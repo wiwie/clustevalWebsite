@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130209133720) do
+ActiveRecord::Schema.define(:version => 20130511181231) do
 
   create_table "aboutus", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -154,6 +154,11 @@ ActiveRecord::Schema.define(:version => 20130209133720) do
   add_index "goldstandards", ["repository_id"], :name => "fk_goldstandards_1"
 
   create_table "help_installations", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "help_source_codes", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
