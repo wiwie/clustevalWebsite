@@ -53,6 +53,7 @@ ClustEval::Application.routes.draw do
 	resources :helps
 	resources :help_installations
 	resources :help_technical_documentations
+	resources :help_publications
 	resources :help_source_codes
 	resources :aboutus
 	resources :parameter_optimization_methods
