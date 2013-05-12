@@ -1,0 +1,118 @@
+<div class="resizable">
+  <div id="comparison_chart" style="height:500px; width:95%;">
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+    
+            chart: {
+                renderTo: 'comparison_chart',
+                type: 'column',
+                marginBottom: 200
+            },
+    
+            title: {
+                text: 'Clustering qualities'
+            },
+    
+            xAxis: {
+                categories: [<% ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}.each do |measure| %><% if @visibleMeasures[measure] %>'<%= measure.alias %>',<% end %><% end %>],
+                labels: {
+                  enabled: true,
+                  rotation: -45,
+                  align: 'right'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Clustering Quality'
+                },
+                min: <%= @minY %>,
+                max: <%= @maxY %>,
+            },
+    
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y;
+                }
+            },
+            plotOptions: {
+              column: {
+                borderWidth: 1,
+                borderColor: '#000000',
+                pointPadding: 0,
+                shadow: false
+              }
+            },
+            series: [
+<% Dataset.all(session).sort_by{|x| x.name}.each do |dataset| %>
+<% if @visibleDatasets[dataset] %>
+{
+  name: '<%= dataset.name %>',
+  data: [<% ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}.each do |measure| %>
+  <% if @visibleMeasures[measure] %>
+    <% @qual = @matrix[@datasetIds[dataset]][@measureIds[measure]] %>
+    <% if @qual != "--" %>
+      <%= @qual %>
+    <% else %>
+      null
+    <% end %>,<% end %><% end %>]
+},
+<% end %>
+<% end %>
+            ]
+        });
+
+      $( ".resizable" ).resizable({
+        helper: "ui-resizable-helper",
+        stop: function( event, ui ) {
+          chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+        }
+      });
+    });
+});
+</script>
+
+<table id="dataAndProgramStatistics" class="display">
+  <thead>
+  <tr>
+    <th>Dataset</th>
+    <% for i in 0..@qualityMeasures.length-1 %>
+    <% measure = @qualityMeasures[i] %>
+    <th>
+    <!--<svg version="1.1" width="20px" height="250px">  
+    <text fill="#000000" stroke="none" font-size="100%" font="serif" transform="rotate(90,0,0)">
+      <tspan y="-5"><%= measure.alias %>
+      </tspan>
+    </text>
+</svg>-->
+<%= measure.alias %>
+</th>
+    <% end %>
+  </tr>
+ </thead>
+ <tbody>
+  <% for i in 0..@datasets.length-1 %>
+  <tr>
+    <% for j in 0..@qualityMeasures.length %>
+      <% if j == 0 %>
+        <td><%= link_to matrix[i][j].name,matrix[i][j] %></td>
+      <% else %>
+        <td>
+          <% if matrix[i][j].to_s == "--" %>
+            <%= matrix[i][j].to_s %>
+          <% else %>
+            <a href="/programs/<%= program.id %>/clust/<%= @datasets[i].id %>?post[clustering_quality_measure_id2]=<%= @qualityMeasures[j-1].id %>"><%= matrix[i][j].to_s %></a>
+          <% end %>
+        </td>
+      <% end %>
+    <% end %>
+  </tr>
+  <% end %>
+</tbody>
+</table>

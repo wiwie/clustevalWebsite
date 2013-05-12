@@ -1,0 +1,30 @@
+<table id="runConfigsParameterOptimization" class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Name</td><td><%= @run.absPath.split('/')[-1] %></td>
+  </tr>
+  <tr>
+    <td>Data result folders</td><td>
+      <% @dataConfigs.each do |dataConfig|%>
+        <% if dataConfig.nil? %>
+        not found
+        <% else %>
+        <%= link_to dataConfig.uniqueRunIdentifier, dataConfig %>
+        <% end %>
+        <br /><% end %>
+      </td>
+  </tr>
+  <tr>
+    <td>Run result folders</td><td><% @runs.each do |run|%><%= link_to run.uniqueRunIdentifier, run %><br /><% end %></td>
+  </tr>
+  <tr>
+    <td>Statistics</td><td><% @statistics.each do |statistic|%><%= link_to statistic.name, statistic %><br /><% end %></td>
+  </tr>
+  </tbody>
+</table>

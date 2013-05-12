@@ -1,0 +1,2 @@
+module RunConfigsDataAnalysisDataConfigsHelper
+end

@@ -1,0 +1,2 @@
+class HelpInstallationsController < ApplicationController
+end

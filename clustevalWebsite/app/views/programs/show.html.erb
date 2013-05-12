@@ -1,0 +1,17 @@
+<%= render_cell :clustering_method_description, :display, :method => @program, :detailsLink => false %><br>
+<table id="program" class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Name</td><td><%= @program.absPath.split('/')[-2] + '/' + @program.absPath.split('/')[-1] %></td>
+  </tr>
+  <tr>
+    <td>Download</td><td><%= link_to 'Click', :controller => 'programs', :action => 'download', :id => @program.id %></td>
+  </tr>
+  </tbody>
+</table>

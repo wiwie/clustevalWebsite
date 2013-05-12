@@ -1,0 +1,22 @@
+    <%= form_tag({:action => 'show_statistics'}, {:method => 'get'}) do %>
+      <% @data_configs = DataConfig.where(:dataset_config_id => DatasetConfig.where(:dataset_id => params[:id])).where(:data_config_id => nil) %>
+      <% if @data_configs.length > 1 %>
+      The data statistics below correspond to one of the following data configurations of this dataset. Depending on which data configuration you choose, the calculated data statistics may differ.
+        Please choose a data configuration:
+        <%= collection_select(:data_config, :data_config_id, @data_configs, :id, :name, {:selected => params[:data_config][:data_config_id]}) %>
+        <%= submit_tag('Change') %>
+      <% end %>
+    <% end %>
+<table id="dataset_statistics" class="display">
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @statistics.each do |statistic| %>
+      <%= render_cell :data_statistic, :display, :statistic => statistic.statistic, :content => statistic.content %>
+    <% end %>
+  </tbody>
+</table>

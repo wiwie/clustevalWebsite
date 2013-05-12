@@ -1,0 +1,18 @@
+<% for d in 0..@runDataAnalysisDataConfigs.length-1 %>
+  <table id="runResultsDataAnalysis" class="display">
+    <thead>
+  	<tr>
+  	<th>Statistic</th>
+  	<th>Value</th>
+  	</tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Data configuration</td><td><%= link_to @runDataAnalysisDataConfigs[d].data_config.absPath.split('/')[-1], @runDataAnalysisDataConfigs[d].data_config %></td>
+      </tr>
+      <% @statistics[d].each do |statistic| %>
+        <%= render_cell :data_statistic, :display, :statistic => statistic.statistic.name, :content => statistic.content, :id => d %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

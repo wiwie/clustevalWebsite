@@ -1,0 +1,23 @@
+<table id="dataConfigs" class="display">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Dataset Configuration</th>
+    <th>Goldstandard Configuration</th>
+  </tr>
+ </thead>
+ <tbody>
+ <% @dataConfigs.each do |dataConfig| %>
+  <tr>
+    <td><%= link_to dataConfig.absPath.split('/')[-1], dataConfig %></td>
+    <td><% @datasetConfig = dataConfig.dataset_config %><%= link_to @datasetConfig.absPath.split('/')[-1], @datasetConfig %></td>
+    <td><% @goldstandardConfig = dataConfig.goldstandard_config %>
+    <%= 
+    if @goldstandardConfig != nil 
+	link_to @goldstandardConfig.absPath.split('/')[-1], @goldstandardConfig 
+    end
+    %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>

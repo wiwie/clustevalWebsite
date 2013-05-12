@@ -1,0 +1,19 @@
+<table id="runConfigsParameterOptimization" class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Name</td><td><%= @run.absPath.split('/')[-1] %></td>
+  </tr>
+  <tr>
+    <td>Data configurations</td><td><% @dataConfigs.each do |dataConfig|%><%= link_to dataConfig.absPath.split('/')[-1], dataConfig %><br /><% end %></td>
+  </tr>
+  <tr>
+    <td>Statistics</td><td><% @statistics.each do |statistic|%><%= link_to statistic.name, statistic %><br /><% end %></td>
+  </tr>
+  </tbody>
+</table>

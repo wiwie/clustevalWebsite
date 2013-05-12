@@ -1,0 +1,20 @@
+<table id="runResults" class="display">
+  <thead>
+  <tr>
+    <th>Unique run identifier</th>
+    <th>Date</th>
+    <th>Run</th>
+    <th>Type</th>
+  </tr>
+ </thead>
+ <tbody>
+ <% for i in 0..@runResults.length-1 %>
+  <tr>
+    <td><%= link_to @runResults[i].uniqueRunIdentifier, @castedRunResults[i] %></td>
+    <td><%= @runResults[i].date%></td>
+    <td><%= link_to @runResults[i].run.absPath.split('/')[-1], @runResults[i].run %></td>
+    <td><%= RunType.find(@runResults[i].run_type_id).name %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>

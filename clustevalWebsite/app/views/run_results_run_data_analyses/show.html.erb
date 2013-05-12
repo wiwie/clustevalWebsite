@@ -1,0 +1,29 @@
+<% for d in 0..@runConfigRunAnalysisRunIdentifier.length-1 %>
+  <% for e in 0..@runConfigRunAnalysisDataIdentifier.length-1 %>
+    <table id="runResultsDataAnalysis" class="display">
+      <thead>
+      	<tr>
+        	<th>Statistic</th>
+        	<th>Value</th>
+      	</tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Data configuration</td>
+          <td><%= link_to @runConfigRunAnalysisRunIdentifier[d].runIdentifier, RunResult.find_by_uniqueRunIdentifier(@runConfigRunAnalysisRunIdentifier[d].runIdentifier) %></td>
+        </tr>
+        <tr>
+          <td>Data Analysis configuration</td>
+          <td><%= link_to @runConfigRunAnalysisDataIdentifier[e].dataIdentifier, RunResult.find_by_uniqueRunIdentifier(@runConfigRunAnalysisDataIdentifier[e].dataIdentifier) %></td>
+        </tr>
+        <% for i in 0..@statistics.length-1 %>
+          <% statistic = @statistics[i] %>
+          <% value = @contents[d][e][i] %>
+          <tr>
+            <td><%= link_to statistic.name, statistic %></td><td><pre><%= raw @code[d][e][i] %></pre></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %> 
+<% end %>

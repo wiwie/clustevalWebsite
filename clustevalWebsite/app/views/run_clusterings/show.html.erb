@@ -1,0 +1,27 @@
+<table id="runConfigsClustering" class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Name</td><td><%= @run.absPath.split('/')[-1] %></td>
+  </tr>
+  <tr>
+    <td>Data configurations</td><td><% @dataConfigs.each do |dataConfig|%><%= link_to dataConfig.absPath.split('/')[-1], dataConfig %><br /><% end %></td>
+  </tr>
+  <tr>
+    <td>Program configurations</td><td><% @programConfigs.each do |programConfig|%><%= link_to programConfig.name, programConfig %><br /><% end %></td>
+  </tr>
+  <tr>
+    <td>Quality measures</td><td><% @qualityMeasures.each do |qualityMeasure|%><%= link_to qualityMeasure.name, qualityMeasure %><br /><% end %></td>
+  </tr>
+  <% for i in 0..@params.length-1 %>
+  <tr>
+  <td><% @programConfig = @params[i].program_config %>(<%= link_to @programConfig.name, @programConfig %>) <%= link_to @params[i].name, @params[i] %></td><td><%= @values[i] %></td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>

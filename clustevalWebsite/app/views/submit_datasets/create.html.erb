@@ -1,0 +1,14 @@
+<%= form_for(@submit_dataset) do |f| %>
+	<%= f.error_messages %>
+	<%= f.label :email, 'E-mail (*)' %>
+	<%= f.text_field :email, :value => params[:submit_dataset][:email] %><br />
+	<%= f.label :firstname, 'First name (*)' %>
+	<%= f.text_field :firstname, :value => params[:submit_dataset][:firstname] %><br />
+	<%= f.label :lastname, 'Last name (*)' %>
+	<%= f.text_field :lastname, :value => params[:submit_dataset][:lastname] %><br />
+	<%= f.label :institution, 'Institution (*)' %>
+	<%= f.text_field :institution, :value => params[:submit_dataset][:institution] %><br />
+	<%= f.label :description, 'Description (*)' %><br />
+	<%= f.text_area :description, :value => params[:submit_dataset][:description] %><br />
+	<%= f.submit 'Submit' %>
+<% end %>

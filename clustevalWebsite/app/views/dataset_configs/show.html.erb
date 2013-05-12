@@ -1,0 +1,22 @@
+<table id="datasetConfig" class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Absolute Path</td><td><%= @datasetConfig.absPath.split('/')[-1] %></td>
+  </tr>
+  <tr>
+    <td>Dataset</td><td><%= link_to @dataset.absPath.split('/')[-2] + "/" + @dataset.absPath.split('/')[-1], @dataset %></td>
+  </tr>
+  <tr>
+    <td>File content</td><td>
+<pre>
+<%= @contents %>
+</pre></td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,43 @@
+<h2><%= 'Run results \'' + @runResult.absPath.split('/')[-1] + '\'' %></h2>
+
+<h3><a name="general"></a>General Information</a></h3>
+<table id="runResultsParameterOptimization" class="display">
+	<thead>
+		<tr>
+			<th>Information</th>
+			<th>Value</th>
+		</tr>
+  	</thead>
+  	<tbody>
+  	<tr>
+  		<td>Run type</td><td><%= @runResult.run.run_type.name %></td>
+  	</tr>
+  	<tr>
+  		<td>Log</td><td><textarea rows="10" cols="30" readonly="readonly"><%= @logContents %></textarea></td>
+  	</tr>
+	</tbody>
+ </table>
+
+<h3>Clustering results</h3>
+  <table id="clustering_results" class="iterations display">
+    <thead>
+    <tr>
+      <th>Program</th>
+      <th>Dataset</th>
+      <th>Parameter set</th>
+      <th>Clustering Quality Measure</th>
+      <th>Quality</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @runResultQualities.each do |quality| %>
+      <tr>
+        <td><%= link_to quality.program_config.program.name, quality.program_config.program %></td>
+        <td><%= link_to quality.data_config.dataset_config.dataset.name, quality.data_config.dataset_config.dataset.dataset %></td>
+        <td><%= quality.paramString %></td>
+        <td><%= quality.clustering_quality_measure.alias %></td>
+        <td><%= quality.quality %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>

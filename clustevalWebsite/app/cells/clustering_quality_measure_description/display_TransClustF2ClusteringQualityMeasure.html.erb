@@ -1,0 +1,17 @@
+The F2-Score is a weighted average of precision and recall: \[ F_2 = 5 \cdot \frac{precision \cdot recall}{4\cdot precision + recall} \] 
+Where <b>Precision</b> is defined as \[ \frac{TP}{TP+FP} \] and <b>Recall</b> is defined as \[ \frac{TP}{TP+FN} 
+	\] 
+The F2-Score originates from the binary classification background, where we only have two classes that we want to distinguish: <b>positive</b> and <b>negative</b>.
+In this scenario there are four possible outcomes:
+	<ul>
+		<li><b>TP (True Positive):</b> The object belongs to class <b>positive</b> and we classified it as <b>positive</b>,</li>
+		<li><b>FP (False Positive ):</b> The object belongs to class <b>negative</b> and we classified it as <b>positive</b>,</li>
+		<li><b>TN (True Negative):</b> The object belongs to class <b>negative</b> and we classified it as <b>negative</b>,</li>
+		<li><b>FN (False Negative):</b> The object belongs to class <b>positive</b> but we classified it as <b>negative</b></li>
+	</ul>
+	<table class="f2scoreMatrix">
+		<tr align="center" style="background-color: #888888;"><td></td><td></td><td colspan="2" style="background-color: #666666;">Reality</td></tr>
+		<tr align="center"><td style="background-color: #888888;"></td><td></td><td>Positive</td><td>Negative</td></tr>
+		<tr align="center"><td rowspan="2" style="background-color: #666666;">Prediction</td><td>Positive</td><td>TP</td><td>FP</td></tr>
+		<tr align="center"><td>Negative</td><td>FN</td><td>TN</td></tr>
+	</table>

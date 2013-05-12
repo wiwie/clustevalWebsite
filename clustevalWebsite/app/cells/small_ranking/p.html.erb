@@ -1,0 +1,36 @@
+<table id="programStatistics" class="display">
+  <thead>
+  <tr>
+    <th>Dataset</th>
+    <th>Best quality</th>
+    <th>Parameter set</th>
+  </tr>
+ </thead>
+ <tbody>
+  <% iterationsExts.each do |iterationExt| %>
+  <tr>
+    <td><%= iterationExt.dataset.name %></td>
+    <td>
+      <%= (iterationExt.quality*1000).round/1000.0 %>
+    </td>
+    <td><%= raw iterationExt.paramSetAsString.gsub(',','<br />') %></td>
+  </tr>
+  <% end %>
+</tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#programStatistics').dataTable({
+      sPaginationType: "full_numbers",
+      oSearch: {"sSearch": "<%= dataset_filter %>"},
+      sDom: '<"H"Rlfr>t<"F"ip>',
+      bJQueryUI: true,
+      bRetrieve: true,
+      bDestroy: true,
+      bSort: true,
+      bAutoWidth: false,
+      aaSorting: [[ 1, "desc" ]]
+    });
+});
+</script>

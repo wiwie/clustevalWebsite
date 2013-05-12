@@ -1,0 +1,87 @@
+<tr>
+  <td>
+    <% @alias = Statistic.find_by_name(statistic).alias %>
+    <%= link_to @alias, Statistic.find_by_name(statistic) %>
+  </td>
+  <td>
+      <div id="resizable<%= @id %>_<%= @statistic.to_s %>" class="resizable">
+      <div id="chart_<%= @id %>_<%= @statistic.to_s %>" style="width:500px; height:500px;"></div>
+      </div>
+      <script type="text/javascript" charset="utf-8">
+        $(function() {
+          var chart;
+
+          chart = new Highcharts.Chart( {
+            credits : {
+              enabled : true
+            },
+            chart: {
+              type: "column",
+              renderTo: "chart_<%= @id %>_<%= @statistic.to_s %>",
+                marginBottom: 250,
+            },
+            title: {
+              text: "<%= @stringArgs[0] %>"
+            },
+            yAxis: {
+              title: {
+                text: "<%= stringArgs[2] %>"
+              }
+            },
+            xAxis: {
+              title: {
+                text: "<%= stringArgs[1] %>"
+              },
+              categories: [
+            <% @xLabels = content[0] %>
+                <% for x in 0..@xLabels.length-1 %>
+                  '<%= @xLabels[x].gsub("\n","") %>'
+                  <% if x < @xLabels.length-1 %>
+                    ,
+                  <% end %>
+                <% end %>
+              ],
+                labels: {
+                  enabled: true,
+                  rotation: -90,
+                  align: 'right'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            series: [{
+              	data: [
+                  <% for x in 0..@xLabels.length-1 %>
+                  	<%= content[1][x] %>
+                    <% if x < @xLabels.length-1 %>
+                    ,
+                    <% end %>
+                  <% end %>
+    		          ],
+                dataLabels: {
+                    enabled: true,
+                    rotation: -90,
+                    color: '#000000',
+                    x: 4,
+                    y: 10,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            	}
+            ]
+          });
+
+
+          $( "#resizable<%= @id %>_<%= @statistic.to_s %>" ).resizable({
+            helper: "ui-resizable-helper",
+            stop: function( event, ui ) {
+              chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+            }
+          });
+        });
+      </script>
+  </td>
+</tr>

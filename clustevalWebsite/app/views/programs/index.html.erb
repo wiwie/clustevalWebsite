@@ -1,0 +1,4 @@
+<h2>Available clustering methods</h2>
+<% @programs.sort_by{|x| x.name}.each do |program| %>
+	<%= render_cell :clustering_method_description, :display, :method => program, :detailsLink => true %>
+<% end %>

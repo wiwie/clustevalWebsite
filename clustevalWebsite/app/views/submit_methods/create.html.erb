@@ -1,0 +1,14 @@
+<%= form_for(@submit_method, html: { class: 'form-horizontal' }) do |f| %>
+	<%= f.error_messages %>
+	<%= f.label :email, 'E-mail (*)' %>
+	<%= f.text_field :email, :value => params[:submit_method][:email] %><br />
+	<%= f.label :firstname, 'First name (*)' %>
+	<%= f.text_field :firstname, :value => params[:submit_method][:firstname] %><br />
+	<%= f.label :lastname, 'Last name (*)' %>
+	<%= f.text_field :lastname, :value => params[:submit_method][:lastname] %><br />
+	<%= f.label :institution, 'Institution (*)' %>
+	<%= f.text_field :institution, :value => params[:submit_method][:institution] %><br />
+	<%= f.label :description, 'Description (*)' %><br />
+	<%= f.text_area :description, :value => params[:submit_method][:description] %><br />
+	<%= f.submit 'Submit' %>
+<% end %>

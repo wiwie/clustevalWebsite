@@ -1,0 +1,35 @@
+<table id="run" class="display">
+  <thead>
+    <th>Information</th>
+    <th>Value</th>
+  </thead>
+  <tbody>
+    <tr><td>Actions</td><td>
+      <% if @run.status != 'RUNNING' %>
+        <%= link_to 'Start', :controller => "runs", :action => "start", :id => params[:id] %>
+      <% else %>
+      Start 
+      <% end %><br />
+      <% if @run.status == 'RUNNING' %>
+      <%= link_to 'Stop', :controller => "runs", :action => "stop", :id => params[:id] %>
+       <% else %>
+      Stop
+      <% end %>
+    </td>
+    <tr>
+      <td>Type</td><td><%= @runType.name %></td>
+    </tr>
+    <tr>
+      <td>Name</td><td><%= @run.absPath.split('/')[-1] %></td>
+    </tr>
+    <tr>
+      <td>Run configuration</td><td><%= link_to @runConfig.absPath.split('/')[-1], @runConfig %></td>
+    </tr>
+    <tr>
+      <td>Status</td><td><%= @run.status %></td>
+    </tr>
+      <% if @run.status == 'RUNNING' %>
+        <td>Percentage</td><td><%= render :partial => "percentage" %></td>
+      <% end %>
+  </tbody>
+</table>

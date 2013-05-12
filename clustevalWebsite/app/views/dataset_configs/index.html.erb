@@ -1,0 +1,16 @@
+<table id="datasetConfigs" class="display">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Dataset</th>
+  </tr>
+ </thead>
+ <tbody>
+ <% @datasetConfigs.each do |datasetConfig| %>
+  <tr>
+    <td><%= link_to datasetConfig.absPath.split('/')[-1], datasetConfig %></td>
+    <td><% @dataset = datasetConfig.dataset %><%= link_to @dataset.absPath.split('/')[-2] + "/" + @dataset.absPath.split('/')[-1], @dataset %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>

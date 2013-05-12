@@ -1,0 +1,41 @@
+source 'https://rubygems.org'
+
+gem 'rails', '3.2.8'
+
+# Bundle edge Rails instead:
+# gem 'rails', :git => 'git://github.com/rails/rails.git'
+
+gem 'mysql2'
+
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'execjs'
+  gem 'therubyracer', :platforms => :ruby
+
+  gem 'uglifier', '>= 1.0.3'
+  
+  gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+  gem 'jquery-datatables-tabletools-rails', github: 'kindjal/jquery-datatables-tabletools-rails'
+  gem 'jquery-ui-rails'
+end
+
+gem 'jquery-rails'
+
+gem 'simple-navigation'
+gem 'authlogic', github: 'wiwie/authlogic'
+gem 'rails3-generators'
+gem 'json'
+gem 'raphael-rails'
+gem 'cells'
+gem 'dynamic_form'
+gem 'foreigner' # enables this app, to use foreign keys in the database
+gem 'immigrant' # allows recreation of existing foreign keys in the database into the migration files
+gem 'rails_sql_views', github: 'centresource/rails_sql_views' # supports view
+gem 'mathjax-rails'
+gem 'composite_primary_keys'
