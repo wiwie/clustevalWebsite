@@ -1,0 +1,73 @@
+<tr>
+  <td>
+    <% @alias = Statistic.find_by_name(statistic).alias %>
+    <%= link_to @alias, Statistic.find_by_name(statistic) %>
+  </td>
+  <td>
+      <div id="resizable<%= @id %>_<%= @statistic.to_s %>" class="resizable">
+      <div id="chart_<%= @id %>_<%= @statistic.to_s %>" style="width:500px; height:500px;"></div>
+      </div>
+      <script type="text/javascript" charset="utf-8">
+        $(function() {
+          var chart;
+
+          chart = new Highcharts.Chart( {
+            credits : {
+              enabled : true
+            },
+            chart: {
+              type: "area",
+              renderTo: "chart_<%= @id %>_<%= @statistic.to_s %>"
+            },
+            title: {
+              text: "<%= @stringArgs[0] %>"
+            },
+            yAxis: {
+              title: {
+                text: "<%= stringArgs[2] %>"
+              }
+            },
+            xAxis: {
+              title: {
+                text: "<%= stringArgs[1] %>"
+              }
+            },
+            legend: {
+            	enabled: <%= stringArgs[3] %>
+            	},
+            series: [
+            <% @xLabels = content[0] %>
+            <% for m in 1..content.length-1 %>
+           		{
+              	name: "<%= @stringArgs[4][m-1] %>",
+              	data: [
+                  <% for x in 0..@xLabels.length-1 %>
+                  	[
+                    <%= @xLabels[x] %>
+                    ,
+                    <%= content[m][x] %>
+                    ]
+                    <% if x < @xLabels.length-1 %>
+                    ,
+                    <% end %>
+                  <% end %>
+        		          ]
+            	}
+              <% if m < content.length-1%>
+              ,
+              <% end %>
+            <% end %>
+            ]
+          });
+
+
+          $( "#resizable<%= @id %>_<%= @statistic.to_s %>" ).resizable({
+            helper: "ui-resizable-helper",
+            stop: function( event, ui ) {
+              chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+            }
+          });
+        });
+      </script>
+  </td>
+</tr>

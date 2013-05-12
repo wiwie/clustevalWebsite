@@ -1,0 +1,282 @@
+
+<h3>Clustering</h3>
+<table id="general" class="display">
+	<thead>
+		<th>Setting</th>
+		<th>Value</th>
+	</thead>
+	<tbody>
+	<tr>
+		<td>Run Result</td><td><%= @runResult.uniqueRunIdentifier %></td>
+	</tr>
+	<tr>
+		<td>Run</td><td><%= link_to @runResult.run.name, @runResult.run %></td>
+	</tr>
+	<tr>
+		<td>Data configuration</td><td><%= link_to @dataConfig.name, @dataConfig %></td>
+	</tr>
+	<tr>
+		<td>Program configuration</td><td><%=  link_to @programConfig.name, @programConfig %></td>
+	</tr>
+	<tr>
+		<td>Parameter Set</td><td><%= @iteration.paramSetAsString %></td>
+	</tr>
+	<tr>
+		<td>Iteration number</td><td><%= @iteration.iteration %></td>
+	</tr>
+	</tbody>
+</table>
+
+<table id="clustering" class="display">
+	<thead>
+		<th>Cluster ID</th>
+		<th>Objects</th>
+	</thead>
+	<tbody>
+	<% @clustering.each do |cluster| %>
+	<tr>
+		<td><%= cluster[0] %></td>
+		<td>
+			<% cluster[1].each do |cluster_object| %>
+				<%= cluster_object[0] %> (<%= cluster_object[1] %>), 
+			<% end %>
+		</td>
+	</tr>
+	<% end %>
+	</tbody>
+</table>
+<h3>Clustering representation</h3>
+<h4>(2D-coordinates created using isoMDS)</h4>
+Hint: To zoom, click on the plot and drag.
+<div id="resizableIsoMDS" class="resizable">
+	<div id="scatterIsoMDS" style="width:500px; height:500px;"></div>
+</div>
+<h4>(2D-coordinates created using PCA)</h4>
+Hint: To zoom, click on the plot and drag.
+<div id="resizablePCA" class="resizable">
+	<div id="scatterPCA" style="width:500px; height:500px;"></div>
+</div>
+<img src="/run_results_parameter_optimizations_parameter_set_iterations/img/<%= params[:id] %>" />
+<h3>Log information</h3>
+<table id="log" class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+  <tr><td>Log</td><td><textarea rows="30" cols="30" readonly="readonly"><%= @logContents %></textarea></td>
+  </tr>
+</tbody>
+ </table>
+
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		var chart1, options ={
+            credits : {
+              enabled : false
+            },
+			chart: {
+				type: "scatter",
+				renderTo: "scatterIsoMDS",
+        		zoomType: 'xy'
+			},
+			//plotOptions: {
+			//	scatter: {
+			//		dataLabels: {
+			//			enabled: true,
+			//			formatter: function() {
+			//				return this.point.name;
+			//			}
+			//		}
+			//	}
+			//},
+			title: {
+				text: "Scatter plot of clustering objects"
+			},
+			yAxis: {
+				title: {
+					text: ""
+				},
+				gridLineWidth: 0,
+				labels: {
+					enabled: false
+				}
+			},
+			xAxis: {
+   				minorGridLineWidth: 0,
+				gridLineWidth: 0,
+				labels: {
+					enabled: false
+				}
+			},
+			tooltip: {
+            	formatter: function() {
+                	return 'Object <b>' + this.point.name + '</b><br />' + this.series.name + '<br />';
+            	}
+        	},
+			series: [
+			<% for c in 0..@clustering.length-1 %>
+			{
+				name: "Cluster <%= c %>"
+			}
+			<%= c < @clustering.length-1 ? ',' : '' %>
+			<% end %>
+			]
+		};
+
+		itemToClusterId = {}
+		<% @clustering.each do |cluster| %>
+			<% cluster[1].each do |cluster_object| %>
+				itemToClusterId['<%= cluster_object[0] %>'] = <%= cluster[0] %>
+			<% end %>
+		<% end %>
+
+		// Load data asynchronously using jQuery. On success, add the data
+        // to the options and initiate the chart.
+        // This data is obtained by exporting a GA custom report to TSV.
+        // http://api.jquery.com/jQuery.get/
+        jQuery.get('/run_results_parameter_optimizations_parameter_set_iterations/isoMDS/<%= params[:id] %>', null, function(tsv, state, xhr) {
+            var lines = [],
+                series = [];
+
+            // inconsistency
+            if (typeof tsv !== 'string') {
+                tsv = xhr.responseText;
+            }
+
+            <% for c in 0..@clustering.length-1 %>
+            	series[<%= c %>] = [];
+            <% end %>
+
+            // split the data return into lines and parse them
+            tsv = tsv.split(/\n/);
+
+            jQuery.each(tsv, function(i, line) {
+            	if (line) {
+                	line = line.split(/\t/);
+                	series[itemToClusterId[line[0]]].push({name: line[0], x: parseFloat(line[1]), y: parseFloat(line[2])});
+                }
+            });
+    
+    		<% for c in 0..@clustering.length-1 %>
+            options.series[<%= c %>].data = series[<%= c %>];
+            <% end %>
+            chart1 = new Highcharts.Chart(options);
+
+		      $( "#resizableIsoMDS" ).resizable({
+		        helper: "ui-resizable-helper",
+		        stop: function( event, ui ) {
+		          chart1.setSize(ui.size.width,ui.size.height,doAnimation = true);
+		        }
+		      });
+        });
+	});
+</script>
+
+
+
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		var chart2, options ={
+            credits : {
+              enabled : false
+            },
+			chart: {
+				type: "scatter",
+				renderTo: "scatterPCA",
+        		zoomType: 'xy'
+			},
+			//plotOptions: {
+			//	scatter: {
+			//		dataLabels: {
+			//			enabled: true,
+			//			formatter: function() {
+			//				return this.point.name;
+			//			}
+			//		}
+			//	}
+			//},
+			title: {
+				text: "Scatter plot of clustering objects"
+			},
+			yAxis: {
+				title: {
+					text: ""
+				},
+				gridLineWidth: 0,
+				labels: {
+					enabled: false
+				}
+			},
+			xAxis: {
+   				minorGridLineWidth: 0,
+				gridLineWidth: 0,
+				labels: {
+					enabled: false
+				}
+			},
+			tooltip: {
+            	formatter: function() {
+                	return 'Object <b>' + this.point.name + '</b><br />' + this.series.name + '<br />';
+            	}
+        	},
+			series: [
+			<% for c in 0..@clustering.length-1 %>
+			{
+				name: "Cluster <%= c %>"
+			}
+			<%= c < @clustering.length-1 ? ',' : '' %>
+			<% end %>
+			]
+		};
+
+		itemToClusterId = {}
+		<% @clustering.each do |cluster| %>
+			<% cluster[1].each do |cluster_object| %>
+				itemToClusterId['<%= cluster_object[0] %>'] = <%= cluster[0] %>
+			<% end %>
+		<% end %>
+
+		// Load data asynchronously using jQuery. On success, add the data
+        // to the options and initiate the chart.
+        // This data is obtained by exporting a GA custom report to TSV.
+        // http://api.jquery.com/jQuery.get/
+        jQuery.get('/run_results_parameter_optimizations_parameter_set_iterations/pca/<%= params[:id] %>', null, function(tsv, state, xhr) {
+            var lines = [],
+                series = [];
+
+            // inconsistency
+            if (typeof tsv !== 'string') {
+                tsv = xhr.responseText;
+            }
+
+            <% for c in 0..@clustering.length-1 %>
+            	series[<%= c %>] = [];
+            <% end %>
+
+            // split the data return into lines and parse them
+            tsv = tsv.split(/\n/);
+
+            jQuery.each(tsv, function(i, line) {
+            	if (line) {
+                	line = line.split(/\t/);
+                	series[itemToClusterId[line[0]]].push({name: line[0], x: parseFloat(line[1]), y: parseFloat(line[2])});
+                }
+            });
+    
+    		<% for c in 0..@clustering.length-1 %>
+            options.series[<%= c %>].data = series[<%= c %>];
+            <% end %>
+            chart2 = new Highcharts.Chart(options);
+
+		      $( "#resizablePCA" ).resizable({
+		        helper: "ui-resizable-helper",
+		        stop: function( event, ui ) {
+		          chart2.setSize(ui.size.width,ui.size.height,doAnimation = true);
+		        }
+		      });
+        });
+	});
+</script>

@@ -1,0 +1,7 @@
+<div class="clustering_method_description">
+	<h3><%= method.name %> (<%= link_to 'Link', method %>)</h3>
+	<p>
+		<%= image_tag 'transclust.png', :height => '156', :style => 'float:right;' %>
+		Transitivity Clustering is a clustering method based on the assumption that groupings of the data are defined by hidden transitivities between the data objects. The clustering process consists of transforming a given intransitive similarity graph into a transitive one by adding and removing edges. The idea is to find a (clustering) solution with minimal number of edge modifications for the unweighted case. It can also be applied to weighted graphs, where the cost of a solution is the sum of the edge weights that were added or removed.
+	</p>
+</div>

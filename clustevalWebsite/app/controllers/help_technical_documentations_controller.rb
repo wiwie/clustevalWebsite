@@ -1,0 +1,2 @@
+class HelpTechnicalDocumentationsController < ApplicationController
+end

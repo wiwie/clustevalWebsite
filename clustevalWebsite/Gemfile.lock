@@ -1,0 +1,185 @@
+GIT
+  remote: git://github.com/centresource/rails_sql_views.git
+  revision: 0486fff084032367b4c08bf0a51b151ef86a08f1
+  specs:
+    rails_sql_views (0.8.0.2.laripk)
+      activerecord
+      rails (~> 3.1.rc1)
+      rake (~> 0.9)
+
+GIT
+  remote: git://github.com/kindjal/jquery-datatables-tabletools-rails.git
+  revision: 4a4036d4567217f0cf3cd7e66169f7fb80c8cb8e
+  specs:
+    jquery-datatables-tabletools-rails (2.0.3)
+      jquery-datatables-rails
+
+GIT
+  remote: git://github.com/rweng/jquery-datatables-rails.git
+  revision: 2024c99b26f94a036629ac04bd158c70d2f4f11b
+  specs:
+    jquery-datatables-rails (1.11.1)
+      jquery-rails
+
+GIT
+  remote: git://github.com/wiwie/authlogic.git
+  revision: 4119a93d98379d56af21f92533f7d5946d80418f
+  specs:
+    authlogic (3.2.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actionmailer (3.2.8)
+      actionpack (= 3.2.8)
+      mail (~> 2.4.4)
+    actionpack (3.2.8)
+      activemodel (= 3.2.8)
+      activesupport (= 3.2.8)
+      builder (~> 3.0.0)
+      erubis (~> 2.7.0)
+      journey (~> 1.0.4)
+      rack (~> 1.4.0)
+      rack-cache (~> 1.2)
+      rack-test (~> 0.6.1)
+      sprockets (~> 2.1.3)
+    activemodel (3.2.8)
+      activesupport (= 3.2.8)
+      builder (~> 3.0.0)
+    activerecord (3.2.8)
+      activemodel (= 3.2.8)
+      activesupport (= 3.2.8)
+      arel (~> 3.0.2)
+      tzinfo (~> 0.3.29)
+    activeresource (3.2.8)
+      activemodel (= 3.2.8)
+      activesupport (= 3.2.8)
+    activesupport (3.2.8)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
+    arel (3.0.2)
+    builder (3.0.4)
+    cells (3.8.8)
+      actionpack (>= 3.0)
+      railties (>= 3.0)
+    coffee-rails (3.2.2)
+      coffee-script (>= 2.2.0)
+      railties (~> 3.2.0)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.5.0)
+    composite_primary_keys (5.0.9)
+      activerecord (~> 3.2.0, >= 3.2.8)
+    dynamic_form (1.1.4)
+    erubis (2.7.0)
+    execjs (1.4.0)
+      multi_json (~> 1.0)
+    foreigner (1.4.0)
+      activerecord (>= 3.0.0)
+    hike (1.2.1)
+    i18n (0.6.2)
+    immigrant (0.1.4)
+      activerecord (>= 3.0)
+      foreigner (>= 1.2.1)
+    journey (1.0.4)
+    jquery-rails (2.2.1)
+      railties (>= 3.0, < 5.0)
+      thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.0.1)
+      jquery-rails
+      railties (>= 3.1.0)
+    json (1.7.7)
+    libv8 (3.11.8.13)
+    mail (2.4.4)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    mathjax-rails (0.0.4)
+      railties (~> 3.0)
+    mime-types (1.21)
+    multi_json (1.6.1)
+    mysql2 (0.3.11)
+    polyglot (0.3.3)
+    rack (1.4.5)
+    rack-cache (1.2)
+      rack (>= 0.4)
+    rack-ssl (1.3.3)
+      rack
+    rack-test (0.6.2)
+      rack (>= 1.0)
+    rails (3.2.8)
+      actionmailer (= 3.2.8)
+      actionpack (= 3.2.8)
+      activerecord (= 3.2.8)
+      activeresource (= 3.2.8)
+      activesupport (= 3.2.8)
+      bundler (~> 1.0)
+      railties (= 3.2.8)
+    rails3-generators (1.0.0)
+      railties (>= 3.0.0)
+    railties (3.2.8)
+      actionpack (= 3.2.8)
+      activesupport (= 3.2.8)
+      rack-ssl (~> 1.3.2)
+      rake (>= 0.8.7)
+      rdoc (~> 3.4)
+      thor (>= 0.14.6, < 2.0)
+    rake (0.9.6)
+    raphael-rails (2.1.1)
+    rdoc (3.12.2)
+      json (~> 1.4)
+    ref (1.0.2)
+    sass (3.2.6)
+    sass-rails (3.2.6)
+      railties (~> 3.2.0)
+      sass (>= 3.1.10)
+      tilt (~> 1.3)
+    simple-navigation (3.10.0)
+      activesupport (>= 2.3.2)
+    sprockets (2.1.3)
+      hike (~> 1.2)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
+    therubyracer (0.11.4)
+      libv8 (~> 3.11.8.12)
+      ref
+    thor (0.17.0)
+    tilt (1.3.3)
+    treetop (1.4.12)
+      polyglot
+      polyglot (>= 0.3.1)
+    tzinfo (0.3.35)
+    uglifier (1.3.0)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  authlogic!
+  cells
+  coffee-rails (~> 3.2.1)
+  composite_primary_keys
+  dynamic_form
+  execjs
+  foreigner
+  immigrant
+  jquery-datatables-rails!
+  jquery-datatables-tabletools-rails!
+  jquery-rails
+  jquery-ui-rails
+  json
+  mathjax-rails
+  mysql2
+  rails (= 3.2.8)
+  rails3-generators
+  rails_sql_views!
+  raphael-rails
+  sass-rails (~> 3.2.3)
+  simple-navigation
+  therubyracer
+  uglifier (>= 1.0.3)

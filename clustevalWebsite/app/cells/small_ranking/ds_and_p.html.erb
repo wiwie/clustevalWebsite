@@ -1,0 +1,131 @@
+<div class="resizable">
+  <div id="comparison_chart" style="height:500px; width:500px;">
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+    
+            chart: {
+                renderTo: 'comparison_chart',
+                type: 'column',
+                marginBottom: 200
+            },
+    
+            title: {
+                text: 'Clustering qualities'
+            },
+    
+            xAxis: {
+                categories: [<% Dataset.all(session).sort_by{|x| x.name}.each do |dataset| %><% if @visibleDatasets[dataset] %>'<%= dataset.name %>',<% end %><% end %>],
+                labels: {
+                  enabled: true,
+                  rotation: -45,
+                  align: 'right'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: '<%= @qualityMeasure.alias %>'
+                },
+                min: <%= @qualityMeasure.minValue %>,
+                max: <%= @qualityMeasure.maxValue %>,
+            },
+    
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y;
+                }
+            },
+            plotOptions: {
+              column: {
+                borderWidth: 1,
+                borderColor: '#000000',
+                pointPadding: 0,
+                shadow: false
+              },
+              series: {   
+            // dataLabels: {
+            //     enabled: true,
+            //     rotation: -90,
+            //     color: '#000000',
+            //     verticalAlign: 'middle'
+            // }
+              }
+            },
+            series: [
+            <% Program.all(session).sort_by{|x| x.alias}.each do |program| %>
+              {
+                name: '<%= program.alias %>',
+                data: [<% Dataset.all(session).sort_by{|x| x.name}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
+                <%# elsif @isMaximum %><%#= @qualityMeasure.minValue %><%# else %><%#= @qualityMeasure.maxValue %>
+                <% else %>null<% end %>,<% end %><% end %>]
+            },
+            <% end %>
+            ]
+        });
+
+      $( ".resizable" ).resizable({
+        helper: "ui-resizable-helper",
+        stop: function( event, ui ) {
+          chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+        }
+      });
+    });
+});
+</script>
+
+<table id="dataAndProgramStatistics" class="display">
+  <thead>
+  <tr>
+    <th>Dataset</th>
+    <% for i in 0..@programs.length-1 %>
+      <% program = @programs[i] %>
+      <th>
+          <!--<svg version="1.1" width="20px" height="250px">  
+        <text fill="#000000" stroke="none" font-size="100%" font="serif" transform="rotate(90,0,0)">
+          <tspan y="-5"><%= program.name %>
+          </tspan>
+        </text>
+        </svg>-->
+        <%= program.name %>
+      </th>
+    <% end %>
+  </tr>
+ </thead>
+ <tbody>
+  <% for i in 0..@datasets.length-1 %>
+  <tr>
+    <% for j in 0..@programs.length %>
+      <% if j == 0 %>
+        <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
+      <% else %>
+       <% @string = "" %>
+          <% if @matrix[i][j].to_s == "--" %>
+            <% @string = @matrix[i][j].to_s %>
+          <% else %>
+            <% @string = '<a href="/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+
+            <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
+              <% @string = @string + "<b>" %>
+            <% end %>
+
+            <% @string = @string + matrix[i][j].to_s + '</a>' %>
+
+            <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
+              <% @string = @string + "</b>" %>
+            <% end %>
+          <% end %>
+        <td>
+          <%= raw @string %>
+        </td>
+      <% end %>
+    <% end %>
+  </tr>
+  <% end %>
+</tbody>
+</table>

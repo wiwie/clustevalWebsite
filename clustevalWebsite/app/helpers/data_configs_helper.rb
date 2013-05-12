@@ -1,0 +1,2 @@
+module DataConfigsHelper
+end

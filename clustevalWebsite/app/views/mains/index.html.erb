@@ -1,0 +1,42 @@
+<h2>Welcome visitor!</h2>
+  <p>clusteval is a free and extendable opensource platform for objective performance comparison of arbitrary Clustering Methods on different datasets. It is designed to support the standard processes related to Cluster Analyses. [1]</p>
+  <p>You can find a list of all available clustering methods under <%= link_to "Clustering Methods",Program %> in the menu. There are <%= Program.all(session).count %> different clustering methods available. Similarly, the available datasets can be found under <%= link_to "Datasets",Dataset %>. There are <%= Dataset.all(session).count %> datasets available.</p>
+<% @repositories = Repository.where(:repository_type_id => RepositoryType.find_by_name('Repository').id) %>
+<% if @repositories.length > 1 %>
+  <h2>Repository</h2>
+  This website shows all information from one central repository. You can select a different repository here:
+  <%= form_tag({:action => 'index'}, {:method => 'post'}) do %>
+  <%= collection_select(:repository, :repository_id, @repositories, :id, :basePath, {:selected => Repository.find_by_basePath(session[:repository_id]).id}) %>
+  <%= submit_tag('Change') %>
+  <% end %>
+<% end %>
+<h2>Download & Installation</h2>
+You are interested in downloading and installing clusteval on your own server? Please refer to the help section <%= link_to "over here", HelpInstallation %>.
+<% if @current_user %>
+<h2>Statistics</h2>
+<table id="statistics" class="display">
+  <thead>
+  <tr>
+    <th>Information</th>
+    <th>Value</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+    <td>Number of Runs</td><td><%= Run.all(session).count %></td>
+  </tr>
+  <tr>
+    <td>Number of Datasets</td><td><%= Dataset.all(session).count %></td>
+  </tr>
+  <tr>
+    <td>Number of Goldstandards</td><td><%= Goldstandard.all(session).count %></td>
+  </tr>
+  <tr>
+    <td>Number of Programs</td><td><%= Program.all(session).count %></td>
+  </tr>
+  <tr>
+    <td>Number of Run Results</td><td><%= RunResult.all(session).count %></td>
+  </tr>
+</tbody>
+</table>
+<% end %>

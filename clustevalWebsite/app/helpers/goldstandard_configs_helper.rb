@@ -1,0 +1,2 @@
+module GoldstandardConfigsHelper
+end

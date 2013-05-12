@@ -1,0 +1,2 @@
+module SubmitMethodsHelper
+end

@@ -1,0 +1,3 @@
+class RunRunAnalysisRunIdentifiersController < ApplicationController
+	before_filter :require_user
+end

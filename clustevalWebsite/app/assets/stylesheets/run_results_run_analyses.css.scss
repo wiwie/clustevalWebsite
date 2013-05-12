@@ -1,0 +1,32 @@
+// Place all the styles related to the runResultsRunAnalyses controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.box_rotate {
+    width: 0.5em;
+    white-space: nowrap;
+
+    display: block;
+    writing-mode: tb-rl;
+    filter: flipv fliph;
+    margin-bottom: 120px;
+     -moz-transform: rotate(90deg);  /* FF3.5+ */
+       -o-transform: rotate(90deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(90deg);  /* Saf3.1+, Chrome */
+             filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
+         -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
+}
+
+.mytable {
+	padding: 0px;
+	cellspacing: 0px;
+	border-spacing: 0px 0px;
+}
+
+.mytable td {
+	padding: 0px;
+	font-size: 10px;
+}
+
+table.display td {
+    padding: 3px 6px;
+}

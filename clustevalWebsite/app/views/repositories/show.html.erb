@@ -1,0 +1,22 @@
+<table id="statistics" class="display">
+  <thead>
+  <tr>
+    <th>Information</th>
+    <th>Value</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+    <td>Number of Runs</td><td><%= Run.all(session).count %></td>
+  </tr>
+  <tr>
+    <td>Number of Datasets</td><td><%= Dataset.all(session).count %></td>
+  </tr>
+  <tr>
+    <td>Number of Goldstandards</td><td><%= Goldstandard.all(session).count %></td>
+  </tr>
+  <tr>
+    <td>Number of Programs</td><td><%= Program.all(session).count %></td>
+  </tr>
+</tbody>
+</table>

@@ -1,0 +1,19 @@
+<table id="goldstandard" class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Name</td><td><%= @goldstandard.absPath.split('/')[-2] + "/" + @goldstandard.absPath.split('/')[-1] %></td>
+  </tr>
+  <tr>
+    <td>File content</td><td>
+<pre>
+<%= @contents %>
+</pre></td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,39 @@
+<table id="runs" class="display">
+  <thead>
+  <tr>
+    <th>Run name</th>
+    <th>Run type</th>
+    <th>Data Configs</th>
+    <th>Program Configs</th>
+    <th>Run Identifiers</th>
+    <th>Status</th>
+  </tr>
+ </thead>
+ <tbody>
+ <% for i in 0..@runs.length-1 %>
+  <tr>
+    <td><%= link_to @runs[i].absPath.split('/')[-1], @runs[i] %></td>
+    <td><%= @runs[i].run_type.name %></td>
+    <td>
+    <% for d in 0..@dataConfigs[i].length-1 %>
+    <%= link_to @dataConfigs[i][d].absPath.split('/')[-1], @dataConfigs[i][d] %>
+    <br />
+    <% end %>
+    </td>
+    <td>
+    <% for d in 0..@programConfigs[i].length-1 %>
+    <%= link_to @programConfigs[i][d].absPath.split('/')[-1], @programConfigs[i][d] %>
+    <br />
+    <% end %>
+    </td>
+    <td>
+    <% for d in 0..@runsAnalysis[i].length-1 %>
+    <%= @runsAnalysis[i][d] %>
+    <br />
+    <% end %>
+    </td>
+    <td><%= @runs[i].status %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>

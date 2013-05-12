@@ -1,0 +1,2 @@
+<h2>How well does '<%= @program.name %>' perform on different datasets?</h2>
+<%= render_cell :small_ranking, :p_and_q, :obj => @program, :iterationsExts => ParameterOptimizationIterationsExt.select("program_id,dataset_id,max(quality) as maxQuality,min(quality) as minQuality,paramSetAsString,clustering_quality_measure_id").where(:program_id => @program.id).group("dataset_id,clustering_quality_measure_id") %>

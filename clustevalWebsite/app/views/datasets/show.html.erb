@@ -1,0 +1,25 @@
+<table id="dataset" class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Name</td><td><%= @dataset.absPath.split('/')[-2] + "/" + @dataset.absPath.split('/')[-1] %></td>
+  </tr>
+  <tr>
+    <td>Dataset format</td><td><%= @dataset.dataset_format.name %></td>
+  </tr>
+  <tr>
+    <td>Download</td><td><%= link_to 'Click', :controller => 'datasets', :action => 'download', :id => @dataset.id %></td>
+  </tr>
+  <tr>
+    <td>First <%= @contents.count("\n") %> lines</td><td>
+<textarea readonly="readonly" rows="7">
+<%= @contents %>
+</textarea></td>
+  </tr>
+  </tbody>
+</table>

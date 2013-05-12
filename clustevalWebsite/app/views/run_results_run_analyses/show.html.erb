@@ -1,0 +1,41 @@
+<style type="text/css" >
+.whiterectangle { color: white; background-color: white; z-index: 0;}
+.blackrectangle { color: black; background-color: black; z-index: 1;}
+</style>
+<script type="text/javascript" >
+function drawrectangle( myclass, top, left, width, height )
+{
+    var bodylist = document.getElementsByTagName( "body" );
+    var rect = document.createElement( "div" );
+    var mystyle = 'position:absolute;top:' + top + ";left:" + left + ';width:' + width + ";height:" + height;
+    rect.setAttribute( "class", myclass );
+    rect.setAttribute( "style", mystyle );
+    bodylist[0].appendChild( rect );
+}
+</script>
+<script type="text/javascript" >
+drawrectangle( "whiterectangle", 0, 0, 1, 1 );  // make a background rectangle, not necessary with default browser settings
+</script>
+  <% for d in 0..@runRunAnalysisRunIdentifier.length-1 %>
+<table id="runResultsDataAnalysis" class="display">
+  <thead>
+	<tr>
+	<th>Statistic</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Run configuration</td><td><%= link_to @runRunAnalysisRunIdentifier[d].runIdentifier, RunResult.find_by_uniqueRunIdentifier(@runRunAnalysisRunIdentifier[d].runIdentifier) %></td>
+    </tr>
+    <% for i in 0..@statistics.length-1 %>
+    <% statistic = @statistics[i] %>
+    <% value = @contents[d][i] %>
+    <tr>
+      <td><%= link_to statistic.name, statistic %></td><td><pre><%= raw @code[d][i] %></pre>
+  </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+  <% end %>

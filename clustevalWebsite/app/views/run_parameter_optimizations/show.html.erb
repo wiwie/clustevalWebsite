@@ -1,0 +1,35 @@
+<table id="runConfigsParameterOptimization" class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Name</td><td><%= @run.absPath.split('/')[-1] %></td>
+  </tr>
+  <tr>
+    <td>Data configurations</td><td><% @dataConfigs.each do |dataConfig|%><%= link_to dataConfig.absPath.split('/')[-1], dataConfig %><br /><% end %></td>
+  </tr>
+  <tr>
+    <td>Program configurations</td><td><% @programConfigs.each do |programConfig|%><%= link_to programConfig.name, programConfig %><br /><% end %></td>
+  </tr>
+  <tr>
+    <td>Quality measures</td><td><% @qualityMeasures.each do |qualityMeasure|%><%= link_to qualityMeasure.alias, qualityMeasure %><br /><% end %></td>
+  </tr>
+  <% for i in 0..@params.length-1 %>
+  <tr>
+  <td><% @programConfig = ProgramConfig.find_by_id(@params[i].programConfigId) %>(<%= link_to @programConfig.name, @programConfig %>) <%= link_to @params[i].name, @params[i] %></td><td><%= @values[i] %></td>
+  </tr>
+  <% end %>
+  <% for i in 0..@programConfigs.length-1 %>
+  <tr>
+  <td>Parameter Optimization Settings (<%= link_to @programConfigs[i].name, @programConfigs[i] %>)</td><td>
+	Method: <%= link_to @optMethods[i].name, @optMethods[i] %><br />
+	Criterion: <%= link_to @optCriterions[i].alias, @optCriterions[i] %><br />
+	Parameter: <% @optParameters[i].each do |optParameter| %><%= link_to optParameter.name, optParameter %> <% end %></td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>

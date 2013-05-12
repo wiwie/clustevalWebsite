@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>clusteval | Integrative Clustering Evaluation Framework</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "stylesheet", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "highcharts" %>
+  <%= javascript_include_tag "modules/exporting" %>
+  <%= javascript_include_tag 'raphael' %>
+  <%= javascript_include_tag 'ColReorderWithResize' %>
+  <%= mathjax_tag %>
+  <%= csrf_meta_tags %>
+  <script type="text/javascript">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['\\$','\\$'] ]
+  }
+});
+  </script>
+  <script type="text/javascript">
+        var chart;
+        Highcharts.theme = {
+           colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+           chart: {
+              backgroundColor: {
+                 linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                 stops: [
+                    [0, 'rgb(255, 255, 255)'],
+                    [1, 'rgb(240, 240, 255)']
+                 ]
+              },
+              borderWidth: 2,
+              plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+              plotShadow: true,
+              plotBorderWidth: 1
+           },
+           title: {
+              style: {
+                 color: '#000',
+                 font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+              }
+           },
+           subtitle: {
+              style: {
+                 color: '#666666',
+                 font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+              }
+           },
+           xAxis: {
+              gridLineWidth: 1,
+              lineColor: '#000',
+              tickColor: '#000',
+              labels: {
+                 style: {
+                    color: '#000',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                 }
+              },
+              title: {
+                 style: {
+                    color: '#333',
+                    fontWeight: 'bold',
+                    fontSize: '12px',
+                    fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+
+                 }
+              }
+           },
+           yAxis: {
+              minorTickInterval: 'auto',
+              lineColor: '#000',
+              lineWidth: 1,
+              tickWidth: 1,
+              tickColor: '#000',
+              labels: {
+                 style: {
+                    color: '#000',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                 }
+              },
+              title: {
+                 style: {
+                    color: '#333',
+                    fontWeight: 'bold',
+                    fontSize: '12px',
+                    fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                 }
+              }
+           },
+           legend: {
+              itemStyle: {
+                 font: '9pt Trebuchet MS, Verdana, sans-serif',
+                 color: 'black'
+
+              },
+              itemHoverStyle: {
+                 color: '#039'
+              },
+              itemHiddenStyle: {
+                 color: 'gray'
+              }
+           },
+           labels: {
+              style: {
+                 color: '#99b'
+              }
+           },
+          plotOptions: {
+              area: {
+                  marker: {
+                      enabled: false,
+                      symbol: 'circle',
+                      radius: 2,
+                      states: {
+                          hover: {
+                              enabled: true
+                          }
+                      }
+                  }
+              }
+          },
+           navigation: {
+              buttonOptions: {
+                 theme: {
+                    stroke: '#CCCCCC'
+                 }
+              }
+           }
+        };
+        Highcharts.setOptions(Highcharts.theme);
+  </script>
+  <style>
+    .resizable {
+      width: 500px;
+      height: 500px;
+    }
+    .ui-resizable-helper { 
+      border: 2px dotted #00F; 
+    }
+  </style>
+</head>
+<body>
+
+<div class='title'>
+	<h1><div id="first" >clusteval</div> <div id="second">Integrative Clustering Evaluation Framework</div></h1>
+</div>
+
+<div class='example_content' id='example_3'>
+  <div id='top_navigation'>
+    <table id="menu_table" class="designTable">
+      <tr>
+        <td style="vertical-align: bottom;"><%= current_user ?  render_navigation(:level => 1, :static_leaf => true, :context => :admin) : render_navigation(:level => 1, :static_leaf => true) %></td>
+        <td><div style="float:right;padding:3px;"><%= render :partial => "layouts/auth" %></div></td>
+      </tr>
+    </table>
+  </div>
+</div> 
+  <% if false %>
+  <div class='content_wrapper'>
+       <div id='sub_navigation'>
+  	   <%= current_user ? render_navigation(:level => 2, :context => :admin) : nil %>
+  </div>
+  </div>
+  <% end %>
+  <div class='clustEvalContent'>
+    <table class="designTable">
+      <tr valign="top">
+        <td class='content_table_left'>
+        <div class='left_navigation'>
+          <%= render_cell :navigation, :display %>
+
+          <div class='left_navigation_title'>
+            <%= image_tag '/assets/027.png', :style => 'padding-right: 5px;' %>Hints:
+          </div>
+          <p><small>
+            <%= render_cell :info_text, :display %>
+          </small></p>
+        </div>
+        </td>
+        <td class='content_table_right'>
+    <div class='breadcrumb'><%= current_user ? render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => true, :join_with => ' » ', :prefix => ' You are here: ', :context => :admin) : render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => true, :join_with => ' » ', :prefix => ' You are here: ') %></div>
+        <div class='clustEvalContentInner'>
+        <%= yield %>
+        </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+</html>

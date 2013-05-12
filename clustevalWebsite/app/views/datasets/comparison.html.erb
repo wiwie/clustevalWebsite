@@ -1,0 +1,23 @@
+<%= form_tag({:action => 'comparison'},{:method => 'get'}) do %>
+<h2>How do clustering methods perform on a certain dataset?</h2>
+<% if params[:post] %> 
+	<% dataset_id = params[:post][:dataset_id] %>
+	<% @qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:clustering_quality_measure_id]) %>
+	<% qualityMeasureName = @qualityMeasure.name %>
+<% else %>
+<% dataset_id = Dataset.first.id %>
+
+<% @qualityMeasures = ClusteringQualityMeasure.all(session) %>
+<% @qualityMeasures.each do |measure| %>
+	<% if measure.name == 'TransClustF2ClusteringQualityMeasure' %>
+		<% @qualityMeasure = measure %>
+		<% break %>
+	<% end %>
+<% end %>
+<% end %>
+Please choose a dataset
+<%= collection_select(:post, :dataset_id, Dataset.all(session), :id, :name, {:selected => dataset_id},{:style=>'width:200px', :onchange => "this.form.submit();"}) %> and <br />
+a clustering quality measure
+<%= collection_select(:post, :clustering_quality_measure_id, ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px', :onchange => "this.form.submit();"} ) %>
+<%= render_cell :small_ranking, :ds, :qualityMeasure => @qualityMeasure.id, :obj => Dataset.find_by_id(dataset_id) %>
+<% end %>

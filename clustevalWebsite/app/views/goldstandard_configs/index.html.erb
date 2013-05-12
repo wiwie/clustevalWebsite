@@ -1,0 +1,16 @@
+<table id="goldstandardConfigs" class="display">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Goldstandard</th>
+  </tr>
+ </thead>
+ <tbody>
+ <% @goldstandardConfigs.each do |goldstandardConfig| %>
+  <tr>
+    <td><%= link_to goldstandardConfig.absPath.split('/')[-1], goldstandardConfig %></td>
+    <td><% @goldStandard = goldstandardConfig.goldstandard %><%= link_to @goldStandard.absPath.split('/')[-2] + "/" + @goldStandard.absPath.split('/')[-1], @goldStandard %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>

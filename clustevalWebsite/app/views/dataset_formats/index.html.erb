@@ -1,0 +1,16 @@
+<table id="datasetFormats" class="display">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Example Datasets</th>
+  </tr>
+ </thead>
+ <tbody>
+ <% @datasetFormats.each do |datasetFormat| %>
+  <tr>
+    <td><%= link_to datasetFormat.name, datasetFormat %></td>
+    <td>TODO</td>
+  </tr>
+<% end %>
+</tbody>
+</table>

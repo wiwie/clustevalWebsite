@@ -1,0 +1,357 @@
+<h2><%= 'Run results \'' + @runResult.absPath.split('/')[-1] + '\'' %></h2>
+
+<h3><a name="navigation">Navigation</a></h3>
+<ul title="Navigation">
+	<li><a href="#general">General Information</a></li>
+<% for i in 0..@runResultsParamOpt.length-1 %>
+<li><a href="#<%= i.to_s %>"><%= @dataConfigs[i].absPath.split('/')[-1] + ' & ' + @programConfigs[i].absPath.split('/')[-1] %></a></li>
+<% end %>
+</ul>
+<h3><a name="general"></a>General Information</a></h3>
+<table id="runResultsParameterOptimization" class="display">
+	<thead>
+		<tr>
+			<th>Information</th>
+			<th>Value</th>
+		</tr>
+  	</thead>
+  	<tbody>
+  	<tr>
+  		<td>Run</td><td><%= link_to @runResult.run.name,@runResult.run %></td>
+  	</tr>
+  	<tr>
+  		<td>Run type</td><td><%= @runResult.run.run_type.name %></td>
+  	</tr>
+  	<tr>
+  		<td>Log</td><td><textarea rows="10" cols="30" readonly="readonly"><%= @logContents %></textarea></td>
+  	</tr>
+	</tbody>
+ </table>
+  <% for i in 0..@runResultsParamOpt.length-1 %>
+  <% runResultsParam = @runResultsParamOpt[i] %>
+  <% @dataConfig = @dataConfigs[i] %>
+  <% @programConfig = @programConfigs[i] %>
+  <h3><a name="<%= i.to_s %>"><%= @dataConfig.absPath.split('/')[-1] + ' & ' + @programConfig.absPath.split('/')[-1] %></a></h3>
+  <a href="#navigation">To top ^</a>
+  <table class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  	<tbody>
+  <tr>
+    <td>Name</td><td><%= runResultsParam.absPath.split('/')[-3] + '/' + runResultsParam.absPath.split('/')[-2] + '/' + runResultsParam.absPath.split('/')[-1] %></td>
+  </tr>
+  <tr>
+    <td>Data Config</td><td><%= link_to @dataConfig.absPath.split('/')[-1], @dataConfig %></td>
+  </tr>
+  <tr>
+    <td>Program Config</td><td><%= link_to @programConfig.absPath.split('/')[-1], @programConfig %></td>
+  </tr>
+  <tr>
+    <td>Invocation line</td><td><%= @invocationLines[i] %></td>
+  </tr>
+  <tr>
+  	<td>Default parameter values (Run Config)</td><td><% @paramValues = RunExecutionParameterValue.where(:run_execution_id => @runExecution.id).where(:program_config_id => @programConfig.id) %><% @paramValues.each do |paramValue| %><%= paramValue.program_parameter.name %>=<%= paramValue.value %><br /><% end %></td>
+  </tr>
+  <tr>
+  	<td>Default parameter values (Program Config)</td><td><% @params = ProgramParameter.where(:program_config_id => @programConfig.id) %><% @params.each do |param| %><%= param.name %>=<%= param.def %><br /><% end %></td>
+  </tr>
+  	<tr>
+  		<td>Optimization method</td>
+  		<td><%= RunParameterOptimizationMethod.includes(:parameter_optimization_method).where(:run_parameter_optimization_id => @run.id).where(:program_config_id => @programConfig.id)[0].parameter_optimization_method.name %></td>
+  	</tr>
+  <tr>
+	<td>Optimization curve</td>
+  	<td>
+	  	<div id="resizable<%= i %>1" class="resizable">
+			<div id="chart_<%= i %>" style="width:500px; height:500px;"></div>
+		</div>
+	</td>
+  </tr>
+  <tr>
+	<td>Optimization curve</td>
+  	<td>
+	  	<div id="resizable<%= i %>2" class="resizable">
+			<div id="chart_iter_<%= i %>" style="width:500px; height:500px;"></div>
+		</div>
+	</td>
+  </tr>
+  </tbody>
+</table>
+<h4>Optimization process</h4>
+	<table id="iterations_<%= i.to_s %>" class="iterations display">
+		<thead>
+	  <tr>
+	    <th>Iteration</th>
+	    <th>Parameter set</th>
+	    <th>Clustering Quality Measure</th>
+	    <th>Quality</th>
+	    <th>Clustering</th>
+	  </tr>
+		</thead>
+		<tbody>
+			<%#= raw @paramValuesTableStrings[i] %>
+		</tbody>
+	</table>
+  <% end %>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+
+	Highcharts.theme = {
+	   colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+	   chart: {
+	      backgroundColor: {
+	         linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+	         stops: [
+	            [0, 'rgb(255, 255, 255)'],
+	            [1, 'rgb(240, 240, 255)']
+	         ]
+	      },
+	      borderWidth: 2,
+	      plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+	      plotShadow: true,
+	      plotBorderWidth: 1
+	   },
+	   title: {
+	      style: {
+	         color: '#000',
+	         font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+	      }
+	   },
+	   subtitle: {
+	      style: {
+	         color: '#666666',
+	         font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+	      }
+	   },
+	   xAxis: {
+	      gridLineWidth: 1,
+	      lineColor: '#000',
+	      tickColor: '#000',
+	      labels: {
+	         style: {
+	            color: '#000',
+	            font: '11px Trebuchet MS, Verdana, sans-serif'
+	         }
+	      },
+	      title: {
+	         style: {
+	            color: '#333',
+	            fontWeight: 'bold',
+	            fontSize: '12px',
+	            fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+
+	         }
+	      }
+	   },
+	   yAxis: {
+	      minorTickInterval: 'auto',
+	      lineColor: '#000',
+	      lineWidth: 1,
+	      tickWidth: 1,
+	      tickColor: '#000',
+	      labels: {
+	         style: {
+	            color: '#000',
+	            font: '11px Trebuchet MS, Verdana, sans-serif'
+	         }
+	      },
+	      title: {
+	         style: {
+	            color: '#333',
+	            fontWeight: 'bold',
+	            fontSize: '12px',
+	            fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+	         }
+	      }
+	   },
+	   legend: {
+	      itemStyle: {
+	         font: '9pt Trebuchet MS, Verdana, sans-serif',
+	         color: 'black'
+
+	      },
+	      itemHoverStyle: {
+	         color: '#039'
+	      },
+	      itemHiddenStyle: {
+	         color: 'gray'
+	      }
+	   },
+	   labels: {
+	      style: {
+	         color: '#99b'
+	      }
+	   },
+
+	   navigation: {
+	      buttonOptions: {
+	         theme: {
+	            stroke: '#CCCCCC'
+	         }
+	      }
+	   }
+	};
+	Highcharts.setOptions(Highcharts.theme);
+          Highcharts.setOptions(Highcharts.theme);
+
+		<% for i in 0..@runResultsParamOpt.length-1 %>
+
+			$('#iterations_' + <%= i.to_s %>).dataTable({
+				sPaginationType: "full_numbers",
+				sDom: '<"H"Rlfr>t<"F"ip>',
+				bDeferRender: true,
+				bJQueryUI: true,
+				bRetrieve: true,
+				bDestroy: true,
+				bProcessing: true,
+				sAjaxSource: '<%= '/run_results_parameter_optimizations/fetch_table_data/' + params[:id] + '/' + @dataConfigs[i].id.to_s + '/' + @programConfigs[i].id.to_s %>'});
+
+			// Load data asynchronously using jQuery. On success, add the data
+	        // to the options and initiate the chart.
+	        // This data is obtained by exporting a GA custom report to TSV.
+	        // http://api.jquery.com/jQuery.get/
+	        jQuery.get('<%= '/run_results_parameter_optimizations/fetch_graph_data/' + params[:id] + '/' + @dataConfigs[i].id.to_s + '/' + @programConfigs[i].id.to_s %>', null, function(tsv, state, xhr) {
+				var options1, options2, 
+					chart1, chart2, 
+					lines = [],
+	                seriesIds = {},
+	                series1 = [],
+	                series2 = [],
+	                id;
+
+				options1 = {
+		            credits : {
+		              enabled : false
+		            },
+					chart: {
+						type: "scatter",
+						renderTo: "chart_<%= i %>",
+						zoomType: 'xy'
+					},
+					title: {
+						text: "<%= @runResultsParamOpt[i].absPath.split('/')[-1] %>"
+					},
+					yAxis: {
+						title: {
+							text: "Clustering quality"
+						}
+					},
+					xAxis: {
+						title: {
+							text: "<%= @parameterNames[i] %>"
+						}
+					},
+		            plotOptions: {
+		                scatter: {
+		                    marker: {
+		                        radius: 2,
+		                    },
+		                    turboThreshold: 100,
+		                    shadow: false
+		                }
+		            },
+					series: [
+					<% for m in 0..@runResultsQualityMeasures.length-1 %>
+					{
+						name: "<%= @runResultsQualityMeasures[m].clustering_quality_measure.alias %>",
+						visible: <%= m == 0 ? 'true' : 'false' %>,
+						data: []
+					}
+					<%= m < @runResultsQualityMeasures.length-1 ? ',' : '' %>
+					<% end %>
+					]
+				}
+
+				options2 = {
+		            credits : {
+		              enabled : false
+		            },
+					chart: {
+						type: "scatter",
+						renderTo: "chart_iter_<%= i %>",
+						zoomType: 'xy'
+					},
+					title: {
+						text: "<%= @runResultsParamOpt[i].absPath.split('/')[-1] %>"
+					},
+					yAxis: {
+						title: {
+							text: "Clustering quality"
+						}
+					},
+					xAxis: {
+						title: {
+							text: "Iteration"
+						}
+					},
+		            plotOptions: {
+		                scatter: {
+		                    marker: {
+		                        radius: 2,
+		                    },
+		                    turboThreshold: 100
+		                }
+		            },
+					series: [
+					<% for m in 0..@runResultsQualityMeasures.length-1 %>
+					{
+						name: "<%= @runResultsQualityMeasures[m].clustering_quality_measure.alias %>",
+						visible: <%= m == 0 ? 'true' : 'false' %>,
+						data: []
+					}
+					<%= m < @runResultsQualityMeasures.length-1 ? ',' : '' %>
+					<% end %>
+					]
+				}
+
+		        chart1 = new Highcharts.Chart(options1);
+		        chart2 = new Highcharts.Chart(options2);
+
+	            chart1.showLoading();
+	            chart2.showLoading();
+
+				<% for m in 0..@runResultsQualityMeasures.length-1 %>
+					seriesIds['<%= @runResultsQualityMeasures[m].clustering_quality_measure.alias %>'] = parseInt(<%= m %>);
+					series1[parseInt(<%= m %>)] = [];
+					series2[parseInt(<%= m %>)] = [];
+				<% end %>
+
+	            // split the data return into lines and parse them
+	            tsv = tsv.split(/\n/);
+	            jQuery.each(tsv, function(i, line) {
+	                line = line.split('\t');
+	                id = seriesIds[line[0]];
+	                series1[id].push([parseFloat(line[1]),parseFloat(line[2])]);
+	                series2[id].push([parseInt(line[3]),parseFloat(line[2])]);
+	            });
+	    
+	    		<% for m in 0..@runResultsQualityMeasures.length-1 %>
+	    			chart1.series[<%= m %>].setData(series1[<%= m %>], redraw=false);
+	    			chart2.series[<%= m %>].setData(series2[<%= m %>], redraw=false);
+	            <% end %>
+	            chart1.hideLoading()
+	            chart1.redraw();
+	            chart2.hideLoading()
+	            chart2.redraw();
+
+		      $( "#resizable<%= i %>1" ).resizable({
+		        helper: "ui-resizable-helper",
+		        stop: function( event, ui ) {
+		          chart1.setSize(ui.size.width,ui.size.height,doAnimation = true);
+		        }
+		      });
+
+		      $( "#resizable<%= i %>2" ).resizable({
+		        helper: "ui-resizable-helper",
+		        stop: function( event, ui ) {
+		          chart2.setSize(ui.size.width,ui.size.height,doAnimation = true);
+		        }
+		      });
+        	});
+		<% end %>
+	});
+</script>

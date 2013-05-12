@@ -1,0 +1,6 @@
+<h2>Clustering Quality Measures</h2>
+<ul>
+	<% @measures.sort_by{|x| x.alias}.each do |measure| %>
+		<li><%= link_to measure.alias, measure %></li>
+	<% end %>
+</ul>

@@ -1,0 +1,33 @@
+<%= form_tag('/datasets/' + params[:id] + '/clust', :method => 'get') do %>
+<h2>How well do clustering methods perform on this dataset?</h2>
+Please choose a clustering quality measure:
+<%= collection_select(:post, :clustering_quality_measure_id2, ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px; font: 16px serif;', :onchange => "this.form.submit();"} ) %>
+
+<table id="dataConfig2" class="display">
+  <thead>
+  <tr>
+    <th>Program</th>
+    <th>Parameter set</th>
+    <th>Quality</th>
+  </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#dataConfig2').dataTable({
+      sPaginationType: "full_numbers",
+      sDom: '<"H"Rlfr>t<"F"ip>',
+      bJQueryUI: true,
+      bRetrieve: true,
+      bDestroy: true,
+      aaSorting: [[ 4, "desc" ]],
+      bProcessing: true,
+      bDeferRender: true,
+      sAjaxSource: '/datasets/fetch_table_data/<%= params[:id] %>/<%= @qualityMeasure.id %>'
+    });
+});
+</script>
+
+<% end %>

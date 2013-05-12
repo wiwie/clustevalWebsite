@@ -1,0 +1,16 @@
+<table id="runResultFormats" class="display">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Example RunResults</th>
+  </tr>
+ </thead>
+ <tbody>
+ <% @runResultFormats.each do |runResultFormat| %>
+  <tr>
+    <td><%= link_to runResultFormat.name, runResultFormat %></td>
+    <td>TODO</td>
+  </tr>
+<% end %>
+</tbody>
+</table>

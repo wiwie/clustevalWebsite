@@ -1,0 +1,2 @@
+<% Dir.chdir('/home/wiwie/Dropbox/workspace/ClusEvalFramework') %>
+<%= `java -cp lib/*:lib/logback/*:bin serverclient.EvalClient -clientId #{current_user.id} -getRunStatus #{params[:id]}` %>

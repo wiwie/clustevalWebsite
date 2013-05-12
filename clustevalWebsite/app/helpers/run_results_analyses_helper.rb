@@ -1,0 +1,2 @@
+module RunResultsAnalysesHelper
+end

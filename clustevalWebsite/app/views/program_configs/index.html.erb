@@ -1,0 +1,18 @@
+<table id="programConfigs" class="display">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Program</th>
+    <th>Output Format</th>
+  </tr>
+ </thead>
+ <tbody>
+ <% @programConfigs.each do |programConfig| %>
+  <tr>
+    <td><%= link_to programConfig.absPath.split('/')[-1], programConfig %></td>
+    <td><% @program = programConfig.program %><%= link_to @program.absPath.split('/')[-2] + '/' + @program.absPath.split('/')[-1], @program %></td>
+    <td><%= programConfig.run_result_format.name %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>

@@ -1,0 +1,2 @@
+module GoldstandardsHelper
+end

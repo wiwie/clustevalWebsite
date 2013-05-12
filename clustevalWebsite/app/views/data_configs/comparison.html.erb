@@ -1,0 +1,2 @@
+<h2>How well do clustering methods perform on data configuration '<%= DataConfig.find(@data_config_id).name %>'?</h2>
+<%= render_cell :small_ranking, :ds_and_q, :obj => DataConfig.find_by_id(@data_config_id), :iterationsExts => ParameterOptimizationDataConfigsIteration.select("program_id,data_config_id,max(quality) as maxQuality,min(quality) as minQuality,paramSetAsString,clustering_quality_measure_id").where(:data_config_id => @data_config_id).group("program_id,clustering_quality_measure_id") %>
