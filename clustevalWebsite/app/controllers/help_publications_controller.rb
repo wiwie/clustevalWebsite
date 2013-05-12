@@ -1,0 +1,2 @@
+class HelpPublicationsController < ApplicationController
+end
