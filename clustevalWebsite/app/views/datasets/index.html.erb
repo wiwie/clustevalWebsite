@@ -2,8 +2,8 @@
 <% @datasets.sort_by{|x| x[0].alias}.each do |dataset| %>
   <h3><%= dataset[0].alias %></h3>
   <ul>
-  <% dataset[1].sort_by{|x| x.name}.each do |ds| %>
-    <li><%= link_to ds.name, ds %></li>
+  <% dataset[1].sort_by{|x| x.alias}.each do |ds| %>
+    <li><%= link_to ds.alias, ds %></li>
   <% end %>
   </ul>
 <% end %>
