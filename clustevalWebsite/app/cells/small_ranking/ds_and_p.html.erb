@@ -11,8 +11,7 @@ $(function () {
     
             chart: {
                 renderTo: 'comparison_chart',
-                type: 'column',
-                marginBottom: 200
+                type: 'column'
             },
     
             title: {
@@ -20,7 +19,7 @@ $(function () {
             },
     
             xAxis: {
-                categories: [<% Dataset.all(session).sort_by{|x| x.name}.each do |dataset| %><% if @visibleDatasets[dataset] %>'<%= dataset.name %>',<% end %><% end %>],
+                categories: [<% Dataset.all(session).sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %>'<%= dataset.alias %>',<% end %><% end %>],
                 labels: {
                   enabled: true,
                   rotation: -45,
@@ -61,7 +60,7 @@ $(function () {
             <% Program.all(session).sort_by{|x| x.alias}.each do |program| %>
               {
                 name: '<%= program.alias %>',
-                data: [<% Dataset.all(session).sort_by{|x| x.name}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
+                data: [<% Dataset.all(session).sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
                 <%# elsif @isMaximum %><%#= @qualityMeasure.minValue %><%# else %><%#= @qualityMeasure.maxValue %>
                 <% else %>null<% end %>,<% end %><% end %>]
             },
@@ -102,7 +101,7 @@ $(function () {
   <tr>
     <% for j in 0..@programs.length %>
       <% if j == 0 %>
-        <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
+        <td><%= link_to @matrix[i][j].alias, @matrix[i][j] %></td>
       <% else %>
        <% @string = "" %>
           <% if @matrix[i][j].to_s == "--" %>
