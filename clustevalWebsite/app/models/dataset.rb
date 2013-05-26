@@ -15,6 +15,7 @@ class Dataset < ActiveRecord::Base
   end
 
   def name
-  	return (absPath.split('/')[-2] + '/' + absPath.split('/')[-1])
+  	#return (absPath.split('/')[-2] + '/' + absPath.split('/')[-1])
+    return (self.alias)
   end
 end

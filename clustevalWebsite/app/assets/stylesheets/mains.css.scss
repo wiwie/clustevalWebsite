@@ -162,10 +162,10 @@ p {
 
 .ui-widget {
 	font: 16px 'DroidSerifRegular', Arial, sans-serif;
-	border: 2px solid $medium2;
-	padding: 2px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	#border: 2px solid $medium2;
+	#padding: 2px;
+	#-moz-border-radius: 5px;
+	#border-radius: 5px;
 	background-color:$light;
 }
 
