@@ -9,7 +9,7 @@
  <% @datasetConfigs.each do |datasetConfig| %>
   <tr>
     <td><%= link_to datasetConfig.absPath.split('/')[-1], datasetConfig %></td>
-    <td><% @dataset = datasetConfig.dataset %><%= link_to @dataset.absPath.split('/')[-2] + "/" + @dataset.absPath.split('/')[-1], @dataset %></td>
+    <td><% @dataset = datasetConfig.dataset %><%= link_to @dataset.alias %></td>
   </tr>
 <% end %>
 </tbody>
