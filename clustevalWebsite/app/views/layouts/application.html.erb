@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>clusteval | <%=h yield(:title) %></title>
+  <title>clusteval | <%= yield(:title) %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag    "stylesheet", :media => "all" %>
   <%= javascript_include_tag "application" %>
@@ -11,13 +11,6 @@
   <%= javascript_include_tag 'ColReorderWithResize' %>
   <%= mathjax_tag %>
   <%= csrf_meta_tags %>
-  <script type="text/javascript">
-  MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [['\\$','\\$'] ]
-  }
-});
-  </script>
   <script type="text/javascript">
         var chart;
         Highcharts.theme = {
@@ -181,7 +174,10 @@
         <td class='content_table_right'>
     <div class='breadcrumb'><%= current_user ? render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => true, :join_with => ' » ', :prefix => ' You are here: ', :context => :admin) : render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => true, :join_with => ' » ', :prefix => ' You are here: ') %></div>
         <div class='clustEvalContentInner'>
-        <%= yield %>
+        <h2><%= yield(:title) %></h2>
+        <div style="padding-left:10px; padding-right:10px;">
+          <%= yield %>
+        </div>
         </div>
         </td>
       </tr>
