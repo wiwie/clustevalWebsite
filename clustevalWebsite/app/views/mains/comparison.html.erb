@@ -1,6 +1,5 @@
-<% content_for :title, "Overview" %>
+<% content_for :title, "Comparison of all clustering methods on all datasets" %>
 <%= form_tag({:action => 'comparison'}, {:method => 'get'}) do %>
-<h2>Comparison of all clustering methods on all datasets</h2>
 <% if not @qualityMeasure %>
 	<p>This comparison page requires a quality measure in the repository, but there is none. Please add at least one measure to the repository and reload this page.</p>
 <% else %>
@@ -9,7 +8,7 @@
 	<%= collection_select(:post, :measure, ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px', :onchange => "this.form.submit();"} ) %>
 	</p>
 	<p>If you want to invert the matrix (interchange columns and rows), click this button:
-	<%= check_box_tag(:inv, 'Bla', @inverted, {:onchange => "this.form.submit();"}) %><label for="inv">Invert</label></p>
+	<%= check_box_tag(:inv, '1', @inverted, {:onchange => "this.form.submit();"}) %><label for="inv">Invert</label></p>
 	<% if !@inverted %>
 	<%= render_cell :small_ranking, :ds_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts %>
 	<% else %>
