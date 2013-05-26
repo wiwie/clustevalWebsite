@@ -1,4 +1,4 @@
-<h2>Available datasets</h2>
+<% content_for :title, "Available datasets" %>
 <% @datasets.sort_by{|x| x[0].alias}.each do |dataset| %>
   <h3><%= dataset[0].alias %></h3>
   <ul>

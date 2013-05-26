@@ -1,5 +1,5 @@
 <%= form_tag('/datasets/' + params[:id] + '/clust', :method => 'get') do %>
-<h2>How well do clustering methods perform on this dataset?</h2>
+<% content_for :title, "How well do clustering methods perform on this dataset?" %>
 Please choose a clustering quality measure:
 <%= collection_select(:post, :clustering_quality_measure_id2, ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px; font: 16px serif;', :onchange => "this.form.submit();"} ) %>
 
