@@ -114,7 +114,11 @@ SimpleNavigation::Configuration.run do |navigation|
       primary.item( :nav_admins, 'Admin', admins_path, :highlights_on => :subpath) do |sub_admin|
         sub_admin.item( :nav_program_configs, 'Clustering Method Configurations', program_configs_path) do |sub_program_configs|
           ProgramConfig.all(session).sort_by{|x| x.name}.each do |program_config|
-            sub_program_configs.item :nav_program_configs, program_config.name, program_config_path(program_config)
+            sub_program_configs.item( :nav_program_configs, program_config.name, program_config_path(program_config)) do |sub_program_config|
+              ProgramParameter.where(:program_config_id => program_config.id).each do |parameter|
+                sub_program_config.item( :nav_program_parameters, parameter.name, program_parameter_path(parameter))
+              end
+            end
           end
         end
         sub_admin.item( :nav_data_configs, 'Data Configurations', data_configs_path) do |sub_data_configs|

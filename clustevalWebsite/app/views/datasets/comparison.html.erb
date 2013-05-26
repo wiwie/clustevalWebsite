@@ -1,5 +1,5 @@
 <%= form_tag({:action => 'comparison'},{:method => 'get'}) do %>
-<h2>How do clustering methods perform on a certain dataset?</h2>
+<% content_for :title, "How do clustering methods perform on a certain dataset?" %>
 <% if params[:post] %> 
 	<% dataset_id = params[:post][:dataset_id] %>
 	<% @qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:clustering_quality_measure_id]) %>
