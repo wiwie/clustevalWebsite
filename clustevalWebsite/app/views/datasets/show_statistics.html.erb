@@ -1,3 +1,4 @@
+<% content_for :title, "Data Set '" + @dataset.alias + "' - Statistics" %>
     <%= form_tag({:action => 'show_statistics'}, {:method => 'get'}) do %>
       <% @data_configs = DataConfig.where(:dataset_config_id => DatasetConfig.where(:dataset_id => params[:id])).where(:data_config_id => nil) %>
       <% if @data_configs.length > 1 %>
