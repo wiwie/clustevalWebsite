@@ -4,8 +4,8 @@
     <%= link_to @alias, Statistic.find_by_name(statistic) %>
   </td>
   <td>
-      <div id="resizable<%= @id %>_<%= @statistic.to_s %>" class="resizable">
-      <div id="chart_<%= @id %>_<%= @statistic.to_s %>" style="width:500px; height:500px;"></div>
+      <div id="resizable<%= @id %>_<%= @statistic.to_s %>" class="resizable" style="height:400px; width:100%;">
+      <div id="chart_<%= @id %>_<%= @statistic.to_s %>"></div>
       </div>
       <script type="text/javascript" charset="utf-8">
         $(function() {

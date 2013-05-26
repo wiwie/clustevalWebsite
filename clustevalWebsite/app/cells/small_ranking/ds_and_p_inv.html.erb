@@ -1,6 +1,53 @@
-<div class="resizable">
-  <div id="comparison_chart" style="height:500px; width:500px;">
+<div class="resizable" style="height:400px; width:100%;">
+  <div id="comparison_chart">
   </div>
+</div>
+<br>
+<div class="resizableTable">
+<table id="dataAndProgramStatistics" class="display">
+  <thead>
+  <tr>
+    <th>Program</th>
+    <% for i in 0..@datasets.length-1 %>
+    <% dataset = @datasets[i] %>
+    <th>
+      <%= dataset.alias %>
+</th>
+    <% end %>
+  </tr>
+ </thead>
+ <tbody>
+  <% for i in 0..@programs.length-1 %>
+  <tr>
+    <% for j in 0..@datasets.length %>
+      <% if j == 0 %>
+        <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
+      <% else %>
+       <% @string = "" %>
+          <% if @matrix[i][j].to_s == "--" %>
+            <% @string = @matrix[i][j].to_s %>
+          <% else %>
+            <% @string = '<a href="/datasets/' + @datasets[j-1].id.to_s + '/bestclust/' + @programs[i].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+
+            <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
+              <% @string = @string + "<b>" %>
+            <% end %>
+
+            <% @string = @string + matrix[i][j].to_s + '</a>' %>
+
+            <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
+              <% @string = @string + "</b>" %>
+            <% end %>
+          <% end %>
+        <td>
+          <%= raw @string %>
+        </td>
+      <% end %>
+    <% end %>
+  </tr>
+  <% end %>
+</tbody>
+</table>
 </div>
 
 <script type="text/javascript">
@@ -77,6 +124,9 @@ $(function () {
 
       $( ".resizable" ).resizable({
         helper: "ui-resizable-helper",
+        create: function( event, ui ) {
+          chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+        },
         stop: function( event, ui ) {
           chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
         }
@@ -88,50 +138,3 @@ $(function () {
     });
 });
 </script>
-
-<div class="resizableTable">
-<table id="dataAndProgramStatistics" class="display">
-  <thead>
-  <tr>
-    <th>Program</th>
-    <% for i in 0..@datasets.length-1 %>
-    <% dataset = @datasets[i] %>
-    <th>
-      <%= dataset.alias %>
-</th>
-    <% end %>
-  </tr>
- </thead>
- <tbody>
-  <% for i in 0..@programs.length-1 %>
-  <tr>
-    <% for j in 0..@datasets.length %>
-      <% if j == 0 %>
-        <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
-      <% else %>
-       <% @string = "" %>
-          <% if @matrix[i][j].to_s == "--" %>
-            <% @string = @matrix[i][j].to_s %>
-          <% else %>
-            <% @string = '<a href="/datasets/' + @datasets[j-1].id.to_s + '/bestclust/' + @programs[i].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
-
-            <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
-              <% @string = @string + "<b>" %>
-            <% end %>
-
-            <% @string = @string + matrix[i][j].to_s + '</a>' %>
-
-            <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
-              <% @string = @string + "</b>" %>
-            <% end %>
-          <% end %>
-        <td>
-          <%= raw @string %>
-        </td>
-      <% end %>
-    <% end %>
-  </tr>
-  <% end %>
-</tbody>
-</table>
-</div>
