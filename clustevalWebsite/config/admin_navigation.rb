@@ -111,7 +111,7 @@ SimpleNavigation::Configuration.run do |navigation|
       sub_submit.item :nav_submit_dataset, 'Submit dataset', url_for(:controller => 'submit_datasets', :action => 'create')
       sub_submit.item :nav_submit_method, 'Submit method', url_for(:controller => 'submit_methods', :action => 'create')
     end
-      primary.item( :nav_admins, 'Admin', admins_path, :highlights_on => :subpath) do |sub_admin|
+      primary.item( :nav_admins, 'Advanced', admins_path, :highlights_on => :subpath) do |sub_admin|
         sub_admin.item( :nav_program_configs, 'Clustering Method Configurations', program_configs_path) do |sub_program_configs|
           ProgramConfig.all(session).sort_by{|x| x.name}.each do |program_config|
             sub_program_configs.item( :nav_program_configs, program_config.name, program_config_path(program_config)) do |sub_program_config|

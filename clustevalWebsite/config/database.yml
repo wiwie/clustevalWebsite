@@ -10,8 +10,8 @@ development:
   database: clustEval
   pool: 5
   timeout: 5000
-  username: clustEvalWrite
-  password: clustEvalWrite
+  username: root
+  password: n%0ou3$t
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -23,8 +23,8 @@ test:
   database: clustEval
   pool: 5
   timeout: 5000
-  username: clustEvalWrite
-  password: clustEvalWrite
+  username: root
+  password: n%0ou3$t
 
 production:
 #  adapter: sqlite3
@@ -33,5 +33,5 @@ production:
   database: clustEval
   pool: 5
   timeout: 5000
-  username: clustEvalWrite
-  password: clustEvalWrite
+  username: root
+  password: n%0ou3$t
