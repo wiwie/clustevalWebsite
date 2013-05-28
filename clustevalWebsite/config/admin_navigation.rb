@@ -197,6 +197,7 @@ SimpleNavigation::Configuration.run do |navigation|
         sub_help.item :nav_help_publication, 'Publications', help_publications_path
       end
       primary.item( :nav_aboutus, 'About us', aboutus_path) do |sub_aboutus|
+        sub_aboutus.item( :nav_impressum, 'Impressum', aboutus_impressums_path)
       end
     #end
 
