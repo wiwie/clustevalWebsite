@@ -20,13 +20,14 @@ class ApplicationController < ActionController::Base
     end
 
     def require_user
-      logger.debug "ApplicationController::require_user"
-      unless current_user
-        store_location
-        flash[:notice] = "You must be logged in to access this page"
-        redirect_to new_user_session_url
-        return false
-      end
+      #logger.debug "ApplicationController::require_user"
+      #unless current_user
+      #  store_location
+      #  flash[:notice] = "You must be logged in to access this page"
+      #  redirect_to new_user_session_url
+      #  return false
+      #end
+      return true
     end
 
     def require_no_user
