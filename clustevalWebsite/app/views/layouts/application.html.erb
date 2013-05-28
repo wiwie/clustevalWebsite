@@ -143,19 +143,11 @@
   <div id='top_navigation'>
     <table id="menu_table" class="designTable">
       <tr>
-        <td style="vertical-align: bottom;"><%= current_user ?  render_navigation(:level => 1, :static_leaf => true, :context => :admin) : render_navigation(:level => 1, :static_leaf => true) %></td>
-        <td><div style="float:right;padding:3px;"><%= render :partial => "layouts/auth" %></div></td>
+        <td style="vertical-align: bottom;"><%= render_navigation(:level => 1, :static_leaf => true, :context => :admin) %></td>
       </tr>
     </table>
   </div>
-</div> 
-  <% if false %>
-  <div class='content_wrapper'>
-       <div id='sub_navigation'>
-  	   <%= current_user ? render_navigation(:level => 2, :context => :admin) : nil %>
-  </div>
-  </div>
-  <% end %>
+</div>
   <div class='clustEvalContent'>
     <table class="designTable">
       <tr valign="top">
@@ -172,7 +164,7 @@
         </div>
         </td>
         <td class='content_table_right'>
-    <div class='breadcrumb'><%= current_user ? render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => true, :join_with => ' » ', :prefix => ' You are here: ', :context => :admin) : render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => true, :join_with => ' » ', :prefix => ' You are here: ') %></div>
+    <div class='breadcrumb'><%= render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => true, :join_with => ' » ', :prefix => ' You are here: ', :context => :admin) %></div>
         <div class='clustEvalContentInner'>
         <h2><%= yield(:title) %></h2>
         <div style="padding-left:10px; padding-right:10px;">
