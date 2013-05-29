@@ -73,7 +73,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 		@datasetConfig = @dataConfig.dataset_config
 		@dataset = @datasetConfig.dataset
 
-		@isoMDSpath = @dataset.absPath + '.isoMDS'
+		@isoMDSpath = @dataset.absPath + '.strip.isoMDS'
 		
 		send_file( @isoMDSpath,
                 :disposition => 'inline',
@@ -97,7 +97,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 		@datasetConfig = @dataConfig.dataset_config
 		@dataset = @datasetConfig.dataset
 
-		@isoMDSpath = @dataset.absPath + '.PCA'
+		@isoMDSpath = @dataset.absPath + '.strip.PCA'
 		
 		send_file( @isoMDSpath,
                 :disposition => 'inline',
