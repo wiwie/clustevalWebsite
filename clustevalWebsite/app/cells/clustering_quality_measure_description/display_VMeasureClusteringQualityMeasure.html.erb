@@ -1,0 +1,22 @@
+The V-Measure is defined as the harmonic mean of homogeneity $h$ and completeness $c$ of the clustering, as defined in \cite{Rosenberg2007}. Homogeneity $h$ is maximized when each cluster contains elements of as few different classes as possible. Completeness $c$ aims to put all elements of each class in single clusters. Both these measures can be expressed in terms of the mutual information and entropy measures originating from the field of information retrieval.
+
+\[ V_\beta = (1+\beta)\frac{h \cdot c}{\beta \cdot h + c} \]
+			
+Homogeneity \(h\) is maximized, if a cluster consists of only samples of one class (gold standard cluster). 
+
+\[ h = \begin{cases} 1 & \mbox{if } H(C) = 0 \\ 1-\frac{H(C|K)}{H(C)} & \mbox{else} \end{cases} \]
+
+\[ H(C|K) = - \sum_{k=1}^{|K|} \sum_{c=1}^{|C|} \frac{a_{ck}}{N} log \frac{a_{ck}}{\sum_{c=1}^{|C|}a_{ck}} \]
+
+\[ H(C) = - \sum_{c=1}^{|C|} \frac{\sum_{k=1}^{|K|} a_{ck}}{N} log \frac{\sum_{k=1}^{|K|} a_{ck}}{N} \]
+Completeness \(c\) rewards clusterings, where all samples of the same class are concentrated within single clusters. This is what contrasts the V-Measure to the F-Score. F-Score for clusterings does not aim to minimize the number of classes that are put into each cluster.
+\[ c = \begin{cases} 
+			1 & \mbox{if } H(K) = 0 \\ 
+			1-\frac{H(K|C)}{H(K)} & \mbox{else} 
+			\end{cases} \]
+
+\[ H(K|C) = - \sum_{k=1}^{|K|} \sum_{c=1}^{|C|} \frac{a_{ck}}{N} log \frac{a_{ck}}{\sum_{k=1}^{|K|}a_{ck}} \]
+
+\[ H(K) = - \sum_{k=1}^{|K|} \frac{\sum_{c=1}^{|C|} a_{ck}}{N} log \frac{\sum_{c=1}^{|C|} a_{ck}}{N} \]
+
+\(a_{ck}\) is the number of elements of class \(c\) in cluster \(k\).
