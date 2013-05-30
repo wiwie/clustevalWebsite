@@ -2,7 +2,7 @@ class ProgramConfigsController < ApplicationController
 	before_filter :require_user
 
 	def index
-		@programConfigs = ProgramConfig.all(session)
+		@programConfigs = ProgramConfig.all(session).select{ |program_config| program_config.program_config_id == nil }
 		
 		respond_to do |format|
 			format.html # index.html.erb
@@ -11,7 +11,7 @@ class ProgramConfigsController < ApplicationController
 	end
 
 	def fetch_table_data
-		@programConfig = ProgramConfig.find_by_name(params[:id])
+		@programConfig = ProgramConfig.find(params[:id])
 		@program = @programConfig.program
 		@runResultFormat = RunResultFormat.find(@programConfig.run_result_format_id)
 		@parameters = @programConfig.program_parameters
@@ -40,7 +40,7 @@ class ProgramConfigsController < ApplicationController
 	end
 	
 	def show
-		@programConfig = ProgramConfig.find_by_name(params[:id])
+		@programConfig = ProgramConfig.find(params[:id])
 		@program = @programConfig.program
 		@runResultFormat = RunResultFormat.find(@programConfig.run_result_format_id)
 		@parameters = @programConfig.program_parameters
