@@ -5,9 +5,9 @@ class ProgramConfig < ActiveRecord::Base
 	belongs_to :run_result_format
 	has_many :program_parameters
 
-	def to_param
-		"#{name}".split('/')[-1]
-	end
+	#def to_param
+	#	"#{name}".split('/')[-1]
+	#end
 
   def self.all(session, *args)
 	if session
