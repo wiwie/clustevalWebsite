@@ -1,0 +1,18 @@
+The Rand Index is the ratio of pairs of objects correctly clustered out of all possible pairs. This measure estimates the likelihood of an element being correctly classified. This measure is based on the pairwise approach to calculate TP,TN,FP and FN.
+
+\[ R = \frac{TP+TN}{TP+FP+FN+TN} \]
+
+In the binary classification background we have two classes that we want to distinguish: <b>positive</b> and <b>negative</b>.
+In this scenario there are four possible outcomes:
+	<ul>
+		<li><b>TP (True Positive):</b> The object belongs to class <b>positive</b> and we classified it as <b>positive</b>,</li>
+		<li><b>FP (False Positive ):</b> The object belongs to class <b>negative</b> and we classified it as <b>positive</b>,</li>
+		<li><b>TN (True Negative):</b> The object belongs to class <b>negative</b> and we classified it as <b>negative</b>,</li>
+		<li><b>FN (False Negative):</b> The object belongs to class <b>positive</b> but we classified it as <b>negative</b></li>
+	</ul>
+	<table class="f2scoreMatrix">
+		<tr align="center" style="background-color: #888888;"><td></td><td></td><td colspan="2" style="background-color: #666666;">Reality</td></tr>
+		<tr align="center"><td style="background-color: #888888;"></td><td></td><td>Positive</td><td>Negative</td></tr>
+		<tr align="center"><td rowspan="2" style="background-color: #666666;">Prediction</td><td>Positive</td><td>TP</td><td>FP</td></tr>
+		<tr align="center"><td>Negative</td><td>FN</td><td>TN</td></tr>
+	</table>
