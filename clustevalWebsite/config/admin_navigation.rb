@@ -79,7 +79,7 @@ SimpleNavigation::Configuration.run do |navigation|
       primary.item :nav_comparison, 'Overview', url_for(:controller => 'mains', :action => 'comparison')
       primary.item( :nav_programs, 'Clustering Methods', programs_path, :highlights_on => :subpath) do |sub_programs|
         sub_programs.item :nav_programs_general, 'Overview', programs_path
-        sub_programs.item :nav_programs_comparison, 'Comparison', url_for(:controller => 'programs', :action => 'comparison')
+        sub_programs.item :nav_programs_comparison, 'Best Clusterings', url_for(:controller => 'programs', :action => 'comparison')
         Program.all(session).each do |program|
           sub_programs.item( :nav_program, program.name, program_path(program)) do |sub_program|
             sub_program.item :nav_program_general, 'General', program_path(program)
@@ -90,7 +90,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
       primary.item( :nav_datasets, 'Data Sets', datasets_path, :highlights_on => :subpath) do |sub_datasets|
         sub_datasets.item :nav_datasets_general, 'Overview', datasets_path
-        sub_datasets.item :nav_datasets_comparison, 'Comparison', url_for(:controller => 'datasets', :action => 'comparison')
+        sub_datasets.item :nav_datasets_comparison, 'Best Clusterings', url_for(:controller => 'datasets', :action => 'comparison')
         Dataset.all(session).each do |dataset|
           sub_datasets.item( :nav_dataset, dataset.name, dataset_path(dataset)) do |sub_dataset|
             sub_dataset.item :nav_dataset_general, 'General', dataset_path(dataset)
