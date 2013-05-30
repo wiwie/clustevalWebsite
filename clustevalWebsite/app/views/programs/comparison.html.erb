@@ -4,9 +4,15 @@
 <% qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:clustering_quality_measure_id2]) %>
 <% qualityMeasureName = qualityMeasure.id %>
 <% else %>
-<% program_id = Program.first.id %>
-<% qualityMeasure = ClusteringQualityMeasure.find_by_name('TransClustF2ClusteringQualityMeasure') %>
-<% qualityMeasureName = qualityMeasure.id %>
+	<% program_id = Program.all(session).first.id %>
+	<% @qualityMeasures = ClusteringQualityMeasure.all(session) %>
+	<% @qualityMeasures.each do |measure| %>
+		<% if measure.name == 'TransClustF2ClusteringQualityMeasure' %>
+			<% qualityMeasure = measure %>
+			<% break %>
+		<% end %>
+	<% end %>
+	<% qualityMeasureName = qualityMeasure.id %>
 <% end %>
 <% content_for :title, "How does a clustering method perform on different datasets?" %>
 Please choose a clustering method <%= collection_select(:post, :program_id, Program.all(session).sort_by{|x| x.alias}, :id, :name, {:selected => program_id},{:style=>'width:300px; font: 16px serif;', :onchange => "this.form.submit();"}) %> and <br />
