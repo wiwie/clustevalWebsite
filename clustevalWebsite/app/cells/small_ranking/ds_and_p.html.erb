@@ -79,9 +79,13 @@ $(function () {
             yAxis: {
                 title: {
                     text: '<%= @qualityMeasure.alias %>'
-                },
-                min: <%= @qualityMeasure.minValue %>,
-                max: <%= @qualityMeasure.maxValue %>,
+                }
+                <% if @qualityMeasure.minValue %>
+                ,min: <%= @qualityMeasure.minValue %>
+                <% end %>
+                <% if @qualityMeasure.maxValue %>
+                ,max: <%= @qualityMeasure.maxValue %>
+                <% end %>
             },
     
             tooltip: {
