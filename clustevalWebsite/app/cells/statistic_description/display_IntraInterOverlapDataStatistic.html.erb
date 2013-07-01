@@ -1,0 +1,4 @@
+The overlap of the intra and the inter similarity distribution can be used as an indicated whether an easy separation of clusters is possible. The overlap can be assessed differently. This statistic considers the similarity distributions discretized into buckets. Let the intra distribution be \(d_{intra}\) and the inter distribution \(d_{inter}\), then the overlap is defined as
+			\begin{equation}
+				Overlap = \frac{1}{\sum_i d_{intra}(i) + \sum d_{inter}(i)} \cdot \sum_i \text{min}\{d_{intra}(i),d_{inter}(i)\}
+			\end{equation}
