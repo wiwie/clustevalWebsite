@@ -1,0 +1,9 @@
+This statistic fits a linear regression model on the data statistics of a data input which can be represented as a single double value and tries to predict the achieved cluster validities of that data set. Linear regression models find a vector of coefficients \(\beta_i\) for a linear prediction model of the form
+			\begin{equation}
+				X\cdot\beta \approx y
+			\end{equation}
+			solving the optimization problem
+			\begin{eqnarray}
+				\text{min}~\sum_i\left(y_i-X_i\cdot\beta\right)
+			\end{eqnarray}
+			For every clustering method and cluster validity index one linear regression model is trained.
