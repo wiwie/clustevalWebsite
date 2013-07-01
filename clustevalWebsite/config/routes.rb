@@ -95,9 +95,9 @@ ClustEval::Application.routes.draw do
 	resources :run_results_run_data_analyses
 	resources :run_result_formats
 	resources :statistics
-	resources :statistics_datas
+	resources :statistics_data
 	resources :statistics_runs
-	resources :statistics_run_datas
+	resources :statistics_run_data
 	resources :view_runs
 	resources :small_rankings
 	resources :submits

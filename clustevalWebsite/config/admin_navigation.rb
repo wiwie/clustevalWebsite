@@ -189,6 +189,12 @@ SimpleNavigation::Configuration.run do |navigation|
             end
           end
         end
+        sub_admin.item( :nav_runs, 'Statistics', statistics_path) do |sub_statistics|
+          StatisticsData.all(session).sort_by{|x| x.statistic.alias}.each do |dataStatistic|
+            @ident = dataStatistic.statistic.alias
+            sub_statistics.item :nav_data_statistic, @ident, url_for(:controller => 'statistics_data', :action => 'show', :id => dataStatistic.statistic, :only_path => true)
+          end
+        end
       end
       primary.item( :nav_helps, 'Help', helps_path) do |sub_help|
         sub_help.item :nav_help_installation, 'Download & Installation', help_installations_path
