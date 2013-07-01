@@ -1,0 +1,5 @@
+The (average) Silhouette Value relates dissimilarities of elements of different clusters to dissimilarities of elements of the same cluster and tries to maximize their difference. It takes into account all pairwise dissimilarities and is therefore less conservative and less prone to outliers than the Davies Bouldin Index. The formula is given in \ref{eqn:silhouette_value}, where \(a(i)\) is the average dissimilarity of object \(i\) to other elements of its cluster, \(b(i)\) is the average dissimilarity of object \(i\) to elements of other clusters, \(c_i\) is the cluster of object \(i\) and \(d(i,j)\) is the dissimilarity of object \(i\) and \(j\).
+
+\[ S = \frac{1}{n} \sum_i s_i = \frac{1}{n} \frac{b(i) - a(i)}{\text{max} \{ a(i), b(i) \} } \label{eqn:silhouette_value} \]
+\[ a(i) = \frac{1}{|c_i|} \sum_{j \in c_i} d(i,j) \]
+\[ b(i) = \frac{1}{n-|c_i|} \sum_{j \in C\backslash c_i} d(i,j) \]
