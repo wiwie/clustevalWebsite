@@ -1,0 +1,15 @@
+<h2>Data Statistics</h2>
+<% @dataStatistics.each do |data_statistic| %>
+	<%= link_to data_statistic.statistic.alias, data_statistic.statistic %>
+	<br>
+<% end %>
+<h2>Run Statistics</h2>
+<% @runStatistics.each do |run_statistic| %>
+	<%= link_to run_statistic.statistic.alias, run_statistic.statistic %>
+	<br>
+<% end %>
+<h2>Run-Data Statistics</h2>
+<% @runDataStatistics.each do |run_data_statistic| %>
+	<%= link_to run_data_statistic.statistic.alias, run_data_statistic.statistic %>
+	<br>
+<% end %>
