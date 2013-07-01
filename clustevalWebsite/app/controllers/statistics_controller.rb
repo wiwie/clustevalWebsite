@@ -2,7 +2,7 @@ class StatisticsController < ApplicationController
 	before_filter :require_user
 
 	def show
-
+		@statistic = Statistic.find(params[:id])
 	end
 
 	def index
