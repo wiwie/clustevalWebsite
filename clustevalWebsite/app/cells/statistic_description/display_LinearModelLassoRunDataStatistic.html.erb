@@ -1,0 +1,4 @@
+A version of a linear regression model which tries to minimize the complexity of the trained model, by shrinking the \(\beta\) coefficients. Lasso is penalizing the coefficients \(\beta_i\) linearly, where \(\lambda\) can be used to control the degree of penalization:
+			\begin{equation}
+			\text{min}~\sum_i\left(y_i-X_i\cdot\beta\right)+\lambda\sum_i \left|\beta_i\right|
+			\end{equation}
