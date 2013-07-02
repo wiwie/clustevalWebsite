@@ -111,10 +111,12 @@
 				bProcessing: true,
 				sAjaxSource: '<%= '/run_results_parameter_optimizations/fetch_table_data/' + params[:id] + '/' + @dataConfigs[i].id.to_s + '/' + @programConfigs[i].id.to_s %>'});
 
+            $("body").addClass("loading"); 
 			// Load data asynchronously using jQuery. On success, add the data
 	        // to the options and initiate the chart.
 	        // This data is obtained by exporting a GA custom report to TSV.
 	        // http://api.jquery.com/jQuery.get/
+
 	        jQuery.get('<%= '/run_results_parameter_optimizations/fetch_graph_data/' + params[:id] + '/' + @dataConfigs[i].id.to_s + '/' + @programConfigs[i].id.to_s %>', null, function(tsv, state, xhr) {
 				var options1, options2, 
 					chart1, chart2, 
@@ -246,6 +248,8 @@
 		          chart2.setSize(ui.size.width,ui.size.height,doAnimation = true);
 		        }
 		      });
+				$("body").removeClass("loading"); 
+		      
         	});
 		<% end %>
 	});

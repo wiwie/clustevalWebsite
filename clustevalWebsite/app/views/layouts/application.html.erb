@@ -122,6 +122,15 @@
            }
         };
         Highcharts.setOptions(Highcharts.theme);
+
+        $("body").on({
+          ajaxStart: function() { 
+              $(this).addClass("loading"); 
+          },
+          ajaxStop: function() { 
+              $(this).removeClass("loading"); 
+          } 
+      });
   </script>
   <style>
     .resizable {
@@ -175,6 +184,8 @@
       </tr>
     </table>
   </div>
+
+  <div class="modal"><!-- Place at bottom of page --></div>
 
 </body>
 </html>

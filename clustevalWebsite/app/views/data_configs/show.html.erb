@@ -43,6 +43,7 @@
 </table>
 <script type="text/javascript">
 $(document).ready(function() {
+  $('body').addClass('loading'); 
   $('#dataConfig2').dataTable({
       sPaginationType: "full_numbers",
       sDom: '<"H"Rlfr>t<"F"ip>',
@@ -52,7 +53,10 @@ $(document).ready(function() {
       aaSorting: [[ 4, "desc" ]],
       bProcessing: true,
       bDeferRender: true,
-      sAjaxSource: '<%= '/data_configs/fetch_table_data/' + params[:id] %>'
+      sAjaxSource: '<%= '/data_configs/fetch_table_data/' + params[:id] %>',
+      fnInitComplete: function(oSettings) {
+        $('body').removeClass('loading'); 
+      }
     });
 });
 </script>

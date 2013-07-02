@@ -27,7 +27,8 @@ class ProgramConfigsController < ApplicationController
 				runResult.t12_r5, 
 				runResult.t10_r6.split('/')[-1], 
 				runResult.t0_r3.gsub(',','<br />'),
-				ClusteringQualityMeasure.find_by_name(runResult.t5_r2).alias,
+				#ClusteringQualityMeasure.find_by_name(runResult.t5_r2).alias,
+				runResult.t5_r2,
         		runResult.t4_r4, 
 				#''#view_context.link_to("Clustering", :controller => "run_results_parameter_optimizations_parameter_set_iterations", :action=>"show", :id => runResult.t1_r2).to_s
 				# improves speed

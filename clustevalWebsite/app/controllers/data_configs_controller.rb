@@ -23,11 +23,13 @@ class DataConfigsController < ApplicationController
 
 		@paramValuesQualityArray = []
 		@runResultsDataConfigsRanking.each do |runResult|
+			#@measure = ClusteringQualityMeasure.find_by_name(runResult.t5_r2)
 			@paramValuesQualityArray << [
 				runResult.t12_r5, 
 				runResult.t10_r6.split('/')[-1], 
 				runResult.t0_r3.gsub(',','<br />'),
-				ClusteringQualityMeasure.find_by_name(runResult.t5_r2).alias,
+				#(@measure.nil? ? '' : @measure.alias),
+				runResult.t5_r2,
         		runResult.t4_r4, 
 				#''#view_context.link_to("Clustering", :controller => "run_results_parameter_optimizations_parameter_set_iterations", :action=>"show", :id => runResult.t1_r2).to_s
 				# improves speed
@@ -61,6 +63,6 @@ class DataConfigsController < ApplicationController
 	end
 
 	def comparison
-		@data_config_id = DataConfig.find_by_name(params[:id])
+            @data_config_id = DataConfig.all(session).select{|dataConfig| dataConfig.name == params[:id]}.first
 	end
 end

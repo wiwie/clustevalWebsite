@@ -5,10 +5,10 @@
 <% else %>
 	<p>This matrix contains the best performances of clustering methods applied to different datasets. Every cell shows the best achieved clustering quality with the corresponding clustering method on the corresponding dataset. The clustering quality is measured as <%= link_to @qualityMeasure.alias, @qualityMeasure %>.</p>
 	<p>You can choose a different clustering quality measure:
-	<%= collection_select(:post, :measure, ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px', :onchange => "this.form.submit();"} ) %>
+	<%= collection_select(:post, :measure, ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px', :onchange => "$('body').addClass('loading'); this.form.submit();"} ) %>
 	</p>
 	<p>If you want to invert the matrix (interchange columns and rows), click this button:
-	<%= check_box_tag(:inv, '1', @inverted, {:onchange => "this.form.submit();"}) %><label for="inv">Invert</label></p>
+	<%= check_box_tag(:inv, '1', @inverted, {:onchange => "$('body').addClass('loading'); this.form.submit();"}) %><label for="inv">Invert</label></p>
 	<% if !@inverted %>
 	<%= render_cell :small_ranking, :ds_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts %>
 	<% else %>
