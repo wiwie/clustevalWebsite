@@ -29,5 +29,106 @@ $(document).ready(function() {
     });
 });
 </script>
+<p></p>
+<div id="resizable" class="resizable" style="height:800px; width:100%;">
+  <div id="chart" style="height:800px; width:100%;"></div>
+</div>
 
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+      $("body").addClass("loading"); 
+      // Load data asynchronously using jQuery. On success, add the data
+      // to the options and initiate the chart.
+      // This data is obtained by exporting a GA custom report to TSV.
+      // http://api.jquery.com/jQuery.get/
+
+      jQuery.get('<%= '/datasets/show_clusterings_fetch_graph_data/' + params[:id] + '/' + @qualityMeasure.id.to_s %>', null, function(tsv, state, xhr) {
+      var options1, chart1, 
+        lines = [],
+                seriesIds = {},
+                paramNames = {},
+                series1 = [],
+                id;
+
+        <% @programs = Program.all(session).sort_by{|x| x.alias} %>
+      <% for m in 0..@programs.length-1 %>
+        seriesIds['<%= @programs[m].id %>'] = parseInt(<%= m %>);
+        series1[parseInt(<%= m %>)] = [];
+      <% end %>
+
+      // split the data return into lines and parse them
+      tsv = tsv.split(/\n/);
+      jQuery.each(tsv, function(i, line) {
+          line = line.split('\t');
+          id = seriesIds[line[1]];
+          series1[id].push([parseFloat(line[3]),parseFloat(line[4])]);
+          paramNames[id] = line[2];
+      });
+
+      options1 = {
+        chart: {
+          type: "scatter",
+          renderTo: "chart",
+          zoomType: 'xy'
+        },
+        title: {
+          text: "<%= Dataset.find(params[:id]).alias %>"
+        },
+        xAxis: [
+          <% for m in 0..@programs.length-1 %>
+          {
+            title: {
+              //text: paramNames[seriesIds[<%= @programs[m].id %>]] + ' (<%= @programs[m].alias %>)'
+              text: '<%= @programs[m].alias %>'
+            }
+          }
+          <%= m < @programs.length-1 ? ',' : '' %>
+          <% end %>
+        ],
+        yAxis: {
+          title: {
+            text: "<%= ClusteringQualityMeasure.find(params[:post][:clustering_quality_measure_id2]).alias %>"
+          }
+        },
+        plotOptions: {
+            scatter: {
+                marker: {
+                    radius: 2,
+                },
+                turboThreshold: 100,
+                shadow: false
+            }
+        },
+        series: [
+        <% for m in 0..@programs.length-1 %>
+        {
+          name: "<%= @programs[m].alias %>",
+          visible: 'true',
+          data: [],
+          xAxis: <%= m %>
+        }
+        <%= m < @programs.length-1 ? ',' : '' %>
+        <% end %>
+        ]
+      }
+
+      chart1 = new Highcharts.Chart(options1);
+      chart1.showLoading();
+
+      <% for m in 0..@programs.length-1 %>
+        chart1.series[<%= m %>].setData(series1[<%= m %>], redraw=false);
+      <% end %>
+      chart1.hideLoading()
+      chart1.redraw();
+
+      $( "#resizable" ).resizable({
+        helper: "ui-resizable-helper",
+        stop: function( event, ui ) {
+          chart1.setSize(ui.size.width,ui.size.height,doAnimation = true);
+        }
+      });
+      $("body").removeClass("loading"); 
+    });
+  });
+</script>
 <% end %>
