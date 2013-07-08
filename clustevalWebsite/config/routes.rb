@@ -7,6 +7,7 @@ ClustEval::Application.routes.draw do
   	match 'datasets/comparison' => 'datasets#comparison'
   	match 'datasets/show_comparison' => 'datasets#show_comparison'
 	match 'datasets/fetch_table_data/:id/:measureId' => 'datasets#fetch_table_data'
+	match 'datasets/show_clusterings_fetch_graph_data/:id/:measureId' => 'datasets#show_clusterings_fetch_graph_data'
 	match 'datasets/download/:id' => 'datasets#download'
 	match 'datasets/:id/perf' => 'datasets#show_performance'
 	match 'datasets/:id/stat' => 'datasets#show_statistics'

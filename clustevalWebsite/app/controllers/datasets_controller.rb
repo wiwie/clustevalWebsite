@@ -119,6 +119,32 @@ class DatasetsController < ApplicationController
 		end
 	end
 
+	def show_clusterings_fetch_graph_data
+		@datasets = Dataset.find(params[:id])
+		@datasets = Dataset.where(:dataset_id => @datasets)
+		@dataset_configs = DatasetConfig.where(:dataset_id => @datasets)
+		@data_configs = DataConfig.where(:dataset_config_id => @dataset_configs)
+		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:clustering_quality_measure, {:program_config => :program}]).where(:data_config_id => @data_configs).where(:clustering_quality_measure_id => params[:measureId]).select("value, programs.id AS program_id, quality,clustering_quality_measures.alias,paramName")
+		
+		@paramValuesQualityString = ''
+		@runResultsParamOptIteration.each do |iteration|
+			@paramValuesQualityString << iteration.alias
+			@paramValuesQualityString << '	'
+			@paramValuesQualityString << iteration.program_id.to_s
+			@paramValuesQualityString << '	'
+			@paramValuesQualityString << iteration.paramName
+			@paramValuesQualityString << '	'
+			@paramValuesQualityString << iteration.value.to_s
+			@paramValuesQualityString << '	'
+			@paramValuesQualityString << iteration.quality.to_s
+			@paramValuesQualityString << '
+'
+		end
+		@paramValuesQualityString = @paramValuesQualityString.chop
+
+		render :inline => @paramValuesQualityString
+	end
+
 	def show_bestclusterings
 		@dataset = Dataset.find(params[:id])
 
