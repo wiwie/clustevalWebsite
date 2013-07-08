@@ -77,13 +77,17 @@ class DatasetsController < ApplicationController
 
 	def show_statistics
 		if params[:data_config]
-			@statistics = DatasetStatistic.where(:data_config_id => params[:data_config][:data_config_id])
+			@dataset = Dataset.find_by_id(params[:id])
+			@statistics = DatasetStatistic.where(:data_config_id => params[:data_config][:data_config_id]).where(:date => params[:data_config][:date])
+			@dates = DatasetStatistic.select("DISTINCT date").where(:data_config_id => params[:data_config][:data_config_id])
 		else
 			@dataset = Dataset.find_by_id(params[:id])
 			@dataConfigs = DataConfig.where(:dataset_config_id => DatasetConfig.where(:dataset_id => params[:id]))
 			@statistics = DatasetStatistic.where(:data_config_id => @dataConfigs.first.id)
+			@dates = DatasetStatistic.select("DISTINCT date").where(:data_config_id => @dataConfigs.first.id)
 			params[:data_config] = {}
 			params[:data_config][:data_config_id] = @dataConfigs.first.id.to_s
+			params[:data_config][:date] = @dates.first.date.to_s
 		end
 		
 		respond_to do |format|
