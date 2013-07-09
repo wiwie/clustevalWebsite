@@ -87,7 +87,7 @@ $(document).ready(function() {
         ],
         yAxis: {
           title: {
-            text: "<%= ClusteringQualityMeasure.find(params[:post][:clustering_quality_measure_id2]).alias %>"
+            text: "<%= @qualityMeasure.alias %>"
           }
         },
         plotOptions: {
