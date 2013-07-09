@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528154638) do
+ActiveRecord::Schema.define(:version => 20130709112358) do
 
   create_table "aboutus", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -102,6 +102,13 @@ ActiveRecord::Schema.define(:version => 20130528154638) do
   add_index "dataset_configs", ["dataset_id"], :name => "fk_dataSetConfigs_2"
   add_index "dataset_configs", ["repository_id"], :name => "fk_dataSetConfigs_1"
 
+  create_table "dataset_descriptions", :force => true do |t|
+    t.string "dataset_fullName",    :limit => 200,  :null => false
+    t.string "dataset_description", :limit => 1000, :null => false
+  end
+
+  add_index "dataset_descriptions", ["dataset_fullName"], :name => "fk_dataset_descriptions_1", :unique => true
+
   create_table "dataset_formats", :force => true do |t|
     t.integer "repository_id",                :null => false
     t.binary  "name",          :limit => 255
@@ -110,6 +117,21 @@ ActiveRecord::Schema.define(:version => 20130528154638) do
 
   add_index "dataset_formats", ["name", "repository_id"], :name => "name_UNIQUE", :unique => true, :length => {"name"=>200, "repository_id"=>nil}
   add_index "dataset_formats", ["repository_id"], :name => "fk_dataSetFormats_1"
+
+  create_table "dataset_images", :force => true do |t|
+    t.string "dataset_fullName", :limit => 200, :null => false
+    t.string "dataset_imageUrl", :limit => 500, :null => false
+  end
+
+  add_index "dataset_images", ["dataset_fullName"], :name => "fk_dataset_images_1", :unique => true
+
+  create_table "dataset_publications", :force => true do |t|
+    t.string "dataset_fullName",       :limit => 200,  :null => false
+    t.string "dataset_publication",    :limit => 1000, :null => false
+    t.string "dataset_publicationUrl", :limit => 1000, :null => false
+  end
+
+  add_index "dataset_publications", ["dataset_fullName"], :name => "fk_dataset_publications_1", :unique => true
 
   create_table "dataset_types", :force => true do |t|
     t.integer "repository_id",                :null => false
@@ -774,23 +796,23 @@ ActiveRecord::Schema.define(:version => 20130528154638) do
   add_index "statistics", ["name", "repository_id"], :name => "name_UNIQUE", :unique => true, :length => {"name"=>200, "repository_id"=>nil}
   add_index "statistics", ["repository_id"], :name => "fk_statistics_1"
 
-  create_table "statistics_datas", :force => true do |t|
+  create_table "statistics_data", :force => true do |t|
     t.integer "repository_id", :null => false
     t.integer "statistic_id",  :null => false
   end
 
-  add_index "statistics_datas", ["repository_id", "statistic_id"], :name => "index4", :unique => true
-  add_index "statistics_datas", ["repository_id"], :name => "fk_statisticsData_2"
-  add_index "statistics_datas", ["statistic_id"], :name => "fk_statisticsData_1"
+  add_index "statistics_data", ["repository_id", "statistic_id"], :name => "index4", :unique => true
+  add_index "statistics_data", ["repository_id"], :name => "fk_statisticsData_2"
+  add_index "statistics_data", ["statistic_id"], :name => "fk_statisticsData_1"
 
-  create_table "statistics_run_datas", :force => true do |t|
+  create_table "statistics_run_data", :force => true do |t|
     t.integer "repository_id", :null => false
     t.integer "statistic_id",  :null => false
   end
 
-  add_index "statistics_run_datas", ["repository_id", "statistic_id"], :name => "index4", :unique => true
-  add_index "statistics_run_datas", ["repository_id"], :name => "fk_statisticsRunData_1"
-  add_index "statistics_run_datas", ["statistic_id"], :name => "fk_statisticsRunData_2"
+  add_index "statistics_run_data", ["repository_id", "statistic_id"], :name => "index4", :unique => true
+  add_index "statistics_run_data", ["repository_id"], :name => "fk_statisticsRunData_1"
+  add_index "statistics_run_data", ["statistic_id"], :name => "fk_statisticsRunData_2"
 
   create_table "statistics_runs", :force => true do |t|
     t.integer "repository_id", :null => false
@@ -1019,11 +1041,11 @@ ActiveRecord::Schema.define(:version => 20130528154638) do
 
   add_foreign_key "statistics", "repositories", :name => "statistics_repository_id_fk", :dependent => :delete
 
-  add_foreign_key "statistics_datas", "repositories", :name => "statistics_data_repository_id_fk", :dependent => :delete
-  add_foreign_key "statistics_datas", "statistics", :name => "statistics_data_statistic_id_fk", :dependent => :delete
+  add_foreign_key "statistics_data", "repositories", :name => "statistics_data_repository_id_fk", :dependent => :delete
+  add_foreign_key "statistics_data", "statistics", :name => "statistics_data_statistic_id_fk", :dependent => :delete
 
-  add_foreign_key "statistics_run_datas", "repositories", :name => "statistics_run_data_repository_id_fk", :dependent => :delete
-  add_foreign_key "statistics_run_datas", "statistics", :name => "statistics_run_data_statistic_id_fk", :dependent => :delete
+  add_foreign_key "statistics_run_data", "repositories", :name => "statistics_run_data_repository_id_fk", :dependent => :delete
+  add_foreign_key "statistics_run_data", "statistics", :name => "statistics_run_data_statistic_id_fk", :dependent => :delete
 
   add_foreign_key "statistics_runs", "repositories", :name => "statistics_runs_repository_id_fk", :dependent => :delete
   add_foreign_key "statistics_runs", "statistics", :name => "statistics_runs_statistic_id_fk", :dependent => :delete
@@ -1048,6 +1070,14 @@ ActiveRecord::Schema.define(:version => 20130528154638) do
     v.column :statistic
   end
 
+  create_view "parameter_optimization_data_configs_iterations", "select `dcOrig`.`id` AS `data_config_id`,`ps`.`id` AS `program_id`,`it`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`it`.`quality` AS `quality`,`it`.`paramSetAsString` AS `paramSetAsString` from ((((`programs` `ps` join `data_configs` `dcs`) join `data_configs` `dcOrig`) join `program_configs` `pcs`) join `parameter_optimization_iterations` `it`) where ((`it`.`data_config_id` = `dcs`.`id`) and (`it`.`program_config_id` = `pcs`.`id`) and (`dcs`.`data_config_id` = `dcOrig`.`id`) and (`pcs`.`program_id` = `ps`.`id`))", :force => true do |v|
+    v.column :data_config_id
+    v.column :program_id
+    v.column :clustering_quality_measure_id
+    v.column :quality
+    v.column :paramSetAsString
+  end
+
   create_view "parameter_optimization_iterations", "select `iter`.`id` AS `run_results_parameter_optimizations_parameter_set_iteration_id`,`iter`.`iteration` AS `iteration`,`iter`.`paramSetAsString` AS `paramSetAsString`,`measure`.`id` AS `clustering_quality_measure_id`,`qual`.`quality` AS `quality`,`results`.`uniqueRunIdentifier` AS `uniqueRunIdentifier`,`opts`.`data_config_id` AS `data_config_id`,`opts`.`program_config_id` AS `program_config_id`,`progParams`.`name` AS `paramName`,`vals`.`value` AS `value` from (((((((((`run_results_parameter_optimizations_parameter_set_iterations` `iter` join `run_results_parameter_optimizations_parameter_sets` `sets`) join `run_results_parameter_optimizations` `opts`) join `run_results_executions` `exec`) join `run_results` `results`) join `run_results_parameter_optimizations_qualities` `qual`) join `run_results_parameter_optimizations_parameter_values` `vals`) join `run_results_parameter_optimizations_parameter_set_parameters` `params`) join `program_parameters` `progParams`) join `clustering_quality_measures` `measure`) where ((`results`.`id` = `exec`.`run_result_id`) and (`exec`.`id` = `opts`.`run_results_execution_id`) and (`opts`.`id` = `sets`.`run_results_parameter_optimization_id`) and (`sets`.`id` = `iter`.`run_results_parameter_optimizations_parameter_set_id`) and (`iter`.`id` = `qual`.`run_results_parameter_optimizations_parameter_set_iteration_id`) and (`measure`.`id` = `qual`.`clustering_quality_measure_id`) and (`vals`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `iter`.`id`) and (`vals`.`run_results_parameter_optimizations_parameter_set_parameter_id` = `params`.`id`) and (`params`.`program_parameter_id` = `progParams`.`id`))", :force => true do |v|
     v.column :run_results_parameter_optimizations_parameter_set_iteration_id
     v.column :iteration
@@ -1061,15 +1091,15 @@ ActiveRecord::Schema.define(:version => 20130528154638) do
     v.column :value
   end
 
-  create_view "parameter_optimization_data_configs_iterations", "select `dcOrig`.`id` AS `data_config_id`,`ps`.`id` AS `program_id`,`it`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`it`.`quality` AS `quality`,`it`.`paramSetAsString` AS `paramSetAsString` from ((((`programs` `ps` join `data_configs` `dcs`) join `data_configs` `dcOrig`) join `program_configs` `pcs`) join `parameter_optimization_iterations` `it`) where ((`it`.`data_config_id` = `dcs`.`id`) and (`it`.`program_config_id` = `pcs`.`id`) and (`dcs`.`data_config_id` = `dcOrig`.`id`) and (`pcs`.`program_id` = `ps`.`id`))", :force => true do |v|
-    v.column :data_config_id
+  create_view "parameter_optimization_iterations_exts", "select `dsOrig`.`id` AS `dataset_id`,`ps`.`id` AS `program_id`,`it`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`it`.`quality` AS `quality`,`it`.`paramSetAsString` AS `paramSetAsString` from ((((((`datasets` `dsOrig` join `datasets` `ds`) join `programs` `ps`) join `dataset_configs` `dscs`) join `data_configs` `dcs`) join `program_configs` `pcs`) join `parameter_optimization_iterations` `it`) where ((`it`.`data_config_id` = `dcs`.`id`) and (`it`.`program_config_id` = `pcs`.`id`) and (`dcs`.`dataset_config_id` = `dscs`.`id`) and (`dscs`.`dataset_id` = `ds`.`id`) and (`ds`.`dataset_id` = `dsOrig`.`id`) and (`pcs`.`program_id` = `ps`.`id`))", :force => true do |v|
+    v.column :dataset_id
     v.column :program_id
     v.column :clustering_quality_measure_id
     v.column :quality
     v.column :paramSetAsString
   end
 
-  create_view "parameter_optimization_iterations_exts", "select `dsOrig`.`id` AS `dataset_id`,`ps`.`id` AS `program_id`,`it`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`it`.`quality` AS `quality`,`it`.`paramSetAsString` AS `paramSetAsString` from ((((((`datasets` `dsOrig` join `datasets` `ds`) join `programs` `ps`) join `dataset_configs` `dscs`) join `data_configs` `dcs`) join `program_configs` `pcs`) join `parameter_optimization_iterations` `it`) where ((`it`.`data_config_id` = `dcs`.`id`) and (`it`.`program_config_id` = `pcs`.`id`) and (`dcs`.`dataset_config_id` = `dscs`.`id`) and (`dscs`.`dataset_id` = `ds`.`id`) and (`ds`.`dataset_id` = `dsOrig`.`id`) and (`pcs`.`program_id` = `ps`.`id`))", :force => true do |v|
+  create_view "parameter_optimization_max_qual_rows", "select `iter`.`dataset_id` AS `dataset_id`,`iter`.`program_id` AS `program_id`,`iter`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`iter`.`quality` AS `quality`,`iter`.`paramSetAsString` AS `paramSetAsString` from (`parameter_optimization_iterations_exts` `iter` join `parameter_optimization_max_quals` `groupediter` on(((`iter`.`dataset_id` = `groupediter`.`dataset_id`) and (`iter`.`program_id` = `groupediter`.`program_id`) and (`iter`.`clustering_quality_measure_id` = `groupediter`.`clustering_quality_measure_id`) and (`iter`.`quality` = `groupediter`.`maxQuality`))))", :force => true do |v|
     v.column :dataset_id
     v.column :program_id
     v.column :clustering_quality_measure_id
@@ -1084,7 +1114,7 @@ ActiveRecord::Schema.define(:version => 20130528154638) do
     v.column :maxQuality
   end
 
-  create_view "parameter_optimization_max_qual_rows", "select `iter`.`dataset_id` AS `dataset_id`,`iter`.`program_id` AS `program_id`,`iter`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`iter`.`quality` AS `quality`,`iter`.`paramSetAsString` AS `paramSetAsString` from (`parameter_optimization_iterations_exts` `iter` join `parameter_optimization_max_quals` `groupediter` on(((`iter`.`dataset_id` = `groupediter`.`dataset_id`) and (`iter`.`program_id` = `groupediter`.`program_id`) and (`iter`.`clustering_quality_measure_id` = `groupediter`.`clustering_quality_measure_id`) and (`iter`.`quality` = `groupediter`.`maxQuality`))))", :force => true do |v|
+  create_view "parameter_optimization_min_qual_rows", "select `iter`.`dataset_id` AS `dataset_id`,`iter`.`program_id` AS `program_id`,`iter`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`iter`.`quality` AS `quality`,`iter`.`paramSetAsString` AS `paramSetAsString` from (`parameter_optimization_iterations_exts` `iter` join `parameter_optimization_min_quals` `groupediter` on(((`iter`.`dataset_id` = `groupediter`.`dataset_id`) and (`iter`.`program_id` = `groupediter`.`program_id`) and (`iter`.`clustering_quality_measure_id` = `groupediter`.`clustering_quality_measure_id`) and (`iter`.`quality` = `groupediter`.`minQuality`))))", :force => true do |v|
     v.column :dataset_id
     v.column :program_id
     v.column :clustering_quality_measure_id
@@ -1097,14 +1127,6 @@ ActiveRecord::Schema.define(:version => 20130528154638) do
     v.column :program_id
     v.column :clustering_quality_measure_id
     v.column :minQuality
-  end
-
-  create_view "parameter_optimization_min_qual_rows", "select `iter`.`dataset_id` AS `dataset_id`,`iter`.`program_id` AS `program_id`,`iter`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`iter`.`quality` AS `quality`,`iter`.`paramSetAsString` AS `paramSetAsString` from (`parameter_optimization_iterations_exts` `iter` join `parameter_optimization_min_quals` `groupediter` on(((`iter`.`dataset_id` = `groupediter`.`dataset_id`) and (`iter`.`program_id` = `groupediter`.`program_id`) and (`iter`.`clustering_quality_measure_id` = `groupediter`.`clustering_quality_measure_id`) and (`iter`.`quality` = `groupediter`.`minQuality`))))", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :quality
-    v.column :paramSetAsString
   end
 
   create_view "run_result_data_analysis_data_configs_statistics", "select `runRes`.`id` AS `run_result_id`,`runResDataAna`.`id` AS `run_results_data_analysis_id`,`runRes`.`uniqueRunIdentifier` AS `uniqueRunIdentifier`,`runRes`.`absPath` AS `absPath`,`runDataAnaDataConf`.`data_config_id` AS `data_config_id`,`runAnaStats`.`statistic_id` AS `statistic_id` from (((((((`run_results_data_analyses` `runResDataAna` join `run_results_analyses` `runResAna`) join `run_results` `runRes`) join `runs` `run`) join `run_analyses` `runAna`) join `run_analysis_statistics` `runAnaStats`) join `run_data_analyses` `runDataAna`) join `run_data_analysis_data_configs` `runDataAnaDataConf`) where ((`runResDataAna`.`run_results_analysis_id` = `runResAna`.`id`) and (`runResAna`.`run_result_id` = `runRes`.`id`) and (`runRes`.`run_id` = `run`.`id`) and (`runAna`.`run_id` = `run`.`id`) and (`runAnaStats`.`run_analysis_id` = `runAna`.`id`) and (`runDataAna`.`run_analysis_id` = `runAna`.`id`) and (`runDataAnaDataConf`.`run_data_analysis_id` = `runDataAna`.`id`))", :force => true do |v|
