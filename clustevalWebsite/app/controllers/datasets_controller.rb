@@ -109,7 +109,7 @@ class DatasetsController < ApplicationController
 			@qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:clustering_quality_measure_id2])
 			@qualityMeasureName = @qualityMeasure.id
 		else
-			@qualityMeasure = ClusteringQualityMeasure.find_by_name('TransClustF2ClusteringQualityMeasure')
+			@qualityMeasure = ClusteringQualityMeasure.all(session).select{|x| x.name == 'TransClustF2ClusteringQualityMeasure'}.first
 			@qualityMeasureName = @qualityMeasure.id
 		end
 		
