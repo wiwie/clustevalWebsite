@@ -97,7 +97,7 @@ class RunResultsParameterOptimizationsController < ApplicationController
 	end
 
 	def fetch_graph_data
-		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:data_config, :program_config, :clustering_quality_measure]).where(:data_config_id => params[:dataId]).where(:clustering_quality_measure_id => params[:measureId].where(:program_config_id => params[:programId]).select("value, quality, iteration,clustering_quality_measures.alias")
+		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:data_config, :program_config, :clustering_quality_measure]).where(:data_config_id => params[:dataId]).where(:program_config_id => params[:programId]).select("value, quality, iteration,clustering_quality_measures.alias")
 		
 		@paramValuesQualityString = ''
 		@runResultsParamOptIteration.each do |iteration|
