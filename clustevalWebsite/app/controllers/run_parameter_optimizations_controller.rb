@@ -1,7 +1,7 @@
 class RunParameterOptimizationsController < ApplicationController
 	before_filter :require_user
 	def show
-		@run = Run.find_by_name(params[:id])
+		@run = Run.all(session).select{|x| x.name == params[:id]}.first
 		@executionRun = RunExecution.find_by_run_id(@run.id)
 		@parameterOptimizationRun = RunParameterOptimization.find_by_run_execution_id(@executionRun.id)
 
