@@ -10,6 +10,54 @@
   <%= submit_tag('Change') %>
   <% end %>
 <% end %>
+<h2>Use-Case</h2>
+<div class="usecase">
+<div class="graph_node">
+  <b>1. Inputs</b><br>
+  Provide the inputs to the clusteval backend.<br>
+  <%= link_to "-> Data Sets", Dataset %><br>
+  <%= link_to "-> Clustering Methods", Program %><br>
+  <%= link_to "-> Measures", ClusteringQualityMeasure %><br>
+</div>
+<div class="vertical_line" style="width:200px;"></div>
+<div class="graph_node">
+  <b>2. Clustering Process</b><br>
+  Perform a clustering process using<br> the clusteval backend.<br>
+
+</div>
+<div class="vertical_line" style="width:200px;"></div>
+<div class="graph_node">
+  <b>3. Overview</b><br>
+  Get an <%= link_to "-> Overview", :controller => :mains, :action => :comparison %> over all <br>achieved clustering qualities.
+</div>
+<p></p>
+<div class="graph_node">
+  <b>6. Specific Data Set</b><br>
+  Take a look at the achieved qualities<br>
+  on a single data set.<br>
+  <%= link_to "-> Data Sets -> " + Dataset.all(session).first.alias + " -> Best Qualities", :controller => :datasets, :action => :show_comparison, :id => Dataset.all(session).first %>
+</div>
+<div class="vertical_line" style="width:20px;"></div>
+<div class="graph_node">
+  <b>5. Which Parameter Sets?</b><br>
+  ... and find out with which parameter sets this method<br> achieved the best qualities by clicking on the qualities.<br>
+  <%= link_to "-> Clustering Methods -> " + Program.all(session).first.alias + " -> Best Parameters", :controller => :programs, :action => :show_bestclusterings, :id => Program.all(session).first, :dataset_filter => Dataset.all(session).first %>.
+</div>
+<div class="vertical_line" style="width:20px;"></div>
+<div class="graph_node">
+  <b>4. Specific Clustering Method</b><br>
+  Take a look at the achieved qualities<br>
+  of a single clustering method.<br>
+  <%= link_to "-> Clustering Methods -> " + Program.all(session).first.alias + " -> Best Qualities", :controller => :programs, :action => :show_performance, :id => Program.all(session).first %>.
+</div>
+<p></p>
+<div class="graph_node">
+  <b>7. Which Parameter Sets?</b><br>
+  ... and find out with which parameter sets the optimal<br> clusterings were achieved on this data set by clicking on the qualities.<br>
+  <%= link_to "-> Data Sets -> " + Dataset.all(session).first.alias + " -> Best Parameters", :controller => :datasets, :action => :show_bestclusterings, :id => Dataset.all(session).first, :program_filter => Program.all(session).first %>.
+</div>
+</div>
+
 <h2>Download & Installation</h2>
 You are interested in downloading and installing clusteval on your own server? Please refer to the help section <%= link_to "over here", HelpInstallation %>.
 <% if @current_user %>
