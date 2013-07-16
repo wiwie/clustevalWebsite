@@ -187,6 +187,28 @@ p {
 	vertical-align: top;
 }
 
+.graph_node {
+	border: 2px solid $medium2;
+	padding: 5px;
+	text-align: left;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color:white;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.vertical_line {
+    border-top: 2px solid $medium2;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.usecase {
+	display: inline-block;
+	text-align: center;
+}
+
 .ui-resizable { position: relative;}
 .ui-resizable-handle { position: absolute;font-size: 0.1px; display: block; }
 .ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
