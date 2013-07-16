@@ -83,21 +83,21 @@ SimpleNavigation::Configuration.run do |navigation|
         Program.all(session).each do |program|
           sub_programs.item( :nav_program, program.name, program_path(program)) do |sub_program|
             sub_program.item :nav_program_general, 'General', program_path(program)
-            sub_program.item :nav_program_performance, 'Performance', url_for(:controller => 'programs', :action => 'show_performance', :id => program.id)
-            sub_program.item :nav_program_bestclusterings, 'Best Clusterings', url_for(:controller => 'programs', :action => 'show_bestclusterings', :id => program.id)
+            sub_program.item :nav_program_performance, 'Best Qualities', url_for(:controller => 'programs', :action => 'show_performance', :id => program.id)
+            sub_program.item :nav_program_bestclusterings, 'Best Parameters', url_for(:controller => 'programs', :action => 'show_bestclusterings', :id => program.id)
           end
         end
       end
       primary.item( :nav_datasets, 'Data Sets', datasets_path, :highlights_on => :subpath) do |sub_datasets|
         sub_datasets.item :nav_datasets_general, 'Overview', datasets_path
-        sub_datasets.item :nav_datasets_comparison, 'Best Clusterings', url_for(:controller => 'datasets', :action => 'comparison')
+        #sub_datasets.item :nav_datasets_comparison, 'Best Clusterings', url_for(:controller => 'datasets', :action => 'comparison')
         Dataset.all(session).each do |dataset|
           sub_datasets.item( :nav_dataset, dataset.name, dataset_path(dataset)) do |sub_dataset|
             sub_dataset.item :nav_dataset_general, 'General', dataset_path(dataset)
             sub_dataset.item :nav_dataset_statistics, 'Statistics', url_for(:controller => 'datasets', :action => 'show_statistics', :id => dataset.id)
-            sub_dataset.item :nav_dataset_comparison, 'Comparison', url_for(:controller => 'datasets', :action => 'show_comparison', :id => dataset.id)
-            sub_dataset.item :nav_dataset_bestclusterings, 'Best Clusterings', url_for(:controller => 'datasets', :action => 'show_bestclusterings', :id => dataset.id)
-            sub_dataset.item :nav_dataset_clusterings, 'Clusterings', url_for(:controller => 'datasets', :action => 'show_clusterings', :id => dataset.id)
+            sub_dataset.item :nav_dataset_comparison, 'Best Qualities', url_for(:controller => 'datasets', :action => 'show_comparison', :id => dataset.id)
+            sub_dataset.item :nav_dataset_bestclusterings, 'Best Parameters', url_for(:controller => 'datasets', :action => 'show_bestclusterings', :id => dataset.id)
+            sub_dataset.item :nav_dataset_clusterings, 'All Clusterings', url_for(:controller => 'datasets', :action => 'show_clusterings', :id => dataset.id)
           end
         end
       end

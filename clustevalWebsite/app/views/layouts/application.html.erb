@@ -11,6 +11,11 @@
   <%= javascript_include_tag 'ColReorderWithResize' %>
   <%= mathjax_tag %>
   <%= csrf_meta_tags %>
+  <script type="text/javascript">  
+      $(function(){
+        $("a[data-toggle='tooltip']").tooltip();
+      })
+</script>
   <script type="text/javascript">
         var chart;
         Highcharts.theme = {
@@ -143,11 +148,9 @@
   </style>
 </head>
 <body>
-
 <div class='title'>
-	<h1><div id="first" >clusteval</div> <div id="second">Integrative Clustering Evaluation Framework</div></h1>
+	<h1><div id="first">clusteval</div> <div id="second">Integrative Clustering Evaluation Framework</div></h1>
 </div>
-
 <div class='example_content' id='example_3'>
   <div id='top_navigation'>
     <table id="menu_table" class="designTable">
