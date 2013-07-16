@@ -1,0 +1,5 @@
+# pack-refs with: peeled 
+7d1a3ba094f3383150835a66b5201641c3f8e1f5 refs/heads/applying-patches
+90329db26a68f12a7d235462d64861e3e040b538 refs/heads/fixing
+6d892f57c92d6476de5481a7ddca646b56afedf2 refs/heads/integration
+0486fff084032367b4c08bf0a51b151ef86a08f1 refs/heads/master
