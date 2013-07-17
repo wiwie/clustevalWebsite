@@ -206,7 +206,7 @@ p {
 
 .usecase {
 	display: inline-block;
-	text-align: center;
+	text-align: left;
 }
 
 .ui-resizable { position: relative;}
@@ -675,7 +675,7 @@ $trBackground: #FFFFFF;
     height:     100%;
     width:      100%;
     background: rgba( 255, 255, 255, .8 ) 
-                url('http://clusteval.mmci.uni-saarland.de/assets/ajax-loader.gif') 
+                url('http://clusteval.mpi-inf.mpg.de/assets/ajax-loader.gif') 
                 50% 50% 
                 no-repeat;
 }
