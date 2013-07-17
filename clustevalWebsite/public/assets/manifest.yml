@@ -18,7 +18,7 @@ rails.png: rails-be8732dac73d845ac5b142c8fb5f9fb0.png
 spectral.png: spectral-9c266d4e3b2768310adca115f04a22b4.png
 spirals1000.png: spirals1000-a17388a7db22c6ea2666355c49a2c3a5.png
 transclust.png: transclust-30f289dbc453f9451c3b38fdcbdcf2e2.png
-application.js: application-7661017d3b6aee8fa54837efce76657b.js
+application.js: application-1da42ca223ff853d8fd77bb4333d6ff4.js
 highcharts.js: highcharts-72d911e92e04970f740aa29b8371d98d.js
 BebasNeue-webfont.eot: BebasNeue-webfont-a32569e3d3d4213f6e34be251e6e196f.eot
 BebasNeue-webfont.svg: BebasNeue-webfont-0eeada0761ac58bcf561d59462739c6e.svg
@@ -68,7 +68,7 @@ DroidSerif-Regular-webfont.eot: DroidSerif-Regular-webfont-f9bc5410e66db8656fbb7
 DroidSerif-Regular-webfont.svg: DroidSerif-Regular-webfont-93da9cdf412f37f8225bad880d00121a.svg
 DroidSerif-Regular-webfont.ttf: DroidSerif-Regular-webfont-2f6146de487fc86308cc67899b8f6828.ttf
 DroidSerif-Regular-webfont.woff: DroidSerif-Regular-webfont-c6568fe4c0a3df3ddf523335284d7abf.woff
-application.css: application-a603a565335369e9764c7d11fc61260c.css
+application.css: application-2b849ac42be2a2ee227e1af9c5d6d5bd.css
 nobile-webfont.eot: nobile-webfont-dd31fe4fda6f64d5ff6d756e7b546ff4.eot
 nobile-webfont.svg: nobile-webfont-9e76027d2278aa770b98ef87971b214c.svg
 nobile-webfont.ttf: nobile-webfont-f60c63187fba9dc367ec40d5ab42c154.ttf
@@ -85,12 +85,18 @@ nobile_italic-webfont.eot: nobile_italic-webfont-20d1ee74834f27342b124a9677ca217
 nobile_italic-webfont.svg: nobile_italic-webfont-6bfdc73a53ec2b1e99f192abdb456f10.svg
 nobile_italic-webfont.ttf: nobile_italic-webfont-dc120e7a6238fa3b1165bff150c726a3.ttf
 nobile_italic-webfont.woff: nobile_italic-webfont-6dc109971b7e06b3d9a5e705771c0fbb.woff
+fontawesome-webfont.eot: fontawesome-webfont-d7a865d33c72e692a4e89b0c0c4d826e.eot
+fontawesome-webfont.svg: fontawesome-webfont-703a7ba6fde560b14dd4b85a23fb9b57.svg
+fontawesome-webfont.ttf: fontawesome-webfont-e959b6b345c4bfee7467ada467629a2b.ttf
+fontawesome-webfont.woff: fontawesome-webfont-e9c915040514e887cdf8091afe7c7c83.woff
+twitter/bootstrap/glyphicons-halflings-white.png: twitter/bootstrap/glyphicons-halflings-white-13553a5bf21ae3cc374006592488ec64.png
+twitter/bootstrap/glyphicons-halflings.png: twitter/bootstrap/glyphicons-halflings-ab3144065a860d198f1d7d9a4882640c.png
 README.markdown: README-e7779570e64bbbacea65f680c07a66ad.markdown
 history.md: history-aedf271417e5b3d5615e1f5e1799602f.md
 license.txt: license-7b21fdc0f818b95c8beafa9759b52509.txt
 make: make
 reference.html: reference-611406d3ddc5d3558db1a802f6d4013e.html
-jquery.min.map: jquery.min-0633f0a59e3d0cd55ac3518f228b2893.map
+jquery.min.map: jquery.min-70bec01470bf6bcfed5892ae554b38c8.map
 jquery-ui/animated-overlay.gif: jquery-ui/animated-overlay-691b2d4343303de8d214ad5395fd895d.gif
 jquery-ui/ui-bg_flat_0_aaaaaa_40x100.png: jquery-ui/ui-bg_flat_0_aaaaaa_40x100-a1eb3e0764573ed4b261ca742ed96ac3.png
 jquery-ui/ui-bg_flat_75_ffffff_40x100.png: jquery-ui/ui-bg_flat_75_ffffff_40x100-841636c8f8d33987bb8d2f31e8ef92ca.png
