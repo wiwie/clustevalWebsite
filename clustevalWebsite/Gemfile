@@ -41,5 +41,5 @@ gem 'rails_sql_views', github: 'centresource/rails_sql_views' # supports view
 gem 'mathjax-rails'
 gem 'composite_primary_keys'
 
-gem "less-rails"
+# gem "less-rails"
 gem "twitter-bootstrap-rails"
