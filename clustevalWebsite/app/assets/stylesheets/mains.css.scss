@@ -152,13 +152,13 @@ p {
 	text-decoration: none;
 }
 
-.content_table_right select {
-	font: $fontsize 'DroidSerifRegular', Arial, sans-serif;
-	border: 2px solid $medium2;
-	padding: 2px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-}
+// .content_table_right select {
+// 	font: $fontsize 'DroidSerifRegular', Arial, sans-serif;
+// 	border: 2px solid $medium2;
+// 	padding: 2px;
+// 	-moz-border-radius: 5px;
+// 	border-radius: 5px;
+// }
 
 .ui-widget {
 	font: 16px 'DroidSerifRegular', Arial, sans-serif;
@@ -666,7 +666,7 @@ $trBackground: #FFFFFF;
    with position:fixed. Width, height, top and left speak
    speak for themselves. Background we set to 80% white with
    our animation centered, and no-repeating */
-.modal {
+.mymodal {
     display:    none;
     position:   fixed;
     z-index:    1000;
@@ -688,6 +688,15 @@ body.loading {
 
 /* Anytime the body has the loading class, our
    modal element will be visible */
-body.loading .modal {
+body.loading .mymodal {
     display: block;
+}
+
+// bootstrap overrides
+textarea {
+	padding: 0px;
+}
+
+li {
+	line-height: normal;
 }
