@@ -1,7 +1,7 @@
 <div class="clustering_method_description">
 	<h3><%= dataset.name %><% if detailsLink %> (<%= link_to 'Details', dataset %>)<% end %></h3>
 	<p>
-		<% if dataset.imageUrl %><%= image_tag dataset.imageUrl, :height => '156', :style => 'float:right;' %><% end %>
+		<% if dataset.imageUrl %><%= image_tag dataset.imageUrl, :style => 'float:right;height:156px;', :class => 'thumbnail' %><% end %>
 		<%= dataset.description %>
 		<% if dataset.publication %>
 		<br><br>

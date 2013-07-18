@@ -6,8 +6,7 @@
   <h2>Repository</h2>
   This website shows all information from one central repository. You can select a different repository here:
   <%= form_tag({:action => 'index'}, {:method => 'post'}) do %>
-  <%= collection_select(:repository, :repository_id, @repositories, :id, :basePath, {:selected => Repository.find_by_basePath(session[:repository_id]).id}) %>
-  <%= submit_tag('Change') %>
+  <%= collection_select(:repository, :repository_id, @repositories, :id, :basePath, {:selected => Repository.find_by_basePath(session[:repository_id]).id}, :onchange => "$('body').addClass('loading'); this.form.submit();", :class => 'span3') %>
   <% end %>
 <% end %>
 <a id="workflow"><h2>Workflow</h2></a>
