@@ -47,7 +47,8 @@ ClusteringQualityMeasureOptimum.create([
 	{measure_name: 'SilhouetteValueRClusteringQualityMeasure', name: 'Maximum'},
 	{measure_name: 'FPRClusteringQualityMeasure', name: 'Minimum'},
 	{measure_name: 'TransClustFClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'TransClustF2ClusteringQualityMeasure', name: 'Maximum'}])
+	{measure_name: 'TransClustF2ClusteringQualityMeasure', name: 'Maximum'},
+	{measure_name: 'DaviesBouldinIndexRClusteringQualityMeasure', name: 'Minimum'}])
 
 DatasetDescription.create([
 	{dataset_fullName: 'synthetic/spirals250', dataset_description: 'This synthetic data set consists of 250 two-dimensional data objects, distributed over two entangled spirals. Since the data set is non-convex, it is almost impossible to resolve the natural grouping for clustering methods, that are solely based on an approach maximizing between-cluster distances and minimizing within-cluster distances in the original input space. Therefore, methods that either transform the data into a more suitable space, like Spectral Clustering, or that base their cluster identification on local neighborhood similarities will be able to identify the cluster structure.'},
