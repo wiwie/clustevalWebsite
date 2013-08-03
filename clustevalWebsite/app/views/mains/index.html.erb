@@ -9,7 +9,7 @@
   <%= collection_select(:repository, :repository_id, @repositories, :id, :basePath, {:selected => Repository.find_by_basePath(session[:repository_id]).id}, :onchange => "$('body').addClass('loading'); this.form.submit();", :class => 'span3') %>
   <% end %>
 <% end %>
-<a id="workflow"><h2>Workflow</h2></a>
+<a id="workflow" style="text-decoration:none;"><h2>Workflow</h2></a>
 The use-case below presents to you where you can find which functionality on the clusteval website. 
 <div class="usecase" style="padding-top:170px; padding-left:150px;width:100%; padding-bottom:150px;">
   <a data-toggle="tooltip" title="1. Inputs" href="#workflow" id="usecase_1" class="well well-small" style="font-weight:bold;">1. Inputs</a>
