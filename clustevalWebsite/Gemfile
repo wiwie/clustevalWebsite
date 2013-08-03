@@ -43,3 +43,6 @@ gem 'composite_primary_keys'
 
 # gem "less-rails"
 gem "twitter-bootstrap-rails"
+
+# sitemap creation
+gem 'sitemap_generator'
