@@ -5,7 +5,7 @@
 <table id="dataAndProgramStatistics" class="display">
   <thead>
   <tr>
-    <th>Data Set</th>
+    <th>Dataset Config</th>
     <% for i in 0..@programs.length-1 %>
       <% program = @programs[i] %>
       <th>
@@ -21,17 +21,17 @@
   </tr>
  </thead>
  <tbody>
-  <% for i in 0..@datasets.length-1 %>
+  <% for i in 0..@datasetConfigs.length-1 %>
   <tr>
     <% for j in 0..@programs.length %>
       <% if j == 0 %>
-        <td><%= link_to @matrix[i][j].alias, @matrix[i][j] %></td>
+        <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
       <% else %>
        <% @string = "" %>
           <% if @matrix[i][j].to_s == "--" %>
             <% @string = @matrix[i][j].to_s %>
           <% else %>
-            <% @string = '<a href="/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+            <% @string = '<a href="/datasetConfigs/' + @datasetConfigs[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
 
             <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
               <% @string = @string + "<b>" %>
@@ -69,7 +69,7 @@ $(function () {
             },
     
             xAxis: {
-                categories: [<% Dataset.all(session).sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %>'<%= dataset.alias %>',<% end %><% end %>],
+                categories: [<% DatasetConfig.all(session).each do |dataset_config| %><% if @visibleDatasets[dataset_config] %>'<%= dataset_config.name %>',<% end %><% end %>],
                 labels: {
                   enabled: true,
                   rotation: -45,
@@ -114,7 +114,7 @@ $(function () {
             <% Program.all(session).sort_by{|x| x.alias}.each do |program| %>
               {
                 name: '<%= program.alias %>',
-                data: [<% Dataset.all(session).sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
+                data: [<% DatasetConfig.all(session).each do |dataset_config| %><% if @visibleDatasets[dataset_config] %><% @qual = @matrix[@datasetConfigIds[dataset_config]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
                 <%# elsif @isMaximum %><%#= @qualityMeasure.minValue %><%# else %><%#= @qualityMeasure.maxValue %>
                 <% else %>null<% end %>,<% end %><% end %>]
             },

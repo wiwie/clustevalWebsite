@@ -1,7 +1,8 @@
 class DatasetConfig < ActiveRecord::Base
 	belongs_to :repository
-	belongs_to :dataset
 	belongs_to :dataset_config
+  	has_many :dataset_configs_datasets
+  	has_many :datasets, through: :dataset_configs_datasets
 
 
 	def to_param

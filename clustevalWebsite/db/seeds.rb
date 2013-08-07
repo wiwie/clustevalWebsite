@@ -39,16 +39,10 @@ ProgramPublication.create([
 	{program_fullName: 'MCL/mcl-12-068', program_publication: 'Stijn van Dongen, <b>Graph Clustering by Flow Simulation.</b> PhD thesis, <i>University of Utrecht</i> 2000 May.', program_publicationUrl: 'http://igitur-archive.library.uu.nl/dissertations/1895620/full.pdf'},
 	{program_fullName: 'programs/KMeansClusteringRProgram.jar', program_publication: 'J. A. Hartigan and M. A. Wong. Algorithm as 136: <b>A k-means clustering algorithm.</b> <i>Journal of the Royal Statistical Society.</i> Series C (Applied Statistics), 28(1):pp. 100-108, 1979.', program_publicationUrl: 'http://www.jstor.org/discover/10.2307/2346830'}])
 ClusteringQualityMeasureOptimum.create([
-	{measure_name: 'RandIndexClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'SpecificityClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'SensitivityClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'SilhouetteValueClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'FDRClusteringQualityMeasure', name: 'Minimum'},
-	{measure_name: 'SilhouetteValueRClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'FPRClusteringQualityMeasure', name: 'Minimum'},
-	{measure_name: 'TransClustFClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'TransClustF2ClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'DaviesBouldinIndexRClusteringQualityMeasure', name: 'Minimum'}])
+	{measure_name: 'AlignedEdgesQualityMeasure', name: 'Maximum'},
+	{measure_name: 'EdgeCorrectnessQualityMeasure', name: 'Maximum'},
+	{measure_name: 'GraphEditDistanceQualityMeasure', name: 'Minimum'}
+	])
 
 DatasetDescription.create([
 	{dataset_fullName: 'synthetic/spirals250', dataset_description: 'This synthetic data set consists of 250 two-dimensional data objects, distributed over two entangled spirals. Since the data set is non-convex, it is almost impossible to resolve the natural grouping for clustering methods, that are solely based on an approach maximizing between-cluster distances and minimizing within-cluster distances in the original input space. Therefore, methods that either transform the data into a more suitable space, like Spectral Clustering, or that base their cluster identification on local neighborhood similarities will be able to identify the cluster structure.'},
@@ -59,6 +53,6 @@ DatasetImage.create([
 	{dataset_fullName: 'synthetic/spirals250', dataset_imageUrl: 'spirals1000.png'}
 	])
 DatasetPublication.create([
-	{dataset_fullName: 'tcga/all_emc_spearman.txt', dataset_publication: 'Nora Speicher. <b>Towards the identification of cancer subtypes by integrative clustering of molecular data.</b> Master’s thesis, <i>Universität des Saarlandes</i>, December 2012.', dataset_publicationUrl: 'http://domino.mpi-inf.mpg.de/intranet/ag3/ag3publ.nsf/AuthorEditorIndividualView/ae782c8688cc637cc1257b27005442df?OpenDocument'},
+	{dataset_fullName: 'tcga/all_emc_spearman.txt', dataset_publication: 'Nora Speicher. <b>Towards the identification of cancer subtypes by integrative clustering of molecular data.</b> Master''s thesis, <i>Universitaet des Saarlandes</i>, December 2012.', dataset_publicationUrl: 'http://domino.mpi-inf.mpg.de/intranet/ag3/ag3publ.nsf/AuthorEditorIndividualView/ae782c8688cc637cc1257b27005442df?OpenDocument'},
 	{dataset_fullName: 'sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt', dataset_publication: 'Shoshana D Brown, John A Gerlt, Jennifer L Seffernick, and Patricia C Babbitt. <b>A gold standard set of mechanistically diverse enzyme superfamilies.</b> <i>Genome Biol, 7(1):R8</i>, 2006.', dataset_publicationUrl: 'http://www.ncbi.nlm.nih.gov/pubmed/16507141'}
 	])

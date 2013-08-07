@@ -3,7 +3,8 @@ class Dataset < ActiveRecord::Base
 	belongs_to :dataset_format
   belongs_to :dataset
   belongs_to :dataset_type
-  has_many :dataset_configs
+  has_many :dataset_configs_datasets
+  has_many :dataset_configs, through: :dataset_configs_datasets
 
   def self.all(session, *args)
   if session

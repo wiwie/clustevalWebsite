@@ -28,13 +28,7 @@ class MainsController < ApplicationController
 			@qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:measure])
 			@inverted = params[:inv]
 		else
-			@qualityMeasures = ClusteringQualityMeasure.all(session)
-			@qualityMeasures.each do |measure|
-				if measure.name == 'TransClustF2ClusteringQualityMeasure'
-					@qualityMeasure = measure
-					break
-				end
-			end
+			@qualityMeasure = ClusteringQualityMeasure.first
 			@inverted = false
 		end
 		if not @qualityMeasure
@@ -43,7 +37,7 @@ class MainsController < ApplicationController
 			@qualityMeasureName = @qualityMeasure.id
 
 			# data for table
-			@iterationsExts = ParameterOptimizationIterationsExt.includes(:program, :dataset).select("program_id,dataset_id,max(quality) as maxQuality,min(quality) as minQuality,clustering_quality_measure_id").where(:clustering_quality_measure_id => @qualityMeasureName).group("dataset_id,program_id")
+			@iterationsExts = ParameterOptimizationIterationsExt.includes(:program, :dataset_config).select("program_id,dataset_config_id,max(quality) as maxQuality,min(quality) as minQuality,clustering_quality_measure_id").where(:clustering_quality_measure_id => @qualityMeasureName).group("dataset_config_id,program_id")
 		end
 		respond_to do |format|
 			format.html # index.html.erb

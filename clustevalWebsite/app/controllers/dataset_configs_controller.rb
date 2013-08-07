@@ -13,7 +13,7 @@ class DatasetConfigsController < ApplicationController
 	def show
 		@datasetConfig = DatasetConfig.find_by_name(params[:id])
 		
-		@dataset = @datasetConfig.dataset
+		@datasets = @datasetConfig.datasets
 		
 		file = File.open(@datasetConfig.absPath)
 		@contents = ""

@@ -8,7 +8,7 @@ class CreateRunResultsClusteringQualities < ActiveRecord::Migration
       t.integer "program_config_id",                :null => false
       t.integer "clustering_quality_measure_id",                :null => false
       t.binary "paramString", :null => false
-      t.binary "quality",                :null => false
+      t.float "quality",                :null => false
     end
 
   add_index "run_results_clustering_qualities", ["repository_id"], :name => "fk_run_results_clustering_qualities_1"

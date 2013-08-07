@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130709112358) do
+ActiveRecord::Schema.define(:version => 20130807003720) do
 
   create_table "aboutus", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -93,14 +93,20 @@ ActiveRecord::Schema.define(:version => 20130709112358) do
     t.integer "repository_id",                    :null => false
     t.binary  "absPath",           :limit => 255
     t.binary  "name",              :limit => 255
-    t.integer "dataset_id",                       :null => false
     t.integer "dataset_config_id"
   end
 
   add_index "dataset_configs", ["absPath", "repository_id"], :name => "absPath_UNIQUE", :unique => true, :length => {"absPath"=>200, "repository_id"=>nil}
   add_index "dataset_configs", ["dataset_config_id"], :name => "fk_dataset_configs_1"
-  add_index "dataset_configs", ["dataset_id"], :name => "fk_dataSetConfigs_2"
   add_index "dataset_configs", ["repository_id"], :name => "fk_dataSetConfigs_1"
+
+  create_table "dataset_configs_datasets", :force => true do |t|
+    t.integer "dataset_id"
+    t.integer "dataset_config_id"
+  end
+
+  add_index "dataset_configs_datasets", ["dataset_config_id"], :name => "dataset_configs_datasets_fk2"
+  add_index "dataset_configs_datasets", ["dataset_id"], :name => "dataset_configs_datasets_fk1"
 
   create_table "dataset_descriptions", :force => true do |t|
     t.string "dataset_fullName",    :limit => 200,  :null => false
@@ -885,8 +891,10 @@ ActiveRecord::Schema.define(:version => 20130709112358) do
   add_foreign_key "data_configs", "repositories", :name => "data_configs_repository_id_fk", :dependent => :delete
 
   add_foreign_key "dataset_configs", "dataset_configs", :name => "dataset_configs_dataset_config_id_fk", :dependent => :delete
-  add_foreign_key "dataset_configs", "datasets", :name => "dataset_configs_dataset_id_fk", :dependent => :delete
   add_foreign_key "dataset_configs", "repositories", :name => "dataset_configs_repository_id_fk", :dependent => :delete
+
+  add_foreign_key "dataset_configs_datasets", "dataset_configs", :name => "dataset_configs_datasets_fk2", :dependent => :delete
+  add_foreign_key "dataset_configs_datasets", "datasets", :name => "dataset_configs_datasets_fk1", :dependent => :delete
 
   add_foreign_key "dataset_formats", "repositories", :name => "dataset_formats_repository_id_fk", :dependent => :delete
 
@@ -1017,6 +1025,28 @@ ActiveRecord::Schema.define(:version => 20130709112358) do
   add_foreign_key "run_results_parameter_optimizations", "repositories", :name => "run_results_parameter_optimizations_repository_id_fk", :dependent => :delete
   add_foreign_key "run_results_parameter_optimizations", "run_results_executions", :name => "run_results_parameter_optimizations_run_results_execution_id_fk", :dependent => :delete
 
+  add_foreign_key "run_results_parameter_optimizations_parameter_set_iterations", "clusterings", :name => "run_results_param_opt_parameter_set_iterations_clustering_id_fk", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_parameter_set_iterations", "repositories", :name => "run_results_param_opt_param_set_iter_repository_id_fk", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_parameter_set_iterations", "run_results_parameter_optimizations_parameter_sets", :name => "fk11", :dependent => :delete
+
+  add_foreign_key "run_results_parameter_optimizations_parameter_set_parameters", "program_parameters", :name => "run_results_param_opt_parameter_set_param_program_param_id_fk", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_parameter_set_parameters", "repositories", :name => "run_results_param_opt_param_set_param_repository_id_fk", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_parameter_set_parameters", "run_results_parameter_optimizations", :name => "fk12", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_parameter_set_parameters", "run_results_parameter_optimizations_parameter_sets", :name => "fk13", :dependent => :delete
+
+  add_foreign_key "run_results_parameter_optimizations_parameter_sets", "repositories", :name => "fk14", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_parameter_sets", "run_results_parameter_optimizations", :name => "fk15", :dependent => :delete
+
+  add_foreign_key "run_results_parameter_optimizations_parameter_values", "repositories", :name => "fk16", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_parameter_values", "run_results_parameter_optimizations", :name => "fk17", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_parameter_values", "run_results_parameter_optimizations_parameter_set_iterations", :name => "fk18", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_parameter_values", "run_results_parameter_optimizations_parameter_set_parameters", :name => "fk19", :dependent => :delete
+
+  add_foreign_key "run_results_parameter_optimizations_qualities", "clustering_quality_measures", :name => "fk20", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_qualities", "repositories", :name => "fk21", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_qualities", "run_results_parameter_optimizations", :name => "fk22", :dependent => :delete
+  add_foreign_key "run_results_parameter_optimizations_qualities", "run_results_parameter_optimizations_parameter_set_iterations", :name => "fk23", :dependent => :delete
+
   add_foreign_key "run_results_run_analyses", "repositories", :name => "run_results_run_analyses_repository_id_fk", :dependent => :delete
   add_foreign_key "run_results_run_analyses", "run_results_analyses", :name => "run_results_run_analyses_run_results_analysis_id_fk", :column => "run_results_analysis_id", :dependent => :delete
 
@@ -1049,249 +1079,5 @@ ActiveRecord::Schema.define(:version => 20130709112358) do
 
   add_foreign_key "statistics_runs", "repositories", :name => "statistics_runs_repository_id_fk", :dependent => :delete
   add_foreign_key "statistics_runs", "statistics", :name => "statistics_runs_statistic_id_fk", :dependent => :delete
-
-  create_view "dataset_statistics", "select `ds`.`id` AS `dataset_id`,`anaDataConfigs`.`data_config_id` AS `data_config_id`,`res`.`id` AS `run_result_id`,`res`.`absPath` AS `absPath`,`res`.`run_id` AS `run_id`,`res`.`date` AS `date`,`stats`.`name` AS `statistic` from ((((((((((((`run_data_analysis_data_configs` `anaDataConfigs` join `data_configs` `dcs`) join `dataset_configs` `dscs`) join `datasets` `ds`) join `run_data_analyses` `runDataAna`) join `run_analyses` `runAna`) join `run_analysis_statistics` `runStats`) join `statistics` `stats`) join `runs`) join `runs` `runsOrig`) join `run_results` `res`) join `run_results_analyses` `resAna`) join `run_results_data_analyses` `resDataAna`) where ((`res`.`id` = `resAna`.`run_result_id`) and (`resAna`.`id` = `resDataAna`.`run_results_analysis_id`) and (`runs`.`id` = `res`.`run_id`) and (`runsOrig`.`id` = `runs`.`run_id`) and (`runsOrig`.`id` = `runAna`.`run_id`) and (`runDataAna`.`run_analysis_id` = `runAna`.`id`) and (`anaDataConfigs`.`run_data_analysis_id` = `runDataAna`.`id`) and (`anaDataConfigs`.`data_config_id` = `dcs`.`id`) and (`dcs`.`dataset_config_id` = `dscs`.`id`) and (`dscs`.`dataset_id` = `ds`.`id`) and (`runStats`.`run_analysis_id` = `runAna`.`id`) and (`stats`.`id` = `runStats`.`statistic_id`))", :force => true do |v|
-    v.column :dataset_id
-    v.column :data_config_id
-    v.column :run_result_id
-    v.column :absPath
-    v.column :run_id
-    v.column :date
-    v.column :statistic
-  end
-
-  create_view "datasets_recent_statistics", "select `dataset_statistics`.`dataset_id` AS `dataset_id`,`dataset_statistics`.`data_config_id` AS `data_config_id`,`dataset_statistics`.`run_result_id` AS `run_result_id`,`dataset_statistics`.`absPath` AS `absPath`,`dataset_statistics`.`run_id` AS `run_id`,`dataset_statistics`.`date` AS `date`,`dataset_statistics`.`statistic` AS `statistic` from `dataset_statistics` where (`dataset_statistics`.`dataset_id`,`dataset_statistics`.`statistic`,`dataset_statistics`.`date`) in (select `dataset_statistics`.`dataset_id`,`dataset_statistics`.`statistic`,max(`dataset_statistics`.`date`) AS `maxDate` from `dataset_statistics` group by `dataset_statistics`.`dataset_id`,`dataset_statistics`.`statistic`)", :force => true do |v|
-    v.column :dataset_id
-    v.column :data_config_id
-    v.column :run_result_id
-    v.column :absPath
-    v.column :run_id
-    v.column :date
-    v.column :statistic
-  end
-
-  create_view "parameter_optimization_data_configs_iterations", "select `dcOrig`.`id` AS `data_config_id`,`ps`.`id` AS `program_id`,`it`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`it`.`quality` AS `quality`,`it`.`paramSetAsString` AS `paramSetAsString` from ((((`programs` `ps` join `data_configs` `dcs`) join `data_configs` `dcOrig`) join `program_configs` `pcs`) join `parameter_optimization_iterations` `it`) where ((`it`.`data_config_id` = `dcs`.`id`) and (`it`.`program_config_id` = `pcs`.`id`) and (`dcs`.`data_config_id` = `dcOrig`.`id`) and (`pcs`.`program_id` = `ps`.`id`))", :force => true do |v|
-    v.column :data_config_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :quality
-    v.column :paramSetAsString
-  end
-
-  create_view "parameter_optimization_iterations", "select `iter`.`id` AS `run_results_parameter_optimizations_parameter_set_iteration_id`,`iter`.`iteration` AS `iteration`,`iter`.`paramSetAsString` AS `paramSetAsString`,`measure`.`id` AS `clustering_quality_measure_id`,`qual`.`quality` AS `quality`,`results`.`uniqueRunIdentifier` AS `uniqueRunIdentifier`,`opts`.`data_config_id` AS `data_config_id`,`opts`.`program_config_id` AS `program_config_id`,`progParams`.`name` AS `paramName`,`vals`.`value` AS `value` from (((((((((`run_results_parameter_optimizations_parameter_set_iterations` `iter` join `run_results_parameter_optimizations_parameter_sets` `sets`) join `run_results_parameter_optimizations` `opts`) join `run_results_executions` `exec`) join `run_results` `results`) join `run_results_parameter_optimizations_qualities` `qual`) join `run_results_parameter_optimizations_parameter_values` `vals`) join `run_results_parameter_optimizations_parameter_set_parameters` `params`) join `program_parameters` `progParams`) join `clustering_quality_measures` `measure`) where ((`results`.`id` = `exec`.`run_result_id`) and (`exec`.`id` = `opts`.`run_results_execution_id`) and (`opts`.`id` = `sets`.`run_results_parameter_optimization_id`) and (`sets`.`id` = `iter`.`run_results_parameter_optimizations_parameter_set_id`) and (`iter`.`id` = `qual`.`run_results_parameter_optimizations_parameter_set_iteration_id`) and (`measure`.`id` = `qual`.`clustering_quality_measure_id`) and (`vals`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `iter`.`id`) and (`vals`.`run_results_parameter_optimizations_parameter_set_parameter_id` = `params`.`id`) and (`params`.`program_parameter_id` = `progParams`.`id`))", :force => true do |v|
-    v.column :run_results_parameter_optimizations_parameter_set_iteration_id
-    v.column :iteration
-    v.column :paramSetAsString
-    v.column :clustering_quality_measure_id
-    v.column :quality
-    v.column :uniqueRunIdentifier
-    v.column :data_config_id
-    v.column :program_config_id
-    v.column :paramName
-    v.column :value
-  end
-
-  create_view "parameter_optimization_iterations_exts", "select `dsOrig`.`id` AS `dataset_id`,`ps`.`id` AS `program_id`,`it`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`it`.`quality` AS `quality`,`it`.`paramSetAsString` AS `paramSetAsString` from ((((((`datasets` `dsOrig` join `datasets` `ds`) join `programs` `ps`) join `dataset_configs` `dscs`) join `data_configs` `dcs`) join `program_configs` `pcs`) join `parameter_optimization_iterations` `it`) where ((`it`.`data_config_id` = `dcs`.`id`) and (`it`.`program_config_id` = `pcs`.`id`) and (`dcs`.`dataset_config_id` = `dscs`.`id`) and (`dscs`.`dataset_id` = `ds`.`id`) and (`ds`.`dataset_id` = `dsOrig`.`id`) and (`pcs`.`program_id` = `ps`.`id`))", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :quality
-    v.column :paramSetAsString
-  end
-
-  create_view "parameter_optimization_max_qual_rows", "select `iter`.`dataset_id` AS `dataset_id`,`iter`.`program_id` AS `program_id`,`iter`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`iter`.`quality` AS `quality`,`iter`.`paramSetAsString` AS `paramSetAsString` from (`parameter_optimization_iterations_exts` `iter` join `parameter_optimization_max_quals` `groupediter` on(((`iter`.`dataset_id` = `groupediter`.`dataset_id`) and (`iter`.`program_id` = `groupediter`.`program_id`) and (`iter`.`clustering_quality_measure_id` = `groupediter`.`clustering_quality_measure_id`) and (`iter`.`quality` = `groupediter`.`maxQuality`))))", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :quality
-    v.column :paramSetAsString
-  end
-
-  create_view "parameter_optimization_max_quals", "select `parameter_optimization_iterations_exts`.`dataset_id` AS `dataset_id`,`parameter_optimization_iterations_exts`.`program_id` AS `program_id`,`parameter_optimization_iterations_exts`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,max(`parameter_optimization_iterations_exts`.`quality`) AS `maxQuality` from `parameter_optimization_iterations_exts` group by `parameter_optimization_iterations_exts`.`dataset_id`,`parameter_optimization_iterations_exts`.`program_id`,`parameter_optimization_iterations_exts`.`clustering_quality_measure_id`", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :maxQuality
-  end
-
-  create_view "parameter_optimization_min_qual_rows", "select `iter`.`dataset_id` AS `dataset_id`,`iter`.`program_id` AS `program_id`,`iter`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`iter`.`quality` AS `quality`,`iter`.`paramSetAsString` AS `paramSetAsString` from (`parameter_optimization_iterations_exts` `iter` join `parameter_optimization_min_quals` `groupediter` on(((`iter`.`dataset_id` = `groupediter`.`dataset_id`) and (`iter`.`program_id` = `groupediter`.`program_id`) and (`iter`.`clustering_quality_measure_id` = `groupediter`.`clustering_quality_measure_id`) and (`iter`.`quality` = `groupediter`.`minQuality`))))", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :quality
-    v.column :paramSetAsString
-  end
-
-  create_view "parameter_optimization_min_quals", "select `parameter_optimization_iterations_exts`.`dataset_id` AS `dataset_id`,`parameter_optimization_iterations_exts`.`program_id` AS `program_id`,`parameter_optimization_iterations_exts`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,min(`parameter_optimization_iterations_exts`.`quality`) AS `minQuality` from `parameter_optimization_iterations_exts` group by `parameter_optimization_iterations_exts`.`dataset_id`,`parameter_optimization_iterations_exts`.`program_id`,`parameter_optimization_iterations_exts`.`clustering_quality_measure_id`", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :minQuality
-  end
-
-  create_view "run_result_data_analysis_data_configs_statistics", "select `runRes`.`id` AS `run_result_id`,`runResDataAna`.`id` AS `run_results_data_analysis_id`,`runRes`.`uniqueRunIdentifier` AS `uniqueRunIdentifier`,`runRes`.`absPath` AS `absPath`,`runDataAnaDataConf`.`data_config_id` AS `data_config_id`,`runAnaStats`.`statistic_id` AS `statistic_id` from (((((((`run_results_data_analyses` `runResDataAna` join `run_results_analyses` `runResAna`) join `run_results` `runRes`) join `runs` `run`) join `run_analyses` `runAna`) join `run_analysis_statistics` `runAnaStats`) join `run_data_analyses` `runDataAna`) join `run_data_analysis_data_configs` `runDataAnaDataConf`) where ((`runResDataAna`.`run_results_analysis_id` = `runResAna`.`id`) and (`runResAna`.`run_result_id` = `runRes`.`id`) and (`runRes`.`run_id` = `run`.`id`) and (`runAna`.`run_id` = `run`.`id`) and (`runAnaStats`.`run_analysis_id` = `runAna`.`id`) and (`runDataAna`.`run_analysis_id` = `runAna`.`id`) and (`runDataAnaDataConf`.`run_data_analysis_id` = `runDataAna`.`id`))", :force => true do |v|
-    v.column :run_result_id
-    v.column :run_results_data_analysis_id
-    v.column :uniqueRunIdentifier
-    v.column :absPath
-    v.column :data_config_id
-    v.column :statistic_id
-  end
-
-  create_view "run_results_data_configs_rankings", "select `run_results_parameter_optimizations_parameter_set_iterations`.`id` AS `t0_r0`,`run_results_parameter_optimizations_parameter_set_iterations`.`run_results_parameter_optimizations_parameter_set_id` AS `t0_r1`,`run_results_parameter_optimizations_parameter_set_iterations`.`iteration` AS `t0_r2`,`run_results_parameter_optimizations_parameter_set_iterations`.`paramSetAsString` AS `t0_r3`,`run_results_parameter_optimizations_parameter_values`.`id` AS `t1_r0`,`run_results_parameter_optimizations_parameter_values`.`repository_id` AS `t1_r1`,`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `t1_r2`,`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_parameter_id` AS `t1_r3`,`run_results_parameter_optimizations_parameter_values`.`value` AS `t1_r4`,`run_results_parameter_optimizations_parameter_set_parameters`.`id` AS `t2_r0`,`run_results_parameter_optimizations_parameter_set_parameters`.`repository_id` AS `t2_r1`,`run_results_parameter_optimizations_parameter_set_parameters`.`run_results_parameter_optimizations_parameter_set_id` AS `t2_r2`,`run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_id` AS `t2_r3`,`program_parameters`.`id` AS `t3_r0`,`program_parameters`.`repository_id` AS `t3_r1`,`program_parameters`.`program_config_id` AS `t3_r2`,`program_parameters`.`program_parameter_type_id` AS `t3_r3`,`program_parameters`.`name` AS `t3_r4`,`program_parameters`.`description` AS `t3_r5`,`program_parameters`.`minValue` AS `t3_r6`,`program_parameters`.`maxValue` AS `t3_r7`,`program_parameters`.`def` AS `t3_r8`,`run_results_parameter_optimizations_qualities`.`id` AS `t4_r0`,`run_results_parameter_optimizations_qualities`.`repository_id` AS `t4_r1`,`run_results_parameter_optimizations_qualities`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `t4_r2`,`run_results_parameter_optimizations_qualities`.`clustering_quality_measure_id` AS `t4_r3`,`run_results_parameter_optimizations_qualities`.`quality` AS `t4_r4`,`clustering_quality_measures`.`id` AS `t5_r0`,`clustering_quality_measures`.`repository_id` AS `t5_r1`,`clustering_quality_measures`.`name` AS `t5_r2`,`clustering_quality_measures`.`minValue` AS `t5_r3`,`clustering_quality_measures`.`maxValue` AS `t5_r4`,`clustering_quality_measures`.`requiresGoldStandard` AS `t5_r5`,`run_results_parameter_optimizations_parameter_sets`.`id` AS `t6_r0`,`run_results_parameter_optimizations_parameter_sets`.`repository_id` AS `t6_r1`,`run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimization_id` AS `t6_r2`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`id` AS `t7_r0`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`repository_id` AS `t7_r1`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimizations_parameter_set_id` AS `t7_r2`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`program_parameter_id` AS `t7_r3`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`id` AS `t8_r0`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`repository_id` AS `t8_r1`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`program_config_id` AS `t8_r2`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_type_id` AS `t8_r3`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`name` AS `t8_r4`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`description` AS `t8_r5`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`minValue` AS `t8_r6`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`maxValue` AS `t8_r7`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`def` AS `t8_r8`,`run_results_parameter_optimizations`.`id` AS `t9_r0`,`run_results_parameter_optimizations`.`repository_id` AS `t9_r1`,`run_results_parameter_optimizations`.`run_results_execution_id` AS `t9_r2`,`run_results_parameter_optimizations`.`data_config_id` AS `t9_r3`,`run_results_parameter_optimizations`.`program_config_id` AS `t9_r4`,`run_results_parameter_optimizations`.`absPath` AS `t9_r5`,`program_configs`.`id` AS `t10_r0`,`program_configs`.`repository_id` AS `t10_r1`,`program_configs`.`program_id` AS `t10_r2`,`program_configs`.`program_config_id` AS `t10_r4`,`program_configs`.`name` AS `t10_r5`,`program_configs`.`absPath` AS `t10_r6`,`program_configs`.`invocationFormat` AS `t10_r7`,`program_configs`.`invocationFormatWithoutGoldStandard` AS `t10_r8`,`program_configs`.`invocationFormatParameterOptimization` AS `t10_r9`,`program_configs`.`invocationFormatParameterOptimizationWithoutGoldStandard` AS `t10_r10`,`program_configs`.`expectsNormalizedDataSet` AS `t10_r11`,`run_results_executions`.`id` AS `t11_r0`,`run_results_executions`.`repository_id` AS `t11_r1`,`run_results_executions`.`run_result_id` AS `t11_r2`,`run_results`.`id` AS `t12_r0`,`run_results`.`repository_id` AS `t12_r1`,`run_results`.`run_type_id` AS `t12_r2`,`run_results`.`uniqueRunIdentifier` AS `t12_r3`,`run_results`.`run_id` AS `t12_r4`,`run_results`.`date` AS `t12_r5` from ((((((((((((`run_results_parameter_optimizations_parameter_set_iterations` left join `run_results_parameter_optimizations_parameter_values` on((`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `run_results_parameter_optimizations_parameter_set_iterations`.`id`))) left join `run_results_parameter_optimizations_parameter_set_parameters` on((`run_results_parameter_optimizations_parameter_set_parameters`.`id` = `run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_parameter_id`))) left join `program_parameters` on((`program_parameters`.`id` = `run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_id`))) left join `run_results_parameter_optimizations_qualities` on((`run_results_parameter_optimizations_qualities`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `run_results_parameter_optimizations_parameter_set_iterations`.`id`))) left join `clustering_quality_measures` on((`clustering_quality_measures`.`id` = `run_results_parameter_optimizations_qualities`.`clustering_quality_measure_id`))) left join `run_results_parameter_optimizations_parameter_sets` on((`run_results_parameter_optimizations_parameter_sets`.`id` = `run_results_parameter_optimizations_parameter_set_iterations`.`run_results_parameter_optimizations_parameter_set_id`))) left join `run_results_parameter_optimizations_parameter_set_parameters` `run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets` on((`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimizations_parameter_set_id` = `run_results_parameter_optimizations_parameter_sets`.`id`))) left join `program_parameters` `program_parameters_run_results_parameter_optimizations_parameter_set_parameters` on((`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`id` = `run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`program_parameter_id`))) left join `run_results_parameter_optimizations` on((`run_results_parameter_optimizations`.`id` = `run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimization_id`))) left join `program_configs` on((`program_configs`.`id` = `run_results_parameter_optimizations`.`program_config_id`))) left join `run_results_executions` on((`run_results_executions`.`id` = `run_results_parameter_optimizations`.`run_results_execution_id`))) left join `run_results` on((`run_results`.`id` = `run_results_executions`.`run_result_id`)))", :force => true do |v|
-    v.column :t0_r0
-    v.column :t0_r1
-    v.column :t0_r2
-    v.column :t0_r3
-    v.column :t1_r0
-    v.column :t1_r1
-    v.column :t1_r2
-    v.column :t1_r3
-    v.column :t1_r4
-    v.column :t2_r0
-    v.column :t2_r1
-    v.column :t2_r2
-    v.column :t2_r3
-    v.column :t3_r0
-    v.column :t3_r1
-    v.column :t3_r2
-    v.column :t3_r3
-    v.column :t3_r4
-    v.column :t3_r5
-    v.column :t3_r6
-    v.column :t3_r7
-    v.column :t3_r8
-    v.column :t4_r0
-    v.column :t4_r1
-    v.column :t4_r2
-    v.column :t4_r3
-    v.column :t4_r4
-    v.column :t5_r0
-    v.column :t5_r1
-    v.column :t5_r2
-    v.column :t5_r3
-    v.column :t5_r4
-    v.column :t5_r5
-    v.column :t6_r0
-    v.column :t6_r1
-    v.column :t6_r2
-    v.column :t7_r0
-    v.column :t7_r1
-    v.column :t7_r2
-    v.column :t7_r3
-    v.column :t8_r0
-    v.column :t8_r1
-    v.column :t8_r2
-    v.column :t8_r3
-    v.column :t8_r4
-    v.column :t8_r5
-    v.column :t8_r6
-    v.column :t8_r7
-    v.column :t8_r8
-    v.column :t9_r0
-    v.column :t9_r1
-    v.column :t9_r2
-    v.column :t9_r3
-    v.column :t9_r4
-    v.column :t9_r5
-    v.column :t10_r0
-    v.column :t10_r1
-    v.column :t10_r2
-    v.column :t10_r4
-    v.column :t10_r5
-    v.column :t10_r6
-    v.column :t10_r7
-    v.column :t10_r8
-    v.column :t10_r9
-    v.column :t10_r10
-    v.column :t10_r11
-    v.column :t11_r0
-    v.column :t11_r1
-    v.column :t11_r2
-    v.column :t12_r0
-    v.column :t12_r1
-    v.column :t12_r2
-    v.column :t12_r3
-    v.column :t12_r4
-    v.column :t12_r5
-  end
-
-  create_view "run_results_program_configs_rankings", "select `run_results_parameter_optimizations_parameter_set_iterations`.`id` AS `t0_r0`,`run_results_parameter_optimizations_parameter_set_iterations`.`run_results_parameter_optimizations_parameter_set_id` AS `t0_r1`,`run_results_parameter_optimizations_parameter_set_iterations`.`iteration` AS `t0_r2`,`run_results_parameter_optimizations_parameter_set_iterations`.`paramSetAsString` AS `t0_r3`,`run_results_parameter_optimizations_parameter_values`.`id` AS `t1_r0`,`run_results_parameter_optimizations_parameter_values`.`repository_id` AS `t1_r1`,`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `t1_r2`,`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_parameter_id` AS `t1_r3`,`run_results_parameter_optimizations_parameter_values`.`value` AS `t1_r4`,`run_results_parameter_optimizations_parameter_set_parameters`.`id` AS `t2_r0`,`run_results_parameter_optimizations_parameter_set_parameters`.`repository_id` AS `t2_r1`,`run_results_parameter_optimizations_parameter_set_parameters`.`run_results_parameter_optimizations_parameter_set_id` AS `t2_r2`,`run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_id` AS `t2_r3`,`program_parameters`.`id` AS `t3_r0`,`program_parameters`.`repository_id` AS `t3_r1`,`program_parameters`.`program_config_id` AS `t3_r2`,`program_parameters`.`program_parameter_type_id` AS `t3_r3`,`program_parameters`.`name` AS `t3_r4`,`program_parameters`.`description` AS `t3_r5`,`program_parameters`.`minValue` AS `t3_r6`,`program_parameters`.`maxValue` AS `t3_r7`,`program_parameters`.`def` AS `t3_r8`,`run_results_parameter_optimizations_qualities`.`id` AS `t4_r0`,`run_results_parameter_optimizations_qualities`.`repository_id` AS `t4_r1`,`run_results_parameter_optimizations_qualities`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `t4_r2`,`run_results_parameter_optimizations_qualities`.`clustering_quality_measure_id` AS `t4_r3`,`run_results_parameter_optimizations_qualities`.`quality` AS `t4_r4`,`clustering_quality_measures`.`id` AS `t5_r0`,`clustering_quality_measures`.`repository_id` AS `t5_r1`,`clustering_quality_measures`.`name` AS `t5_r2`,`clustering_quality_measures`.`minValue` AS `t5_r3`,`clustering_quality_measures`.`maxValue` AS `t5_r4`,`clustering_quality_measures`.`requiresGoldStandard` AS `t5_r5`,`run_results_parameter_optimizations_parameter_sets`.`id` AS `t6_r0`,`run_results_parameter_optimizations_parameter_sets`.`repository_id` AS `t6_r1`,`run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimization_id` AS `t6_r2`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`id` AS `t7_r0`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`repository_id` AS `t7_r1`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimizations_parameter_set_id` AS `t7_r2`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`program_parameter_id` AS `t7_r3`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`id` AS `t8_r0`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`repository_id` AS `t8_r1`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`program_config_id` AS `t8_r2`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_type_id` AS `t8_r3`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`name` AS `t8_r4`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`description` AS `t8_r5`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`minValue` AS `t8_r6`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`maxValue` AS `t8_r7`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`def` AS `t8_r8`,`run_results_parameter_optimizations`.`id` AS `t9_r0`,`run_results_parameter_optimizations`.`repository_id` AS `t9_r1`,`run_results_parameter_optimizations`.`run_results_execution_id` AS `t9_r2`,`run_results_parameter_optimizations`.`data_config_id` AS `t9_r3`,`run_results_parameter_optimizations`.`program_config_id` AS `t9_r4`,`run_results_parameter_optimizations`.`absPath` AS `t9_r5`,`program_configs`.`id` AS `t10_r0`,`program_configs`.`repository_id` AS `t10_r1`,`program_configs`.`program_id` AS `t10_r2`,`program_configs`.`program_config_id` AS `t10_r4`,`program_configs`.`name` AS `t10_r5`,`program_configs`.`absPath` AS `t10_r6`,`program_configs`.`invocationFormat` AS `t10_r7`,`program_configs`.`invocationFormatWithoutGoldStandard` AS `t10_r8`,`program_configs`.`invocationFormatParameterOptimization` AS `t10_r9`,`program_configs`.`invocationFormatParameterOptimizationWithoutGoldStandard` AS `t10_r10`,`program_configs`.`expectsNormalizedDataSet` AS `t10_r11`,`run_results_executions`.`id` AS `t11_r0`,`run_results_executions`.`repository_id` AS `t11_r1`,`run_results_executions`.`run_result_id` AS `t11_r2`,`run_results`.`id` AS `t12_r0`,`run_results`.`repository_id` AS `t12_r1`,`run_results`.`run_type_id` AS `t12_r2`,`run_results`.`uniqueRunIdentifier` AS `t12_r3`,`run_results`.`run_id` AS `t12_r4`,`run_results`.`date` AS `t12_r5` from ((((((((((((`run_results_parameter_optimizations_parameter_set_iterations` left join `run_results_parameter_optimizations_parameter_values` on((`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `run_results_parameter_optimizations_parameter_set_iterations`.`id`))) left join `run_results_parameter_optimizations_parameter_set_parameters` on((`run_results_parameter_optimizations_parameter_set_parameters`.`id` = `run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_parameter_id`))) left join `program_parameters` on((`program_parameters`.`id` = `run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_id`))) left join `run_results_parameter_optimizations_qualities` on((`run_results_parameter_optimizations_qualities`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `run_results_parameter_optimizations_parameter_set_iterations`.`id`))) left join `clustering_quality_measures` on((`clustering_quality_measures`.`id` = `run_results_parameter_optimizations_qualities`.`clustering_quality_measure_id`))) left join `run_results_parameter_optimizations_parameter_sets` on((`run_results_parameter_optimizations_parameter_sets`.`id` = `run_results_parameter_optimizations_parameter_set_iterations`.`run_results_parameter_optimizations_parameter_set_id`))) left join `run_results_parameter_optimizations_parameter_set_parameters` `run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets` on((`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimizations_parameter_set_id` = `run_results_parameter_optimizations_parameter_sets`.`id`))) left join `program_parameters` `program_parameters_run_results_parameter_optimizations_parameter_set_parameters` on((`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`id` = `run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`program_parameter_id`))) left join `run_results_parameter_optimizations` on((`run_results_parameter_optimizations`.`id` = `run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimization_id`))) left join `program_configs` on((`program_configs`.`id` = `run_results_parameter_optimizations`.`program_config_id`))) left join `run_results_executions` on((`run_results_executions`.`id` = `run_results_parameter_optimizations`.`run_results_execution_id`))) left join `run_results` on((`run_results`.`id` = `run_results_executions`.`run_result_id`)))", :force => true do |v|
-    v.column :t0_r0
-    v.column :t0_r1
-    v.column :t0_r2
-    v.column :t0_r3
-    v.column :t1_r0
-    v.column :t1_r1
-    v.column :t1_r2
-    v.column :t1_r3
-    v.column :t1_r4
-    v.column :t2_r0
-    v.column :t2_r1
-    v.column :t2_r2
-    v.column :t2_r3
-    v.column :t3_r0
-    v.column :t3_r1
-    v.column :t3_r2
-    v.column :t3_r3
-    v.column :t3_r4
-    v.column :t3_r5
-    v.column :t3_r6
-    v.column :t3_r7
-    v.column :t3_r8
-    v.column :t4_r0
-    v.column :t4_r1
-    v.column :t4_r2
-    v.column :t4_r3
-    v.column :t4_r4
-    v.column :t5_r0
-    v.column :t5_r1
-    v.column :t5_r2
-    v.column :t5_r3
-    v.column :t5_r4
-    v.column :t5_r5
-    v.column :t6_r0
-    v.column :t6_r1
-    v.column :t6_r2
-    v.column :t7_r0
-    v.column :t7_r1
-    v.column :t7_r2
-    v.column :t7_r3
-    v.column :t8_r0
-    v.column :t8_r1
-    v.column :t8_r2
-    v.column :t8_r3
-    v.column :t8_r4
-    v.column :t8_r5
-    v.column :t8_r6
-    v.column :t8_r7
-    v.column :t8_r8
-    v.column :t9_r0
-    v.column :t9_r1
-    v.column :t9_r2
-    v.column :t9_r3
-    v.column :t9_r4
-    v.column :t9_r5
-    v.column :t10_r0
-    v.column :t10_r1
-    v.column :t10_r2
-    v.column :t10_r4
-    v.column :t10_r5
-    v.column :t10_r6
-    v.column :t10_r7
-    v.column :t10_r8
-    v.column :t10_r9
-    v.column :t10_r10
-    v.column :t10_r11
-    v.column :t11_r0
-    v.column :t11_r1
-    v.column :t11_r2
-    v.column :t12_r0
-    v.column :t12_r1
-    v.column :t12_r2
-    v.column :t12_r3
-    v.column :t12_r4
-    v.column :t12_r5
-  end
 
 end

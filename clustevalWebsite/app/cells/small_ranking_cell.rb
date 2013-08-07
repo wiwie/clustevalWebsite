@@ -59,19 +59,19 @@ class SmallRankingCell < Cell::Rails
 		@visiblePrograms = {}
 
 		@matrix = []
-		@datasetIds = {}
-		@datasets = Dataset.all(session)
-		for i in 0..@datasets.length-1
-		  @datasetIds[@datasets[i]] = i
+		@datasetConfigIds = {}
+		@datasetConfigs = DatasetConfig.all(session)
+		for i in 0..@datasetConfigs.length-1
+		  @datasetConfigIds[@datasetConfigs[i]] = i
 		  #@matrix << [link_to(Dataset.all(session)[i].name, Dataset.all(session)[i])]
-		  @matrix << [@datasets[i]]
+		  @matrix << [@datasetConfigs[i]]
 		end
 		@programIds = {}
 		@programs = Program.all(session).sort_by{|x| x.alias}
 		for i in 1..@programs.length
 		  @programIds[@programs[i-1]] = i
 
-		  for j in 0..@datasets.length-1
+		  for j in 0..@datasetConfigs.length-1
 		    @matrix[j][i] = '--'
 		  end
 		end
@@ -80,34 +80,34 @@ class SmallRankingCell < Cell::Rails
 		@rowMax = {}
 		@rowMaxPos = {}
 		opts[:iterationsExts].each do |iterationExt|
-		  datasetId = @datasetIds[iterationExt.dataset]
+		  datasetConfigId = @datasetConfigIds[iterationExt.dataset_config]
 		  programId = @programIds[iterationExt.program]
 
-		  next if datasetId == nil or programId == nil
+		  next if datasetConfigId == nil or programId == nil
 
-		  @visibleDatasets[iterationExt.dataset] = true
+		  @visibleDatasets[iterationExt.dataset_config] = true
 		  @visiblePrograms[iterationExt.program] = true
 
-		  @matrix[datasetId][programId] = (((@isMaximum ? iterationExt.maxQuality : iterationExt.minQuality)*1000).round/1000.0)
-		  if @rowMax[datasetId]
+		  @matrix[datasetConfigId][programId] = (((@isMaximum ? iterationExt.maxQuality : iterationExt.minQuality)*1000).round/1000.0)
+		  if @rowMax[datasetConfigId]
 		  	if @isMaximum
-			    if @rowMax[datasetId] < @matrix[datasetId][programId]
-			      @rowMax[datasetId] = @matrix[datasetId][programId]
-			      @rowMaxPos[datasetId] = [programId]
-			    elsif @rowMax[datasetId] == @matrix[datasetId][programId]
-			      @rowMaxPos[datasetId] << programId
+			    if @rowMax[datasetConfigId] < @matrix[datasetConfigId][programId]
+			      @rowMax[datasetConfigId] = @matrix[datasetConfigId][programId]
+			      @rowMaxPos[datasetConfigId] = [programId]
+			    elsif @rowMax[datasetConfigId] == @matrix[datasetConfigId][programId]
+			      @rowMaxPos[datasetConfigId] << programId
 			    end
 			else
-			    if @rowMax[datasetId] > @matrix[datasetId][programId]
-			      @rowMax[datasetId] = @matrix[datasetId][programId]
-			      @rowMaxPos[datasetId] = [programId]
-			    elsif @rowMax[datasetId] == @matrix[datasetId][programId]
-			      @rowMaxPos[datasetId] << programId
+			    if @rowMax[datasetConfigId] > @matrix[datasetConfigId][programId]
+			      @rowMax[datasetConfigId] = @matrix[datasetConfigId][programId]
+			      @rowMaxPos[datasetConfigId] = [programId]
+			    elsif @rowMax[datasetConfigId] == @matrix[datasetConfigId][programId]
+			      @rowMaxPos[datasetConfigId] << programId
 			    end
 			end
 		  else
-		    @rowMax[datasetId] = @matrix[datasetId][programId]
-		    @rowMaxPos[datasetId] = [programId]
+		    @rowMax[datasetConfigId] = @matrix[datasetConfigId][programId]
+		    @rowMaxPos[datasetConfigId] = [programId]
 		  end
 		end
 		render :view => 'ds_and_p', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds}

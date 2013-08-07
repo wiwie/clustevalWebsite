@@ -11,7 +11,10 @@
     <td>Absolute Path</td><td><%= @datasetConfig.absPath.split('/')[-1] %></td>
   </tr>
   <tr>
-    <td>Dataset</td><td><%= link_to @dataset.absPath.split('/')[-2] + "/" + @dataset.absPath.split('/')[-1], @dataset %></td>
+    <td>Datasets</td>
+    <td>
+      <% @datasets.each do |ds| %><%= link_to ds.absPath.split('/')[-2] + "/" + ds.absPath.split('/')[-1], ds %>,<% end  %>
+    </td>
   </tr>
   <tr>
     <td>File content</td><td>
