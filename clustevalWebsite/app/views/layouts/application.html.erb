@@ -150,7 +150,7 @@
   <div id='top_navigation'>
     <table id="menu_table" class="designTable">
       <tr>
-        <td style="vertical-align: bottom;"><%= render_navigation(:level => 1, :static_leaf => true, :context => :admin) %></td>
+        <td style="vertical-align: bottom;"><%= render_navigation(:level => 1, :static_leaf => true) %></td>
       </tr>
     </table>
   </div>
@@ -171,7 +171,7 @@
         </div>
         </td>
         <td class='content_table_right'>
-    <div class='breadcrumb'><%= render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => true, :join_with => ' » ', :prefix => ' You are here: ', :context => :admin) %></div>
+    <div class='breadcrumb'><%= render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => true, :join_with => ' » ', :prefix => ' You are here: ') %></div>
         <div class='clustEvalContentInner'>
         <h2><%= yield(:title) %></h2>
         <div style="padding-left:10px; padding-right:10px;">

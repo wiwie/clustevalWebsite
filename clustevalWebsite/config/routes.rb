@@ -4,16 +4,16 @@ ClustEval::Application.routes.draw do
   	mathjax 'mathjax'
 
   	match 'datasets/index' => 'datasets#index'
-  	match 'datasets/comparison' => 'datasets#comparison'
-  	match 'datasets/show_comparison' => 'datasets#show_comparison'
-	match 'datasets/fetch_table_data/:id/:measureId' => 'datasets#fetch_table_data'
-	match 'datasets/show_clusterings_fetch_graph_data/:id/:measureId' => 'datasets#show_clusterings_fetch_graph_data'
+  	match 'dataset_configs/comparison' => 'dataset_configs#comparison'
+  	match 'dataset_configs/show_comparison' => 'dataset_configs#show_comparison'
+	match 'dataset_configs/fetch_table_data/:id/:measureId' => 'dataset_configs#fetch_table_data'
+	match 'dataset_configs/show_clusterings_fetch_graph_data/:id/:measureId' => 'dataset_configs#show_clusterings_fetch_graph_data'
 	match 'datasets/download/:id' => 'datasets#download'
-	match 'datasets/:id/perf' => 'datasets#show_performance'
-	match 'datasets/:id/stat' => 'datasets#show_statistics'
-	match 'datasets/:id/clust' => 'datasets#show_clusterings'
-	match 'datasets/:id/bestclust' => 'datasets#show_bestclusterings'
-	match 'datasets/:id/bestclust/:program_filter' => 'datasets#show_bestclusterings', :as => :dataset_filter
+	match 'dataset_configs/:id/perf' => 'dataset_configs#show_performance'
+	match 'dataset_configs/:id/stat' => 'dataset_configs#show_statistics'
+	match 'dataset_configs/:id/clust' => 'dataset_configs#show_clusterings'
+	match 'dataset_configs/:id/bestclust' => 'dataset_configs#show_bestclusterings'
+	match 'dataset_configs/:id/bestclust/:program_filter' => 'dataset_configs#show_bestclusterings', :as => :dataset_filter
 	match 'data_configs/fetch_table_data/:id' => 'data_configs#fetch_table_data'
 	match 'data_configs/:id/comparison' => 'data_configs#comparison'
 	match 'login', :to => "user_sessions#new",      :as => :login

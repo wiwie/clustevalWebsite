@@ -10,7 +10,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 
 		@dataConfig = DataConfig.find(@paramOpt.data_config_id)
 		@datasetConfig = @dataConfig.dataset_config
-		@dataset = @datasetConfig.dataset
+		#@dataset = @datasetConfig.dataset
 
 		@programConfig = ProgramConfig.find(@paramOpt.program_config_id)
 
@@ -24,25 +24,36 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 			@logContents << tmp
 		end
 
+		directory = @paramOpt.absPath
+		pathDelimiter = directory.length-1-directory.reverse.index("/")
+		directory = directory[0,pathDelimiter]
 
-		clusteringPath = @paramOpt.absPath.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv'
-		file = File.open(clusteringPath)
 		@clusteringContents = []
-		while tmp = file.gets do
-			@clusteringContents << tmp
-		end
 
-		@clusteringContents = @clusteringContents[1].split(/\t/)[1]
+		Dir.foreach(directory) do |item|
+		  next if item == '.' or item == '..'
 
-		@clustering = {}
-		i = 0
-		@clusteringContents.split(';').each do |clusterString|
-			@clusterItems = {}
-			clusterString.split(',').each do |clusterItemString|
-				@clusterItems[clusterItemString.split(':')[0]] = clusterItemString.split(':')[1]
+		  if item.index("." + @iteration.iteration.to_s + ".") and item.index(".conv")
+		  	clusteringPath = directory + "/" + item
+
+			file = File.open(clusteringPath)
+			while tmp = file.gets do
+				@clusteringContents << tmp
 			end
-			@clustering[i.to_s] = @clusterItems
-			i = i + 1
+
+			@clusteringContents = @clusteringContents[1].split(/\t/)[1]
+
+			@clustering = {}
+			i = 0
+			@clusteringContents.split(';').each do |clusterString|
+				@clusterItems = {}
+				clusterString.split(',').each do |clusterItemString|
+					@clusterItems[clusterItemString.split(':')[0]] = clusterItemString.split(':')[1]
+				end
+				@clustering[i.to_s] = @clusterItems
+				i = i + 1
+			end
+		  end
 		end
 
 		

@@ -51,7 +51,7 @@
     <td>Program Config</td><td><%= link_to @programConfig.absPath.split('/')[-1], @programConfig %></td>
   </tr>
   <tr>
-    <td>Invocation line</td><td><%= @invocationLines[i] %></td>
+    <td>Invocation line</td><td><%#= @invocationLines[i] %></td>
   </tr>
   <tr>
   	<td>Default parameter values (Run Config)</td><td><% @paramValues = RunExecutionParameterValue.where(:run_execution_id => @runExecution.id).where(:program_config_id => @programConfig.id) %><% @paramValues.each do |paramValue| %><%= paramValue.program_parameter.name %>=<%= paramValue.value %><br /><% end %></td>
@@ -89,7 +89,7 @@
 	    <th>Parameter set</th>
 	    <th>Clustering Quality Measure</th>
 	    <th>Quality</th>
-	    <th>Clustering</th>
+	    <th>Matching</th>
 	  </tr>
 		</thead>
 		<tbody>
@@ -137,7 +137,7 @@
 					},
 					yAxis: {
 						title: {
-							text: "Clustering quality"
+							text: "Quality"
 						}
 					},
 					xAxis: {
@@ -177,7 +177,7 @@
 					},
 					yAxis: {
 						title: {
-							text: "Clustering quality"
+							text: "Quality"
 						}
 					},
 					xAxis: {

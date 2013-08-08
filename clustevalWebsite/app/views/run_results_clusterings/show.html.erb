@@ -33,7 +33,7 @@
       <% @runResultQualities.each do |quality| %>
       <tr>
         <td><%= link_to quality.program_config.program.name, quality.program_config.program %></td>
-        <td><%= link_to quality.data_config.dataset_config.dataset.name, quality.data_config.dataset_config.dataset.dataset %></td>
+        <td><%= link_to quality.data_config.dataset_config.name, quality.data_config.dataset_config.dataset_config %></td>
         <td><%= quality.paramString %></td>
         <td><%= quality.clustering_quality_measure.alias %></td>
         <td><%= quality.quality %></td>

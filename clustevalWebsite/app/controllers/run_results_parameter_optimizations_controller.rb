@@ -39,7 +39,7 @@ class RunResultsParameterOptimizationsController < ApplicationController
 
   		@optParams = @run.run_parameter_optimization_parameters
 
-		@invocationLines = []
+		# @invocationLines = []
 
 		for i in 0..@runResultsParamOpt.length-1 do
 			runResultsParam = @runResultsParamOpt[i]
@@ -50,25 +50,25 @@ class RunResultsParameterOptimizationsController < ApplicationController
 			@optParam = @optParams.find_by_program_config_id(@programConfig.id)
 			@parameterNames << @optParam.program_parameter.name
 
-			if @dataConfig.goldstandard_config_id
-				invocationLine = @programConfig.invocationFormatParameterOptimization
-				if invocationLine == ''
-					invocationLine = @programConfig.invocationFormat
-				end
-				invocationLine = invocationLine.gsub('%gs%',@dataConfig.goldstandard_config.goldstandard.absPath)
-			else
-				invocationLine = @programConfig.invocationFormatParameterOptimizationWithoutGoldStandard
-				if invocationLine == ''
-					invocationLine = @programConfig.invocationFormatWithoutGoldStandard
-				end
-				invocationLine = invocationLine.gsub('%gs%','')
-			end
+		# 	if @dataConfig.goldstandard_config_id
+		# 		invocationLine = @programConfig.invocationFormatParameterOptimization
+		# 		if invocationLine == ''
+		# 			invocationLine = @programConfig.invocationFormat
+		# 		end
+		# 		invocationLine = invocationLine.gsub('%gs%',@dataConfig.goldstandard_config.goldstandard.absPath)
+		# 	else
+		# 		invocationLine = @programConfig.invocationFormatParameterOptimizationWithoutGoldStandard
+		# 		if invocationLine == ''
+		# 			invocationLine = @programConfig.invocationFormatWithoutGoldStandard
+		# 		end
+		# 		invocationLine = invocationLine.gsub('%gs%','')
+		# 	end
 
-			invocationLine = invocationLine.gsub('%e%',@programConfig.program.absPath)
-			invocationLine = invocationLine.gsub('%i%',@dataConfig.dataset_config.dataset.absPath)
-			invocationLine = invocationLine.gsub('%o%','<OUTPUT_PATH>')
+		# 	invocationLine = invocationLine.gsub('%e%',@programConfig.program.absPath)
+		# 	invocationLine = invocationLine.gsub('%i%',@dataConfig.dataset_config.dataset.absPath)
+		# 	invocationLine = invocationLine.gsub('%o%','<OUTPUT_PATH>')
 
-			@invocationLines << invocationLine
+		# 	@invocationLines << invocationLine
 		end
 		
 		respond_to do |format|
@@ -88,7 +88,7 @@ class RunResultsParameterOptimizationsController < ApplicationController
 				#iteration.paramSetAsString,
 				iteration.alias, 
 				iteration.quality.to_s,
-				'<a href="/run_results_parameter_optimizations_parameter_set_iterations/' + iteration.iteration_id.to_s + '">Clustering</a>'
+				'<a href="/run_results_parameter_optimizations_parameter_set_iterations/' + iteration.iteration_id.to_s + '">Matching</a>'
 			]
 		end
 

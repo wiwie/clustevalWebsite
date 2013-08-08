@@ -1,10 +1,10 @@
-<% content_for :title, "Comparison of all clustering methods on all datasets" %>
+<% content_for :title, "Comparison of all methods on all datasets" %>
 <%= form_tag({:action => 'comparison'}, {:method => 'get'}) do %>
 <% if not @qualityMeasure %>
 	<p>This comparison page requires a quality measure in the repository, but there is none. Please add at least one measure to the repository and reload this page.</p>
 <% else %>
-	<p>This matrix contains the best performances of clustering methods applied to different datasets. Every cell shows the best achieved clustering quality with the corresponding clustering method on the corresponding dataset. The clustering quality is measured as <%= link_to @qualityMeasure.alias, @qualityMeasure %>.</p>
-	<p>You can choose a different clustering quality measure:
+	<p>This matrix contains the best performances of methods applied to different datasets. Every cell shows the best achieved quality with the corresponding clustering method on the corresponding dataset. The quality is measured as <%= link_to @qualityMeasure.alias, @qualityMeasure %>.</p>
+	<p>You can choose a different quality measure:
 	<%= collection_select(:post, :measure, ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px', :onchange => "$('body').addClass('loading'); this.form.submit();"} ) %>
 	</p>
 	<p>If you want to invert the matrix (interchange columns and rows), click this button:

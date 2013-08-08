@@ -6,7 +6,7 @@
 <table id="dataAndProgramStatistics" class="display">
   <thead>
   <tr>
-    <th>Dataset</th>
+    <th>Dataset Config</th>
     <% for i in 0..@qualityMeasures.length-1 %>
     <% measure = @qualityMeasures[i] %>
     <th>
@@ -89,7 +89,7 @@ $(function () {
               }
             },
             series: [
-<% Dataset.all(session).sort_by{|x| x.name}.each do |dataset| %>
+<% DatasetConfig.all(session).sort_by{|x| x.name}.each do |dataset| %>
 <% if @visibleDatasets[dataset] %>
 {
   name: '<%= dataset.name %>',

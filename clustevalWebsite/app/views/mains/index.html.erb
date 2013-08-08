@@ -51,18 +51,18 @@ The use-case below presents to you where you can find which functionality on the
   <div style="height:100px;"></div>
 
   <div style="width:180px;display: inline-block;"></div>
-  <a data-toggle="tooltip" title="6. Specific Data Set" href="#workflow" id="usecase_6" class="well well-small" style="font-weight:bold;">6. Specific Data Set</a>
+  <a data-toggle="tooltip" title="6. Specific Dataset Config" href="#workflow" id="usecase_6" class="well well-small" style="font-weight:bold;">6. Specific Dataset Config</a>
   <div class="graph_node" id="usecase_6_content" style="display:none;">
     Take a look at the achieved qualities<br>
-    on a single data set.<br>
-    <%= link_to "-> Data Sets -> " + Dataset.all(session).first.alias + " -> Best Qualities", :controller => :datasets, :action => :show_comparison, :id => Dataset.all(session).first %>
+    on a single dataset configuration.<br>
+    <%= link_to "-> Dataset Configs -> " + DatasetConfig.all(session).first.name + " -> Best Qualities", :controller => :dataset_configs, :action => :show_comparison, :id => DatasetConfig.all(session).first %>
   </div>
 
   <div style="width:150px;display: inline-block;"></div>
   <a data-toggle="tooltip" title="7. Which Parameter Sets?" href="#workflow" id="usecase_7" class="well well-small" style="font-weight:bold;">7. Which Parameter Sets?</a>
   <div class="graph_node" id="usecase_7_content" style="display:none;">
-    ... and find out with which parameter sets the optimal<br> clusterings were achieved on this data set.<br>
-    <%= link_to "-> Data Sets -> " + Dataset.all(session).first.alias + " -> Best Parameters", :controller => :datasets, :action => :show_bestclusterings, :id => Dataset.all(session).first, :program_filter => Program.all(session).first %>.
+    ... and find out with which parameter sets the optimal<br> clusterings were achieved on this dataset configuration.<br>
+    <%= link_to "-> Dataset Configs -> " + DatasetConfig.all(session).first.name + " -> Best Parameters", :controller => :dataset_configs, :action => :show_bestclusterings, :id => DatasetConfig.all(session).first, :program_filter => Program.all(session).first %>.
   </div>
 </div>
 

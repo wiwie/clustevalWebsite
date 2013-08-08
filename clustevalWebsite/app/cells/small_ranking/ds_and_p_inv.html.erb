@@ -11,7 +11,7 @@
     <% for i in 0..@datasets.length-1 %>
     <% dataset = @datasets[i] %>
     <th>
-      <%= dataset.alias %>
+      <%= dataset.name %>
 </th>
     <% end %>
   </tr>
@@ -27,7 +27,7 @@
           <% if @matrix[i][j].to_s == "--" %>
             <% @string = @matrix[i][j].to_s %>
           <% else %>
-            <% @string = '<a href="/datasets/' + @datasets[j-1].id.to_s + '/bestclust/' + @programs[i].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+            <% @string = '<a href="/dataset_configs/' + @datasets[j-1].id.to_s + '/bestclust/' + @programs[i].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
 
             <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
               <% @string = @string + "<b>" %>
@@ -76,9 +76,13 @@ $(function () {
             yAxis: {
                 title: {
                     text: '<%= @qualityMeasure.alias %>'
-                },
-                min: <%= @qualityMeasure.minValue %>,
-                max: <%= @qualityMeasure.maxValue %>,
+                }
+                <% if @qualityMeasure.minValue %>
+                ,min: <%= @qualityMeasure.minValue %>
+                <% end %>
+                <% if @qualityMeasure.maxValue %>
+                ,max: <%= @qualityMeasure.maxValue %>
+                <% end %>
             },
     
             tooltip: {
@@ -104,10 +108,10 @@ $(function () {
               }
             },
             series: [
-<% Dataset.all(session).sort_by{|x| x.alias}.each do |dataset| %>
+<% DatasetConfig.all(session).sort_by{|x| x.name}.each do |dataset| %>
 <% if @visibleDatasets[dataset] %>
 {
-  name: '<%= dataset.alias %>',
+  name: '<%= dataset.name %>',
   data: [<% Program.all(session).sort_by{|x| x.alias}.each do |program| %>
   <% if @visiblePrograms[program] %>
     <% @qual = @matrix[@programIds[program]][@datasetIds[dataset]] %>

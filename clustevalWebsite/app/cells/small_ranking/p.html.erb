@@ -1,7 +1,7 @@
 <table id="programStatistics" class="display">
   <thead>
   <tr>
-    <th>Dataset</th>
+    <th>Dataset Config</th>
     <th>Best quality</th>
     <th>Parameter set</th>
   </tr>
@@ -9,7 +9,7 @@
  <tbody>
   <% iterationsExts.each do |iterationExt| %>
   <tr>
-    <td><%= iterationExt.dataset.name %></td>
+    <td><%= iterationExt.dataset_config.name %></td>
     <td>
       <%= (iterationExt.quality*1000).round/1000.0 %>
     </td>
