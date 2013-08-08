@@ -1,0 +1,6 @@
+<%= form_tag('/datasets/' + params[:id] + '/bestclust', {:method => 'get'}) do %>
+<% content_for :title, "Which parameter sets lead to the optimal clustering quality?" %>
+Please choose a clustering quality measure:
+<%= collection_select(:post, :clustering_quality_measure_id2, ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px; font: 16px serif;', :onchange => "$('body').addClass('loading'); this.form.submit();"} ) %>
+<%= render_cell :small_ranking, :ds, :qualityMeasure => @qualityMeasureName, :obj => DatasetConfig.find_by_id(@dataset_id), :program_filter => params[:program_filter] %>
+<% end %>
