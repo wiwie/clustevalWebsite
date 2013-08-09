@@ -1,6 +1,8 @@
 ---
 affinity_propagation_messages.png: affinity_propagation_messages-c9c5ff457dfb815d5338c64e570174fb.png
-ajax-loader.gif: ajax-loader-27195e3db02b8957b8525510fe56536f.gif
+ajax-loader.gif: ajax-loader-c59bbd56364b1602b301adf0298a7be4.gif
+cassini.png: cassini-d8b9fa4c6f741ff443ad3a69ef234753.png
+cuboid.png: cuboid-09d32f39d900cbe2297a214553e6ac70.png
 dendrogram.png: dendrogram-8bc544bf00b50c6c3c695483fa56b82f.png
 diagona/005.png: diagona/005-88f0f0fdfaf580a768e5dcef36be2661.png
 diagona/027.png: diagona/027-91bd9601577c03f2cf46ba31a41fad3d.png
@@ -18,8 +20,8 @@ rails.png: rails-be8732dac73d845ac5b142c8fb5f9fb0.png
 spectral.png: spectral-9c266d4e3b2768310adca115f04a22b4.png
 spirals1000.png: spirals1000-a17388a7db22c6ea2666355c49a2c3a5.png
 transclust.png: transclust-30f289dbc453f9451c3b38fdcbdcf2e2.png
-application.js: application-66565e9d3b26ef11cd60b74d8bf2af4c.js
-highcharts.js: highcharts-72d911e92e04970f740aa29b8371d98d.js
+application.js: application-accc6abe71d4f52b54ff16f72edaa4b3.js
+highcharts.js: highcharts-8e9130227521041ea9360f903eb56bcb.js
 BebasNeue-webfont.eot: BebasNeue-webfont-a32569e3d3d4213f6e34be251e6e196f.eot
 BebasNeue-webfont.svg: BebasNeue-webfont-0eeada0761ac58bcf561d59462739c6e.svg
 BebasNeue-webfont.ttf: BebasNeue-webfont-3c9ceace78f92e4cd39a89b3fa9744c7.ttf
@@ -68,7 +70,7 @@ DroidSerif-Regular-webfont.eot: DroidSerif-Regular-webfont-f9bc5410e66db8656fbb7
 DroidSerif-Regular-webfont.svg: DroidSerif-Regular-webfont-93da9cdf412f37f8225bad880d00121a.svg
 DroidSerif-Regular-webfont.ttf: DroidSerif-Regular-webfont-2f6146de487fc86308cc67899b8f6828.ttf
 DroidSerif-Regular-webfont.woff: DroidSerif-Regular-webfont-c6568fe4c0a3df3ddf523335284d7abf.woff
-application.css: application-6d50712d49638431e592efc498d84ab8.css
+application.css: application-9b8cf0a1e740db890aefcef397ec3e8d.css
 nobile-webfont.eot: nobile-webfont-dd31fe4fda6f64d5ff6d756e7b546ff4.eot
 nobile-webfont.svg: nobile-webfont-9e76027d2278aa770b98ef87971b214c.svg
 nobile-webfont.ttf: nobile-webfont-f60c63187fba9dc367ec40d5ab42c154.ttf
