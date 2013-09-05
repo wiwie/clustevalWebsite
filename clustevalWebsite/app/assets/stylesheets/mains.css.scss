@@ -30,7 +30,7 @@ body {
 .title {
 	background-color:$darker;
 	padding-top: 30px;
-	padding-bottom: 0px;
+	padding-bottom: 10px;
 }
 
 .title div {
@@ -357,60 +357,60 @@ td {
 	text-decoration: none; 
 	font-weight: bold;
 	background-repeat:no-repeat;
-	background-position: 6px 5px;
+	background-position: 5px 7px;
 }
 
 #nav_mains a {
 	background-repeat:no-repeat;
-	background-position: 6px 5px;
+	background-position: 5px 7px;
 	background-image:url(045.png);
 }
 
 #nav_comparison a {
 	background-repeat:no-repeat;
-	background-position: 6px 5px;
+	background-position: 5px 7px;
 	background-image:url(083.png);
 }
 
 #nav_programs a {
 	background-repeat:no-repeat;
-	background-position: 6px 5px;
+	background-position: 5px 7px;
 	background-image:url(080.png);
 }
 
 #nav_datasets a {
 	background-repeat:no-repeat;
-	background-position: 6px 5px;
+	background-position: 5px 7px;
 	background-image:url(167.png);
 }
 
 #nav_helps a {
 	background-repeat:no-repeat;
-	background-position: 6px 5px;
+	background-position: 5px 7px;
 	background-image:url(043.png);
 }
 
 #nav_aboutus a {
 	background-repeat:no-repeat;
-	background-position: 6px 5px;
+	background-position: 5px 7px;
 	background-image:url(005.png);
 }
 
 #nav_admins a {
 	background-repeat:no-repeat;
-	background-position: 6px 5px;
+	background-position: 5px 7px;
 	background-image:url(086.png);	
 }
 
 #nav_measures a {
 	background-repeat:no-repeat;
-	background-position: 6px 5px;
+	background-position: 5px 7px;
 	background-image:url(066.png);	
 }
 
 #nav_submit a {
 	background-repeat:no-repeat;
-	background-position: 6px 5px;
+	background-position: 5px 7px;
 	background-image:url(fugue/arrow-curve.png);	
 }
 
@@ -697,10 +697,31 @@ textarea {
 	padding: 0px;
 }
 
-li {
-	line-height: normal;
-}
+//li {
+//	line-height: normal;
+//}
 
 .usecase a {
+	text-decoration:none;
+}
+
+$gradient1: #443f40;
+$gradient2: #575253;
+
+.navbar-inner {
+	min-height: 0px;
+}
+
+.navbar .nav>li>a {
+	padding: 5px 15px 5px 25px;
+}
+
+.navbar-fixed-top .navbar-inner,.navbar-static-top .navbar-inner{
+	border-width:0 0 0px;
+}
+
+.navbar .nav>li>a:focus,.navbar .nav>li>a:hover{
+	background-color:transparent;
+	color:#f28c11;
 	text-decoration:none;
 }
