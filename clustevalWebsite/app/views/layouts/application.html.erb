@@ -42,7 +42,7 @@
         <!-- <table id="menu_table" class="designTable"> -->
           <!-- <tr> -->
             <!-- <td style="vertical-align: bottom;"> -->
-              <%= render_navigation(:level => 1, :static_leaf => true) %>
+              <%= render_navigation(:level => 1, :static_leaf => true, :context => "admin") %>
             <!-- </td> -->
           <!-- </tr> -->
         <!-- </table> -->
@@ -56,6 +56,7 @@
       <tr valign="top">
         <td class='content_table_left'>
         <div class='left_navigation'>
+            <div class="affix" style="width:190px;">
           <%= render_cell :navigation, :display %>
 
           <div class='left_navigation_title'>
@@ -64,6 +65,7 @@
           <p><small>
             <%= render_cell :info_text, :display %>
           </small></p>
+        </div>
         </div>
         </td>
         <td class='content_table_right'>
