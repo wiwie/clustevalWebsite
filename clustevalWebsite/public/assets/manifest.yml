@@ -15,6 +15,7 @@ diagona/086.png: diagona/086-29e98a16b35191ae054ba2bb5947ee2b.png
 diagona/167.png: diagona/167-dcf6d3f4766f4294f31f1a289ee38858.png
 fugue/arrow-curve.png: fugue/arrow-curve-9de5de0a410ce9d553186ea3d66099dc.png
 kmeans.png: kmeans-9c9b6e284fc1237bccd49c44ab71e4ee.png
+kmedoids.png: kmedoids-c4da88e92bca3eec09116285a0e7a3fc.png
 markov.png: markov-286300c78ed7fd2cd50ccee13a82e741.png
 rails.png: rails-be8732dac73d845ac5b142c8fb5f9fb0.png
 spectral.png: spectral-9c266d4e3b2768310adca115f04a22b4.png
@@ -70,7 +71,7 @@ DroidSerif-Regular-webfont.eot: DroidSerif-Regular-webfont-f9bc5410e66db8656fbb7
 DroidSerif-Regular-webfont.svg: DroidSerif-Regular-webfont-93da9cdf412f37f8225bad880d00121a.svg
 DroidSerif-Regular-webfont.ttf: DroidSerif-Regular-webfont-2f6146de487fc86308cc67899b8f6828.ttf
 DroidSerif-Regular-webfont.woff: DroidSerif-Regular-webfont-c6568fe4c0a3df3ddf523335284d7abf.woff
-application.css: application-9b8cf0a1e740db890aefcef397ec3e8d.css
+application.css: application-6151de70bddbb3ce56475d8782381302.css
 nobile-webfont.eot: nobile-webfont-dd31fe4fda6f64d5ff6d756e7b546ff4.eot
 nobile-webfont.svg: nobile-webfont-9e76027d2278aa770b98ef87971b214c.svg
 nobile-webfont.ttf: nobile-webfont-f60c63187fba9dc367ec40d5ab42c154.ttf
