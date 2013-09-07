@@ -30,57 +30,52 @@
   </style>
 </head>
 <body>
-<p style="height:100px;"></p>
-<div class="container">
 <div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
     <div class='title'>
       <h1><div id="first">clusteval</div> <div id="second">Integrative Clustering Evaluation Framework</div></h1>
     </div>
-  <div class="navbar-inner">
-    <!-- <div class='example_content' id='example_3'> -->
-      <!-- <div id='top_navigation'> -->
-        <!-- <table id="menu_table" class="designTable"> -->
-          <!-- <tr> -->
-            <!-- <td style="vertical-align: bottom;"> -->
-              <%= render_navigation(:level => 1, :static_leaf => true, :context => "admin") %>
-            <!-- </td> -->
-          <!-- </tr> -->
-        <!-- </table> -->
-      <!-- </div> -->
-    <!-- </div> -->
+    <div class='breadcrumb'>
+      <%= render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => false, :join_with => ' » ', :prefix => ' Location: ', :context => :admin) %>
+    </div>
+      <%= render_navigation(:level => 1, :static_leaf => true, :context => "admin") %>
   </div>
 </div>
-</div>
-  <div class='clustEvalContent'>
+<br><br>
+<div style="height:100px;">&nbsp;</div>
     <table class="designTable">
       <tr valign="top">
         <td class='content_table_left'>
-        <div class='left_navigation'>
-            <div class="affix" style="width:190px;">
-          <%= render_cell :navigation, :display %>
+  <!-- <div class="row"> -->
+      <!-- <div class="span2"> -->
+          <!-- <div class='left_navigation'> -->
+        <div data-spy="affix" style="width: 200px;">
 
-          <div class='left_navigation_title'>
-            <%= image_tag '/assets/027.png', :style => 'padding-right: 5px;' %>Hints:
-          </div>
-          <p><small>
-            <%= render_cell :info_text, :display %>
-          </small></p>
-        </div>
-        </div>
+            <%= render_cell :navigation, :display %>
+
+            <div class='left_navigation_title'>
+              <%= image_tag '/assets/027.png', :style => 'padding-right: 5px;' %>Hints:
+            </div>
+            <p><small>
+              <%= render_cell :info_text, :display %>
+            </small></p>
+          <!-- </div> -->
+        <!-- </div> -->
+      <!-- </div> -->
         </td>
-        <td class='content_table_right'>
-    <div class='breadcrumb'><%= render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => true, :join_with => ' Â» ', :prefix => ' You are here: ', :context => :admin) %></div>
-        <div class='clustEvalContentInner'>
+<td class='content_table_right'>
+    <!-- <div class="span12"> -->
+      <div class='clustEvalContentInner'>
         <h2><%= yield(:title) %></h2>
         <div style="padding-left:10px; padding-right:10px;">
           <%= yield %>
         </div>
-        </div>
+      </div>
+    <!-- </div> -->
         </td>
       </tr>
     </table>
   </div>
-
   <div class="mymodal"><!-- Place at bottom of page --></div>
   <p></p>
 </body>
