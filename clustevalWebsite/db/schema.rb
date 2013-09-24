@@ -570,7 +570,7 @@ ActiveRecord::Schema.define(:version => 20130807003720) do
     t.integer "program_config_id",             :null => false
     t.integer "clustering_quality_measure_id", :null => false
     t.binary  "paramString",                   :null => false
-    t.binary  "quality",                       :null => false
+    t.float   "quality",                       :null => false
   end
 
   add_index "run_results_clustering_qualities", ["clustering_quality_measure_id"], :name => "fk_clustering_quals_qual_measures"
