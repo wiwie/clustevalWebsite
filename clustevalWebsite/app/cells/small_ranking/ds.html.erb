@@ -7,16 +7,14 @@
   </tr>
  </thead>
  <tbody>
-  <% iterationsExts.each do |iterationExt| %>
-  <tr>
-    <td><%= iterationExt.program.alias %></td>
-    <td>
-      <%= (iterationExt.quality*1000).round/1000.0 %>
-    </td>
-    <td><%= raw iterationExt.paramSetAsString.gsub(",","<br />") %></td>
-  </tr>
-  <% end %>
 </tbody>
+  <tfoot>
+  <tr>
+    <th>Program</th>
+    <th>Best quality</th>
+    <th>Parameter set</th>
+  </tr>
+ </tfoot>
 </table>
 
 <script type="text/javascript">
@@ -30,7 +28,14 @@ $(document).ready(function() {
       bDestroy: true,
       bSort: true,
       bAutoWidth: false,
-      aaSorting: [[ 1, "desc" ]]
+      aaSorting: [[ 1, "desc" ]],
+      sAjaxSource: "/datasets/bestclusterings_table_data/<%= dataset.id %>/<%= qualityMeasure %>"
+    }).columnFilter({
+      aoColumns: [
+        { type: "select" },
+        { type: "number-range" },
+        { type: "text" }
+        ]
     });
 });
 </script>

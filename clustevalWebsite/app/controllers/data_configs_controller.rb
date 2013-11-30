@@ -2,9 +2,7 @@ class DataConfigsController < ApplicationController
 	before_filter :require_user
 
 	def index
-		@repositoryType = RepositoryType.find_by_name("Repository")
-		@repository = Repository.find_by_repository_type_id(@repositoryType.id)
-		@dataConfigs = DataConfig.where(:repository_id => @repository.id)
+		@dataConfigs = DataConfig.all(session)
 		
 		respond_to do |format|
 			format.html # index.html.erb
@@ -13,7 +11,7 @@ class DataConfigsController < ApplicationController
 	end
 
 	def fetch_table_data
-		@dataConfig = DataConfig.find_by_name(params[:id])
+		@dataConfig = DataConfig.all(session).select{|dataConfig| dataConfig.name == params[:id]}.first
 		@datasetConfig = @dataConfig.dataset_config
 		@goldstandardConfig = @dataConfig.goldstandard_config
     	@runResults = RunResultsParameterOptimization.select(:id).where(:data_config_id => DataConfig.select(:id).where(:data_config_id => params[:id]))
@@ -27,8 +25,9 @@ class DataConfigsController < ApplicationController
 			@paramValuesQualityArray << [
 				runResult.t12_r5, 
 				runResult.t10_r6.split('/')[-1], 
+				#runResult.t10_r6,
 				runResult.t0_r3.gsub(',','<br />'),
-				#(@measure.nil? ? '' : @measure.alias),
+				#runResult.t0_r3,
 				runResult.t5_r2,
         		runResult.t4_r4, 
 				#''#view_context.link_to("Clustering", :controller => "run_results_parameter_optimizations_parameter_set_iterations", :action=>"show", :id => runResult.t1_r2).to_s
@@ -37,12 +36,12 @@ class DataConfigsController < ApplicationController
 			]
 		end
 
-		@json = {"aaData" => @paramValuesQualityArray}.to_json
+		@json = JSON.generate({"aaData" => @paramValuesQualityArray})
 		render :inline => @json
 	end
 	
 	def show
-		@dataConfig = DataConfig.find_by_name(params[:id])
+		@dataConfig = DataConfig.all(session).select{|dataConfig| dataConfig.name == params[:id]}.first
 		@datasetConfig = @dataConfig.dataset_config
 		@goldstandardConfig = @dataConfig.goldstandard_config
     	@runResults = RunResultsParameterOptimization.select(:id).where(:data_config_id => DataConfig.select(:id).where(:data_config_id => params[:id]))
