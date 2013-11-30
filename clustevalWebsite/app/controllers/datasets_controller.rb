@@ -33,7 +33,15 @@ class DatasetsController < ApplicationController
 	def show
 		@dataset = Dataset.find_by_id(params[:id])
 
-		@content = ''
+		# parse license document
+		begin
+			file = File.open(@dataset.absPath + ".LICENSE")
+			@license = ""
+			while tmp = file.gets
+				@license << tmp
+			end
+		rescue
+		end
 		
 		file = File.open(@dataset.absPath)
 		@contents = ""
@@ -162,5 +170,27 @@ class DatasetsController < ApplicationController
 			format.html # index.html.erb
 			format.json { render :json => @dataset }
 		end
+	end
+
+	def bestclusterings_table_data
+		@dataset = Dataset.find(params[:id])
+		@qualityMeasure = ClusteringQualityMeasure.find(params[:measureId])
+
+		if @qualityMeasure.optimum == 'Maximum'
+			@iterationsExts = ParameterOptimizationMaxQualRow.joins([:program, :dataset]).select("parameter_optimization_max_qual_rows.program_id,parameter_optimization_max_qual_rows.dataset_id,quality,paramSetAsString,clustering_quality_measure_id").where(:dataset_id => @dataset.id).where(:clustering_quality_measure_id => @qualityMeasure.id)
+		else
+			@iterationsExts = ParameterOptimizationMinQualRow.joins([:program, :dataset]).select("parameter_optimization_min_qual_rows.program_id,parameter_optimization_min_qual_rows.dataset_id,quality,paramSetAsString,clustering_quality_measure_id").where(:dataset_id => @dataset.id).where(:clustering_quality_measure_id => @qualityMeasure.id)
+		end
+
+		result = []
+	  	@iterationsExts.each do |iterationExt|
+	  		result << [
+	  			iterationExt.program.alias,
+	      		(iterationExt.quality*1000).round/1000.0,
+	    		iterationExt.paramSetAsString.gsub(",","<br />")
+	    	]
+	  	end
+		
+		render :inline => {"aaData" => result}.to_json
 	end
 end

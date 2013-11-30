@@ -2,6 +2,8 @@ class RunResultsRunAnalysesController < ApplicationController
 	before_filter :require_user
 
 	def show
+		@statistics = []
+
 		@runResult = RunResult.find_by_id(params[:id])
 
 		@run = Run.find(@runResult.run_id)
@@ -11,9 +13,6 @@ class RunResultsRunAnalysesController < ApplicationController
 		@runRunAnalysisRunIdentifier = RunRunAnalysisRunIdentifier.where(:run_run_analysis_id => @runRunAnalysis.id)
 
 		@runsAnalysisStatistic = RunAnalysisStatistic.where(:run_analysis_id => @runAnalysis.id)
-
-		@statistics = []
-
 		@runsAnalysisStatistic.each do |st|
 			@statistics << Statistic.find(st.statistic_id)
 		end
@@ -23,7 +22,7 @@ class RunResultsRunAnalysesController < ApplicationController
 		@code = []
 
 		for d in 0..@runRunAnalysisRunIdentifier.length-1
-			 runIdentifier = @runRunAnalysisRunIdentifier[d]
+			runIdentifier = @runRunAnalysisRunIdentifier[d]
 
 			@codeTmp = []
 
@@ -84,10 +83,57 @@ class RunResultsRunAnalysesController < ApplicationController
 					@contentsTmp << @content
 
 	      			@newCode << '</table>'
-	      		else
-					@content = ""
+	      		elsif statistic.name == 'ParameterImportanceRunStatistic'
+					@map = {}
+					@tmpMap = {}
+					@percentilesMap = {}
+					@measures = Set.new
+					@datasets = Set.new
+					@parameter = Set.new
 					while tmp = file.gets do
-						@content << tmp
+						split = tmp.split(/\t/)
+						if not @map[split[2]]
+							@map[split[2]] = {}
+						end
+						if not @map[split[2]][split[1]]
+							@map[split[2]][split[1]] = {}
+						end
+						@map[split[2]][split[1]][split[0]] = split[3]
+						@measures.add(split[2])
+						@datasets.add(split[1])
+						@parameter.add(split[0])
+
+						# put temporary values into percentiles map
+						if not @tmpMap[split[1]]
+							@tmpMap[split[1]] = {}
+							@percentilesMap[split[1]] = {}
+						end
+						if not @tmpMap[split[1]][split[0]]
+							@tmpMap[split[1]][split[0]] = Set.new
+						end
+						@tmpMap[split[1]][split[0]].add(split[3].gsub("\n","").to_f)
+					end
+
+					# calculate percentiles
+					@tmpMap.keys.each do |ds|
+						@tmpMap[ds].keys.each do |param|
+							@percentilesMap[ds][param] = calculate_percentile(@tmpMap[ds][param].to_a, [0.0,0.25,0.5,0.75,1.0])
+						end
+					end
+
+					@content = []
+					@content << @map
+					@content << @measures.to_a.sort_by{|x| x}
+					@content << @datasets.to_a.sort_by{|x| x}
+					@content << @parameter.to_a.sort_by{|x| x}
+					@content << @percentilesMap
+
+					@contentsTmp << @content
+	      			@newCode = @content
+	      		else
+					@content = []
+					while tmp = file.gets do
+						@content << tmp.split(/\t/)
 					end
 					@contentsTmp << @content
 	      			@newCode = @content
@@ -101,6 +147,29 @@ class RunResultsRunAnalysesController < ApplicationController
 
 			@contents << @contentsTmp
 		end
+	end
+
+	def calculate_percentile(array=[],percentiles=[0.0])
+		# multiply items in the array by the required percentile 
+		# (e.g. 0.75 for 75th percentile)
+		# round the result up to the next whole number
+		# then subtract one to get the array item we need to return
+		if not array
+			return nil
+		end
+
+		result = []
+
+		sortedArray = array.sort
+	  	for i in 0..percentiles.length-1
+			#result[i] = sortedArray[((sortedArray.length * percentiles[i]).ceil)-1]
+	  		percentile = percentiles[i]
+			k = (percentile*(sortedArray.length-1)+1).floor - 1
+			f = (percentile*(sortedArray.length-1)+1).modulo(1)
+
+    		result[i] = sortedArray[k] + (f * (sortedArray[k] - sortedArray[k-1]))
+		end
+		return result
 	end
 
 	def img
