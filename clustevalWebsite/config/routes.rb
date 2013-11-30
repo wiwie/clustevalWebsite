@@ -8,6 +8,7 @@ ClustEval::Application.routes.draw do
   	match 'datasets/show_comparison' => 'datasets#show_comparison'
 	match 'datasets/fetch_table_data/:id/:measureId' => 'datasets#fetch_table_data'
 	match 'datasets/show_clusterings_fetch_graph_data/:id/:measureId' => 'datasets#show_clusterings_fetch_graph_data'
+	match 'datasets/bestclusterings_table_data/:id/:measureId' => 'datasets#bestclusterings_table_data'
 	match 'datasets/download/:id' => 'datasets#download'
 	match 'datasets/:id/perf' => 'datasets#show_performance'
 	match 'datasets/:id/stat' => 'datasets#show_statistics'
@@ -20,6 +21,9 @@ ClustEval::Application.routes.draw do
 	match 'logout', :to => "user_sessions#destroy", :as => :logout
 	match 'mains' => 'mains#set_user_session_repository', :via => :post
 	match 'mains/comparison' => 'mains#comparison'
+	match 'mains/workflow' => 'mains#workflow'
+	match 'mains/comparison_table_data/:qualityMeasure' => 'mains#comparison_table_data'
+	match 'mains/comparison_table_data_inverse/:qualityMeasure' => 'mains#comparison_table_data_inverse'
 	match 'mains/tableHeaderImage/:text' => 'mains#tableHeaderImage'
 	match 'program_configs/fetch_table_data/:id' => 'program_configs#fetch_table_data'
 	match 'programs/download/:id' => 'programs#download'
