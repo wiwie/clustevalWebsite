@@ -1,0 +1,155 @@
+<tr>
+  <td>
+    <% @alias = Statistic.find_by_name(statistic).alias %>
+    <%= link_to @alias, Statistic.find_by_name(statistic) %>
+  </td>
+  <td>
+    <% content[2].each do |dataset| %>
+        <div id="resizable<%= @id %>_<%= dataset %>_<%= @statistic.to_s %>" class="resizable" style="height:400px;width:100%;">
+        <div id="chart_<%= @id %>_<%= dataset %>_<%= @statistic.to_s %>"></div>
+        </div>
+        <script type="text/javascript" charset="utf-8">
+          $(function() {
+            var chart;
+
+            chart = new Highcharts.Chart( {
+              credits : {
+                enabled : true
+              },
+              chart: {
+                type: "column",
+                renderTo: "chart_<%= @id %>_<%= dataset %>_<%= @statistic.to_s %>",
+              },
+              title: {
+                text: "<%= @stringArgs[0] %> <%= dataset %>"
+              },
+              yAxis: {
+                title: {
+                  text: "<%= stringArgs[2] %>"
+                }
+              },
+              xAxis: {
+                title: {
+                  text: "<%= stringArgs[1] %>"
+                },
+                categories: [
+                  <% @xLabels = content[1] %>
+                  <% for x in 0..@xLabels.length-1 %>
+                    '<%= ClusteringQualityMeasure.find_by_name(@xLabels[x].gsub("\n","")).alias %>'
+                    <% if x < @xLabels.length-1 %>
+                      ,
+                    <% end %>
+                  <% end %>
+                ],
+                  labels: {
+                    enabled: true,
+                    rotation: -90,
+                    align: 'right'
+                  }
+              },
+              legend: {
+                  enabled: true
+              },
+              series: [
+              <% for p in 0..content[3].length-1 %>
+                <% @param = content[3][p] %>
+                {
+                  name: "<%= content[3][p] %>",
+                  data: [
+                  <% for x in 0..content[1].length-1 %>
+                    <% @measure = content[1][x] %>
+                    <% if @content[0][@measure][dataset] and @content[0][@measure][dataset][@param] %>
+                      <%= @content[0][@measure][dataset][@param].gsub("\n","").gsub("NaN","0.0") %>
+                    <% else %>
+                      0.0
+                    <% end %>
+                    <% if x < @xLabels.length-1 %>,<% end %>
+                  <% end %>]
+                }
+                <% if p < content[3].length-1%>
+                ,
+                <% end %>
+              <% end %>
+              ],
+              plotOptions: {
+                column: {
+                  groupPadding: 0.1,
+                  pointPadding: 0.05
+                }
+              }
+            });
+
+
+            $( "#resizable<%= @id %>_<%= dataset %>_<%= @statistic.to_s %>" ).resizable({
+              helper: "ui-resizable-helper",
+              stop: function( event, ui ) {
+                chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+              }
+            });
+          });
+        </script>
+
+        <div id="resizable<%= @id %>_2_<%= dataset %>_<%= @statistic.to_s %>" class="resizable" style="height:400px;width:100%;">
+        <div id="chart_<%= @id %>_2_<%= dataset %>_<%= @statistic.to_s %>"></div>
+        </div>
+        <script type="text/javascript" charset="utf-8">
+          $(function() {
+            var chart;
+
+            chart = new Highcharts.Chart( {
+              chart: {
+                type: "boxplot",
+                renderTo: "chart_<%= @id %>_2_<%= dataset %>_<%= @statistic.to_s %>",
+              },
+              title: {
+                text: "<%= @stringArgs[0] %> <%= dataset %>"
+              },
+              yAxis: {
+                title: {
+                  text: "<%= stringArgs[2] %>"
+                }
+              },
+              xAxis: {
+                title: {
+                  text: "Density Parameter"
+                },
+                categories: [
+                  <% @params = content[3] %>
+                  <% for x in 0..@params.length-1 %>
+                    '<%= @params[x] %>'
+                    <% if x < @params.length-1 %>
+                      ,
+                    <% end %>
+                  <% end %>
+                ]
+              },
+              legend: {
+                  enabled: true
+              },
+              series: [{
+                name: 'Observations',
+                data: [
+                  <% for x in 0..content[3].length-1 %>
+                    <% if content[4][dataset] and content[4][dataset][content[3][x]] %>
+                      <%= content[4][dataset][content[3][x]] %>
+                    <% else %>
+                      [0.0,0.0,0.0,0.0,0.0]
+                    <% end %>
+                    <% if x < content[3].length-1 %>, <% end %>
+                  <% end %>
+                ]
+              }]
+            });
+
+
+            $( "#resizable<%= @id %>_2_<%= dataset %>_<%= @statistic.to_s %>" ).resizable({
+              helper: "ui-resizable-helper",
+              stop: function( event, ui ) {
+                chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+              }
+            });
+          });
+        </script>
+        <% end %>
+  </td>
+</tr>
