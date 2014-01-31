@@ -74,6 +74,6 @@ DatasetImage.create([
 	{dataset_fullName: 'synthetic/cassini250', dataset_imageUrl: 'cassini.png'}
 	])
 DatasetPublication.create([
-	{dataset_fullName: 'tcga/all_emc_spearman.txt', dataset_publication: 'Nora Speicher. <b>Towards the identification of cancer subtypes by integrative clustering of molecular data.</b> Masters thesis, <i>Universität des Saarlandes</i>, December 2012.', dataset_publicationUrl: 'http://domino.mpi-inf.mpg.de/intranet/ag3/ag3publ.nsf/AuthorEditorIndividualView/ae782c8688cc637cc1257b27005442df?OpenDocument'},
+	{dataset_fullName: 'tcga/all_emc_spearman.txt', dataset_publication: 'Nora Speicher. <b>Towards the identification of cancer subtypes by integrative clustering of molecular data.</b> Masters thesis, <i>Saarland University</i>, December 2012.', dataset_publicationUrl: 'http://domino.mpi-inf.mpg.de/intranet/ag3/ag3publ.nsf/AuthorEditorIndividualView/ae782c8688cc637cc1257b27005442df?OpenDocument'},
 	{dataset_fullName: 'sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt', dataset_publication: 'Shoshana D Brown, John A Gerlt, Jennifer L Seffernick, and Patricia C Babbitt. <b>A gold standard set of mechanistically diverse enzyme superfamilies.</b> <i>Genome Biol, 7(1):R8</i>, 2006.', dataset_publicationUrl: 'http://www.ncbi.nlm.nih.gov/pubmed/16507141'}
 	])
