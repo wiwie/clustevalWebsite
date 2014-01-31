@@ -17,6 +17,35 @@
   </tr>
  </thead>
  <tbody>
+  <% for i in 0..@programs.length-1 %>
+  <tr>
+    <% for j in 0..@datasets.length %>
+      <% if j == 0 %>
+        <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
+      <% else %>
+       <% @string = "" %>
+          <% if @matrix[i][j].to_s == "--" %>
+            <% @string = @matrix[i][j].to_s %>
+          <% else %>
+            <% @string = '<a href="/datasets/' + @datasets[j-1].id.to_s + '/bestclust/' + @programs[i].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+
+            <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
+              <% @string = @string + "<b>" %>
+            <% end %>
+
+            <% @string = @string + matrix[i][j].to_s + '</a>' %>
+
+            <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
+              <% @string = @string + "</b>" %>
+            <% end %>
+          <% end %>
+        <td>
+          <%= raw @string %>
+        </td>
+      <% end %>
+    <% end %>
+  </tr>
+  <% end %>
 </tbody>
 </table>
 </div>
@@ -24,23 +53,7 @@
 <script type="text/javascript">
 $(function () {
     var chart;
-
-        $('#dataAndProgramStatistics').dataTable({
-          sPaginationType: "full_numbers",
-          bDeferRender: true,
-          bJQueryUI: true,
-          bRetrieve: true,
-          bPaginate: false,
-          bInfo: false,
-          bFilter: false,
-          bAutoWidth: false,
-          oTableTools: {
-            sSwfPath: "/assets/dataTables/copy_csv_xls.swf",
-            aButtons: ['copy', 'csv']
-          },
-          sAjaxSource: '/mains/comparison_table_data_inverse/<%= @qualityMeasure.id %>'
-        });
-
+    $(document).ready(function() {
         chart = new Highcharts.Chart({
     
             chart: {
@@ -81,7 +94,13 @@ $(function () {
                 pointPadding: 0,
                 shadow: false
               },
-              series: {
+              series: {   
+            // dataLabels: {
+            //     enabled: true,
+            //     rotation: -90,
+            //     color: '#000000',
+            //     verticalAlign: 'middle'
+            // }
               }
             },
             series: [
@@ -116,5 +135,6 @@ $(function () {
       $( ".resizableTable" ).resizable({
         helper: "ui-resizable-helper"
       });
+    });
 });
 </script>

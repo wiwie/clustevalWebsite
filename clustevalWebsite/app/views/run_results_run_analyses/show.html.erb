@@ -30,7 +30,12 @@ drawrectangle( "whiterectangle", 0, 0, 1, 1 );  // make a background rectangle, 
       <td>Run configuration</td><td><%= link_to @runRunAnalysisRunIdentifier[d].runIdentifier, RunResult.find_by_uniqueRunIdentifier(@runRunAnalysisRunIdentifier[d].runIdentifier) %></td>
     </tr>
     <% for i in 0..@statistics.length-1 %>
-        <%= render_cell :run_statistic, :display, :statistic => @statistics[i].name, :content => @contents[d][i], :id => d %>
+    <% statistic = @statistics[i] %>
+    <% value = @contents[d][i] %>
+    <tr>
+      <td><%= link_to statistic.name, statistic %></td><td><pre><%= raw @code[d][i] %></pre>
+  </td>
+    </tr>
     <% end %>
   </tbody>
 </table>

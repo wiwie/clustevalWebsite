@@ -101,7 +101,7 @@ h1, h2, h3, h4, h5, h6          { font-weight: bolder }
 }
 
 .left_navigation ul li:before {
-	content: "» ";
+	content: "Â» ";
 	color:$darker;
 }
 
@@ -733,9 +733,3 @@ $gradient2: #575253;
 	color:#f28c11;
 	text-decoration:none;
 }
-
- tfoot input {
- 	padding: 0px;
- 	margin: 0px;
- 	width: 20%;
- }

@@ -1,5 +1,4 @@
 <% content_for :title, "Data Set '" + @dataset.alias + "' - General" %>
-<%= render_cell :dataset_description, :display, :dataset =>  @dataset, :detailsLink => false %>
 <table id="dataset" class="display">
   <thead>
 	<tr>
@@ -18,9 +17,9 @@
     <td>Dataset format</td><td><%= @dataset.dataset_format.name %></td>
   </tr>
   <tr>
-    <td>Download</td><td><%= link_to 'Click', :controller => 'datasets', :action => 'download', :id => @dataset.id %><% if @license %> (by downloading the dataset you accept the license presented below)<% end %></td>
+    <td>Download</td><td><%= link_to 'Click', :controller => 'datasets', :action => 'download', :id => @dataset.id %> (by downloading the dataset you accept the license presented below)</td>
   </tr>
-  <% if @license %>
+  <% if true %>
   <tr>
     <td>License</td>
     <td>
