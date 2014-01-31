@@ -95,15 +95,6 @@
 		<tbody>
 			<%#= raw @paramValuesTableStrings[i] %>
 		</tbody>
-		<tfoot>
-	  <tr>
-	    <th>Iteration</th>
-	    <th>Parameter set</th>
-	    <th>Clustering Quality Measure</th>
-	    <th>Quality</th>
-	    <th>Clustering</th>
-	  </tr>
-		</tfoot>
 	</table>
   <% end %>
 <script type="text/javascript" charset="utf-8">
@@ -122,15 +113,7 @@
 				bRetrieve: true,
 				bDestroy: true,
 				bProcessing: true,
-				sAjaxSource: '<%= '/run_results_parameter_optimizations/fetch_table_data/' + params[:id] + '/' + @dataConfigs[i].id.to_s + '/' + @programConfigs[i].id.to_s %>'}).columnFilter({
-			      aoColumns: [
-			        { type: "number-range" },
-			        { type: "text" },
-			        { type: "select" },
-			        { type: "number-range" },
-			        null
-			        ]
-			    });
+				sAjaxSource: '<%= '/run_results_parameter_optimizations/fetch_table_data/' + params[:id] + '/' + @dataConfigs[i].id.to_s + '/' + @programConfigs[i].id.to_s %>'});
 
             $("body").addClass("loading"); 
 			// Load data asynchronously using jQuery. On success, add the data

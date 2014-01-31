@@ -13,7 +13,7 @@ class RunResultsDataAnalysesController < ApplicationController
 		@runDataAnalysisDataConfigs = RunDataAnalysisDataConfig.where(:run_data_analysis_id => @runDataAnalysis.id)
 
 		for d in 0..@runDataAnalysisDataConfigs.length-1
-			dataConfig = @runDataAnalysisDataConfigs[d]
+			 dataConfig = @runDataAnalysisDataConfigs[d]
 
 			@statistics << RunResultDataAnalysisDataConfigsStatistic.where(:run_result_id => params[:id]).where(:data_config_id => dataConfig.data_config_id)
 		end
