@@ -96,6 +96,11 @@ Highcharts.theme = {
 				stroke: '#CCCCCC'
 			}
 		}
+	},
+	plotOptions: {
+		column: {
+		    borderWidth: 0
+		}
 	}
 };
 
