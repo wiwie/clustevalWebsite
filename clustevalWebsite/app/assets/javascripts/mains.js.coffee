@@ -15,6 +15,7 @@ ellipsis = (text, n) ->
     text
 
 jQuery ->
+	MyDatatable('#dataAndProgramStatistics');
 	bla = $('#dataAndProgramStatistics').dataTable(
 		sPaginationType: "full_numbers"
 		bJQueryUI: true
