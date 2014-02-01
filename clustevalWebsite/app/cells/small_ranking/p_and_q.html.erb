@@ -10,14 +10,14 @@
     <% for i in 0..@qualityMeasures.length-1 %>
     <% measure = @qualityMeasures[i] %>
     <th>
-    <!--<svg version="1.1" width="20px" height="250px">  
-    <text fill="#000000" stroke="none" font-size="100%" font="serif" transform="rotate(90,0,0)">
-      <tspan y="-5"><%= measure.alias %>
-      </tspan>
-    </text>
-</svg>-->
-<%= measure.alias %>
-</th>
+    <svg version="1.1" width="20px" height="250px">  
+      <text fill="#000000" stroke="none" font-size="100%" font="serif" transform="rotate(90,0,0)">
+        <tspan y="-5"><%= measure.alias %>
+        </tspan>
+      </text>
+    </svg>
+    <%#= measure.alias %>
+    </th>
     <% end %>
   </tr>
  </thead>
