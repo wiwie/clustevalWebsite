@@ -101,7 +101,8 @@ Highcharts.theme = {
 	},
 	plotOptions: {
 		column: {
-		    borderWidth: 0
+			borderWidth: 0,
+			groupPadding: 0.1
 		}
 	}
 };
