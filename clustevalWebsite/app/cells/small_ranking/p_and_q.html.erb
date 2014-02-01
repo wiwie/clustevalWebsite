@@ -5,18 +5,20 @@
 <br>
 <table id="dataAndProgramStatistics" class="display">
   <thead>
-  <tr>
+  <tr style="overflow: visible;">
     <th>Dataset</th>
     <% for i in 0..@qualityMeasures.length-1 %>
     <% measure = @qualityMeasures[i] %>
-    <th style="width:30px; height:250px; overflow: visible;">
-    <svg version="1.1" width="100px" height="300px">
-      <text fill="#000000" stroke="none" font-size="100%" font="serif" transform="rotate(-45,5,235)">
-          <tspan x="5" y="250">
-            <%= measure.alias %>
-          </tspan>
-        </text>
-      </svg>
+    <th style="overflow: visible;">
+      <div style="position:absolute;top:-250px;">
+      <svg version="1.1" width="200px" height="250px">
+        <text fill="#000000" stroke="none" font-size="100%" font="serif" transform="rotate(-45,5,235)">
+            <tspan x="5" y="250">
+              <%= measure.alias %>
+            </tspan>
+          </text>
+        </svg>
+      </div>
     <!--<p class="rotate90">-->
       <!--<%= measure.alias %>-->
     <!--</p>-->
