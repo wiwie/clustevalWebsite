@@ -41,11 +41,6 @@ $(function () {
                         this.series.name +': '+ this.y;
                 }
             },
-            plotOptions: {
-              column: {
-                shadow: false
-              }
-            },
             series: [
             <% Program.all(session).sort_by{|x| x.name}.each do |program| %>
             <% if @visiblePrograms[program] %>
