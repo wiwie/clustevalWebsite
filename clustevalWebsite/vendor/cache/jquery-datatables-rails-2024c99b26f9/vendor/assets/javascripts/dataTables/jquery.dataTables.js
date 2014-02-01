@@ -1235,6 +1235,8 @@
 					nSpan.className = oSettings.oClasses.sSortIcon;
 					nDiv.appendChild( nSpan );
 					nTh.appendChild( nDiv );
+
+					oSettings.aoColumns[i].nSpan = nSpan;
 				}
 			}
 
@@ -1244,7 +1246,8 @@
 				{
 					if ( oSettings.aoColumns[i].bSortable !== false )
 					{
-						_fnSortAttachListener( oSettings, oSettings.aoColumns[i].nTh, i );
+						//_fnSortAttachListener( oSettings, oSettings.aoColumns[i].nTh, i );
+						//_fnSortAttachListener( oSettings, oSettings.aoColumns[i].nSpan, i );
 					}
 					else
 					{

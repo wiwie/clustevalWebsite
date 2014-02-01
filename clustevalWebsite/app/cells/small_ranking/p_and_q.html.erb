@@ -3,7 +3,7 @@
   </div>
 </div>
 <br>
-<div style="padding-top:120px;">
+<div style="padding-top:185px;">
   <table id="dataAndProgramStatistics" class="display">
     <thead>
     <tr style="overflow: visible;">
@@ -11,13 +11,15 @@
       <% for i in 0..@qualityMeasures.length-1 %>
       <% measure = @qualityMeasures[i] %>
       <th style="overflow: visible;">
-        <div style="position:absolute;top:-270px;">
-        <svg version="1.1" width="200px" height="250px">
-          <text fill="#000000" stroke="none" font-size="100%" font="serif" transform="rotate(-45,5,235)">
-              <tspan x="5" y="250">
-                <%= measure.alias %>
-              </tspan>
-            </text>
+        <div style="position:absolute;top:-225px;">
+          <svg version="1.1" width="200px" height="200px">
+            <a xlink:href="<%= link_to measure, measure.alias %>">
+              <text fill="#000000" stroke="none" font-size="100%" font="serif" transform="rotate(-45,5,185)">
+                <tspan x="5" y="200">
+                  <%= measure.alias %>
+                </tspan>
+              </text>
+            </a>
           </svg>
         </div>
       <!--<p class="rotate90">-->
