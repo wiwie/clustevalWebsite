@@ -1,0 +1,11 @@
+
+
+table.dataTable thead th {
+	cursor: auto;
+	*cursor: auto;
+}
+
+table.dataTable thead th div span {
+	cursor: pointer;
+	*cursor: hand;
+}
