@@ -26,5 +26,5 @@
  }
 
  .dataTables_wrapper {
- 	overflow: static;
+ 	overflow: visible;
  }
