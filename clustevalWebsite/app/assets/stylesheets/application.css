@@ -24,3 +24,7 @@
  	margin: 0px;
  	padding: 0px;
  }
+
+ .dataTables_wrapper {
+ 	overflow: static;
+ }
