@@ -72,6 +72,8 @@ Highcharts.theme = {
 		}
 	},
 	legend: {
+		borderRadius: 0,
+		borderWidth: 3,
 		itemStyle: {
 			font: '9pt Trebuchet MS, Verdana, sans-serif',
 			color: 'black'
