@@ -1,5 +1,5 @@
 class RunDataAnalysesController < ApplicationController
-	before_filter :require_user
+	
 
 
 	def show

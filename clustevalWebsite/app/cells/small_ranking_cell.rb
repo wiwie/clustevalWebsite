@@ -2,15 +2,15 @@ class SmallRankingCell < Cell::Rails
 	def dc_and_p(opts)
 		@matrix = []
 		datasetIds = {}
-		@dataConfigs = DataConfig.all(session)
-		@dataSets = Dataset.all(session)
+		@dataConfigs = DataConfig.all(params[:repository])
+		@dataSets = Dataset.all(params[:repository])
 		for i in 0..@dataConfigs.length-1
 		  datasetIds[@dataSets[i]] = i
 		  #@matrix << [link_to(Dataset.all(session)[i].name, Dataset.all(session)[i])]
 		  @matrix << [@dataSets[i]]
 		end
 		programIds = {}
-		@programs = Program.all(session)
+		@programs = Program.all(params[:repository])
 		for i in 1..@programs.length
 		  programIds[@programs[i-1]] = i
 
@@ -60,14 +60,14 @@ class SmallRankingCell < Cell::Rails
 
 		@matrix = []
 		@datasetIds = {}
-		@datasets = Dataset.all(session)
+		@datasets = Dataset.all(params[:repository])
 		for i in 0..@datasets.length-1
 		  @datasetIds[@datasets[i]] = i
 		  #@matrix << [link_to(Dataset.all(session)[i].name, Dataset.all(session)[i])]
 		  @matrix << [@datasets[i]]
 		end
 		@programIds = {}
-		@programs = Program.all(session).sort_by{|x| x.alias}
+		@programs = Program.all(params[:repository]).sort_by{|x| x.alias}
 		for i in 1..@programs.length
 		  @programIds[@programs[i-1]] = i
 
@@ -120,8 +120,8 @@ class SmallRankingCell < Cell::Rails
 
 		@matrix = []
 		@programIds = {}
-		@datasets = Dataset.all(session).sort_by{|x| x.name}
-		@programs = Program.all(session)
+		@datasets = Dataset.all(params[:repository]).sort_by{|x| x.name}
+		@programs = Program.all(params[:repository])
 		for i in 0..@programs.length-1
 		  @programIds[@programs[i]] = i
 		  @matrix << [@programs[i]]
@@ -184,13 +184,13 @@ class SmallRankingCell < Cell::Rails
 
 		@matrix = []
 		@programIds = {}
-		@programs = Program.all(session)
+		@programs = Program.all(params[:repository])
 		for i in 0..@programs.length-1
 		  @programIds[@programs[i]] = i
 		  @matrix << [@programs[i]]
 		end
 		@measureIds = {}
-		@qualityMeasures = ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}
+		@qualityMeasures = ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}
 		for i in 1..@qualityMeasures.length
 		  @measureIds[@qualityMeasures[i-1]] = i
 
@@ -226,13 +226,13 @@ class SmallRankingCell < Cell::Rails
 	def dc_and_q(opts)
 		@matrix = []
 		programIds = {}
-		@programs = Program.all(session)
+		@programs = Program.all(params[:repository])
 		for i in 0..@programs.length-1
 		  programIds[@programs[i]] = i
 		  @matrix << [@programs[i]]
 		end
 		measureIds = {}
-		@qualityMeasures = ClusteringQualityMeasure.all(session)
+		@qualityMeasures = ClusteringQualityMeasure.all(params[:repository])
 		for i in 1..@qualityMeasures.length
 		  measureIds[@qualityMeasures[i-1]] = i
 
@@ -260,13 +260,13 @@ class SmallRankingCell < Cell::Rails
 
 		@matrix = []
 		@datasetIds = {}
-		@datasets = Dataset.all(session)
+		@datasets = Dataset.all(params[:repository])
 		for i in 0..@datasets.length-1
 		  @datasetIds[@datasets[i]] = i
 		  @matrix << [@datasets[i]]
 		end
 		@measureIds = {}
-		@qualityMeasures = ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}
+		@qualityMeasures = ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}
 		for i in 1..@qualityMeasures.length
 		  @measureIds[@qualityMeasures[i-1]] = i
 

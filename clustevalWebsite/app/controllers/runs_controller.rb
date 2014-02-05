@@ -1,5 +1,5 @@
 class RunsController < ApplicationController
-	before_filter :require_user
+
 	def index
 		@runs = []
 		@castedRun = []
@@ -7,7 +7,7 @@ class RunsController < ApplicationController
 		@programConfigs = []
 		@runsAnalysis = []
 		
-		Run.all(session).each do |run|
+		Run.all(params[:repository]).each do |run|
 			
 			if run.run_type.name == "Clustering"
 				# objects for this run

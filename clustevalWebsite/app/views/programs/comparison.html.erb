@@ -4,8 +4,8 @@
 <% qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:clustering_quality_measure_id2]) %>
 <% qualityMeasureName = qualityMeasure.id %>
 <% else %>
-	<% program_id = Program.all(session).first.id %>
-	<% @qualityMeasures = ClusteringQualityMeasure.all(session) %>
+	<% program_id = Program.all(params[:repository]).first.id %>
+	<% @qualityMeasures = ClusteringQualityMeasure.all(params[:repository]) %>
 	<% @qualityMeasures.each do |measure| %>
 		<% if measure.name == 'TransClustF2ClusteringQualityMeasure' %>
 			<% qualityMeasure = measure %>
@@ -15,8 +15,8 @@
 	<% qualityMeasureName = qualityMeasure.id %>
 <% end %>
 <% content_for :title, "How does a clustering method perform on different datasets?" %>
-Please choose a clustering method <%= collection_select(:post, :program_id, Program.all(session).sort_by{|x| x.alias}, :id, :name, {:selected => program_id},{:style=>'width:300px; font: 16px serif;', :onchange => "$('body').addClass('loading'); this.form.submit();"}) %> and <br />
+Please choose a clustering method <%= collection_select(:post, :program_id, Program.all(params[:repository]).sort_by{|x| x.alias}, :id, :name, {:selected => program_id},{:style=>'width:300px; font: 16px serif;', :onchange => "$('body').addClass('loading'); this.form.submit();"}) %> and <br />
 a clustering quality measure:
-<%= collection_select(:post, :clustering_quality_measure_id2, ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}, :id, :alias, {:selected => qualityMeasure.id},{:style=>'width:200px; font: 16px serif;', :onchange => "$('body').addClass('loading'); this.form.submit();"} ) %>
+<%= collection_select(:post, :clustering_quality_measure_id2, ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}, :id, :alias, {:selected => qualityMeasure.id},{:style=>'width:200px; font: 16px serif;', :onchange => "$('body').addClass('loading'); this.form.submit();"} ) %>
 <%= render_cell :small_ranking, :p, :qualityMeasure => qualityMeasureName, :obj => Program.find_by_id(program_id) %>
 <% end %>

@@ -1,6 +1,6 @@
 <tr>
 	<td>
-		<%= link_to Statistic.find_by_name(statistic).alias, Statistic.find_by_name(statistic) %>
+		<% @statistic = Statistic.find_by_name(statistic) %><%= link_to @statistic.alias, @statistic %>
 	</td>
 	<td>
 		<%= raw content.join('') %>

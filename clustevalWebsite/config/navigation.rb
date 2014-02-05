@@ -57,7 +57,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item( :nav_programs, 'Clustering Methods', programs_path, :highlights_on => :subpath) do |sub_programs|
       sub_programs.item :nav_programs_general, 'Overview', programs_path
       sub_programs.item :nav_programs_comparison, 'Comparison', url_for(:controller => 'programs', :action => 'comparison')
-      Program.all(session).each do |program|
+      Program.all(params[:repository]).each do |program|
         sub_programs.item( :nav_program, program.name, program_path(program)) do |sub_program|
           sub_program.item :nav_program_general, 'General', program_path(program)
           sub_program.item :nav_program_performance, 'Performance', url_for(:controller => 'programs', :action => 'show_performance', :id => program.id)
@@ -68,7 +68,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item( :nav_datasets, 'Data Sets', datasets_path, :highlights_on => :subpath) do |sub_datasets|
       sub_datasets.item :nav_datasets_general, 'Overview', datasets_path
       sub_datasets.item :nav_datasets_comparison, 'Comparison', url_for(:controller => 'datasets', :action => 'comparison')
-      Dataset.all(session).each do |dataset|
+      Dataset.all(params[:repository]).each do |dataset|
         sub_datasets.item( :nav_dataset, dataset.name, dataset_path(dataset)) do |sub_dataset|
           sub_dataset.item :nav_dataset_general, 'General', dataset_path(dataset)
           sub_dataset.item :nav_dataset_statistics, 'Statistics', url_for(:controller => 'datasets', :action => 'show_statistics', :id => dataset.id)
@@ -79,7 +79,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
     primary.item( :nav_measures, 'Measures', clustering_quality_measures_path) do |sub_measures|
-      ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}.each do |clustering_quality_measure|
+      ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}.each do |clustering_quality_measure|
         sub_measures.item( :nav_measure, clustering_quality_measure.alias, clustering_quality_measure_path(clustering_quality_measure))
       end
     end

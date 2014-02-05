@@ -1,7 +1,7 @@
 class RunResultFormatsController < ApplicationController
-	before_filter :require_user
+	
 	def index
-		@runResultFormats = RunResultFormat.all(session)
+		@runResultFormats = RunResultFormat.all(params[:repository])
 		
 		respond_to do |format|
 			format.html # index.html.erb

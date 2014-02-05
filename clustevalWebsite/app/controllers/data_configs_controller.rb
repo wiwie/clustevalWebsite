@@ -1,5 +1,4 @@
 class DataConfigsController < ApplicationController
-	before_filter :require_user
 
 	def index
 		@repositoryType = RepositoryType.find_by_name("Repository")
@@ -33,7 +32,7 @@ class DataConfigsController < ApplicationController
         		runResult.t4_r4, 
 				#''#view_context.link_to("Clustering", :controller => "run_results_parameter_optimizations_parameter_set_iterations", :action=>"show", :id => runResult.t1_r2).to_s
 				# improves speed
-				'<a href="/run_results_parameter_optimizations_parameter_set_iterations/' + runResult.t1_r2.to_s + '">Clustering</a>'
+				'<a href="/' + params[:repository] + '/run_results_parameter_optimizations_parameter_set_iterations/' + runResult.t1_r2.to_s + '">Clustering</a>'
 			]
 		end
 
@@ -63,6 +62,6 @@ class DataConfigsController < ApplicationController
 	end
 
 	def comparison
-            @data_config_id = DataConfig.all(session).select{|dataConfig| dataConfig.name == params[:id]}.first
+            @data_config_id = DataConfig.all(params[:repository]).select{|dataConfig| dataConfig.name == params[:id]}.first
 	end
 end

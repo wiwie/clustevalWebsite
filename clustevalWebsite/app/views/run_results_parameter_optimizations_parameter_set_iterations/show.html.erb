@@ -56,7 +56,7 @@ Hint: To zoom, click on the plot and drag.
 <div id="resizablePCA" class="resizable">
 	<div id="scatterPCA" style="width:500px; height:500px;"></div>
 </div>
-<img src="/run_results_parameter_optimizations_parameter_set_iterations/img/<%= params[:id] %>" />
+<img src="/<%= params[:repository] %>/run_results_parameter_optimizations_parameter_set_iterations/img/<%= params[:id] %>" />
 <h3>Log information</h3>
 <table id="log" class="display">
   <thead>
@@ -137,7 +137,7 @@ Hint: To zoom, click on the plot and drag.
         // to the options and initiate the chart.
         // This data is obtained by exporting a GA custom report to TSV.
         // http://api.jquery.com/jQuery.get/
-        jQuery.get('/run_results_parameter_optimizations_parameter_set_iterations/isoMDS/<%= params[:id] %>', null, function(tsv, state, xhr) {
+        jQuery.get('/' + params[:repository] + '/run_results_parameter_optimizations_parameter_set_iterations/isoMDS/<%= params[:id] %>', null, function(tsv, state, xhr) {
             var lines = [],
                 series = [];
 
@@ -243,7 +243,7 @@ Hint: To zoom, click on the plot and drag.
         // to the options and initiate the chart.
         // This data is obtained by exporting a GA custom report to TSV.
         // http://api.jquery.com/jQuery.get/
-        jQuery.get('/run_results_parameter_optimizations_parameter_set_iterations/pca/<%= params[:id] %>', null, function(tsv, state, xhr) {
+        jQuery.get('/' + params[:repository] + '/run_results_parameter_optimizations_parameter_set_iterations/pca/<%= params[:id] %>', null, function(tsv, state, xhr) {
             var lines = [],
                 series = [];
 

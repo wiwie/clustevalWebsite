@@ -1,5 +1,5 @@
 class RunInternalParameterOptimizationsController < ApplicationController
-	before_filter :require_user
+	
 	def show
 		@parameterOptimizationRun = RunInternalParameterOptimization.find_by_id(params[:id])
 		@run = Run.find_by_id(RunExecution.find_by_id(@parameterOptimizationRun.runExecutionId).runId)

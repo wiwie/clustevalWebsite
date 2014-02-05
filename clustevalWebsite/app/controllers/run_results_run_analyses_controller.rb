@@ -1,5 +1,5 @@
 class RunResultsRunAnalysesController < ApplicationController
-	before_filter :require_user
+	
 
 	def show
 		@runResult = RunResult.find_by_id(params[:id])
@@ -39,10 +39,10 @@ class RunResultsRunAnalysesController < ApplicationController
 				file = File.open(@path)
 
 				if statistic.name == 'CooccurrenceRunStatistic'
-					@newCode = '<img width="600px" src="/run_results_run_analyses/img/' + runIdentifier.runIdentifier + '/CooccurrenceRunStatistic/' + params[:id] + '"/>'
+					@newCode = '<img width="600px" src="/' + params[:repository] + '/run_results_run_analyses/img/' + runIdentifier.runIdentifier + '/CooccurrenceRunStatistic/' + params[:id] + '"/>'
 					@contentsTmp << @newCode
 				elsif statistic.name == 'CooccurrenceBestRunStatistic'
-					@newCode = '<img width="600px" src="/run_results_run_analyses/img/' + runIdentifier.runIdentifier + '/CooccurrenceBestRunStatistic/' + params[:id] + '"/>'
+					@newCode = '<img width="600px" src="/' + params[:repository] + '/run_results_run_analyses/img/' + runIdentifier.runIdentifier + '/CooccurrenceBestRunStatistic/' + params[:id] + '"/>'
 					@contentsTmp << @newCode
 				elsif statistic.name == 'ooccurrenceRunStatistic'
 					@newCode = '<table class="heat-map">'

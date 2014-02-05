@@ -1,7 +1,7 @@
 class ClusteringQualityMeasuresController < ApplicationController
 
 	def index
-		@measures = ClusteringQualityMeasure.all(session)
+		@measures = ClusteringQualityMeasure.all(params[:repository])
 		
 		respond_to do |format|
 			format.html # index.html.erb
