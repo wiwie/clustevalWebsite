@@ -1,7 +1,7 @@
-<%= form_tag('/datasets/' + params[:id] + '/clust', :method => 'get') do %>
+<%= form_tag('/' + params[:repository] + '/datasets/' + params[:id] + '/clust', :method => 'get') do %>
 <% content_for :title, "How well do clustering methods perform on this dataset?" %>
 Please choose a clustering quality measure:
-<%= collection_select(:post, :clustering_quality_measure_id2, ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px; font: 16px serif;', :onchange => "$('body').addClass('loading'); this.form.submit();"} ) %>
+<%= collection_select(:post, :clustering_quality_measure_id2, ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px; font: 16px serif;', :onchange => "$('body').addClass('loading'); this.form.submit();"} ) %>
 
 <table id="dataConfig2" class="display">
   <thead>
@@ -25,7 +25,7 @@ $(document).ready(function() {
       aaSorting: [[ 4, "desc" ]],
       bProcessing: true,
       bDeferRender: true,
-      sAjaxSource: '/datasets/fetch_table_data/<%= params[:id] %>/<%= @qualityMeasure.id %>'
+      sAjaxSource: '/<%= params[:repository] %>/datasets/fetch_table_data/<%= params[:id] %>/<%= @qualityMeasure.id %>'
     });
 });
 </script>
@@ -42,7 +42,7 @@ $(document).ready(function() {
       // This data is obtained by exporting a GA custom report to TSV.
       // http://api.jquery.com/jQuery.get/
 
-      jQuery.get('<%= '/datasets/show_clusterings_fetch_graph_data/' + params[:id] + '/' + @qualityMeasure.id.to_s %>', null, function(tsv, state, xhr) {
+      jQuery.get('/<%= params[:repository] %>/datasets/show_clusterings_fetch_graph_data/<%= params[:id] %>/<%= @qualityMeasure.id.to_s %>', null, function(tsv, state, xhr) {
       var options1, chart1, 
         lines = [],
                 seriesIds = {},
@@ -50,7 +50,7 @@ $(document).ready(function() {
                 series1 = [],
                 id;
 
-        <% @programs = Program.all(session).sort_by{|x| x.alias} %>
+        <% @programs = Program.all(params[:repository]).sort_by{|x| x.alias} %>
       <% for m in 0..@programs.length-1 %>
         seriesIds['<%= @programs[m].id %>'] = parseInt(<%= m %>);
         series1[parseInt(<%= m %>)] = [];

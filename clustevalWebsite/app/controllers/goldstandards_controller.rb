@@ -1,8 +1,7 @@
 class GoldstandardsController < ApplicationController
-	before_filter :require_user
 
 	def index
-		@goldstandards = Goldstandard.all(session)
+		@goldstandards = Goldstandard.all(params[:repository])
 		
 		respond_to do |format|
 			format.html # index.html.erb

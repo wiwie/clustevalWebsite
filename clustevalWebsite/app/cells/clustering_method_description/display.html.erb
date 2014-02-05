@@ -1,5 +1,5 @@
 <div class="clustering_method_description">
-	<h3><%= method.name %><% if detailsLink %> (<%= link_to 'Details', method %>)<% end %></h3>
+	<h3><%= method.name %><% if detailsLink %> (<%=link_to 'Details', method %>)<% end %></h3>
 	<p>
 		<% if method.imageUrl %><%= image_tag method.imageUrl, :style => 'float:right;height:156px;', :class => 'thumbnail' %><% end %>
 		<%= method.description %>

@@ -53,7 +53,7 @@ $(document).ready(function() {
       aaSorting: [[ 4, "desc" ]],
       bProcessing: true,
       bDeferRender: true,
-      sAjaxSource: '<%= '/data_configs/fetch_table_data/' + params[:id] %>',
+      sAjaxSource: '/<%= params[:repository] %>/data_configs/fetch_table_data/<%= params[:id] %>',
       fnInitComplete: function(oSettings) {
         $('body').removeClass('loading'); 
       }

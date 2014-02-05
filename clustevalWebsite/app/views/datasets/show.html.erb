@@ -17,7 +17,7 @@
     <td>Dataset format</td><td><%= @dataset.dataset_format.name %></td>
   </tr>
   <tr>
-    <td>Download</td><td><%= link_to 'Click', :controller => 'datasets', :action => 'download', :id => @dataset.id %> (by downloading the dataset you accept the license presented below)</td>
+    <td>Download</td><td><%= link_to 'Click', :action => 'download', :id => @dataset %> (by downloading the dataset you accept the license presented below)</td>
   </tr>
   <% if true %>
   <tr>

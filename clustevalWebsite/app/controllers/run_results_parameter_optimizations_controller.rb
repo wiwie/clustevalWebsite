@@ -1,5 +1,5 @@
 class RunResultsParameterOptimizationsController < ApplicationController
-	before_filter :require_user
+	
 	def show
 		@runResult = RunResult.includes(
 			
@@ -88,7 +88,7 @@ class RunResultsParameterOptimizationsController < ApplicationController
 				#iteration.paramSetAsString,
 				iteration.alias, 
 				iteration.quality.to_s,
-				'<a href="/run_results_parameter_optimizations_parameter_set_iterations/' + iteration.iteration_id.to_s + '">Clustering</a>'
+				'<a href="/' + params[:repository] + '/run_results_parameter_optimizations_parameter_set_iterations/' + iteration.iteration_id.to_s + '">Clustering</a>'
 			]
 		end
 

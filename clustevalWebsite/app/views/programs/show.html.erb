@@ -12,7 +12,7 @@
     <td>Name</td><td><%= @program.absPath.split('/')[-2] + '/' + @program.absPath.split('/')[-1] %></td>
   </tr>
   <tr>
-    <td>Download</td><td><%= link_to 'Click', :controller => 'programs', :action => 'download', :id => @program.id %></td>
+    <td>Download</td><td><%= link_to 'Click', :action => 'download', :id => @program %></td>
   </tr>
   </tbody>
 </table>

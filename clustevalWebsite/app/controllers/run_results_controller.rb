@@ -1,7 +1,7 @@
 class RunResultsController < ApplicationController
-	before_filter :require_user
+
 	def index
-		@oldRunResults = RunResult.all(session)
+		@oldRunResults = RunResult.all(params[:repository])
 		@runResults = []
 		@castedRunResults = []
 		@oldRunResults.each do |runResult|

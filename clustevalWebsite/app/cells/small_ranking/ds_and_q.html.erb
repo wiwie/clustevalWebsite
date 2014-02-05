@@ -20,7 +20,7 @@ $(function () {
             },
     
             xAxis: {
-                categories: [<% ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}.each do |measure| %><% if @visibleMeasures[measure] %>'<%= measure.alias %>',<% end %><% end %>],
+                categories: [<% ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}.each do |measure| %><% if @visibleMeasures[measure] %>'<%= measure.alias %>',<% end %><% end %>],
                 labels: {
                   enabled: true,
                   rotation: -45,
@@ -42,11 +42,11 @@ $(function () {
                 }
             },
             series: [
-            <% Program.all(session).sort_by{|x| x.name}.each do |program| %>
+            <% Program.all(params[:repository]).sort_by{|x| x.name}.each do |program| %>
             <% if @visiblePrograms[program] %>
             {
               name: '<%= program.alias %>',
-              data: [<% ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}.each do |measure| %>
+              data: [<% ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}.each do |measure| %>
               <% if @visibleMeasures[measure] %>
                 <% @qual = @matrix[@programIds[program]][@measureIds[measure]] %>
                 <% if @qual != "--" %>
@@ -100,7 +100,7 @@ $(function () {
         <% if matrix[i][j].to_s == "--" %>
           <%= matrix[i][j].to_s %>
         <% else %>
-          <a href="/datasets/<%= dataset.id %>/bestclust/<%= @programs[i].alias %>?post[clustering_quality_measure_id2]=<%= @qualityMeasures[j-1].id %>"><%= matrix[i][j].to_s %></a>
+          <a href="/<%= params[:repository] %>/datasets/<%= dataset.id %>/bestclust/<%= @programs[i].alias %>?post[clustering_quality_measure_id2]=<%= @qualityMeasures[j-1].id %>"><%= matrix[i][j].to_s %></a>
         <% end %>
         </td>
       <% end %>

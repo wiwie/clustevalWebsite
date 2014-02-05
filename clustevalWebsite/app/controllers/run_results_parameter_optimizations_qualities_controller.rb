@@ -1,3 +1,3 @@
 class RunResultsParameterOptimizationsQualitiesController < ApplicationController
-	before_filter :require_user
+	
 end

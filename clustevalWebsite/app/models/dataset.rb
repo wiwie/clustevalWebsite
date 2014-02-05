@@ -5,10 +5,9 @@ class Dataset < ActiveRecord::Base
   belongs_to :dataset_type
   has_many :dataset_configs
 
-  def self.all(session, *args)
-  if session
-    @repoId = Repository.find_by_basePath(session[:repository_id]).id
-    return self.find(:all, :conditions => ["repository_id = ?",@repoId])
+  def self.all(repository, *args)
+  if repository
+    return self.find(:all, :conditions => ["repository_id = ?",repository])
   else
     return super.all
   end
