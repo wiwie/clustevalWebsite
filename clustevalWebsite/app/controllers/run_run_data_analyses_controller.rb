@@ -1,5 +1,5 @@
 class RunRunDataAnalysesController < ApplicationController
-	before_filter :require_user
+	
 	def show
 		@run = Run.find_by_name(params[:id])
 		@runAnalysis = RunAnalysis.find_by_run_id(@run.id)

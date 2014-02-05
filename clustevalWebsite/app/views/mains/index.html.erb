@@ -1,71 +1,16 @@
 <% content_for :title, "Welcome!" %>
-  <p>clusteval is a free and extendable opensource platform for objective performance comparison of arbitrary Clustering Methods on different datasets. It is designed to support the standard processes related to Cluster Analyses. [1]</p>
-  <p>You can find a list of all available clustering methods under <%= link_to "Clustering Methods",Program %> in the menu. There are <%= Program.all(session).count %> different clustering methods available. Similarly, the available datasets can be found under <%= link_to "Datasets",Dataset %>. There are <%= Dataset.all(session).count %> datasets available.</p>
+  <p>clusteval is a free and extendable opensource platform for objective performance comparison of arbitrary Clustering Methods on different datasets. It is designed to support the standard processes related to Cluster Analyses.</p>
+  <p>You can find a list of all available clustering methods under <%= link_to "Clustering Methods", Program %> in the menu. There are <%= Program.all(params[:repository]).count %> different clustering methods available. Similarly, the available datasets can be found under <%= link_to "Datasets", Dataset %>. There are <%= Dataset.all(params[:repository]).count %> datasets available.</p>
 <% @repositories = Repository.where(:repository_type_id => RepositoryType.find_by_name('Repository').id) %>
 <% if @repositories.length > 1 %>
   <h2>Repository</h2>
   This website shows all information from one central repository. You can select a different repository here:
   <%= form_tag({:action => 'index'}, {:method => 'post'}) do %>
-  <%= collection_select(:repository, :repository_id, @repositories, :id, :basePath, {:selected => Repository.find_by_basePath(session[:repository_id]).id}, :onchange => "$('body').addClass('loading'); this.form.submit();", :class => 'span3') %>
+  <%= collection_select(:repo_select, :repository_id, @repositories, :id, :basePath, {:selected => params[:repository]}, :onchange => "$('body').addClass('loading'); this.form.submit();", :class => 'span3') %>
   <% end %>
 <% end %>
 <a id="workflow" style="text-decoration:none;"><h2>Workflow</h2></a>
 The use-case below presents to you where you can find which functionality on the clusteval website. 
-<!--<div class="usecase" style="padding-top:170px; padding-left:150px;width:100%; padding-bottom:150px;">
-  <a data-toggle="tooltip" title="1. Inputs" href="#workflow" id="usecase_1" class="well well-small" style="font-weight:bold;">1. Inputs</a>
-  <div id="usecase_1_content" class="graph_node" style="display:none;">
-    Provide the inputs to the<br> clusteval backend.<br>
-    <%= link_to "-> Data Sets", Dataset %><br>
-    <%= link_to "-> Clustering Methods", Program %><br>
-    <%= link_to "-> Measures", ClusteringQualityMeasure %><br>
-  </div>
-  <div style="width:170px;display: inline-block;"></div>
-
-  <a data-toggle="tooltip" title="2. Clustering Process" href="#workflow" id="usecase_2" class="well well-small" style="font-weight:bold;">2. Clustering Process</a>
-  <div class="graph_node" id="usecase_2_content" style="display:none;">
-    Perform a clustering process using<br> the clusteval backend.<br>
-  </div>
-  <div style="width:150px;display: inline-block;"></div>
-
-  <a data-toggle="tooltip" title="3. Overview" href="#workflow" id="usecase_3" class="well well-small" style="font-weight:bold;">3. Overview</a>
-  <div class="graph_node" id="usecase_3_content" style="display:none;">
-    Get an <%= link_to "-> Overview", :controller => :mains, :action => :comparison %> over all <br>achieved clustering qualities.
-  </div>
-  <div style="height:100px;"></div>
-
-  <div style="width:160px;display: inline-block;"></div>
-  <a data-toggle="tooltip" title="5. Which Parameter Sets?" href="#workflow" id="usecase_5" class="well well-small" style="font-weight:bold;">5. Which Parameter Sets?</a>
-  <div class="graph_node" id="usecase_5_content" style="display:none;">
-    ... and find out with which parameter sets this method<br> achieved the best qualities.<br>
-    <%= link_to "-> Clustering Methods -> " + Program.all(session).first.alias + " -> Best Parameters", :controller => :programs, :action => :show_bestclusterings, :id => Program.all(session).first, :dataset_filter => Dataset.all(session).first %>.
-  </div>
-  <div style="width:150px;display: inline-block;"></div>
-
-  <a data-toggle="tooltip" title="4. Specific Clustering Method" href="#workflow" id="usecase_4" class="well well-small" style="font-weight:bold;">4. Specific Clustering Method</a>
-  <div class="graph_node" id="usecase_4_content" style="display:none;">
-    Take a look at the achieved qualities<br>
-    of a single clustering method.<br>
-    <%= link_to "-> Clustering Methods -> " + Program.all(session).first.alias + " -> Best Qualities", :controller => :programs, :action => :show_performance, :id => Program.all(session).first %>.
-  </div>
-
-  <div style="height:100px;"></div>
-
-  <div style="width:180px;display: inline-block;"></div>
-  <a data-toggle="tooltip" title="6. Specific Data Set" href="#workflow" id="usecase_6" class="well well-small" style="font-weight:bold;">6. Specific Data Set</a>
-  <div class="graph_node" id="usecase_6_content" style="display:none;">
-    Take a look at the achieved qualities<br>
-    on a single data set.<br>
-    <%= link_to "-> Data Sets -> " + Dataset.all(session).first.alias + " -> Best Qualities", :controller => :datasets, :action => :show_comparison, :id => Dataset.all(session).first %>
-  </div>
-
-  <div style="width:150px;display: inline-block;"></div>
-  <a data-toggle="tooltip" title="7. Which Parameter Sets?" href="#workflow" id="usecase_7" class="well well-small" style="font-weight:bold;">7. Which Parameter Sets?</a>
-  <div class="graph_node" id="usecase_7_content" style="display:none;">
-    ... and find out with which parameter sets the optimal<br> clusterings were achieved on this data set.<br>
-    <%= link_to "-> Data Sets -> " + Dataset.all(session).first.alias + " -> Best Parameters", :controller => :datasets, :action => :show_bestclusterings, :id => Dataset.all(session).first, :program_filter => Program.all(session).first %>.
-  </div>
-</div>
-
 <h2>Download & Installation</h2>
 You are interested in downloading and installing clusteval on your own server? Please refer to the help section <%= link_to "over here", HelpInstallation %>.
 <% if @current_user %>
@@ -79,112 +24,21 @@ You are interested in downloading and installing clusteval on your own server? P
  </thead>
  <tbody>
   <tr>
-    <td>Number of Runs</td><td><%= Run.all(session).count %></td>
+    <td>Number of Runs</td><td><%= Run.all(params[:repository]).count %></td>
   </tr>
   <tr>
-    <td>Number of Datasets</td><td><%= Dataset.all(session).count %></td>
+    <td>Number of Datasets</td><td><%= Dataset.all(params[:repository]).count %></td>
   </tr>
   <tr>
-    <td>Number of Goldstandards</td><td><%= Goldstandard.all(session).count %></td>
+    <td>Number of Goldstandards</td><td><%= Goldstandard.all(params[:repository]).count %></td>
   </tr>
   <tr>
-    <td>Number of Programs</td><td><%= Program.all(session).count %></td>
+    <td>Number of Programs</td><td><%= Program.all(params[:repository]).count %></td>
   </tr>
   <tr>
-    <td>Number of Run Results</td><td><%= RunResult.all(session).count %></td>
+    <td>Number of Run Results</td><td><%= RunResult.all(params[:repository]).count %></td>
   </tr>
 </tbody>
 </table>
 <% end %>
-
-
-  <script type="text/javascript">  
-      $(function(){
-        $("#usecase_1").popover({ 
-          html : true, 
-          content: function() {
-            return $('#usecase_1_content').html();
-          },
-          placement: 'top'}).popover('show');
-
-        $("#usecase_2").popover({ 
-          html : true, 
-          content: function() {
-            return $('#usecase_2_content').html();
-          },
-          placement: 'top'}).popover('show');
-      
-        $("#usecase_3").popover({ 
-          html : true, 
-          content: function() {
-            return $('#usecase_3_content').html();
-          },
-          placement: 'top'}).popover('show');
-      
-        $("#usecase_4").popover({ 
-          html : true, 
-          content: function() {
-            return $('#usecase_4_content').html();
-          },
-          placement: 'right'}).popover('show');
-      
-        $("#usecase_5").popover({ 
-          html : true, 
-          content: function() {
-            return $('#usecase_5_content').html();
-          },
-          placement: 'left'}).popover('show');
-      
-        $("#usecase_6").popover({ 
-          html : true, 
-          content: function() {
-            return $('#usecase_6_content').html();
-          },
-          placement: 'bottom'}).popover('show');
-      
-        $("#usecase_7").popover({ 
-          html : true, 
-          content: function() {
-            return $('#usecase_7_content').html();
-          },
-          placement: 'bottom'}).popover('show');
-      
-      })
-  </script>
-  <script type="text/javascript">
-    $(function(){
-      var stateMachineConnector = {       
-        connector:"StateMachine",
-        paintStyle:{lineWidth:3,strokeStyle:"#056"},
-        endpoint:"Blank",
-        anchor:"Continuous",
-        overlays:[ ["PlainArrow", {location:1, width:15, length:12} ]]
-      };
-      
-      jsPlumb.connect({
-          source:"usecase_1",
-          target:"usecase_2"
-      }, stateMachineConnector);
-      jsPlumb.connect({
-          source:"usecase_2",
-          target:"usecase_3"
-      }, stateMachineConnector);
-      jsPlumb.connect({
-          source:"usecase_3",
-          target:"usecase_4"
-      }, stateMachineConnector);
-      jsPlumb.connect({
-          source:"usecase_4",
-          target:"usecase_5"
-      }, stateMachineConnector);
-      jsPlumb.connect({
-          source:"usecase_5",
-          target:"usecase_6"
-      }, stateMachineConnector);
-      jsPlumb.connect({
-          source:"usecase_6",
-          target:"usecase_7"
-      }, stateMachineConnector);
-    })
-  </script>-->
 <object data="/mains/workflow.svg" type="image/svg+xml">

@@ -74,15 +74,15 @@ SimpleNavigation::Configuration.run do |navigation|
     #   end
     # # navigation if logged out
     # else
-      primary.item( :nav_mains, 'Welcome', root_path) do |sub_main|
+      primary.item( :nav_mains, 'Welcome', mains_path(params[:repository])) do |sub_main|
       end
       primary.item :nav_comparison, 'Overview', url_for(:controller => 'mains', :action => 'comparison')
       primary.item( :nav_programs, 'Clustering Methods', programs_path, :highlights_on => :subpath) do |sub_programs|
         sub_programs.item :nav_programs_general, 'Overview', programs_path
         #sub_programs.item :nav_programs_comparison, 'Best Clusterings', url_for(:controller => 'programs', :action => 'comparison')
-        Program.all(session).each do |program|
-          sub_programs.item( :nav_program, program.name, program_path(program)) do |sub_program|
-            sub_program.item :nav_program_general, 'General', program_path(program)
+        Program.all(params[:repository]).each do |program|
+          sub_programs.item( :nav_program, program.name, program_path(params[:repository], program)) do |sub_program|
+            sub_program.item :nav_program_general, 'General', program_path(params[:repository], program)
             sub_program.item :nav_program_performance, 'Best Qualities', url_for(:controller => 'programs', :action => 'show_performance', :id => program.id)
             sub_program.item :nav_program_bestclusterings, 'Best Parameters', url_for(:controller => 'programs', :action => 'show_bestclusterings', :id => program.id)
           end
@@ -91,9 +91,9 @@ SimpleNavigation::Configuration.run do |navigation|
       primary.item( :nav_datasets, 'Data Sets', datasets_path, :highlights_on => :subpath) do |sub_datasets|
         sub_datasets.item :nav_datasets_general, 'Overview', datasets_path
         #sub_datasets.item :nav_datasets_comparison, 'Best Clusterings', url_for(:controller => 'datasets', :action => 'comparison')
-        Dataset.all(session).each do |dataset|
-          sub_datasets.item( :nav_dataset, dataset.name, dataset_path(dataset)) do |sub_dataset|
-            sub_dataset.item :nav_dataset_general, 'General', dataset_path(dataset)
+        Dataset.all(params[:repository]).each do |dataset|
+          sub_datasets.item( :nav_dataset, dataset.name, dataset_path(params[:repository], dataset)) do |sub_dataset|
+            sub_dataset.item :nav_dataset_general, 'General', dataset_path(params[:repository], dataset)
             sub_dataset.item :nav_dataset_statistics, 'Statistics', url_for(:controller => 'datasets', :action => 'show_statistics', :id => dataset.id)
             sub_dataset.item :nav_dataset_comparison, 'Best Qualities', url_for(:controller => 'datasets', :action => 'show_comparison', :id => dataset.id)
             sub_dataset.item :nav_dataset_bestclusterings, 'Best Parameters', url_for(:controller => 'datasets', :action => 'show_bestclusterings', :id => dataset.id)
@@ -102,8 +102,8 @@ SimpleNavigation::Configuration.run do |navigation|
         end
       end
     primary.item( :nav_measures, 'Measures', clustering_quality_measures_path) do |sub_measures|
-      ClusteringQualityMeasure.all(session).sort_by{|x| x.alias}.each do |clustering_quality_measure|
-        sub_measures.item( :nav_measure, clustering_quality_measure.alias, clustering_quality_measure_path(clustering_quality_measure))
+      ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}.each do |clustering_quality_measure|
+        sub_measures.item( :nav_measure, clustering_quality_measure.alias, clustering_quality_measure_path(params[:repository], clustering_quality_measure))
       end
     end
     primary.item( :nav_submit, 'Submit', submits_path) do |sub_submit|
@@ -113,39 +113,39 @@ SimpleNavigation::Configuration.run do |navigation|
     end
       primary.item( :nav_admins, 'Advanced', admins_path, :highlights_on => :subpath) do |sub_admin|
         sub_admin.item( :nav_program_configs, 'Clustering Method Configurations', program_configs_path) do |sub_program_configs|
-          ProgramConfig.all(session).select{ |program_config| program_config.program_config_id == nil }.sort_by{|x| x.name}.each do |program_config|
-            sub_program_configs.item( :nav_program_configs, program_config.name, program_config_path(program_config)) do |sub_program_config|
+          ProgramConfig.all(params[:repository]).select{ |program_config| program_config.program_config_id == nil }.sort_by{|x| x.name}.each do |program_config|
+            sub_program_configs.item( :nav_program_configs, program_config.name, program_config_path(params[:repository], params[:repository], program_config)) do |sub_program_config|
               ProgramParameter.where(:program_config_id => program_config.id).each do |parameter|
-                sub_program_config.item( :nav_program_parameters, parameter.name, program_parameter_path(parameter))
+                sub_program_config.item( :nav_program_parameters, parameter.name, program_parameter_path(params[:repository], parameter))
               end
             end
           end
         end
         sub_admin.item( :nav_data_configs, 'Data Configurations', data_configs_path) do |sub_data_configs|
-          DataConfig.all(session).sort_by{|x| x.name}.each do |data_config|
-            sub_data_configs.item( :nav_data_configs, data_config.name, data_config_path(data_config)) do |sub_data_config|
-              sub_data_config.item :nav_data_configs, 'General', data_config_path(data_config)
+          DataConfig.all(params[:repository]).sort_by{|x| x.name}.each do |data_config|
+            sub_data_configs.item( :nav_data_configs, data_config.name, data_config_path(params[:repository], data_config)) do |sub_data_config|
+              sub_data_config.item :nav_data_configs, 'General', data_config_path(params[:repository], data_config)
               sub_data_config.item :nav_data_configs, 'Comparison', url_for(:controller => 'data_configs', :action => 'comparison', :id => data_config.name)
             end
           end
         end
         sub_admin.item( :nav_dataset_configs, 'Dataset Configurations', dataset_configs_path) do |sub_dataset_configs|
-          DatasetConfig.all(session).sort_by{|x| x.name}.each do |dataset_config|
-            sub_dataset_configs.item :nav_dataset_configs, dataset_config.name, dataset_config_path(dataset_config)
+          DatasetConfig.all(params[:repository]).sort_by{|x| x.name}.each do |dataset_config|
+            sub_dataset_configs.item :nav_dataset_configs, dataset_config.name, dataset_config_path(params[:repository], dataset_config)
           end
         end
         sub_admin.item( :nav_gs_configs, 'Goldstandard Configurations', goldstandard_configs_path) do |sub_goldstandard_configs|
-          GoldstandardConfig.all(session).sort_by{|x| x.name}.each do |goldstandard_config|
-            sub_goldstandard_configs.item :nav_goldstandard_configs, goldstandard_config.name, goldstandard_config_path(goldstandard_config)
+          GoldstandardConfig.all(params[:repository]).sort_by{|x| x.name}.each do |goldstandard_config|
+            sub_goldstandard_configs.item :nav_goldstandard_configs, goldstandard_config.name, goldstandard_config_path(params[:repository], goldstandard_config)
           end
         end
         sub_admin.item( :nav_goldstandards, 'Gold Standards', goldstandards_path) do |sub_goldstandards|
-          Goldstandard.all(session).sort_by{|x| x.name}.each do |goldstandard|
-            sub_goldstandards.item :nav_goldstandards, goldstandard.name, goldstandard_path(goldstandard)
+          Goldstandard.all(params[:repository]).sort_by{|x| x.name}.each do |goldstandard|
+            sub_goldstandards.item :nav_goldstandards, goldstandard.name, goldstandard_path(params[:repository], goldstandard)
           end
         end
         sub_admin.item( :nav_runs, 'Runs', runs_path) do |sub_runs|
-          Run.all(session).sort_by{|x| x.name}.each do |run|
+          Run.all(params[:repository]).sort_by{|x| x.name}.each do |run|
             @ident = run.name
             #if @ident.length > 30
             #  @ident = @ident[0..15] + "..." + @ident[@ident.length-15,@ident.length]
@@ -153,10 +153,10 @@ SimpleNavigation::Configuration.run do |navigation|
             @type = run.run_type
             if @type.name == "Clustering"
               run_clustering = RunClustering.find_by_run_execution_id(RunExecution.find_by_run_id(run.id))
-              sub_runs.item :nav_run_clustering, @ident, run_clustering_path(run)
+              sub_runs.item :nav_run_clustering, @ident, run_clustering_path(params[:repository], run)
             elsif @type.name == "Parameter Optimization"
               run_paramOpt = RunParameterOptimization.find_by_run_execution_id(RunExecution.find_by_run_id(run.id))
-              sub_runs.item :nav_run_paramOpt, @ident, run_parameter_optimization_path(run_paramOpt)
+              sub_runs.item :nav_run_paramOpt, @ident, run_parameter_optimization_path(params[:repository], run_paramOpt)
             elsif @type.name == "Data Analysis"
               run_dataAnalysis = RunDataAnalysis.find_by_run_analysis_id(RunAnalysis.find_by_run_id(run.id))
               sub_runs.item :nav_run_dataAnalysis, @ident, url_for(:controller => 'run_data_analyses', :action => 'show', :id => run_dataAnalysis, :only_path => true)
@@ -170,7 +170,7 @@ SimpleNavigation::Configuration.run do |navigation|
           end
         end
         sub_admin.item( :nav_run_results, 'Results', run_results_path) do |sub_run_results|
-          RunResult.all(session).uniq{|x| x.uniqueRunIdentifier}.sort_by{|x| x.uniqueRunIdentifier}.each do |runResult|
+          RunResult.all(params[:repository]).uniq{|x| x.uniqueRunIdentifier}.sort_by{|x| x.uniqueRunIdentifier}.each do |runResult|
             @ident = runResult.uniqueRunIdentifier
             #if @ident.length > 30
             #  @ident = @ident[0..15] + "..." + @ident[@ident.length-15,@ident.length]
@@ -190,7 +190,7 @@ SimpleNavigation::Configuration.run do |navigation|
           end
         end
         sub_admin.item( :nav_runs, 'Statistics', statistics_path) do |sub_statistics|
-          Statistic.all(session).sort_by{|x| x.alias}.each do |statistic|
+          Statistic.all(params[:repository]).sort_by{|x| x.alias}.each do |statistic|
             @ident = statistic.alias
             sub_statistics.item :nav_statistic, @ident, url_for(:controller => 'statistics', :action => 'show', :id => statistic, :only_path => true)
           end

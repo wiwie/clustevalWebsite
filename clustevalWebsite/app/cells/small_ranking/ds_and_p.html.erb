@@ -9,12 +9,6 @@
     <% for i in 0..@programs.length-1 %>
       <% program = @programs[i] %>
       <th>
-          <!--<svg version="1.1" width="20px" height="250px">  
-        <text fill="#000000" stroke="none" font-size="100%" font="serif" transform="rotate(90,0,0)">
-          <tspan y="-5"><%= program.name %>
-          </tspan>
-        </text>
-        </svg>-->
         <%= program.name %>
       </th>
     <% end %>
@@ -31,7 +25,7 @@
           <% if @matrix[i][j].to_s == "--" %>
             <% @string = @matrix[i][j].to_s %>
           <% else %>
-            <% @string = '<a href="/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+            <% @string = '<a href="/' + params[:repository] + '/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
 
             <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
               <% @string = @string + "<b>" %>
@@ -69,7 +63,7 @@ $(function () {
             },
     
             xAxis: {
-                categories: [<% Dataset.all(session).sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %>'<%= dataset.alias %>',<% end %><% end %>],
+                categories: [<% Dataset.all(params[:repository]).sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %>'<%= dataset.alias %>',<% end %><% end %>],
                 labels: {
                   enabled: true,
                   rotation: -45,
@@ -94,21 +88,11 @@ $(function () {
                         this.series.name +': '+ this.y;
                 }
             },
-            plotOptions: {
-              series: {   
-            // dataLabels: {
-            //     enabled: true,
-            //     rotation: -90,
-            //     color: '#000000',
-            //     verticalAlign: 'middle'
-            // }
-              }
-            },
             series: [
-            <% Program.all(session).sort_by{|x| x.alias}.each do |program| %>
+            <% Program.all(params[:repository]).sort_by{|x| x.alias}.each do |program| %>
               {
                 name: '<%= program.alias %>',
-                data: [<% Dataset.all(session).sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
+                data: [<% Dataset.all(params[:repository]).sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
                 <%# elsif @isMaximum %><%#= @qualityMeasure.minValue %><%# else %><%#= @qualityMeasure.maxValue %>
                 <% else %>null<% end %>,<% end %><% end %>]
             },

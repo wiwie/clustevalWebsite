@@ -1,8 +1,7 @@
 class DatasetConfigsController < ApplicationController
-	before_filter :require_user
 
 	def index
-		@datasetConfigs = DatasetConfig.all(session)
+		@datasetConfigs = DatasetConfig.all(params[:repository])
 		
 		respond_to do |format|
 			format.html # index.html.erb

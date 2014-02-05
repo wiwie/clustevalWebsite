@@ -10,6 +10,12 @@ class MainsController < ApplicationController
 	def index
 		if Repository.count == 0
 			render :inline => '<div align="center"><h1>Error: clusteval database not initialized</h1>The framework has not been initialized and no repository could be found in the database.<br />Please initialize the framework by starting the backend server.<br /><br />For more detailed information please consult the clusteval technical documentation.</div>'
+		# another repository has been selected
+		elsif params[:repo_select] and params[:repo_select][:repository_id]
+			redirect_to :controller => 'mains', :action => 'index', :repository => params[:repo_select][:repository_id]
+		# no repository has been selected -> redirect from / to /:repository/mains
+		elsif not params[:repository]
+			redirect_to :action => 'index', :repository => Repository.where(:repository_id => nil).first
 		else
 			respond_to do |format|
 				format.html # index.html.erb
@@ -28,7 +34,7 @@ class MainsController < ApplicationController
 			@qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:measure])
 			@inverted = params[:inv]
 		else
-			@qualityMeasures = ClusteringQualityMeasure.all(session)
+			@qualityMeasures = ClusteringQualityMeasure.all(params[:repository])
 			@qualityMeasures.each do |measure|
 				if measure.name == 'TransClustF2ClusteringQualityMeasure'
 					@qualityMeasure = measure
@@ -52,7 +58,6 @@ class MainsController < ApplicationController
 	end
 
 	def set_user_session_repository
-		session[:repository_id] = Repository.find_by_id(params[:repository][:repository_id]).basePath
 		redirect_to :action => 'index'
 	end
 

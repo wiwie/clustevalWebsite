@@ -11,7 +11,7 @@ class RunParameterOptimization < ActiveRecord::Base
 
   def self.all(session, *args)
 	if session
-		return self.find(:all, :conditions => ["repository_id = ?",Repository.find_by_basePath(session[:repository_id]).id])
+		return self.find(:all, :conditions => ["repository_id = ?",Repository.find(session)])
 	else
 		return super.all
 	end

@@ -1,8 +1,8 @@
 class DatasetFormatsController < ApplicationController
-	before_filter :require_user
+	
 
 	def index
-		@datasetFormats = DatasetFormat.all(session)
+		@datasetFormats = DatasetFormat.all(params[:repository])
 		
 		respond_to do |format|
 			format.html # index.html.erb

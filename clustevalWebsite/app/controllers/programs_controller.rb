@@ -1,7 +1,7 @@
 class ProgramsController < ApplicationController
 
 	def index
-		@programs = Program.all(session)
+		@programs = Program.all(params[:repository])
 		
 		respond_to do |format|
 			format.html # index.html.erb

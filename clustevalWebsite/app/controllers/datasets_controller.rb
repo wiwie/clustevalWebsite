@@ -1,11 +1,11 @@
 class DatasetsController < ApplicationController
 
 	def index
-		@dataset_types = DatasetType.all(session)
+		@dataset_types = DatasetType.all(params[:repository])
 
 		@datasets = {}
 		# this will take only those datasets, with the right repository id
-		@allDatasets = Dataset.all(session)
+		@allDatasets = Dataset.all(params[:repository])
 
 		@dataset_types.each do |dataset_type|
 			@datasets[dataset_type] = @allDatasets.select{|x| x.dataset_type_id == dataset_type.id}
@@ -95,7 +95,9 @@ class DatasetsController < ApplicationController
 			@dates = DatasetStatistic.select("DISTINCT date").where(:data_config_id => @dataConfigs.first.id)
 			params[:data_config] = {}
 			params[:data_config][:data_config_id] = @dataConfigs.first.id.to_s
-			params[:data_config][:date] = @dates.first.date.to_s
+			if @dates.first
+				params[:data_config][:date] = @dates.first.date.to_s
+			end
 		end
 		
 		respond_to do |format|
@@ -117,7 +119,7 @@ class DatasetsController < ApplicationController
 			@qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:clustering_quality_measure_id2])
 			@qualityMeasureName = @qualityMeasure.id
 		else
-			@qualityMeasure = ClusteringQualityMeasure.all(session).select{|x| x.name == 'TransClustF2ClusteringQualityMeasure'}.first
+			@qualityMeasure = ClusteringQualityMeasure.all(params[:repository]).select{|x| x.name == 'TransClustF2ClusteringQualityMeasure'}.first
 			@qualityMeasureName = @qualityMeasure.id
 		end
 		
