@@ -7,6 +7,12 @@
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag 'raphael' %>
   <%= javascript_include_tag 'ColReorderWithResize' %>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS"],
+    extensions: ["tex2jax.js"]
+  });
+</script>
   <%= mathjax_tag %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
