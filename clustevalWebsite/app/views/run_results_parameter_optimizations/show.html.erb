@@ -95,6 +95,15 @@
 		<tbody>
 			<%#= raw @paramValuesTableStrings[i] %>
 		</tbody>
+		<tfoot>
+	  <tr>
+	    <th>Iteration</th>
+	    <th>Parameter set</th>
+	    <th>Clustering Quality Measure</th>
+	    <th>Quality</th>
+	    <th>Clustering</th>
+	  </tr>
+		</tfoot>
 	</table>
   <% end %>
 <script type="text/javascript" charset="utf-8">
@@ -103,7 +112,7 @@
 
 			$('#iterations_' + <%= i.to_s %>).dataTable({
 				sPaginationType: "full_numbers",
-				sDom: 'T<"clear"><"H"Rlfr>t<"F"ip>',
+				sDom: 'WT<"clear"><"H"Rlfr>t<"F"ip>',
 				oTableTools: {
 					sSwfPath: "/assets/dataTables/copy_csv_xls.swf",
 					aButtons: ['copy', 'csv']
@@ -113,7 +122,17 @@
 				bRetrieve: true,
 				bDestroy: true,
 				bProcessing: true,
-				sAjaxSource: '/<%= params[:repository] %>/run_results_parameter_optimizations/fetch_table_data/<%= params[:id] %>/<%= @dataConfigs[i].id.to_s %>/<%= @programConfigs[i].id.to_s %>'});
+				sAjaxSource: '/<%= params[:repository] %>/run_results_parameter_optimizations/fetch_table_data/<%= params[:id] %>/<%= @dataConfigs[i].id.to_s %>/<%= @programConfigs[i].id.to_s %>'})
+			.columnFilter(
+				{aoColumns: [ 
+					{ type: "number" },
+					{ type: "text" },
+					{ type: "select" },
+					{ type: "number" },
+				    null
+				]
+
+		});
 
             $("body").addClass("loading"); 
 			// Load data asynchronously using jQuery. On success, add the data
