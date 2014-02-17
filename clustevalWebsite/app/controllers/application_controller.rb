@@ -15,5 +15,13 @@ class ApplicationController < ActionController::Base
     if Repository.count == 0
       render :inline => '<div align="center"><h1>Error: clusteval database not initialized</h1>The framework has not been initialized and no repository could be found in the database.<br />Please initialize the framework by starting the backend server.<br /><br />For more detailed information please consult the clusteval technical documentation.</div>'
     end
+
+    begin
+      if params[:repository]
+        Repository.find(params[:repository])
+      end
+    rescue
+      redirect_to '/'
+    end
   end
 end
