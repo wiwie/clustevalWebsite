@@ -1,24 +1,38 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "rails3-generators"
+  s.name = %q{rails3-generators}
   s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.3.6") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jose Valim", "Anuj Dutta", "Paul Berry", "Jeff Tucker", "Louis T.", "Jai-Gouk Kim", "Darcy Laycock", "Peter Haza", "Peter Gumeson", "Kristian Mandrup", "Alejandro Juarez"]
-  s.date = "2012-10-07"
-  s.description = "Rails 3 compatible generators for gems that don't have them yet "
-  s.email = "andre@arko.net"
+  s.date = %q{2012-10-07}
+  s.description = %q{Rails 3 compatible generators for gems that don't have them yet }
+  s.email = %q{andre@arko.net}
   s.extra_rdoc_files = ["README.rdoc", "CHANGELOG.rdoc"]
-  s.files = ["README.rdoc", "CHANGELOG.rdoc"]
-  s.homepage = "https://github.com/indirect/rails3-generators"
-  s.post_install_message = "\nrails3-generators-1.0.0\n\nMongoMapper generators removed. MongoMapper (https://github.com/jnunemaker/mongomapper) has its own generators.\n\nSimpleForm generators removed. SimpleForm (https://github.com/plataformatec/simple_form) has its onw generators.\n\nFormtastic generators removed. Formtastic (https://github.com/justinfrench/formtastic) has its onw generators.\n\nAuthlogic generators removed. Authlogic (https://github.com/binarylogic/authlogic) has its onw generators.\n\nBe sure to check out the wiki, https://wiki.github.com/indirect/rails3-generators/,\nfor information about recent changes to this project.\n"
+  s.files = [".gitignore", "CHANGELOG.rdoc", "Gemfile", "Gemfile.lock", "README.rdoc", "Rakefile", "lib/generators/active_model.rb", "lib/generators/active_model/model/model_generator.rb", "lib/generators/active_model/model/templates/model.rb", "lib/generators/data_mapper.rb", "lib/generators/data_mapper/migration/migration_generator.rb", "lib/generators/data_mapper/migration/templates/migration.rb", "lib/generators/data_mapper/model/model_generator.rb", "lib/generators/data_mapper/model/templates/migration.rb", "lib/generators/data_mapper/model/templates/model.rb", "lib/generators/data_mapper/observer/observer_generator.rb", "lib/generators/data_mapper/observer/templates/observer.rb", "lib/generators/helpers/migration_helper.rb", "lib/generators/helpers/model_helper.rb", "lib/generators/koala.rb", "lib/generators/koala/install/install_generator.rb", "lib/generators/koala/install/templates/app/helpers/facebook_helper.rb.tt", "lib/generators/koala/install/templates/config/facebook.yml.tt", "lib/generators/koala/install/templates/config/initializers/koala.rb.tt", "lib/generators/mustache.rb", "lib/generators/mustache/README.md", "lib/generators/mustache/controller/controller_generator.rb", "lib/generators/mustache/controller/templates/view.html.mustache.erb", "lib/generators/mustache/controller/templates/view.rb.erb", "lib/generators/mustache/install/install_generator.rb", "lib/generators/mustache/install/templates/config/initializers/mustache.rb", "lib/generators/mustache/install/templates/lib/mustache_rails.rb", "lib/generators/mustache/scaffold/scaffold_generator.rb", "lib/generators/mustache/scaffold/templates/_form.html.mustache.erb", "lib/generators/mustache/scaffold/templates/edit.html.mustache.erb", "lib/generators/mustache/scaffold/templates/edit.rb.erb", "lib/generators/mustache/scaffold/templates/index.html.mustache.erb", "lib/generators/mustache/scaffold/templates/index.rb.erb", "lib/generators/mustache/scaffold/templates/new.html.mustache.erb", "lib/generators/mustache/scaffold/templates/new.rb.erb", "lib/generators/mustache/scaffold/templates/show.html.mustache.erb", "lib/generators/mustache/scaffold/templates/show.rb.erb", "lib/generators/shoulda.rb", "lib/generators/shoulda/controller/controller_generator.rb", "lib/generators/shoulda/controller/templates/controller.rb", "lib/generators/shoulda/model/model_generator.rb", "lib/generators/shoulda/model/templates/model.rb", "lib/generators/shoulda/scaffold/scaffold_generator.rb", "lib/generators/shoulda/scaffold/templates/scaffold.rb", "lib/rails3-generators.rb", "lib/rails3-generators/version.rb", "rails3-generators.gemspec", "test/fixtures/routes.rb", "test/lib/generators/active_model/model_generator_test.rb", "test/lib/generators/data_mapper/migration_generator_test.rb", "test/lib/generators/data_mapper/model_generator_test.rb", "test/lib/generators/data_mapper/observer_generator_test.rb", "test/lib/generators/koala/install_generator_test.rb", "test/lib/generators/mustache/controller_generator_test.rb", "test/lib/generators/mustache/scaffold_generator_test.rb", "test/lib/generators/mustache/testing_helper.rb", "test/lib/generators/shoulda/controller_generator_test.rb", "test/lib/generators/shoulda/scaffold_generator_test.rb", "test/test_helper.rb"]
+  s.homepage = %q{https://github.com/indirect/rails3-generators}
+  s.post_install_message = %q{
+rails3-generators-1.0.0
+
+MongoMapper generators removed. MongoMapper (https://github.com/jnunemaker/mongomapper) has its own generators.
+
+SimpleForm generators removed. SimpleForm (https://github.com/plataformatec/simple_form) has its onw generators.
+
+Formtastic generators removed. Formtastic (https://github.com/justinfrench/formtastic) has its onw generators.
+
+Authlogic generators removed. Authlogic (https://github.com/binarylogic/authlogic) has its onw generators.
+
+Be sure to check out the wiki, https://wiki.github.com/indirect/rails3-generators/,
+for information about recent changes to this project.
+}
   s.require_paths = ["lib"]
-  s.rubyforge_project = "rails3-generators"
-  s.rubygems_version = "1.8.23"
-  s.summary = "Rails 3 compatible generators"
+  s.rubyforge_project = %q{rails3-generators}
+  s.rubygems_version = %q{1.3.7}
+  s.summary = %q{Rails 3 compatible generators}
 
   if s.respond_to? :specification_version then
+    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
