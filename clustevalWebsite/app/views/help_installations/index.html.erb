@@ -2,7 +2,7 @@
 clusteval is separated into backend and frontend. The backend calculates all the clusterings and performs all the actual analyses of the framework. The frontend includes this website and a corresponding database and is responsible for the representation of the results.
 
 <h3>Backend Executables (Client & Server)</h3>
-The backend consists of a client and a server component. Both can be downloaded separately as a jar-executable.
+The backend consists of a client and a server component. Both can be downloaded separately as a jar-executable. Also, all available dynamic components which can be loaded by the backend are available on GitHub as jars. It is sufficient to copy the "programs" and "supp" subfolders of the "repository" folder in the clustevalPackages GitHub repository into the local repository.
 <table class="downloadTable">
 	<thead>
 		<th>Link</th>
@@ -10,20 +10,40 @@ The backend consists of a client and a server component. Both can be downloaded 
 		<th>Release Date</th>
 	</thead>
 	<tr>
-		<td><%= link_to "clustevalBackendServer.jar", "http://clusteval.mpi-inf.mpg.de/clustevalBackendServer.jar" %></td>
-		<td>1.0</td>
-		<td>13.05.2013</td>
+		<td><%= link_to "clustevalBackendServer.jar", "https://github.com/wiwie/clusteval/blob/v1.2/clusteval/packages/clustevalBackendServer.jar?raw=true" %></td>
+		<td>1.2</td>
+		<td>22.03.2014</td>
 	</tr>
 	<tr>
-		<td><%= link_to "clustevalBackendClient.jar", "http://clusteval.mpi-inf.mpg.de/clustevalBackendClient.jar" %></td>
-		<td>1.0</td>
-		<td>13.05.2013</td>
+		<td><%= link_to "clustevalBackendClient.jar", "https://github.com/wiwie/clusteval/blob/v1.2/clusteval/packages/clustevalBackendClient.jar?raw=true" %></td>
+		<td>1.2</td>
+		<td>22.03.2014</td>
+	</tr>
+	<tr>
+		<td><%= link_to "Dynamic Packages", "https://github.com/wiwie/clustevalPackages/tree/v1.2/clustevalPackages/repository" %></td>
+		<td>1.2</td>
+		<td>22.03.2014</td>
+	</tr>
+</table>
+
+<h3>Results (as a zipped repository)</h3>
+The clustering and analysis results of the bone_marrow, brown and synthetic (cassini, cuboid, spirals) data sets can be downloaded as a zipped repository. This repository also contains all required configuration files as well as dynamic packages which were used to perform the calculations. This repository can be downloaded together with the back end JARs and the website, to host the results on a local webserver.
+<table class="downloadTable">
+	<thead>
+		<th>Link</th>
+		<th>Version</th>
+		<th>Release Date</th>
+	</thead>
+	<tr>
+		<td><%= link_to "repositoryPaper.tar.gz", "http://clusteval.mpi-inf.mpg.de/repositoryPaper.tar.gz" %></td>
+		<td>1.2</td>
+		<td>22.03.2014</td>
 	</tr>
 </table>
 
 <h3>Frontend (Website & MySQL DB Structure)</h3>
 For a detailed step-by-step installation guide for the frontend, please check out the installation section of the clusteval <%= link_to "technical documentation", HelpTechnicalDocumentation %>.
-You can download a zip containing all parts of the frontend (website together with a mysql dump) here:
+You can download a zip containing all parts of the frontend here:
 <table class="downloadTable">
 	<thead>
 		<th>Link</th>
@@ -31,9 +51,9 @@ You can download a zip containing all parts of the frontend (website together wi
 		<th>Release Date</th>
 	</thead>
 	<tr>
-		<td><%= link_to "clustevalFrontend.zip", "http://clusteval.mpi-inf.mpg.de/clustevalFrontend.zip" %></td>
-		<td>1.0</td>
-		<td>13.05.2013</td>
+		<td><%= link_to "clustevalFrontend.zip", "https://github.com/wiwie/clustevalWebsite/archive/v1.2.zip" %></td>
+		<td>1.2</td>
+		<td>22.03.2014</td>
 	</tr>
 </table>
 
