@@ -1,14 +1,6 @@
 
 SHELL = /bin/sh
 
-# V=0 quiet, V=1 verbose.  other values don't work.
-V = 0
-Q1 = $(V:1=)
-Q = $(Q1:0=@)
-n=$(NULLCMD)
-ECHO1 = $(V:1=@$n)
-ECHO = $(ECHO1:0=@echo)
-
 #### Start of system configuration section. ####
 
 srcdir = .
@@ -51,8 +43,6 @@ sitearchdir = $(sitelibdir)/$(sitearch)
 vendorlibdir = $(vendordir)/$(ruby_version)
 vendorarchdir = $(vendorlibdir)/$(sitearch)
 
-NULLCMD = :
-
 CC = gcc
 CXX = g++
 LIBRUBY = $(LIBRUBY_SO)
@@ -66,16 +56,16 @@ RUBY_EXTCONF_H =
 cflags   =  $(optflags) $(debugflags) $(warnflags)
 optflags = -O3
 debugflags = -ggdb
-warnflags = -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings  
-CFLAGS   = -fPIC -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -Wall -fno-strict-aliasing -fPIC $(ARCH_FLAG)
-INCFLAGS = -I. -I/home/chris/git/clustevalWebsite/clustevalWebsite/vendor/bundle/ruby/1.9.1/gems/libv8-3.11.8.13-x86_64-linux/vendor/v8/include -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir)
+warnflags = -Wextra -Wno-unused-parameter -Wno-parentheses -Wpointer-arith -Wwrite-strings -Wno-missing-field-initializers -Wno-long-long
+CFLAGS   = -fPIC -fno-strict-aliasing -g -g -O2 -fPIC 
+INCFLAGS = -I. -I/local/wiwie/clustevalWebsite/clustevalWebsite/vendor/bundle/ruby/1.9.1/gems/libv8-3.11.8.13-x86_64-linux/vendor/v8/include -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir)
 DEFS     = 
-CPPFLAGS =  -D_FORTIFY_SOURCE=2 $(DEFS) $(cppflags) -Wall -g -rdynamic
-CXXFLAGS = $(CFLAGS) -g -O2 -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security -Wall -fno-strict-aliasing
-ldflags  = /home/chris/git/clustevalWebsite/clustevalWebsite/vendor/bundle/ruby/1.9.1/gems/libv8-3.11.8.13-x86_64-linux/vendor/v8/out/x64.release/obj.target/tools/gyp/libv8_base.a /home/chris/git/clustevalWebsite/clustevalWebsite/vendor/bundle/ruby/1.9.1/gems/libv8-3.11.8.13-x86_64-linux/vendor/v8/out/x64.release/obj.target/tools/gyp/libv8_snapshot.a -L. -Wl,-Bsymbolic-functions -Wl,-z,relro -rdynamic -Wl,-export-dynamic
+CPPFLAGS =   $(DEFS) $(cppflags) -Wall -g -rdynamic
+CXXFLAGS = $(CFLAGS) -fno-strict-aliasing -g
+ldflags  = /local/wiwie/clustevalWebsite/clustevalWebsite/vendor/bundle/ruby/1.9.1/gems/libv8-3.11.8.13-x86_64-linux/vendor/v8/out/x64.release/obj.target/tools/gyp/libv8_base.a /local/wiwie/clustevalWebsite/clustevalWebsite/vendor/bundle/ruby/1.9.1/gems/libv8-3.11.8.13-x86_64-linux/vendor/v8/out/x64.release/obj.target/tools/gyp/libv8_snapshot.a -L.  -rdynamic -Wl,-export-dynamic
 dldflags = 
 ARCH_FLAG = 
-DLDFLAGS = $(ldflags) $(dldflags) $(ARCH_FLAG)
+DLDFLAGS = $(ldflags) $(dldflags)
 LDSHARED = $(CXX) -shared
 LDSHAREDXX = $(CXX) -shared
 AR = ar
@@ -91,7 +81,7 @@ ruby = /usr/bin/ruby1.9.1
 RUBY = $(ruby)
 RM = rm -f
 RM_RF = $(RUBY) -run -e rm -- -rf
-RMDIRS = rmdir --ignore-fail-on-non-empty -p
+RMDIRS = $(RUBY) -run -e rmdir -- -p
 MAKEDIRS = /bin/mkdir -p
 INSTALL = /usr/bin/install -c
 INSTALL_PROG = $(INSTALL) -m 0755
@@ -115,8 +105,8 @@ extout_prefix =
 target_prefix = /v8
 LOCAL_LIBS = 
 LIBS = $(LIBRUBYARG_SHARED) -lpthread  -lpthread -lrt -ldl -lcrypt -lm   -lc
-SRCS = object.cc heap.cc backref.cc script.cc primitive.cc function.cc external.cc trycatch.cc v8.cc constants.cc exception.cc accessor.cc init.cc value.cc invocation.cc template.cc signature.cc stack.cc array.cc locker.cc constraints.cc gc.cc date.cc message.cc rr.cc handles.cc context.cc string.cc
-OBJS = object.o heap.o backref.o script.o primitive.o function.o external.o trycatch.o v8.o constants.o exception.o accessor.o init.o value.o invocation.o template.o signature.o stack.o array.o locker.o constraints.o gc.o date.o message.o rr.o handles.o context.o string.o
+SRCS = accessor.cc array.cc backref.cc constants.cc constraints.cc context.cc date.cc exception.cc external.cc function.cc gc.cc handles.cc heap.cc init.cc invocation.cc locker.cc message.cc object.cc primitive.cc rr.cc script.cc signature.cc stack.cc string.cc template.cc trycatch.cc v8.cc value.cc
+OBJS = accessor.o array.o backref.o constants.o constraints.o context.o date.o exception.o external.o function.o gc.o handles.o heap.o init.o invocation.o locker.o message.o object.o primitive.o rr.o script.o signature.o stack.o string.o template.o trycatch.o v8.o value.o
 TARGET = init
 DLLIB = $(TARGET).so
 EXTSTATIC = 
@@ -124,8 +114,8 @@ STATIC_LIB =
 
 BINDIR        = $(bindir)
 RUBYCOMMONDIR = $(sitedir)$(target_prefix)
-RUBYLIBDIR = /home/chris/git/clustevalWebsite/clustevalWebsite/vendor/bundle/ruby/1.9.1/gems/therubyracer-0.11.4/lib$(target_prefix)
-RUBYARCHDIR = /home/chris/git/clustevalWebsite/clustevalWebsite/vendor/bundle/ruby/1.9.1/gems/therubyracer-0.11.4/lib$(target_prefix)
+RUBYLIBDIR = /local/wiwie/clustevalWebsite/clustevalWebsite/vendor/bundle/ruby/1.9.1/gems/therubyracer-0.11.4/lib$(target_prefix)
+RUBYARCHDIR = /local/wiwie/clustevalWebsite/clustevalWebsite/vendor/bundle/ruby/1.9.1/gems/therubyracer-0.11.4/lib$(target_prefix)
 HDRDIR        = $(rubyhdrdir)/ruby$(target_prefix)
 ARCHHDRDIR    = $(rubyhdrdir)/$(arch)/ruby$(target_prefix)
 
@@ -150,7 +140,7 @@ distclean-so::
 distclean: clean distclean-so distclean-rb-default distclean-rb
 		@-$(RM) Makefile $(RUBY_EXTCONF_H) conftest.* mkmf.log
 		@-$(RM) core ruby$(EXEEXT) *~ $(DISTCLEANFILES)
-		@-$(RMDIRS) $(DISTCLEANDIRS) 2> /dev/null || true
+		@-$(RMDIRS) $(DISTCLEANDIRS)
 
 realclean: distclean
 install: install-so install-rb
@@ -164,49 +154,33 @@ install-rb: pre-install-rb install-rb-default
 install-rb-default: pre-install-rb-default
 pre-install-rb: Makefile
 pre-install-rb-default: Makefile
-pre-install-rb-default:
-	$(ECHO) installing default init libraries
 $(RUBYARCHDIR):
-	$(Q) $(MAKEDIRS) $@
+	$(MAKEDIRS) $@
 
 site-install: site-install-so site-install-rb
 site-install-so: install-so
 site-install-rb: install-rb
 
-.SUFFIXES: .c .m .cc .mm .cxx .cpp .C .o
+.SUFFIXES: .c .m .cc .cxx .cpp .C .o
 
 .cc.o:
-	$(ECHO) compiling $(<)
-	$(Q) $(CXX) $(INCFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(COUTFLAG)$@ -c $<
-
-.mm.o:
-	$(ECHO) compiling $(<)
-	$(Q) $(CXX) $(INCFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(COUTFLAG)$@ -c $<
+	$(CXX) $(INCFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(COUTFLAG)$@ -c $<
 
 .cxx.o:
-	$(ECHO) compiling $(<)
-	$(Q) $(CXX) $(INCFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(COUTFLAG)$@ -c $<
+	$(CXX) $(INCFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(COUTFLAG)$@ -c $<
 
 .cpp.o:
-	$(ECHO) compiling $(<)
-	$(Q) $(CXX) $(INCFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(COUTFLAG)$@ -c $<
+	$(CXX) $(INCFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(COUTFLAG)$@ -c $<
 
 .C.o:
-	$(ECHO) compiling $(<)
-	$(Q) $(CXX) $(INCFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(COUTFLAG)$@ -c $<
+	$(CXX) $(INCFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(COUTFLAG)$@ -c $<
 
 .c.o:
-	$(ECHO) compiling $(<)
-	$(Q) $(CC) $(INCFLAGS) $(CPPFLAGS) $(CFLAGS) $(COUTFLAG)$@ -c $<
-
-.m.o:
-	$(ECHO) compiling $(<)
-	$(Q) $(CC) $(INCFLAGS) $(CPPFLAGS) $(CFLAGS) $(COUTFLAG)$@ -c $<
+	$(CC) $(INCFLAGS) $(CPPFLAGS) $(CFLAGS) $(COUTFLAG)$@ -c $<
 
 $(DLLIB): $(OBJS) Makefile
-	$(ECHO) linking shared-object v8/$(DLLIB)
 	@-$(RM) $(@)
-	$(Q) $(LDSHAREDXX) -o $@ $(OBJS) $(LIBPATH) $(DLDFLAGS) $(LOCAL_LIBS) $(LIBS)
+	$(LDSHAREDXX) -o $@ $(OBJS) $(LIBPATH) $(DLDFLAGS) $(LOCAL_LIBS) $(LIBS)
 
 
 
