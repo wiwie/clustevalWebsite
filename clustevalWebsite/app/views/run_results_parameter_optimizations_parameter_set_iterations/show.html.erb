@@ -24,6 +24,9 @@
 	<tr>
 		<td>Iteration number</td><td><%= @iteration.iteration %></td>
 	</tr>
+	<tr>
+		<td>Number of clusters</td><td><%= @clustering.length %></td>
+	</tr>
 	</tbody>
 </table>
 
@@ -45,6 +48,10 @@
 	<% end %>
 	</tbody>
 </table>
+<h3>Cluster Size distribution</h3>
+<div id="resizableClusterSize" class="resizable">
+	<div id="clusterSize" style="width:500px; height:500px;"></div>
+</div>
 <h3>Clustering representation</h3>
 <h4>(2D-coordinates created using isoMDS)</h4>
 Hint: To zoom, click on the plot and drag.
@@ -70,10 +77,83 @@ Hint: To zoom, click on the plot and drag.
   </tr>
 </tbody>
  </table>
+ 
+<script type="text/javascript" charset="utf-8">
+$(function() {
+  var chart;
+
+  chart = new Highcharts.Chart( {
+    credits : {
+      enabled : true
+    },
+    chart: {
+      type: "column",
+      renderTo: "clusterSize"
+    },
+    title: {
+      text: "Cluster Sizes"
+    },
+    yAxis: {
+      title: {
+	text: "Cluster Size"
+      }
+    },
+    xAxis: {
+      title: {
+	text: "Cluster"
+      },
+      categories: [
+		<% c = 0 %>
+		<% @clustering.each do |cluster| %>
+			"Cluster <%= cluster[0] %>"<%= c < @clustering.length-1 ? ',' : '' %>
+			<% c = c + 1 %>
+		<% end %>
+      ],
+	labels: {
+	  enabled: true,
+	  rotation: -90,
+	  align: 'right'
+	}
+    },
+    legend: {
+	enabled: false
+    },
+    series: [{
+	data: [
+		<% c = 0 %>
+		<% @clustering.each do |cluster| %>
+			<%= cluster[1].length %><%= c < @clustering.length-1 ? ',' : '' %>
+			<% c = c + 1 %>
+		<% end %>
+	],
+	dataLabels: {
+	    enabled: true,
+	    rotation: -90,
+	    color: '#000000',
+	    x: 4,
+	    y: 10,
+	    style: {
+		fontSize: '13px',
+		fontFamily: 'Verdana, sans-serif'
+	    }
+	}
+	}
+    ]
+  });
+
+
+  $( "#resizableClusterSize" ).resizable({
+    helper: "ui-resizable-helper",
+    stop: function( event, ui ) {
+      chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+    }
+  });
+});
+</script>
 
 <script type="text/javascript" charset="utf-8">
 	$(function() {
-		var chart1, options ={
+		var chart1, itemToClusterId, options ={
             credits : {
               enabled : false
             },
@@ -82,16 +162,6 @@ Hint: To zoom, click on the plot and drag.
 				renderTo: "scatterIsoMDS",
         		zoomType: 'xy'
 			},
-			//plotOptions: {
-			//	scatter: {
-			//		dataLabels: {
-			//			enabled: true,
-			//			formatter: function() {
-			//				return this.point.name;
-			//			}
-			//		}
-			//	}
-			//},
 			title: {
 				text: "Scatter plot of clustering objects"
 			},
@@ -117,20 +187,24 @@ Hint: To zoom, click on the plot and drag.
             	}
         	},
 			series: [
-			<% for c in 0..@clustering.length-1 %>
+			<% c = 0 %>
+			<% @clustering.each do |cluster| %>
 			{
-				name: "Cluster <%= c %>"
+				name: "Cluster <%= cluster[0] %>"
 			}
 			<%= c < @clustering.length-1 ? ',' : '' %>
+			<% c = c + 1 %>
 			<% end %>
 			]
 		};
 
-		itemToClusterId = {}
+		itemToClusterId = {} 
+		<% c = 0 %>
 		<% @clustering.each do |cluster| %>
 			<% cluster[1].each do |cluster_object| %>
-				itemToClusterId['<%= cluster_object[0] %>'] = <%= cluster[0] %>
+				itemToClusterId['<%= cluster_object[0] %>'] = <%= c %>
 			<% end %>
+			<% c = c + 1 %>
 		<% end %>
 
 		// Load data asynchronously using jQuery. On success, add the data
@@ -138,40 +212,40 @@ Hint: To zoom, click on the plot and drag.
         // This data is obtained by exporting a GA custom report to TSV.
         // http://api.jquery.com/jQuery.get/
         jQuery.get('/<%= params[:repository] %>/run_results_parameter_optimizations_parameter_set_iterations/isoMDS/<%= params[:id] %>', null, function(tsv, state, xhr) {
-            var lines = [],
-                series = [];
+		var lines = [],
+		series = [];
 
-            // inconsistency
-            if (typeof tsv !== 'string') {
-                tsv = xhr.responseText;
-            }
+		// inconsistency
+		if (typeof tsv !== 'string') {
+			tsv = xhr.responseText;
+		}
 
-            <% for c in 0..@clustering.length-1 %>
-            	series[<%= c %>] = [];
-            <% end %>
+		<% for c in 0..@clustering.length-1 %>
+			series[<%= c %>] = [];
+		<% end %>
 
-            // split the data return into lines and parse them
-            tsv = tsv.split(/\n/);
+		// split the data return into lines and parse them
+		tsv = tsv.split(/\n/);
 
-            jQuery.each(tsv, function(i, line) {
-            	if (line) {
-                	line = line.split(/\t/);
-                	series[itemToClusterId[line[0]]].push({name: line[0], x: parseFloat(line[1]), y: parseFloat(line[2])});
-                }
-            });
-    
-    		<% for c in 0..@clustering.length-1 %>
-            options.series[<%= c %>].data = series[<%= c %>];
-            <% end %>
-            chart1 = new Highcharts.Chart(options);
+		jQuery.each(tsv, function(i, line) {
+			if (line) {
+				line = line.split(/\t/);
+				series[itemToClusterId[line[0]]].push({name: line[0], x: parseFloat(line[1]), y: parseFloat(line[2])});
+			}
+		});
+
+		<% for c in 0..@clustering.length-1 %>
+			options.series[<%= c %>].data = series[<%= c %>];
+		<% end %>
+		chart1 = new Highcharts.Chart(options);
 
 		      $( "#resizableIsoMDS" ).resizable({
-		        helper: "ui-resizable-helper",
-		        stop: function( event, ui ) {
-		          chart1.setSize(ui.size.width,ui.size.height,doAnimation = true);
-		        }
+			helper: "ui-resizable-helper",
+			stop: function( event, ui ) {
+			  chart1.setSize(ui.size.width,ui.size.height,doAnimation = true);
+			}
 		      });
-        });
+		});
 	});
 </script>
 
@@ -179,7 +253,7 @@ Hint: To zoom, click on the plot and drag.
 
 <script type="text/javascript" charset="utf-8">
 	$(function() {
-		var chart2, options ={
+		var chart2, itemToClusterId, options ={
             credits : {
               enabled : false
             },
@@ -188,16 +262,6 @@ Hint: To zoom, click on the plot and drag.
 				renderTo: "scatterPCA",
         		zoomType: 'xy'
 			},
-			//plotOptions: {
-			//	scatter: {
-			//		dataLabels: {
-			//			enabled: true,
-			//			formatter: function() {
-			//				return this.point.name;
-			//			}
-			//		}
-			//	}
-			//},
 			title: {
 				text: "Scatter plot of clustering objects"
 			},
@@ -232,11 +296,13 @@ Hint: To zoom, click on the plot and drag.
 			]
 		};
 
-		itemToClusterId = {}
+		itemToClusterId = {} 
+		<% c = 0 %>
 		<% @clustering.each do |cluster| %>
 			<% cluster[1].each do |cluster_object| %>
-				itemToClusterId['<%= cluster_object[0] %>'] = <%= cluster[0] %>
+				itemToClusterId['<%= cluster_object[0] %>'] = <%= c %>
 			<% end %>
+			<% c = c + 1 %>
 		<% end %>
 
 		// Load data asynchronously using jQuery. On success, add the data
