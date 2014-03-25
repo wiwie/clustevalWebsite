@@ -1,6 +1,6 @@
 /**
  * Grid theme for Highcharts JS
- * @author Torstein Hønsi
+ * @author Torstein Honsi
  */
 
 Highcharts.theme = {
@@ -13,11 +13,10 @@ Highcharts.theme = {
 				[1, 'rgb(240, 240, 255)']
 			]
 		},
-		borderWidth: 0,
-		borderRadius: 0,
+		borderWidth: 2,
 		plotBackgroundColor: 'rgba(255, 255, 255, .9)',
-		plotShadow: false,
-		plotBorderWidth: 0
+		plotShadow: true,
+		plotBorderWidth: 1
 	},
 	title: {
 		style: {
@@ -73,7 +72,6 @@ Highcharts.theme = {
 		}
 	},
 	legend: {
-		borderWidth: 0,
 		itemStyle: {
 			font: '9pt Trebuchet MS, Verdana, sans-serif',
 			color: 'black'
@@ -97,12 +95,6 @@ Highcharts.theme = {
 			theme: {
 				stroke: '#CCCCCC'
 			}
-		}
-	},
-	plotOptions: {
-		column: {
-			borderWidth: 0,
-			groupPadding: 0.1
 		}
 	}
 };

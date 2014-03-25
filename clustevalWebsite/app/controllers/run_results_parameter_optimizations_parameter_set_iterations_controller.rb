@@ -41,7 +41,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 			clusterString.split(',').each do |clusterItemString|
 				@clusterItems[clusterItemString.split(':')[0]] = clusterItemString.split(':')[1]
 			end
-			@clustering[i.to_s] = @clusterItems
+			@clustering[(i+1).to_s] = @clusterItems
 			i = i + 1
 		end
 
