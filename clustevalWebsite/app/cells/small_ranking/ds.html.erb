@@ -4,6 +4,7 @@
     <th>Program</th>
     <th>Best quality</th>
     <th>Parameter set</th>
+    <th>Clustering</th>
   </tr>
  </thead>
  <tbody>
@@ -14,6 +15,7 @@
       <%= (iterationExt.quality*1000).round/1000.0 %>
     </td>
     <td><%= raw iterationExt.paramSetAsString.gsub(",","<br />") %></td>
+    <td><a href="/<%= params[:repository] %>/run_results_parameter_optimizations_parameter_set_iterations/<%= iterationExt.iteration.to_s %>">Clustering</a></td>
   </tr>
   <% end %>
 </tbody>

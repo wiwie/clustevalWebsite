@@ -313,9 +313,9 @@ class SmallRankingCell < Cell::Rails
 	def ds(opts)
 		measure = ClusteringQualityMeasure.find_by_id(opts[:qualityMeasure])
 		if measure.optimum == 'Maximum'
-			@iterationsExts = ParameterOptimizationMaxQualRow.joins([:program, :dataset]).select("parameter_optimization_max_qual_rows.program_id,parameter_optimization_max_qual_rows.dataset_id,quality,paramSetAsString,clustering_quality_measure_id").where(:dataset_id => opts[:obj].id).where(:clustering_quality_measure_id => measure.id)
+			@iterationsExts = ParameterOptimizationMaxQualRow.joins([:program, :dataset]).select("parameter_optimization_max_qual_rows.program_id,parameter_optimization_max_qual_rows.dataset_id,quality,paramSetAsString,clustering_quality_measure_id,iteration").where(:dataset_id => opts[:obj].id).where(:clustering_quality_measure_id => measure.id)
 		else
-			@iterationsExts = ParameterOptimizationMinQualRow.joins([:program, :dataset]).select("parameter_optimization_min_qual_rows.program_id,parameter_optimization_min_qual_rows.dataset_id,quality,paramSetAsString,clustering_quality_measure_id").where(:dataset_id => opts[:obj].id).where(:clustering_quality_measure_id => measure.id)
+			@iterationsExts = ParameterOptimizationMinQualRow.joins([:program, :dataset]).select("parameter_optimization_min_qual_rows.program_id,parameter_optimization_min_qual_rows.dataset_id,quality,paramSetAsString,clustering_quality_measure_id,iteration").where(:dataset_id => opts[:obj].id).where(:clustering_quality_measure_id => measure.id)
 		end
 		render :view => 'ds', :locals => {:qualityMeasure => opts[:qualityMeasure], :iterationsExts => @iterationsExts, :program_filter => opts[:program_filter]}
 	end
