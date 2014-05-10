@@ -6,6 +6,7 @@
   <thead>
   <tr>
     <th>Data Set</th>
+    <th>Data Type</th>
     <% for i in 0..@programs.length-1 %>
       <% program = @programs[i] %>
       <th>
@@ -20,10 +21,11 @@
     <% for j in 0..@programs.length %>
       <% if j == 0 %>
         <td><%= link_to @matrix[i][j].alias, @matrix[i][j] %></td>
+        <td><%= @matrix[i][j].dataset_type.alias %></td>
       <% else %>
        <% @string = "" %>
           <% if @matrix[i][j].to_s == "--" %>
-            <% @string = @matrix[i][j].to_s %>
+            <% @string = "--" %>
           <% else %>
             <% @string = '<a href="/' + params[:repository] + '/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
 

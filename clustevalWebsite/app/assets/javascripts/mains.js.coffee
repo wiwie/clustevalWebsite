@@ -17,6 +17,12 @@ ellipsis = (text, n) ->
 jQuery ->
 	MyDatatable('#dataAndProgramStatistics');
 	bla = $('#dataAndProgramStatistics').dataTable(
+		aoColumnDefs:	[
+			{
+				aTargets: [ 1 ]
+				bVisible: false
+			}
+		]
 		sPaginationType: "full_numbers"
 		bJQueryUI: true
 		bRetrieve: true
@@ -25,10 +31,12 @@ jQuery ->
 		bInfo: false
 		bFilter: false
 		bAutoWidth: false
-		sDom: 'T<"clear"><"H"Rlfr>t<"F"ip>'
+		sDom: 'C<"clear">T<"clear"><"H"Rlfr>t<"F"ip>'
 		oTableTools:
 			sSwfPath: "/assets/dataTables/copy_csv_xls.swf"
-			aButtons: ['copy', 'csv'])
+			aButtons: ['copy', 'csv']
+		oColVis:
+			aiInclude: [ 0, 1 ])
 
 jQuery ->
 	$('.clustEvalContentInner :checkbox').each ->
