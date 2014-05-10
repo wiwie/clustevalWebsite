@@ -36,7 +36,7 @@ jQuery ->
 			sSwfPath: "/assets/dataTables/copy_csv_xls.swf"
 			aButtons: ['copy', 'csv']
 		oColVis:
-			aiInclude: [ 0, 1 ])
+			aiInclude: [ 1 ])
 
 jQuery ->
 	$('.clustEvalContentInner :checkbox').each ->
