@@ -1,7 +1,7 @@
 var MyDatatable = function( sTable ) {
 	var ths = $(sTable + " > thead > tr > th").each(function(index) {
 		// skip index 0
-		if (index == 0)
+		if (index == 0 || index == 1)
 			return;
 
 		var oldText = $(this).text();

@@ -25,7 +25,7 @@
       <% else %>
        <% @string = "" %>
           <% if @matrix[i][j].to_s == "--" %>
-            <% @string = @matrix[i][j].to_s %>
+            <% @string = "--" %>
           <% else %>
             <% @string = '<a href="/' + params[:repository] + '/datasets/' + @datasets[j-1].id.to_s + '/bestclust/' + @programs[i].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
 
@@ -76,9 +76,13 @@ $(function () {
             yAxis: {
                 title: {
                     text: '<%= @qualityMeasure.alias %>'
-                },
-                min: <%= @qualityMeasure.minValue %>,
-                max: <%= @qualityMeasure.maxValue %>,
+                }
+                <% if @qualityMeasure.minValue %>
+                ,min: <%= @qualityMeasure.minValue %>
+                <% end %>
+                <% if @qualityMeasure.maxValue %>
+                ,max: <%= @qualityMeasure.maxValue %>
+                <% end %>
             },
     
             tooltip: {
