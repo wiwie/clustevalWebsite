@@ -8,6 +8,7 @@
   <thead>
   <tr>
     <th>Program</th>
+    <th></th>
     <% for i in 0..@datasets.length-1 %>
     <% dataset = @datasets[i] %>
     <th>
@@ -22,6 +23,7 @@
     <% for j in 0..@datasets.length %>
       <% if j == 0 %>
         <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
+        <td></td>
       <% else %>
        <% @string = "" %>
           <% if @matrix[i][j].to_s == "--" %>
