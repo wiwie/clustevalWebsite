@@ -131,11 +131,11 @@ class AddKeys < ActiveRecord::Migration
     add_foreign_key "runs", "repositories", :name => "runs_repository_id_fk", dependent: :delete
     add_foreign_key "runs", "runs", :name => "runs_run_id_fk", dependent: :delete
     add_foreign_key "runs", "run_types", :name => "runs_run_type_id_fk", dependent: :delete
-    add_foreign_key "statistics_datas", "repositories", :name => "statistics_data_repository_id_fk", dependent: :delete
-    add_foreign_key "statistics_datas", "statistics", :name => "statistics_data_statistic_id_fk", dependent: :delete
+    add_foreign_key "statistics_data", "repositories", :name => "statistics_data_repository_id_fk", dependent: :delete
+    add_foreign_key "statistics_data", "statistics", :name => "statistics_data_statistic_id_fk", dependent: :delete
     add_foreign_key "statistics", "repositories", :name => "statistics_repository_id_fk", dependent: :delete
-    add_foreign_key "statistics_run_datas", "repositories", :name => "statistics_run_data_repository_id_fk", dependent: :delete
-    add_foreign_key "statistics_run_datas", "statistics", :name => "statistics_run_data_statistic_id_fk", dependent: :delete
+    add_foreign_key "statistics_run_data", "repositories", :name => "statistics_run_data_repository_id_fk", dependent: :delete
+    add_foreign_key "statistics_run_data", "statistics", :name => "statistics_run_data_statistic_id_fk", dependent: :delete
     add_foreign_key "statistics_runs", "repositories", :name => "statistics_runs_repository_id_fk", dependent: :delete
     add_foreign_key "statistics_runs", "statistics", :name => "statistics_runs_statistic_id_fk", dependent: :delete
   end

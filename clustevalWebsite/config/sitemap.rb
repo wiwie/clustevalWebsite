@@ -1,3 +1,7 @@
+require 'rubygems'
+require 'sitemap_generator'
+
+
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "http://clusteval.mpi-inf.mpg.de"
 
@@ -24,12 +28,12 @@ SitemapGenerator::Sitemap.create do
   #   Article.find_each do |article|
   #     add article_path(article), :lastmod => article.updated_at
   #   end
-  add '/mains/comparison'
-  add programs_path
-  add datasets_path
-  add clustering_quality_measures_path
-  add submits_path
-  add admins_path
-  add helps_path
-  add aboutus_path
+  add '/1/mains/comparison'
+  add programs_path(1)
+  add datasets_path(1)
+  add clustering_quality_measures_path(1)
+  add submits_path(1)
+  add admins_path(1)
+  add helps_path(1)
+  add aboutus_path(1)
 end
