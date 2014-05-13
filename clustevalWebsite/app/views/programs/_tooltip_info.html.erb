@@ -1,0 +1,16 @@
+<b><large>Clustering Method: <%= @program.alias%></large></b>
+<small>
+	<table class="tooltip_info">
+		<tr><td valign="top"><b>Name:</b></td><td><%= @program.full_name%></td></tr>
+<% if @program.description %>
+		<tr><td valign="top"><b>Description:</b></td><td>
+<% if @program.imageUrl %>
+		<%= image_tag @program.imageUrl, :style => 'float:left;height:100px;margin-right:5px;', :class => 'thumbnail' %>
+<% end %>
+			<%= @program.description %></td></tr> 
+<% end %>
+<% if @program.publication %>
+		<tr><td valign="top"><b>Publication:</b></td><td><%= raw @program.publication %></td></tr> 
+<% end %>
+	</table>
+</small>

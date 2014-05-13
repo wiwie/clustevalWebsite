@@ -1,0 +1,15 @@
+<b><large>Dataset <%= @dataset.alias%></large></b>
+<small>
+	<table class="tooltip_info">
+		<tr><td valign="top"><b>Name:</b></td><td><%= @dataset.full_name%></td></tr>
+		<tr><td valign="top"><b>Type:</b></td><td><%= @dataset.dataset_type.alias%></td></tr> 
+		<tr><td valign="top"><b>Format:</b></td><td><%= @dataset.dataset_format.name%></td></tr>	 
+<% if @description %>
+		<tr><td valign="top"><b>Description:</b></td><td><%= raw @description.dataset_description %></td></tr>
+<% end %>
+		
+<% if @publication %>
+		<tr><td valign="top"><b>Publication:</b></td><td><%= raw @publication.dataset_publication %></td></tr>
+<% end %>
+	</table>
+</small>

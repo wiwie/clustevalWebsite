@@ -1,0 +1,10 @@
+<b><large>Clustering Quality Measure: <%= @measure.alias%></large></b>
+<small>
+	<table class="tooltip_info">
+		<tr><td valign="top"><b>Type:</b></td><td><%= @measure.requiresGoldStandard ? 'External' : 'Internal' %></td></tr>
+		<tr><td valign="top"><b>Optimize by:</b></td><td><%= @measure.optimum == 'Maximum' ? 'Maximization' : 'Minimization' %></td></tr>
+		<tr><td valign="top"><b>Range:</b></td><td>[<%= @measure.minValue ? @measure.minValue : '?' %>, <%= @measure.maxValue ? @measure.maxValue : '?' %>]</td></tr>
+	</table>
+</small>
+<script type="text/javascript">
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);</script>
