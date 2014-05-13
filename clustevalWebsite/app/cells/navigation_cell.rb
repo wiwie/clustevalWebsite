@@ -1,4 +1,4 @@
-class NavigationCell < Cell::Rails
+class NavigationCell < MyCell
 	helper SimpleNavigation::Helpers
 
   def display

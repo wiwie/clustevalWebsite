@@ -1,4 +1,4 @@
-class InfoTextCell < Cell::Rails
+class InfoTextCell < MyCell
 	helper ActionView::Helpers::FormTagHelper
 
   def display

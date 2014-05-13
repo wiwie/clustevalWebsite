@@ -1,4 +1,4 @@
-class StatisticDescriptionCell < Cell::Rails
+class StatisticDescriptionCell < MyCell
 	def display(opts)
 		begin
 	  		render :view => 'display_' + opts[:statistic].name, :locals => {:statistic => opts[:statistic]}

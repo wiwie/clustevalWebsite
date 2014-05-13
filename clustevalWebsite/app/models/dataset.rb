@@ -6,11 +6,11 @@ class Dataset < ActiveRecord::Base
   has_many :dataset_configs
 
   def self.all(repository, *args)
-  if repository
-    return self.find(:all, :conditions => ["repository_id = ?",repository])
-  else
-    return super.all
-  end
+    if repository
+      return self.find(:all, :conditions => ["repository_id = ?",repository])
+    else
+      return super.all
+    end
   end
 
   def name

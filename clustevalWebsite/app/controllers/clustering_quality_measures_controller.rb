@@ -17,4 +17,10 @@ class ClusteringQualityMeasuresController < ApplicationController
 			format.json { render :json => @measure }
 		end
 	end
+
+	def tooltip_info
+		@measure = ClusteringQualityMeasure.find(params[:id])
+
+		render partial: 'tooltip_info'
+	end
 end

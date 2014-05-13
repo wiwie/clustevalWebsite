@@ -1,4 +1,4 @@
-class ClusteringQualityMeasureDescriptionCell < Cell::Rails
+class ClusteringQualityMeasureDescriptionCell < MyCell
 	def display(opts)
 		begin
 	  		render :view => 'display_' + opts[:measure].name, :locals => {:measure => opts[:measure]}

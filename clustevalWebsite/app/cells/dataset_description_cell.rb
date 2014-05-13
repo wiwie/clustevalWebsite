@@ -1,4 +1,4 @@
-class DatasetDescriptionCell < Cell::Rails
+class DatasetDescriptionCell < MyCell
 	helper ActionView::Helpers::FormTagHelper
 
 	def display(opts)

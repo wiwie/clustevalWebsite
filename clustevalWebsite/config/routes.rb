@@ -15,6 +15,7 @@ ClustEval::Application.routes.draw do
 		match 'datasets/:id/clust' => 'datasets#show_clusterings'
 		match 'datasets/:id/bestclust' => 'datasets#show_bestclusterings'
 		match 'datasets/:id/bestclust/:program_filter' => 'datasets#show_bestclusterings', :as => :dataset_filter
+		match 'datasets/:id/tooltip_info' => 'datasets#tooltip_info'
 		match 'data_configs/fetch_table_data/:id' => 'data_configs#fetch_table_data'
 		match 'data_configs/:id/comparison' => 'data_configs#comparison'
 		match 'login', :to => "user_sessions#new",      :as => :login
@@ -32,6 +33,7 @@ ClustEval::Application.routes.draw do
 		match 'programs/:id/perf' => 'programs#show_performance'
 		match 'programs/:id/clust' => 'programs#show_bestclusterings'
 		match 'programs/:id/clust/:dataset_filter' => 'programs#show_bestclusterings', :as => :program_filter
+		match 'programs/:id/tooltip_info' => 'programs#tooltip_info'
 		match 'run_results_parameter_optimizations/img/:id' => 'run_results_parameter_optimizations#img'
 		match 'run_results_parameter_optimizations/fetch_table_data/:id/:dataId/:programId' => 'run_results_parameter_optimizations#fetch_table_data'
 		match 'run_results_parameter_optimizations/fetch_graph_data/:id/:dataId/:programId' => 'run_results_parameter_optimizations#fetch_graph_data'
@@ -45,6 +47,8 @@ ClustEval::Application.routes.draw do
 		match 'small_rankings/dsp/:qualityMeasure/:inv' => 'small_rankings#dsp'
 		match 'small_rankings/ds/:id/:qualityMeasure' => 'small_rankings#ds'
 		match 'small_rankings/p/:id/:qualityMeasure' => 'small_rankings#p'
+
+		match 'clustering_quality_measures/:id/tooltip_info' => 'clustering_quality_measures#tooltip_info'
 
 		resources :admins
 		resources :datasets

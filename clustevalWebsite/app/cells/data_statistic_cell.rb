@@ -1,4 +1,4 @@
-class DataStatisticCell < Cell::Rails
+class DataStatisticCell < MyCell
 
   def display(opts)
   		@statistic = opts[:statistic]

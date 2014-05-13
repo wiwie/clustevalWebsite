@@ -25,6 +25,31 @@
           } 
       });
   </script>
+  <script type="text/javascript">
+  $(function() {
+    $( document ).tooltip({
+      items: "[tooltip_info]",
+      position: {
+        at: "right center"
+      },
+      show: {
+        duration: 0
+      },
+      hide: {
+        duration: 0
+      },
+      content: function(callback) {
+        var element = $( this );
+        if ( element.is( "[tooltip_info]" ) ) {
+          var address = element.attr("tooltip_info");
+          $.get(address, null, function(data) {
+              callback(data); //**call the callback function to return the value**
+          });
+        }
+      }
+    });
+  });
+  </script>
   <style>
     .resizable {
       width: 500px;

@@ -265,8 +265,8 @@ td {
 }
 
 .f2scoreMatrix td {
-	 width: 100px;
-	 height: 100px;
+	 width: 50px;
+	 height: 50px;
 	padding:0px;
 	margin:0px;
 	border-collapse: collapse;
@@ -732,4 +732,12 @@ $gradient2: #575253;
 	background-color:transparent;
 	color:#f28c11;
 	text-decoration:none;
+}
+
+.tooltip_info {
+	margin-top: 10px;
+}
+
+.tooltip_info tr td {
+	padding: 5px;
 }

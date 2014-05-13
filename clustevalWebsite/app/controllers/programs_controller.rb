@@ -58,4 +58,10 @@ class ProgramsController < ApplicationController
 			format.json { render :json => @program }
 		end
 	end
+
+	def tooltip_info
+		@program = Program.find(params[:id])
+
+		render partial: 'tooltip_info'
+	end
 end

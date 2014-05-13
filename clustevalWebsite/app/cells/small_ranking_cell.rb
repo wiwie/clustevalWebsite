@@ -1,4 +1,4 @@
-class SmallRankingCell < Cell::Rails
+class SmallRankingCell < MyCell
 	def dc_and_p(opts)
 		@matrix = []
 		datasetIds = {}

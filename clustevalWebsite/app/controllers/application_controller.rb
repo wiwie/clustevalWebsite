@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   # add the default repository parameter which is part of every route to the url_options -> we do not need to write it in every link_to method
   def default_url_options(options={})
-    { :repository => params[:repository]} 
+    { :repository => params[:repository] }
   end
 
   #def url_options

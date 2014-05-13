@@ -1,4 +1,4 @@
-class ClusteringMethodDescriptionCell < Cell::Rails
+class ClusteringMethodDescriptionCell < MyCell
 	helper ActionView::Helpers::FormTagHelper
 
 	def display(opts)

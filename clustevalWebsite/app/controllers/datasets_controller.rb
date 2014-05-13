@@ -173,4 +173,12 @@ class DatasetsController < ApplicationController
 			format.json { render :json => @dataset }
 		end
 	end
+
+	def tooltip_info
+		@dataset = Dataset.find(params[:id])
+		@description = DatasetDescription.find_by_dataset_fullName(@dataset.full_name)
+		@publication = DatasetPublication.find_by_dataset_fullName(@dataset.full_name)
+
+		render partial: 'tooltip_info'
+	end
 end
