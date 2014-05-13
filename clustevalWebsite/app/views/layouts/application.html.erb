@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>clusteval | <%= yield(:title) %></title>
+  <title>ClustEval | <%= yield(:title) %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag    "stylesheet", :media => "all" %>
   <%= javascript_include_tag "application" %>
@@ -39,7 +39,7 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class='title'>
-      <h1><div id="first">clusteval</div> <div id="second">Integrative Clustering Evaluation Framework</div></h1>
+      <h1><div id="first">ClustEval</div> <div id="second">Integrative Clustering Evaluation Framework</div></h1>
     </div>
     <div class='breadcrumb'>
       <%= render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => false, :join_with => ' » ', :prefix => ' Location: ', :context => :admin) %>

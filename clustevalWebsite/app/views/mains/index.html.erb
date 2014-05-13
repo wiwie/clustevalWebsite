@@ -1,4 +1,4 @@
-<% content_for :title, "Welcome!" %>
+<% content_for :title, " Integrative Clustering Evaluation Framework | Welcome!" %>
   <p>clusteval is a free and extendable opensource platform for objective performance comparison of arbitrary Clustering Methods on different datasets. It is designed to support the standard processes related to Cluster Analyses.</p>
   <p>You can find a list of all available clustering methods under <%= link_to "Clustering Methods", Program %> in the menu. There are <%= Program.all(params[:repository]).count %> different clustering methods available. Similarly, the available datasets can be found under <%= link_to "Datasets", Dataset %>. There are <%= Dataset.all(params[:repository]).count %> datasets available.</p>
 <% @repositories = Repository.where(:repository_type_id => RepositoryType.find_by_name('Repository').id) %>

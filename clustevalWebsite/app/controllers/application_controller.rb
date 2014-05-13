@@ -18,7 +18,11 @@ class ApplicationController < ActionController::Base
 
     begin
       if params[:repository]
-        Repository.find(params[:repository])
+        @repo = Repository.find(params[:repository])
+        # run result repository
+        if @repo.repository_id
+          redirect_to '/'
+        end
       end
     rescue
       redirect_to '/'
