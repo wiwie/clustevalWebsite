@@ -24,7 +24,7 @@ gem 'uglifier', '>= 1.0.3'
 
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'jquery-datatables-tabletools-rails', github: 'kindjal/jquery-datatables-tabletools-rails'
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', github: 'wiwie/jquery-ui-rails'
 
 gem 'jquery-rails'
 
@@ -41,8 +41,7 @@ gem 'rails_sql_views', github: 'centresource/rails_sql_views' # supports view
 gem 'mathjax-rails'
 gem 'composite_primary_keys'
 
-# gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", github: 'wiwie/twitter-bootstrap-rails'
 
 # sitemap creation
 gem 'sitemap_generator'
