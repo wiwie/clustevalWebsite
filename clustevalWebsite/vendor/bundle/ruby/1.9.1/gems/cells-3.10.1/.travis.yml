@@ -1,0 +1,12 @@
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - jruby-19mode
+notifications:
+  irc: "irc.freenode.org#cells"
+gemfile:
+  - gemfiles/Gemfile.rails3-0
+  - gemfiles/Gemfile.rails3-1
+  - gemfiles/Gemfile.rails3-2
+  - gemfiles/Gemfile.rails4-0
+  - gemfiles/Gemfile.rails4-1
