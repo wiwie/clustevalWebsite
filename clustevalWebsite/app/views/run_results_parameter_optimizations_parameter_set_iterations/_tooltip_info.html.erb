@@ -1,0 +1,12 @@
+<b><large>Clustering</large></b>
+<small>
+	<table class="tooltip_info">
+		<tr><td valign="top"><b>Number of clusters:</b></td><td><%= @clustering.length%></td></tr>
+		<tr><td valign="top"><b>Run identifier:</b></td><td><%= @runResult.uniqueRunIdentifier %></td></tr>
+		<tr><td valign="top"><b>Run:</b></td><td><%= @runResult.run.name %></td></tr>
+		<tr><td valign="top"><b>Data configuration:</b></td><td><%= @dataConfig.name%></td></tr>
+		<tr><td valign="top"><b>Program configuration:</b></td><td><%= @programConfig.name%></td></tr>
+		<tr><td valign="top"><b>Parameter Set:</b></td><td><%= @iteration.paramSetAsString%></td></tr>
+		<tr><td valign="top"><b>Iteration Number:</b></td><td><%= @iteration.iteration%></td></tr>
+	</table>
+</small>

@@ -62,6 +62,6 @@ class DataConfigsController < ApplicationController
 	end
 
 	def comparison
-            @data_config_id = DataConfig.all(params[:repository]).select{|dataConfig| dataConfig.name == params[:id]}.first
+            @data_config_id = DataConfig.all(params[:repository]).select{|dataConfig| dataConfig.name == params[:id] and not dataConfig.data_config_id}.first
 	end
 end

@@ -40,7 +40,7 @@
 	<tr>
 		<td><%= cluster[0] %></td>
 		<td>
-			<% cluster[1].each do |cluster_object| %>
+			<% cluster[1][0].each do |cluster_object| %>
 				<%= cluster_object[0] %> (<%= cluster_object[1] %>), 
 			<% end %>
 		</td>
@@ -122,7 +122,7 @@ $(function() {
 	data: [
 		<% c = 0 %>
 		<% @clustering.each do |cluster| %>
-			<%= cluster[1].length %><%= c < @clustering.length-1 ? ',' : '' %>
+			<%= cluster[1][1] %><%= c < @clustering.length-1 ? ',' : '' %>
 			<% c = c + 1 %>
 		<% end %>
 	],
@@ -201,7 +201,7 @@ $(function() {
 		itemToClusterId = {} 
 		<% c = 0 %>
 		<% @clustering.each do |cluster| %>
-			<% cluster[1].each do |cluster_object| %>
+			<% cluster[1][0].each do |cluster_object| %>
 				itemToClusterId['<%= cluster_object[0] %>'] = <%= c %>
 			<% end %>
 			<% c = c + 1 %>
@@ -299,7 +299,7 @@ $(function() {
 		itemToClusterId = {} 
 		<% c = 0 %>
 		<% @clustering.each do |cluster| %>
-			<% cluster[1].each do |cluster_object| %>
+			<% cluster[1][0].each do |cluster_object| %>
 				itemToClusterId['<%= cluster_object[0] %>'] = <%= c %>
 			<% end %>
 			<% c = c + 1 %>

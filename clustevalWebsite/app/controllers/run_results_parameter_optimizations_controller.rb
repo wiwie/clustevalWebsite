@@ -47,8 +47,12 @@ class RunResultsParameterOptimizationsController < ApplicationController
 			@dataConfigs << @dataConfig
 			@programConfig = runResultsParam.program_config
 			@programConfigs << @programConfig
-			@optParam = @optParams.find_by_program_config_id(@programConfig.id)
-			@parameterNames << @optParam.program_parameter.name
+			@optParam = @optParams.where(:program_config_id => @programConfig.id)
+			@paramNamesTmp = []
+			for param in @optParam do
+				@paramNamesTmp << param.program_parameter
+			end
+			@parameterNames << @paramNamesTmp
 
 			if @dataConfig.goldstandard_config_id
 				invocationLine = @programConfig.invocationFormatParameterOptimization
@@ -78,7 +82,7 @@ class RunResultsParameterOptimizationsController < ApplicationController
 	end
 
 	def fetch_table_data
-		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:data_config, :program_config, :clustering_quality_measure]).where(:data_config_id => params[:dataId]).where(:program_config_id => params[:programId]).select("value, quality, run_results_parameter_optimizations_parameter_set_iteration_id as iteration_id, iteration,paramSetAsString,clustering_quality_measures.alias")
+		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:data_config, :program_config, :clustering_quality_measure]).where(:data_config_id => params[:dataId]).where(:program_config_id => params[:programId]).select("value, quality, run_results_parameter_optimizations_parameter_set_iteration_id as iteration_id, iteration,paramSetAsString,clustering_quality_measures.alias").group("iteration_id","clustering_quality_measures.alias")
 		
 		@paramValuesQualityArray = []
 		@runResultsParamOptIteration.each do |iteration|
@@ -97,7 +101,7 @@ class RunResultsParameterOptimizationsController < ApplicationController
 	end
 
 	def fetch_graph_data
-		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:data_config, :program_config, :clustering_quality_measure]).where(:data_config_id => params[:dataId]).where(:program_config_id => params[:programId]).select("value, quality, iteration,clustering_quality_measures.alias")
+		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:data_config, :program_config, :clustering_quality_measure]).where(:data_config_id => params[:dataId]).where(:program_config_id => params[:programId]).where(:paramName => params[:paramName]).select("GROUP_CONCAT(value SEPARATOR '\t') as value, quality, iteration,clustering_quality_measures.alias").group("iteration","clustering_quality_measures.alias")
 		
 		@paramValuesQualityString = ''
 		@runResultsParamOptIteration.each do |iteration|

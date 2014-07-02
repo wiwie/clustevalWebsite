@@ -13,6 +13,7 @@
         <%= program.name %>
       </th>
     <% end %>
+    <th>Average <%= @qualityMeasure.alias %></th>
   </tr>
  </thead>
  <tbody>
@@ -44,6 +45,7 @@
         </td>
       <% end %>
     <% end %>
+    <td><%= @datasetAvg[i] %></td>
   </tr>
   <% end %>
 </tbody>

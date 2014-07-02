@@ -36,10 +36,11 @@ ClustEval::Application.routes.draw do
 		match 'programs/:id/tooltip_info' => 'programs#tooltip_info'
 		match 'run_results_parameter_optimizations/img/:id' => 'run_results_parameter_optimizations#img'
 		match 'run_results_parameter_optimizations/fetch_table_data/:id/:dataId/:programId' => 'run_results_parameter_optimizations#fetch_table_data'
-		match 'run_results_parameter_optimizations/fetch_graph_data/:id/:dataId/:programId' => 'run_results_parameter_optimizations#fetch_graph_data'
+		match 'run_results_parameter_optimizations/fetch_graph_data/:id/:dataId/:programId/:paramName' => 'run_results_parameter_optimizations#fetch_graph_data'
 		match 'run_results_parameter_optimizations_parameter_set_iterations/img/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#img'
 		match 'run_results_parameter_optimizations_parameter_set_iterations/isoMDS/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#isoMDS'
 		match 'run_results_parameter_optimizations_parameter_set_iterations/pca/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#pca'
+		match 'run_results_parameter_optimizations_parameter_set_iterations/:id/tooltip_info' => 'run_results_parameter_optimizations_parameter_set_iterations#tooltip_info'
 
 		match 'run_results_run_analyses/img/:runIdentifier/:statisticName/:id' => 'run_results_run_analyses#img'
 		match 'runs/start/:id' => 'runs#start'

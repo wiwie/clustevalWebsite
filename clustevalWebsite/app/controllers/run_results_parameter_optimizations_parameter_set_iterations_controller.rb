@@ -38,10 +38,12 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 		i = 0
 		@clusteringContents.split(';').each do |clusterString|
 			@clusterItems = {}
+			@fuzzySum = 0.0
 			clusterString.split(',').each do |clusterItemString|
 				@clusterItems[clusterItemString.split(':')[0]] = clusterItemString.split(':')[1]
+				@fuzzySum = @fuzzySum + clusterItemString.split(':')[1].to_f
 			end
-			@clustering[(i+1).to_s] = @clusterItems
+			@clustering[(i+1).to_s] = [@clusterItems,@fuzzySum]
 			i = i + 1
 		end
 
@@ -110,5 +112,39 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
         #        :type => 'text',
         #        :stream => false,
         #        :filename => 'scatter.txt' )
+	end
+
+	def tooltip_info
+		@iteration = RunResultsParameterOptimizationsParameterSetIteration.find(params[:id])
+		@paramSet = @iteration.run_results_parameter_optimizations_parameter_set
+		@paramOpt = @paramSet.run_results_parameter_optimization
+		 @runResult = @paramOpt.run_results_execution.run_result
+		@dataConfig = DataConfig.find(@paramOpt.data_config_id)
+		@datasetConfig = @dataConfig.dataset_config
+		@dataset = @datasetConfig.dataset
+
+		@programConfig = ProgramConfig.find(@paramOpt.program_config_id)
+
+		clusteringPath = @paramOpt.absPath.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv'
+		file = File.open(clusteringPath)
+		@clusteringContents = []
+		while tmp = file.gets do
+			@clusteringContents << tmp
+		end
+
+		@clusteringContents = @clusteringContents[1].split(/\t/)[1]
+
+		@clustering = {}
+		i = 0
+		@clusteringContents.split(';').each do |clusterString|
+			@clusterItems = {}
+			clusterString.split(',').each do |clusterItemString|
+				@clusterItems[clusterItemString.split(':')[0]] = clusterItemString.split(':')[1]
+			end
+			@clustering[(i+1).to_s] = @clusterItems
+			i = i + 1
+		end
+
+		render partial: 'tooltip_info'
 	end
 end

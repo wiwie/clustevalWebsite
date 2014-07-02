@@ -67,6 +67,7 @@
 	<td>Optimization curve</td>
   	<td>
 	  	<div id="resizable<%= i %>1" class="resizable" style="height:400px; width:100%;">
+	  		Choose parameter for x-axis: <%= select_tag "Parameter_" + i.to_s, options_from_collection_for_select(@parameterNames[i], "name", "name"), :onchange => "init" + i.to_s + "();" %>
 			<div id="chart_<%= i %>"></div>
 		</div>
 	</td>
@@ -107,8 +108,9 @@
 	</table>
   <% end %>
 <script type="text/javascript" charset="utf-8">
-	$(document).ready(function() {
+	//$(document).ready(function() {
 		<% for i in 0..@runResultsParamOpt.length-1 %>
+		function init<%= i.to_s%>() {
 
 			$('#iterations_' + <%= i.to_s %>).dataTable({
 				sPaginationType: "full_numbers",
@@ -131,8 +133,7 @@
 					{ type: "number-range" },
 				    null
 				]
-
-		});
+			});
 
             $("body").addClass("loading"); 
 			// Load data asynchronously using jQuery. On success, add the data
@@ -140,14 +141,21 @@
 	        // This data is obtained by exporting a GA custom report to TSV.
 	        // http://api.jquery.com/jQuery.get/
 
-	        jQuery.get('/<%= params[:repository] %>/run_results_parameter_optimizations/fetch_graph_data/<%= params[:id] %>/<%= @dataConfigs[i].id.to_s %>/<%= @programConfigs[i].id.to_s %>', null, function(tsv, state, xhr) {
+	        var paramSelect = document.getElementById("Parameter_" + <%= i %>);
+	        var selectedParam = paramSelect.options[paramSelect.selectedIndex].value;
+
+	        jQuery.get('/<%= params[:repository] %>/run_results_parameter_optimizations/fetch_graph_data/<%= params[:id] %>/<%= @dataConfigs[i].id.to_s %>/<%= @programConfigs[i].id.to_s %>/' + selectedParam, null, function(tsv, state, xhr) {
 				var options1, options2, 
 					chart1, chart2, 
 					lines = [],
 	                seriesIds = {},
 	                series1 = [],
 	                series2 = [],
-	                id;
+	                id,
+	                paramOptions,
+	                xval;
+
+	            paramOptions = [];
 
 				options1 = {
 					chart: {
@@ -165,7 +173,7 @@
 					},
 					xAxis: {
 						title: {
-							text: "<%= @parameterNames[i] %>"
+							text: selectedParam
 						}
 					},
 		            plotOptions: {
@@ -243,11 +251,28 @@
 	            // split the data return into lines and parse them
 	            tsv = tsv.split(/\n/);
 	            jQuery.each(tsv, function(i, line) {
+	            	if (line == "")
+	            		return;
 	                line = line.split('\t');
 	                id = seriesIds[line[0]];
-	                series1[id].push([parseFloat(line[1]),parseFloat(line[2])]);
+
+	                if (!isNaN(parseFloat(line[1]))) {
+                		series1[id].push([parseFloat(line[1]),parseFloat(line[2])]);
+                	}
+	                else {
+	            		xval = paramOptions.indexOf(line[1]);
+	            		if (xval == -1) {
+	            			xval = paramOptions.push(line[1])-1;
+	            		}
+	            		series1[id].push([xval,parseFloat(line[2])]);
+	            	}
 	                series2[id].push([parseInt(line[3]),parseFloat(line[2])]);
 	            });
+
+	            // set parameter options as categories of x axis
+	            if (paramOptions.length > 0) {
+	            	chart1.xAxis[0].setCategories(paramOptions);
+	            }
 	    
 	    		<% for m in 0..@runResultsQualityMeasures.length-1 %>
 	    			chart1.series[<%= m %>].setData(series1[<%= m %>], redraw=false);
@@ -274,6 +299,7 @@
 				$("body").removeClass("loading"); 
 		      
         	});
+		};
+		init<%= i.to_s %>();
 		<% end %>
-	});
 </script>
