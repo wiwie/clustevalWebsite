@@ -64,55 +64,53 @@
   		<td><%= RunParameterOptimizationMethod.includes(:parameter_optimization_method).where(:run_parameter_optimization_id => @run.id).where(:program_config_id => @programConfig.id)[0].parameter_optimization_method.name %></td>
   	</tr>
   <tr>
-	<td>Optimization curve</td>
+	<td>Optimization Process</td>
   	<td>
-	  	<div id="resizable<%= i %>1" class="resizable" style="height:400px; width:100%;">
-	  		Choose parameter for x-axis: <%= select_tag "Parameter_" + i.to_s, options_from_collection_for_select(@parameterNames[i], "name", "name"), :onchange => "init" + i.to_s + "();" %>
-			<div id="chart_<%= i %>"></div>
-		</div>
-	</td>
-  </tr>
-  <tr>
-	<td>Optimization curve</td>
-  	<td>
-	  	<div id="resizable<%= i %>2" class="resizable" style="height:400px; width:100%;">
-			<div id="chart_iter_<%= i %>"></div>
+  		<div id="showContainer<%= i %>" class="showContainer"><center><br>Show optimization process</center></div>
+  		<div id="container<%= i %>">
+		  	<div id="resizable<%= i %>1" class="resizable" style="height:400px; width:100%;">
+		  		Choose parameter for x-axis: <%= select_tag "Parameter_" + i.to_s, options_from_collection_for_select(@parameterNames[i], "name", "name"), :onchange => "init" + i.to_s + "();" %>
+				<div id="chart_<%= i %>"></div>
+			</div>
+			<br>
+		  	<div id="resizable<%= i %>2" class="resizable" style="height:400px; width:100%;">
+				<div id="chart_iter_<%= i %>"></div>
+			</div>
+			<table id="iterations_<%= i.to_s %>" class="iterations display" style="width:100;">
+				<thead>
+			  <tr>
+			    <th>Iteration</th>
+			    <th>Parameter set</th>
+			    <th>Clustering Quality Measure</th>
+			    <th>Quality</th>
+			    <th>Clustering</th>
+			  </tr>
+				</thead>
+				<tbody>
+					<%#= raw @paramValuesTableStrings[i] %>
+				</tbody>
+				<tfoot>
+			  <tr>
+			    <th>Iteration</th>
+			    <th>Parameter set</th>
+			    <th>Clustering Quality Measure</th>
+			    <th>Quality</th>
+			    <th>Clustering</th>
+			  </tr>
+				</tfoot>
+			</table>
 		</div>
 	</td>
   </tr>
   </tbody>
 </table>
-<h4>Optimization process</h4>
-	<table id="iterations_<%= i.to_s %>" class="iterations display">
-		<thead>
-	  <tr>
-	    <th>Iteration</th>
-	    <th>Parameter set</th>
-	    <th>Clustering Quality Measure</th>
-	    <th>Quality</th>
-	    <th>Clustering</th>
-	  </tr>
-		</thead>
-		<tbody>
-			<%#= raw @paramValuesTableStrings[i] %>
-		</tbody>
-		<tfoot>
-	  <tr>
-	    <th>Iteration</th>
-	    <th>Parameter set</th>
-	    <th>Clustering Quality Measure</th>
-	    <th>Quality</th>
-	    <th>Clustering</th>
-	  </tr>
-		</tfoot>
-	</table>
   <% end %>
 <script type="text/javascript" charset="utf-8">
 	//$(document).ready(function() {
 		<% for i in 0..@runResultsParamOpt.length-1 %>
 		function init<%= i.to_s%>() {
 
-			$('#iterations_' + <%= i.to_s %>).dataTable({
+			$('#iterations_<%= i.to_s %>').dataTable({
 				sPaginationType: "full_numbers",
 				sDom: 'WT<"clear"><"H"Rlfr>t<"F"ip>',
 				oTableTools: {
@@ -121,7 +119,6 @@
 				},
 				bDeferRender: true,
 				bJQueryUI: true,
-				bRetrieve: true,
 				bDestroy: true,
 				bProcessing: true,
 				sAjaxSource: '/<%= params[:repository] %>/run_results_parameter_optimizations/fetch_table_data/<%= params[:id] %>/<%= @dataConfigs[i].id.to_s %>/<%= @programConfigs[i].id.to_s %>'})
@@ -135,7 +132,9 @@
 				]
 			});
 
-            $("body").addClass("loading"); 
+			$("#showContainer<%= i.to_s %>").show();
+			$("#container<%= i.to_s %>").hide();
+            $("#showContainer<%= i.to_s %>").addClass("indivLoading"); 
 			// Load data asynchronously using jQuery. On success, add the data
 	        // to the options and initiate the chart.
 	        // This data is obtained by exporting a GA custom report to TSV.
@@ -236,12 +235,6 @@
 					]
 				}
 
-		        chart1 = new Highcharts.Chart(options1);
-		        chart2 = new Highcharts.Chart(options2);
-
-	            chart1.showLoading();
-	            chart2.showLoading();
-
 				<% for m in 0..@runResultsQualityMeasures.length-1 %>
 					seriesIds['<%= @runResultsQualityMeasures[m].clustering_quality_measure.alias %>'] = parseInt(<%= m %>);
 					series1[parseInt(<%= m %>)] = [];
@@ -268,7 +261,16 @@
 	            	}
 	                series2[id].push([parseInt(line[3]),parseFloat(line[2])]);
 	            });
+		      
+			$("#showContainer<%= i.to_s %>").hide();
+			$("#container<%= i.to_s %>").show();
 
+
+		        chart1 = new Highcharts.Chart(options1);
+		        chart2 = new Highcharts.Chart(options2);
+
+	            chart1.showLoading();
+	            chart2.showLoading();
 	            // set parameter options as categories of x axis
 	            if (paramOptions.length > 0) {
 	            	chart1.xAxis[0].setCategories(paramOptions);
@@ -296,10 +298,11 @@
 		          chart2.setSize(ui.size.width,ui.size.height,doAnimation = true);
 		        }
 		      });
-				$("body").removeClass("loading"); 
-		      
         	});
 		};
-		init<%= i.to_s %>();
+		$("#container<%= i.to_s %>").hide();
+		$("#showContainer<%= i.to_s %>").click(function() {
+			init<%= i.to_s %>();
+		});
 		<% end %>
 </script>

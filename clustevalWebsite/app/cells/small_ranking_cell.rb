@@ -60,7 +60,7 @@ class SmallRankingCell < MyCell
 
 		@matrix = []
 		@datasetIds = {}
-		@datasets = Dataset.where(:id => opts[:datasets])
+		@datasets = Dataset.where(:id => opts[:datasets]).sort_by{|x| x.alias}
 
 		@datasetAvg = {}
 		@datasetNumber = {}
@@ -141,7 +141,7 @@ class SmallRankingCell < MyCell
 		@matrix = []
 		@programIds = {}
 		@datasets = Dataset.where(:id => opts[:datasets]).sort_by{|x| x.name}
-		@programs = Program.where(:id => opts[:methods])
+		@programs = Program.where(:id => opts[:methods]).sort_by{|x| x.alias}
 
 		@programAvg = {}
 		@programNumber = {}
