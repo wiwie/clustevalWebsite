@@ -60,7 +60,7 @@ class SmallRankingCell < MyCell
 
 		@matrix = []
 		@datasetIds = {}
-		@datasets = Dataset.all(params[:repository])
+		@datasets = Dataset.where(:id => opts[:datasets])
 
 		@datasetAvg = {}
 		@datasetNumber = {}
@@ -73,7 +73,7 @@ class SmallRankingCell < MyCell
 		  @datasetNumber[i] = 0
 		end
 		@programIds = {}
-		@programs = Program.all(params[:repository]).sort_by{|x| x.alias}
+		@programs = Program.where(:id => opts[:methods]).sort_by{|x| x.alias}
 		for i in 1..@programs.length
 		  @programIds[@programs[i-1]] = i
 
@@ -140,8 +140,8 @@ class SmallRankingCell < MyCell
 
 		@matrix = []
 		@programIds = {}
-		@datasets = Dataset.all(params[:repository]).sort_by{|x| x.name}
-		@programs = Program.all(params[:repository])
+		@datasets = Dataset.where(:id => opts[:datasets]).sort_by{|x| x.name}
+		@programs = Program.where(:id => opts[:methods])
 
 		@programAvg = {}
 		@programNumber = {}

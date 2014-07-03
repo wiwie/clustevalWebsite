@@ -70,7 +70,7 @@ $(function () {
             },
     
             xAxis: {
-                categories: [<% Program.all(params[:repository]).sort_by{|x| x.alias}.each do |program| %><% if @visiblePrograms[program] %>'<%= program.alias %>',<% end %><% end %>],
+                categories: [<% @programs.sort_by{|x| x.alias}.each do |program| %><% if @visiblePrograms[program] %>'<%= program.alias %>',<% end %><% end %>],
                 labels: {
                   enabled: true,
                   rotation: -45,
@@ -96,11 +96,11 @@ $(function () {
                 }
             },
             series: [
-<% Dataset.all(params[:repository]).sort_by{|x| x.alias}.each do |dataset| %>
+<% @datasets.sort_by{|x| x.alias}.each do |dataset| %>
 <% if @visibleDatasets[dataset] %>
 {
   name: '<%= dataset.alias %>',
-  data: [<% Program.all(params[:repository]).sort_by{|x| x.alias}.each do |program| %>
+  data: [<% @programs.sort_by{|x| x.alias}.each do |program| %>
   <% if @visiblePrograms[program] %>
     <% @qual = @matrix[@programIds[program]][@datasetIds[dataset]] %>
     <% if @qual != "--" %>

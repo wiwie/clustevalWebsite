@@ -4,16 +4,38 @@
 	<p>This comparison page requires a quality measure in the repository, but there is none. Please add at least one measure to the repository and reload this page.</p>
 <% else %>
 	<p>This matrix contains the best performances of clustering methods applied to different datasets. Every cell shows the best achieved clustering quality with the corresponding clustering method on the corresponding dataset. The clustering quality is measured as <%= link_to @qualityMeasure.alias, @qualityMeasure %>.</p>
-	<p>You can choose a different clustering quality measure:
-	<%= collection_select(:post, :measure, ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px', :onchange => "$('body').addClass('loading'); this.form.submit();"} ) %>
-	</p>
-	<p>If you want to invert the matrix (interchange columns and rows), click this button:
-	<%= check_box_tag(:inv, '1', @inverted, {:onchange => "$('body').addClass('loading'); this.form.submit();"}) %><label for="inv">Invert</label></p>
+	<%= select_tag :selectMethods, options_from_collection_for_select(Program.all(params[:repository]).sort_by{|x| x.alias}, "id", "alias", params[:selectMethods] ? params[:selectMethods] : Program.all(params[:repository]).map{|x| x.id.to_s}), {:multiple => true } %>
+	</select>
+	<%= select_tag :selectDatasets, options_from_collection_for_select(Dataset.all(params[:repository]).sort_by{|x| x.alias}, "id", "alias", params[:selectDatasets] ? params[:selectDatasets] : Dataset.all(params[:repository]).map{|x| x.id.to_s}), {:multiple => true } %>
+	</select>
+	<%= collection_select(:post, :measure, ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px'} ) %>
+	<%= check_box_tag(:inv, '1', @inverted) %>Data Sets vs. Methods? (Invert)
+	<input type="submit">
 	<% if !@inverted %>
-	<%= render_cell :small_ranking, :ds_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts %>
+	<%= render_cell :small_ranking, :ds_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets %>
 	<% else %>
-	<%= render_cell :small_ranking, :ds_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts %>
+	<%= render_cell :small_ranking, :ds_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets %>
 	<% end %>
 	<% end %>
 
 <% end %>
+<script type="text/javascript">
+$(document).ready(function(){
+   $("#selectMethods").multiselect({
+    includeSelectAllOption: true,
+    buttonText: function(options, select) {
+    	return 'Selected Methods (' + options.length + ') <b class="caret"></b>';
+    },
+    maxHeight: 400
+   });
+});
+$(document).ready(function(){
+   $("#selectDatasets").multiselect({
+    includeSelectAllOption: true,
+    buttonText: function(options, select) {
+    	return 'Selected Data sets (' + options.length + ') <b class="caret"></b>';
+    },
+    maxHeight: 400
+   });
+});
+</script>

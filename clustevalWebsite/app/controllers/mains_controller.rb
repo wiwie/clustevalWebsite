@@ -43,13 +43,26 @@ class MainsController < ApplicationController
 			end
 			@inverted = false
 		end
+
+		if params[:selectMethods]
+			@methods = params[:selectMethods]
+		else
+			@methods = Program.all(params[:repository]).map{|x| x.id}
+		end
+
+		if params[:selectDatasets]
+			@datasets = params[:selectDatasets]
+		else
+			@datasets = Dataset.all(params[:repository]).map{|x| x.id}
+		end
+
 		if not @qualityMeasure
 			@iterationsExts = {}
 		else
 			@qualityMeasureName = @qualityMeasure.id
 
 			# data for table
-			@iterationsExts = ParameterOptimizationIterationsExt.includes(:program, :dataset).select("program_id,dataset_id,max(quality) as maxQuality,min(quality) as minQuality,clustering_quality_measure_id").where(:clustering_quality_measure_id => @qualityMeasureName).group("dataset_id,program_id")
+			@iterationsExts = ParameterOptimizationIterationsExt.includes(:program, :dataset).select("program_id,dataset_id,max(quality) as maxQuality,min(quality) as minQuality,clustering_quality_measure_id").where(:clustering_quality_measure_id => @qualityMeasureName).where(:dataset_id => @datasets).where(:program_id => @methods).group("dataset_id,program_id")
 		end
 		respond_to do |format|
 			format.html # index.html.erb

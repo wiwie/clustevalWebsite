@@ -67,7 +67,7 @@ $(function () {
             },
     
             xAxis: {
-                categories: [<% Dataset.all(params[:repository]).sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %>'<%= dataset.alias %>',<% end %><% end %>],
+                categories: [<% @datasets.each do |dataset| %><% if @visibleDatasets[dataset] %>'<%= dataset.alias %>',<% end %><% end %>],
                 labels: {
                   enabled: true,
                   rotation: -45,
@@ -93,10 +93,10 @@ $(function () {
                 }
             },
             series: [
-            <% Program.all(params[:repository]).sort_by{|x| x.alias}.each do |program| %>
+            <% @programs.sort_by{|x| x.alias}.each do |program| %>
               {
                 name: '<%= program.alias %>',
-                data: [<% Dataset.all(params[:repository]).sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
+                data: [<% @datasets.sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
                 <%# elsif @isMaximum %><%#= @qualityMeasure.minValue %><%# else %><%#= @qualityMeasure.maxValue %>
                 <% else %>null<% end %>,<% end %><% end %>]
             },
