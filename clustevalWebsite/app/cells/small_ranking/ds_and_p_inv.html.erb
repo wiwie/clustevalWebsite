@@ -15,8 +15,8 @@
       <%= dataset.alias %>
 </th>
     <% end %>
-    <th>Average <%= @qualityMeasure.alias %></th>
-    <th>Median <%= @qualityMeasure.alias %></th>
+    <th>Average <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
+    <th>Median <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
   </tr>
  </thead>
  <tbody>

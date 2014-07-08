@@ -13,8 +13,8 @@
         <%= program.name %>
       </th>
     <% end %>
-    <th>Average</th>
-    <th>Median</th>
+    <th>Average <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
+    <th>Median <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
   </tr>
  </thead>
  <tbody>
