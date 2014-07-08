@@ -4,7 +4,7 @@
 </div>
 <br>
 <div class="resizableTable">
-<table id="dataAndProgramStatistics" class="display">
+<table id="dataAndProgramStatistics1" class="display">
   <thead>
   <tr>
     <th>Program</th>
@@ -124,5 +124,63 @@ $(function () {
         helper: "ui-resizable-helper"
       });
     });
+});
+
+$(document).ready(function() {
+  jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+      "num-html-pre": function ( a ) {
+          var x = String(a).replace( /<[\s\S]*?>/g, "" );
+          if (x == "--")
+            return "--"
+          return parseFloat( x );
+      },
+   
+      "num-html-asc": function ( a, b ) {
+          if (a == "--") {
+            if (b == "--")
+              return 0;            
+            return 1;
+          }
+          if (b == "--")
+            return -1;
+          return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+      },
+   
+      "num-html-desc": function ( a, b ) {
+          if (a == "--") {
+            if (b == "--")
+              return 0;
+            return 1;
+          }
+          if (b == "--")
+            return -1;
+          return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+      }
+  } );
+
+  MyDatatable('#dataAndProgramStatistics1');
+
+  $('#dataAndProgramStatistics1').dataTable({
+    aoColumnDefs: [
+      { "aTargets": [1],"bVisible": false },
+      { "sType": "num-html", "aTargets": [ <%= (0..@datasets.length).to_a.join(', ') %> ] }
+    ],
+    sPaginationType: "full_numbers",
+    bJQueryUI: true,
+    bRetrieve: true,
+    bDestroy: true,
+    bPaginate: false,
+    bInfo: false,
+    bFilter: false,
+    bAutoWidth: false,
+    sDom: 'C<"clear">T<"clear"><"H"Rlfr>t<"F"ip>',
+    oTableTools: {
+      sSwfPath: "/assets/dataTables/copy_csv_xls.swf",
+      aButtons: ['copy', 'csv']
+    },
+    oColVis: {
+      aiInclude: [1]
+    }
+  });
 });
 </script>
