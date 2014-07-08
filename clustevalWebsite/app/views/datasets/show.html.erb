@@ -14,6 +14,13 @@
   <tr>
     <td>Name</td><td><%= @dataset.absPath.split('/')[-2] + "/" + @dataset.absPath.split('/')[-1] %></td>
   </tr>
+  <% if @description %>
+  <tr><td>Description:</td><td><%= raw @description.dataset_description %></td></tr>
+<% end %>
+
+<% if @publication %>
+  <tr><td>Publication:</td><td><%= raw @publication.dataset_publication %></td></tr>
+<% end %>
   <tr>
     <td>Dataset format</td><td><%= @dataset.dataset_format.name %></td>
   </tr>

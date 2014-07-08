@@ -32,6 +32,8 @@ class DatasetsController < ApplicationController
 	
 	def show
 		@dataset = Dataset.find_by_id(params[:id])
+		@description = DatasetDescription.find_by_dataset_fullName(@dataset.full_name)
+		@publication = DatasetPublication.find_by_dataset_fullName(@dataset.full_name)
 
 		# parse license document
 		begin

@@ -10,11 +10,12 @@
 	</select>
 	<%= collection_select(:post, :measure, ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px'} ) %>
 	<%= check_box_tag(:inv, '1', @inverted) %>Data Sets vs. Methods? (Invert)
+	<%= check_box_tag(:showRanks, '1', @showRanks) %>Show Ranks
 	<input type="submit">
 	<% if !@inverted %>
-	<%= render_cell :small_ranking, :ds_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets %>
+	<%= render_cell :small_ranking, :ds_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets, :showRanks => @showRanks %>
 	<% else %>
-	<%= render_cell :small_ranking, :ds_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets %>
+	<%= render_cell :small_ranking, :ds_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets, :showRanks => @showRanks %>
 	<% end %>
 	<% end %>
 

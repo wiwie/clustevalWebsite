@@ -13,7 +13,8 @@
         <%= program.name %>
       </th>
     <% end %>
-    <th>Average <%= @qualityMeasure.alias %></th>
+    <th>Average</th>
+    <th>Median</th>
   </tr>
  </thead>
  <tbody>
@@ -46,6 +47,7 @@
       <% end %>
     <% end %>
     <td><%= @datasetAvg[i] %></td>
+    <td><%= @datasetMedian[i] %></td>
   </tr>
   <% end %>
 </tbody>
@@ -76,13 +78,15 @@ $(function () {
             },
             yAxis: {
                 title: {
-                    text: '<%= @qualityMeasure.alias %>'
+                    text: <% if @showRanks %>'Rank'<% else %>'<%= @qualityMeasure.alias %>'<% end %>
                 }
-                <% if @qualityMeasure.minValue %>
-                ,min: <%= @qualityMeasure.minValue %>
-                <% end %>
-                <% if @qualityMeasure.maxValue %>
-                ,max: <%= @qualityMeasure.maxValue %>
+                <% if !@showRanks %>
+                  <% if @qualityMeasure.minValue %>
+                  ,min: <%= @qualityMeasure.minValue %>
+                  <% end %>
+                  <% if @qualityMeasure.maxValue %>
+                  ,max: <%= @qualityMeasure.maxValue %>
+                  <% end %>
                 <% end %>
             },
     

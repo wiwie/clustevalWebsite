@@ -33,6 +33,7 @@ class MainsController < ApplicationController
 		if params[:post]
 			@qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:measure])
 			@inverted = params[:inv]
+			@showRanks = params[:showRanks]
 		else
 			@qualityMeasures = ClusteringQualityMeasure.all(params[:repository])
 			@qualityMeasures.each do |measure|
@@ -42,6 +43,7 @@ class MainsController < ApplicationController
 				end
 			end
 			@inverted = false
+			@showRanks = false
 		end
 
 		if params[:selectMethods]

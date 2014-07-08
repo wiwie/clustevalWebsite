@@ -57,20 +57,23 @@ class SmallRankingCell < MyCell
 		# data for plot
 		@visibleDatasets = {}
 		@visiblePrograms = {}
+		
+		@ranks = []
 
 		@matrix = []
 		@datasetIds = {}
 		@datasets = Dataset.where(:id => opts[:datasets]).sort_by{|x| x.alias}
 
+		@showRanks = opts[:showRanks]
+
 		@datasetAvg = {}
 		@datasetNumber = {}
+		@datasetMedian = {}
 
 		for i in 0..@datasets.length-1
 		  @datasetIds[@datasets[i]] = i
 		  #@matrix << [link_to(Dataset.all(session)[i].name, Dataset.all(session)[i])]
 		  @matrix << [@datasets[i]]
-		  @datasetAvg[i] = 0
-		  @datasetNumber[i] = 0
 		end
 		@programIds = {}
 		@programs = Program.where(:id => opts[:methods]).sort_by{|x| x.alias}
@@ -96,9 +99,6 @@ class SmallRankingCell < MyCell
 
 		  @matrix[datasetId][programId] = (((@isMaximum ? iterationExt.maxQuality : iterationExt.minQuality)*1000).round/1000.0)
 
-		  @datasetAvg[datasetId] = @datasetAvg[datasetId]+@matrix[datasetId][programId]
-		  @datasetNumber[datasetId] = @datasetNumber[datasetId] + 1
-
 		  if @rowMax[datasetId]
 		  	if @isMaximum
 			    if @rowMax[datasetId] < @matrix[datasetId][programId]
@@ -120,17 +120,37 @@ class SmallRankingCell < MyCell
 		    @rowMaxPos[datasetId] = [programId]
 		  end
 		end
+	  
+		for i in 0..@datasets.length-1
+			@submatrix = @matrix[i][1..@programs.length]
+			if opts[:showRanks]
+				@matrix[i][1..@programs.length] = @submatrix.map{|x| (x == "--") ? ("--") : (@submatrix.select{|y| (y != "--") and (y > x)}.length+1)}
+			end
+			
+			@datasetAvg[i] = @matrix[i][1..@programs.length].inject(0){ |sum, el| (el == "--") ? (sum) : (sum + el) }.to_f
+			@datasetNumber[i] = @matrix[i][1..@programs.length].keep_if{|x| x != "--"}.length
+		end
 
 
 		for i in 0..@datasets.length-1
-            if @datasetNumber[i] > 0
-               @datasetAvg[i] = (@datasetAvg[i]/@datasetNumber[i]*1000).round/1000.0
-            else
-               @datasetAvg[i] = "--"
-            end
-        end
+		    if @datasetNumber[i] > 0
+		       @datasetAvg[i] = (@datasetAvg[i]/@datasetNumber[i]*1000).round/1000.0
+		    else
+		       @datasetAvg[i] = "--"
+		    end
+		    @datasetMedian[i] = median(@matrix[i][1..@matrix[i].length])
+		end
 
-		render :view => 'ds_and_p', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds}
+		render :view => 'ds_and_p', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds, :showRanks => @showRanks}
+	end
+
+	def median(array)
+		sorted = array.keep_if{|i| i != "--"}.sort
+  		len = sorted.length
+  		if len == 0
+  			return "--"
+  		end
+  		return (((sorted[(len - 1) / 2] + sorted[len / 2]) / 2.0)*1000).round/1000.0
 	end
 
 	def ds_and_p_inv(opts)
@@ -138,19 +158,23 @@ class SmallRankingCell < MyCell
 		@visibleDatasets = {}
 		@visiblePrograms = {}
 
+		@showRanks = opts[:showRanks]
+
 		@matrix = []
+		
+		@ranks = []
+		
 		@programIds = {}
 		@datasets = Dataset.where(:id => opts[:datasets]).sort_by{|x| x.name}
 		@programs = Program.where(:id => opts[:methods]).sort_by{|x| x.alias}
 
 		@programAvg = {}
 		@programNumber = {}
+		@programMedian = {}
 
 		for i in 0..@programs.length-1
 		  @programIds[@programs[i]] = i
 		  @matrix << [@programs[i]]
-		  @programAvg[i] = 0
-		  @programNumber[i] = 0
 		end
 		@datasetIds = {}
 		for i in 1..@datasets.length
@@ -176,9 +200,6 @@ class SmallRankingCell < MyCell
 
 		  @matrix[programId][datasetId] = (((@isMaximum ? iterationExt.maxQuality : iterationExt.minQuality)*1000).round/1000.0)
 
-		  @programAvg[programId] = @programAvg[programId]+@matrix[programId][datasetId]
-		  @programNumber[programId] = @programNumber[programId] + 1
-
 		  if @rowMax[programId]
 		  	if @isMaximum
 			    if @rowMax[programId] < @matrix[programId][datasetId]
@@ -200,16 +221,27 @@ class SmallRankingCell < MyCell
 		    @rowMaxPos[programId] = [datasetId]
 		  end
 		end
+	  
+		for i in 0..@programs.length-1
+			@submatrix = @matrix[i][1..@datasets.length]
+			if opts[:showRanks]
+				@matrix[i][1..@datasets.length] = @submatrix.map{|x| (x == "--") ? ("--") : (@submatrix.select{|y| (y != "--") and (y > x)}.length+1)}
+			end
+			
+			@programAvg[i] = @matrix[i][1..@datasets.length].inject(0){ |sum, el| (el == "--") ? (sum) : (sum + el) }.to_f
+			@programNumber[i] = @matrix[i][1..@datasets.length].keep_if{|x| x != "--"}.length
+		end
 
 		for i in 0..@programs.length-1
-            if @programNumber[i] > 0
-                @programAvg[i] = (@programAvg[i]/@programNumber[i]*1000).round/1000.0
-            else
-                @programAvg[i] = "--"
-            end
-        end
+		    if @programNumber[i] > 0
+			@programAvg[i] = (@programAvg[i]/@programNumber[i]*1000).round/1000.0
+		    else
+			@programAvg[i] = "--"
+		    end
+		    @programMedian[i] = median(@matrix[i][1..@matrix[i].length])
+		end
 
-		render :view => 'ds_and_p_inv', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds}
+		render :view => 'ds_and_p_inv', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds, :showRanks => opts[:showRanks]}
 	end
 
 # dataset vs quality
