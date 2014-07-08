@@ -31,15 +31,7 @@
           <% else %>
             <% @string = '<a href="/' + params[:repository] + '/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
 
-            <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
-              <% @string = @string + "<b>" %>
-            <% end %>
-
             <% @string = @string + matrix[i][j].to_s + '</a>' %>
-
-            <% if @rowMaxPos[i] && @rowMaxPos[i].include?(j) %>
-              <% @string = @string + "</b>" %>
-            <% end %>
           <% end %>
         <td>
           <%= raw @string %>

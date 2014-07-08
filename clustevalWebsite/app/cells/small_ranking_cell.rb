@@ -121,18 +121,21 @@ class SmallRankingCell < MyCell
 		  end
 		end
 	  
-		for i in 0..@datasets.length-1
-			@submatrix = @matrix[i][1..@programs.length]
-			if opts[:showRanks]
-				@matrix[i][1..@programs.length] = @submatrix.map{|x| (x == "--") ? ("--") : (@submatrix.select{|y| (y != "--") and (y > x)}.length+1)}
+		if opts[:showRanks]
+			for j in 1..@programs.length
+				@submatrix = @matrix.map{|x| x[j]}
+				@rowRanks = @submatrix.map{|x| (x == "--") ? ("--") : (@submatrix.select{|y| (y != "--") and (y > x)}.length+1)}
+				for i in 0..@datasets.length-1
+					@matrix[i][j] = @rowRanks[i]
+				end
 			end
-			
-			@datasetAvg[i] = @matrix[i][1..@programs.length].inject(0){ |sum, el| (el == "--") ? (sum) : (sum + el) }.to_f
-			@datasetNumber[i] = @matrix[i][1..@programs.length].keep_if{|x| x != "--"}.length
 		end
 
 
 		for i in 0..@datasets.length-1
+			@datasetAvg[i] = @matrix[i][1..@programs.length].inject(0){ |sum, el| (el == "--") ? (sum) : (sum + el) }.to_f
+			@datasetNumber[i] = @matrix[i][1..@programs.length].keep_if{|x| x != "--"}.length
+		    
 		    if @datasetNumber[i] > 0
 		       @datasetAvg[i] = (@datasetAvg[i]/@datasetNumber[i]*1000).round/1000.0
 		    else
@@ -222,21 +225,24 @@ class SmallRankingCell < MyCell
 		  end
 		end
 	  
-		for i in 0..@programs.length-1
-			@submatrix = @matrix[i][1..@datasets.length]
-			if opts[:showRanks]
-				@matrix[i][1..@datasets.length] = @submatrix.map{|x| (x == "--") ? ("--") : (@submatrix.select{|y| (y != "--") and (y > x)}.length+1)}
+		if opts[:showRanks]
+			for j in 1..@datasets.length
+				@submatrix = @matrix.map{|x| x[j]}
+				@rowRanks = @submatrix.map{|x| (x == "--") ? ("--") : (@submatrix.select{|y| (y != "--") and (y > x)}.length+1)}
+				for i in 0..@programs.length-1
+					@matrix[i][j] = @rowRanks[i]
+				end
 			end
-			
-			@programAvg[i] = @matrix[i][1..@datasets.length].inject(0){ |sum, el| (el == "--") ? (sum) : (sum + el) }.to_f
-			@programNumber[i] = @matrix[i][1..@datasets.length].keep_if{|x| x != "--"}.length
 		end
 
 		for i in 0..@programs.length-1
+			@programAvg[i] = @matrix[i][1..@datasets.length].inject(0){ |sum, el| (el == "--") ? (sum) : (sum + el) }.to_f
+			@programNumber[i] = @matrix[i][1..@datasets.length].keep_if{|x| x != "--"}.length
+		    
 		    if @programNumber[i] > 0
-			@programAvg[i] = (@programAvg[i]/@programNumber[i]*1000).round/1000.0
+				@programAvg[i] = (@programAvg[i]/@programNumber[i]*1000).round/1000.0
 		    else
-			@programAvg[i] = "--"
+				@programAvg[i] = "--"
 		    end
 		    @programMedian[i] = median(@matrix[i][1..@matrix[i].length])
 		end
