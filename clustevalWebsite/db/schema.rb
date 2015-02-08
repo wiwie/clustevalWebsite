@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130709112358) do
+ActiveRecord::Schema.define(:version => 20141012095013) do
 
   create_table "aboutus", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -141,6 +141,13 @@ ActiveRecord::Schema.define(:version => 20130709112358) do
 
   add_index "dataset_types", ["repository_id", "name"], :name => "index_dataset_types_name", :unique => true, :length => {"repository_id"=>nil, "name"=>200}
   add_index "dataset_types", ["repository_id"], :name => "fk_dataset_types_1"
+
+  create_table "dataset_visibilities", :force => true do |t|
+    t.string   "dataset_name"
+    t.boolean  "visible"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "datasets", :force => true do |t|
     t.integer "repository_id",                    :null => false

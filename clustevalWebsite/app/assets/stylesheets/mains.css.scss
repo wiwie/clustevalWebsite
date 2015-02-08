@@ -14,7 +14,8 @@ html {
 body {
 	background-color:$light;
 	/*color: rgb(0, 51, 102);*/
- 	font: $fontsize 'DroidSerifRegular', Arial, sans-serif;
+ 	// font: $fontsize 'DroidSerifRegular', Arial, sans-serif;
+	font: $fontsize Arial;
 }
 .example_content {
 	padding: 0px;
@@ -758,3 +759,10 @@ $gradient2: #575253;
                 50% 50% 
                 no-repeat;
 }
+
+table.dataTable tr.odd { background-color: #f6f6ff; }
+table.dataTable tr.even { background-color: white; }
+
+table.dataTable tr.odd  .sorting_1  { background-color: #f6f6ff; }
+table.dataTable tr.even .sorting_1 { background-color: white; }
+

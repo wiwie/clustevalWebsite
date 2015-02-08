@@ -199,12 +199,8 @@ $(function() {
 		};
 
 		itemToClusterId = {} 
-		<% c = 0 %>
-		<% @clustering.each do |cluster| %>
-			<% cluster[1][0].each do |cluster_object| %>
-				itemToClusterId['<%= cluster_object[0] %>'] = <%= c %>
-			<% end %>
-			<% c = c + 1 %>
+		<% @itemToCrispCluster.each do |key, value| %>
+			itemToClusterId['<%= key %>'] = <%= value[0] %>
 		<% end %>
 
 		// Load data asynchronously using jQuery. On success, add the data
@@ -297,12 +293,8 @@ $(function() {
 		};
 
 		itemToClusterId = {} 
-		<% c = 0 %>
-		<% @clustering.each do |cluster| %>
-			<% cluster[1][0].each do |cluster_object| %>
-				itemToClusterId['<%= cluster_object[0] %>'] = <%= c %>
-			<% end %>
-			<% c = c + 1 %>
+		<% @itemToCrispCluster.each do |key, value| %>
+			itemToClusterId['<%= key %>'] = <%= value[0] %>
 		<% end %>
 
 		// Load data asynchronously using jQuery. On success, add the data

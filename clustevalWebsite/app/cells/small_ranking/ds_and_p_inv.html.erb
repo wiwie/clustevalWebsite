@@ -31,11 +31,22 @@
           <% if @matrix[i][j].to_s == "--" %>
             <% @string = "--" %>
           <% else %>
-            <% @string = '<a href="/' + params[:repository] + '/datasets/' + @datasets[j-1].id.to_s + '/bestclust/' + @programs[i].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+            <% if @qualityMeasure.maxValue and @qualityMeasure.minValue %>
+              <% if @showRanks %>
+                <% @fontSize = 100 - 50*((matrix[i][j].to_f-1)/@datasets.length) %>
+              <% elsif @isMaximum %>
+                <% @fontSize = 50 + 50*(matrix[i][j]/(@qualityMeasure.maxValue-@qualityMeasure.minValue)) %>
+              <% else %>
+                <% @fontSize = 100 - 50*(matrix[i][j]/(@qualityMeasure.maxValue-@qualityMeasure.minValue)) %>
+              <% end %>
+            <% else %>
+              <% @fontSize = 100%>
+            <% end %>
+            <% @string = '<a style="text-decoration:none;font-size:' + @fontSize.round.to_s + '%;" href="/' + params[:repository] + '/datasets/' + @datasets[j-1].id.to_s + '/bestclust/' + @programs[i].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
 
             <% @string = @string + matrix[i][j].to_s + '</a>' %>
           <% end %>
-        <td>
+        <td style="text-align:center;">
           <%= raw @string %>
         </td>
       <% end %>
@@ -53,7 +64,13 @@ $(function () {
     var chart;
     $(document).ready(function() {
         chart = new Highcharts.Chart({
-    
+            plotOptions: {
+            column: {
+                animation: false,
+                borderWidth: 0,
+                groupPadding: 0.1,
+                pointPadding: 0.05
+            }},
             chart: {
                 renderTo: 'comparison_chart',
                 type: 'column'
@@ -163,7 +180,7 @@ $(document).ready(function() {
   $('#dataAndProgramStatistics1').dataTable({
     aoColumnDefs: [
       { "aTargets": [1],"bVisible": false },
-      { "sType": "num-html", "aTargets": [ <%= (0..@datasets.length).to_a.join(', ') %> ] }
+      { "sType": "num-html", "aTargets": [ <%= (1..@datasets.length+3).to_a.join(', ') %> ] }
     ],
     sPaginationType: "full_numbers",
     bJQueryUI: true,

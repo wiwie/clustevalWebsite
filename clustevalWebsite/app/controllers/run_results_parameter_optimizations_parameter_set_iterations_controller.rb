@@ -35,13 +35,19 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 		@clusteringContents = @clusteringContents[1].split(/\t/)[1]
 
 		@clustering = {}
+		@itemToCrispCluster = {}
 		i = 0
 		@clusteringContents.split(';').each do |clusterString|
 			@clusterItems = {}
 			@fuzzySum = 0.0
 			clusterString.split(',').each do |clusterItemString|
-				@clusterItems[clusterItemString.split(':')[0]] = clusterItemString.split(':')[1]
-				@fuzzySum = @fuzzySum + clusterItemString.split(':')[1].to_f
+				@coeff = clusterItemString.split(':')[1]
+				@item = clusterItemString.split(':')[0]
+				@clusterItems[@item] = @coeff
+				@fuzzySum = @fuzzySum + @coeff.to_f
+				if not @item in @itemToCrispCluster or (@item in @itemToCrispCluster and @coeff.to_f > @itemToCrispCluster[@item][1])
+					@itemToCrispCluster[@item] = [i,@coeff.to_f]
+				end
 			end
 			@clustering[(i+1).to_s] = [@clusterItems,@fuzzySum]
 			i = i + 1

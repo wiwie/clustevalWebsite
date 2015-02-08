@@ -14,7 +14,12 @@ $(function () {
                 type: 'column',
                 marginBottom: 200
             },
-    
+	    plotOptions: {
+	    column: {
+                borderWidth: 0,
+                groupPadding: 0.1,
+                pointPadding: 0.05
+	    }},
             title: {
                 text: 'Clustering qualities'
             },

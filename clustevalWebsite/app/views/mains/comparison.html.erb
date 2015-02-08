@@ -6,7 +6,7 @@
 	<p>This matrix contains the best performances of clustering methods applied to different datasets. Every cell shows the best achieved clustering quality with the corresponding clustering method on the corresponding dataset. The clustering quality is measured as <%= link_to @qualityMeasure.alias, @qualityMeasure %>.</p>
 	<%= select_tag :selectMethods, options_from_collection_for_select(Program.all(params[:repository]).sort_by{|x| x.alias}, "id", "alias", params[:selectMethods] ? params[:selectMethods] : Program.all(params[:repository]).map{|x| x.id.to_s}), {:multiple => true } %>
 	</select>
-	<%= select_tag :selectDatasets, options_from_collection_for_select(Dataset.all(params[:repository]).sort_by{|x| x.alias}, "id", "alias", params[:selectDatasets] ? params[:selectDatasets] : Dataset.all(params[:repository]).map{|x| x.id.to_s}), {:multiple => true } %>
+	<%= select_tag :selectDatasets, options_from_collection_for_select(Dataset.all(params[:repository]).sort_by{|x| x.alias}, "id", "alias", params[:selectDatasets] ? params[:selectDatasets] : Dataset.all(params[:repository]).select{|x| x.visible.nil? || x.visible }.map{|x| x.id.to_s}), {:multiple => true } %>
 	</select>
 	<%= collection_select(:post, :measure, ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px'} ) %>
 	<%= check_box_tag(:inv, '1', @inverted) %>Data Sets vs. Methods? (Invert)

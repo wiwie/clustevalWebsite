@@ -57,4 +57,13 @@ class Dataset < ActiveRecord::Base
       return ''
     end
   end
+
+  def visible
+    @visible = DatasetVisibility.find_by_dataset_name(self.full_name)
+    if @visible
+      return @visible.visible
+    else
+      return true
+    end
+  end
 end

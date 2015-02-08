@@ -29,11 +29,22 @@
           <% if @matrix[i][j].to_s == "--" %>
             <% @string = "--" %>
           <% else %>
-            <% @string = '<a href="/' + params[:repository] + '/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+            <% if @qualityMeasure.maxValue and @qualityMeasure.minValue %>
+              <% if @showRanks %>
+                <% @fontSize = 100 - 50*((matrix[i][j].to_f-1)/@programs.length) %>
+              <% elsif @isMaximum %>
+                <% @fontSize = 50 + 50*(matrix[i][j]/(@qualityMeasure.maxValue-@qualityMeasure.minValue)) %>
+              <% else %>
+                <% @fontSize = 100 - 50*(matrix[i][j]/(@qualityMeasure.maxValue-@qualityMeasure.minValue)) %>
+              <% end %>
+            <% else %>
+              <% @fontSize = 100%>
+            <% end %>
+            <% @string = '<a style="text-decoration:none;font-size:' + @fontSize.round.to_s + '%;" href="/' + params[:repository] + '/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
 
             <% @string = @string + matrix[i][j].to_s + '</a>' %>
           <% end %>
-        <td>
+        <td style="text-align:center;">
           <%= raw @string %>
         </td>
       <% end %>
@@ -50,7 +61,13 @@ $(function () {
     var chart;
     $(document).ready(function() {
         chart = new Highcharts.Chart({
-    
+            plotOptions: {
+            column: {
+                animation: false,
+                borderWidth: 0,
+                groupPadding: 0.1,
+                pointPadding: 0.05
+            }},
             chart: {
                 renderTo: 'comparison_chart',
                 type: 'column'
@@ -149,7 +166,7 @@ $(document).ready(function() {
     aoColumnDefs: [
       { "aTargets": [1],"bVisible": false
       },
-      { "sType": "num-html", "aTargets": [ <%= (0..@programs.length-1).to_a.join(', ') %> ] }
+      { "sType": "num-html", "aTargets": [ <%= (2..@programs.length+3).to_a.join(', ') %> ] }
     ],
     sPaginationType: "full_numbers",
     bJQueryUI: true,

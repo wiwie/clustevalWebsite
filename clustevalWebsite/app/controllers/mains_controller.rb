@@ -55,7 +55,7 @@ class MainsController < ApplicationController
 		if params[:selectDatasets]
 			@datasets = params[:selectDatasets]
 		else
-			@datasets = Dataset.all(params[:repository]).map{|x| x.id}
+			@datasets = Dataset.all(params[:repository]).select{|x| x.visible.nil? || x.visible }.map{|x| x.id}
 		end
 
 		if not @qualityMeasure
