@@ -70,7 +70,34 @@ class DatasetsController < ApplicationController
 		@qualityMeasureName = params[:measureId]
 		@qualityMeasure = ClusteringQualityMeasure.find(@qualityMeasureName)
 
-		@iterations = ParameterOptimizationIterationsExt.joins(:program).where(:dataset_id => params[:id]).where(:clustering_quality_measure_id => @qualityMeasureName).select("alias, paramSetAsString, quality")
+		columns = ['alias', 'paramSetAsString', 'quality']
+		columnFormat = ['like','like','range']
+
+		filterStrings = []
+		for i in 0..columns.count-1
+			format = columnFormat[i]
+			if format == 'like'
+				if params["sSearch_" + i.to_s] != ''
+					filterStrings += [columns[i] + ' LIKE \'%' + params["sSearch_" + i.to_s] + '%\'']
+				end
+			elsif format == 'range'
+				if params["sSearch_" + i.to_s] != '' and params["sSearch_" + i.to_s] != '~'
+					split = params["sSearch_" + i.to_s].split('~')
+					filterStrings += [columns[i] + ' BETWEEN ' + split[0] + ' AND ' + split[1]]
+				end
+			end
+		end
+		filterString = filterStrings.join(' AND ')
+
+		@iterations = ParameterOptimizationIterationsExt
+			.joins(:program)
+			.where(:dataset_id => params[:id])
+			.where(:clustering_quality_measure_id => @qualityMeasureName)
+			.select("alias, paramSetAsString, quality")
+			.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
+			.limit(params[:iDisplayLength].to_i)
+			.offset(params[:iDisplayStart].to_i)
+			.where(filterString)
 
 		@paramValuesQualityArray = []
 		@iterations.each do |runResult|
@@ -81,7 +108,18 @@ class DatasetsController < ApplicationController
 			]
 		end
 
-		@json = {"aaData" => @paramValuesQualityArray}.to_json
+		@json = {"iTotalRecords" => ParameterOptimizationIterationsExt
+			.joins(:program)
+			.where(:dataset_id => params[:id])
+			.where(:clustering_quality_measure_id => @qualityMeasureName)
+			.select("alias, paramSetAsString, quality").count,
+ 				"iTotalDisplayRecords" => ParameterOptimizationIterationsExt
+			.joins(:program)
+			.where(:dataset_id => params[:id])
+			.where(:clustering_quality_measure_id => @qualityMeasureName)
+			.select("alias, paramSetAsString, quality")
+			.where(filterString).count, 
+ 				"aaData" => @paramValuesQualityArray}.to_json
 		render :inline => @json
 	end
 

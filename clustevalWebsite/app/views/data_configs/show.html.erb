@@ -40,23 +40,47 @@
   </thead>
   <tbody>
   </tbody>
+      <tfoot>
+      <tr>
+        <th>Date</th>
+        <th>Program Config</th>
+        <th>Parameter set</th>
+        <th>Clustering Quality Measure</th>
+        <th>Quality</th>
+        <th>Clustering</th>
+      </tr>
+      </tfoot>
 </table>
 <script type="text/javascript">
 $(document).ready(function() {
   $('body').addClass('loading'); 
   $('#dataConfig2').dataTable({
       sPaginationType: "full_numbers",
-      sDom: '<"H"Rlfr>t<"F"ip>',
+      sDom: 'WT<"clear"><"H"Rlr>t<"F"ip>',
+        oTableTools: {
+          sSwfPath: "/assets/dataTables/copy_csv_xls.swf",
+          aButtons: ['copy', 'csv']
+        },
       bJQueryUI: true,
       bRetrieve: true,
       bDestroy: true,
       aaSorting: [[ 4, "desc" ]],
       bProcessing: true,
       bDeferRender: true,
+      bServerSide: true,
       sAjaxSource: '/<%= params[:repository] %>/data_configs/fetch_table_data/<%= params[:id] %>',
       fnInitComplete: function(oSettings) {
         $('body').removeClass('loading'); 
       }
-    });
+    }).columnFilter(
+        {aoColumns: [ 
+          { type: "text" },
+          { type: "text" },
+          { type: "text" },
+          { type: "text" },
+          { type: "number-range" },
+          null
+        ]
+      });
 });
 </script>

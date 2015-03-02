@@ -13,20 +13,34 @@ Please choose a clustering quality measure:
   </thead>
   <tbody>
   </tbody>
+  <tfoot>
+  <tr>
+    <th>Program</th>
+    <th>Parameter set</th>
+    <th>Quality</th>
+  </tr>
+  </tfoot>
 </table>
 <script type="text/javascript">
 $(document).ready(function() {
   $('#dataConfig2').dataTable({
       sPaginationType: "full_numbers",
-      sDom: '<"H"Rlfr>t<"F"ip>',
+      sDom: '<"H"Rlr>t<"F"ip>',
       bJQueryUI: true,
       bRetrieve: true,
       bDestroy: true,
       aaSorting: [[ 4, "desc" ]],
       bProcessing: true,
       bDeferRender: true,
+      bServerSide: true,
       sAjaxSource: '/<%= params[:repository] %>/datasets/fetch_table_data/<%= params[:id] %>/<%= @qualityMeasure.id %>'
-    });
+    }).columnFilter(
+        {aoColumns: [ 
+          { type: "text" },
+          { type: "text" },
+          { type: "number-range" }
+        ]
+      });;
 });
 </script>
 <p></p>

@@ -1,9 +1,7 @@
 class DataConfigsController < ApplicationController
 
 	def index
-		@repositoryType = RepositoryType.find_by_name("Repository")
-		@repository = Repository.find_by_repository_type_id(@repositoryType.id)
-		@dataConfigs = DataConfig.where(:repository_id => @repository.id)
+		@dataConfigs = DataConfig.where(:repository_id => params[:repository])
 		
 		respond_to do |format|
 			format.html # index.html.erb
@@ -12,13 +10,37 @@ class DataConfigsController < ApplicationController
 	end
 
 	def fetch_table_data
-		@dataConfig = DataConfig.find(params[:id])
-		@datasetConfig = @dataConfig.dataset_config
-		@goldstandardConfig = @dataConfig.goldstandard_config
-    	@runResults = RunResultsParameterOptimization.select(:id).where(:data_config_id => DataConfig.select(:id).where(:data_config_id => params[:id]))
-    	@runResultsParamSets = RunResultsParameterOptimizationsParameterSet.select(:id).where(:run_results_parameter_optimization_id => @runResults)
-		@dataConfigOrigId = DataConfig.where(:data_config_id => @dataConfig.id)
-		@runResultsDataConfigsRanking = RunResultsDataConfigsRanking.where(:t9_r3 => @dataConfigOrigId)
+
+		@dataConfig = DataConfig.find(:all, :conditions => ["repository_id = ?",Repository.find(params[:repository])])
+		#@datasetConfig = @dataConfig.dataset_config
+		#@goldstandardConfig = @dataConfig.goldstandard_config
+    	#@runResults = RunResultsParameterOptimization.select(:id).where(:data_config_id => DataConfig.select(:id).where(:data_config_id => params[:id]))
+    	#@runResultsParamSets = RunResultsParameterOptimizationsParameterSet.select(:id).where(:run_results_parameter_optimization_id => @runResults)
+		#@dataConfigOrigId = DataConfig.where(:data_config_id => @dataConfig.id)
+
+		columns = ['t12_r5','t10_r6','t0_r3','t5_r2','t4_r4','t1_r2']
+		columnFormat = ['like','like','like','like','range','']
+
+		filterStrings = []
+		for i in 0..columns.count-1
+			format = columnFormat[i]
+			if format == 'like'
+				if params["sSearch_" + i.to_s] != ''
+					filterStrings += [columns[i] + ' LIKE \'%' + params["sSearch_" + i.to_s] + '%\'']
+				end
+			elsif format == 'range'
+				if params["sSearch_" + i.to_s] != '' and params["sSearch_" + i.to_s] != '~'
+					split = params["sSearch_" + i.to_s].split('~')
+					filterStrings += [columns[i] + ' BETWEEN ' + split[0] + ' AND ' + split[1]]
+				end
+			end
+		end
+		filterString = filterStrings.join(' AND ')
+
+		@runResultsDataConfigsRanking = RunResultsDataConfigsRanking.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig)).order(
+			columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0]).limit(
+			params[:iDisplayLength].to_i).offset(
+			params[:iDisplayStart].to_i).where(filterString)
 
 		@paramValuesQualityArray = []
 		@runResultsDataConfigsRanking.each do |runResult|
@@ -36,7 +58,9 @@ class DataConfigsController < ApplicationController
 			]
 		end
 
-		@json = {"aaData" => @paramValuesQualityArray}.to_json
+		@json = {"iTotalRecords" => RunResultsDataConfigsRanking.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig)).count,
+ 				"iTotalDisplayRecords" => RunResultsDataConfigsRanking.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig)).where(filterString).count, 
+ 				"aaData" => @paramValuesQualityArray}.to_json
 		render :inline => @json
 	end
 	
@@ -62,7 +86,6 @@ class DataConfigsController < ApplicationController
 	end
 
 	def comparison
-            #@data_config_id = DataConfig.all(params[:repository]).select{|dataConfig| dataConfig.id == params[:id] and not dataConfig.data_config_id}.first
             @data_config_id = params[:id]
 	end
 end

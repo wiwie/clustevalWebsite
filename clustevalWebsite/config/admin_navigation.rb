@@ -171,7 +171,7 @@ SimpleNavigation::Configuration.run do |navigation|
           @dataConfigs.each do |data_config|
             sub_data_configs.item( :nav_data_configs, data_config.name, data_config_path(params[:repository], data_config)) do |sub_data_config|
               sub_data_config.item :nav_data_configs, 'General', data_config_path(params[:repository], data_config)
-              sub_data_config.item :nav_data_configs, 'Comparison', url_for(:controller => 'data_configs', :action => 'comparison', :id => data_config.name)
+              sub_data_config.item :nav_data_configs, 'Comparison', url_for(:controller => 'data_configs', :action => 'comparison', :id => data_config)
             end
           end
         end

@@ -112,7 +112,7 @@
 
 			$('#iterations_<%= i.to_s %>').dataTable({
 				sPaginationType: "full_numbers",
-				sDom: 'WT<"clear"><"H"Rlfr>t<"F"ip>',
+				sDom: 'WT<"clear"><"H"Rlr>t<"F"ip>',
 				oTableTools: {
 					sSwfPath: "/assets/dataTables/copy_csv_xls.swf",
 					aButtons: ['copy', 'csv']
@@ -121,12 +121,13 @@
 				bJQueryUI: true,
 				bDestroy: true,
 				bProcessing: true,
+				bServerSide: true,
 				sAjaxSource: '/<%= params[:repository] %>/run_results_parameter_optimizations/fetch_table_data/<%= params[:id] %>/<%= @dataConfigs[i].id.to_s %>/<%= @programConfigs[i].id.to_s %>'})
 			.columnFilter(
 				{aoColumns: [ 
 					{ type: "number" },
 					{ type: "text" },
-					{ type: "select" },
+					{ type: "text" },
 					{ type: "number-range" },
 				    null
 				]

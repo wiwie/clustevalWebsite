@@ -88,9 +88,38 @@ class RunResultsParameterOptimizationsController < ApplicationController
 		end
 	end
 
-	def fetch_table_data
-		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:data_config, :program_config, :clustering_quality_measure]).where(:data_config_id => params[:dataId]).where(:program_config_id => params[:programId]).select("value, quality, run_results_parameter_optimizations_parameter_set_iteration_id as iteration_id, iteration,paramSetAsString,clustering_quality_measures.alias").group("iteration_id","clustering_quality_measures.alias")
-		
+	def fetch_table_data		
+		columns = ['iteration', 'paramSetAsString', 'alias', 'quality', '']
+		columnFormat = ['like','like','like','range','']
+
+		filterStrings = []
+		for i in 0..columns.count-1
+			format = columnFormat[i]
+			if format == 'like'
+				if params["sSearch_" + i.to_s] != ''
+					filterStrings += [columns[i] + ' LIKE \'%' + params["sSearch_" + i.to_s] + '%\'']
+				end
+			elsif format == 'range'
+				if params["sSearch_" + i.to_s] != '' and params["sSearch_" + i.to_s] != '~'
+					split = params["sSearch_" + i.to_s].split('~')
+					filterStrings += [columns[i] + ' BETWEEN ' + split[0] + ' AND ' + split[1]]
+				end
+			end
+		end
+		filterString = filterStrings.join(' AND ')
+
+
+		@runResultsParamOptIteration = ParameterOptimizationIteration
+				.joins([:data_config, :program_config, :clustering_quality_measure])
+				.where(:data_config_id => params[:dataId])
+				.where(:program_config_id => params[:programId])
+				.select("value, quality, run_results_parameter_optimizations_parameter_set_iteration_id as iteration_id, iteration,paramSetAsString,clustering_quality_measures.alias")
+				.group("iteration_id","clustering_quality_measures.alias")
+				.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0]).limit(
+			params[:iDisplayLength].to_i).offset(
+			params[:iDisplayStart].to_i).where(filterString)
+
+
 		@paramValuesQualityArray = []
 		@runResultsParamOptIteration.each do |iteration|
 			@paramValuesQualityArray << [
@@ -103,7 +132,18 @@ class RunResultsParameterOptimizationsController < ApplicationController
 			]
 		end
 
-		@json = {"aaData" => @paramValuesQualityArray}.to_json
+		@json = {"iTotalRecords" => ParameterOptimizationIteration
+				.joins([:data_config, :program_config, :clustering_quality_measure])
+				.where(:data_config_id => params[:dataId])
+				.where(:program_config_id => params[:programId])
+				.select("distinct run_results_parameter_optimizations_parameter_set_iteration_id,clustering_quality_measures.alias").count,
+ 				"iTotalDisplayRecords" => ParameterOptimizationIteration
+				.joins([:data_config, :program_config, :clustering_quality_measure])
+				.where(:data_config_id => params[:dataId])
+				.where(:program_config_id => params[:programId])
+				.select("distinct run_results_parameter_optimizations_parameter_set_iteration_id,clustering_quality_measures.alias")
+				.where(filterString).count, 
+ 				"aaData" => @paramValuesQualityArray}.to_json
 		render :inline => @json
 	end
 
