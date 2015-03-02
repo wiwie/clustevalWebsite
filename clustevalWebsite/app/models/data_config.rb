@@ -8,9 +8,9 @@ class DataConfig < ActiveRecord::Base
 		return (absPath.split('/')[-1].gsub('.dataconfig',''))
 	end
 
-	def to_param
-		"#{name}"
-	end
+	#def to_param
+	#	"#{name}"
+	#end
 
   def self.all(session, *args)
 	if session

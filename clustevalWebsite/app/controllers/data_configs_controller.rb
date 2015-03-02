@@ -12,7 +12,7 @@ class DataConfigsController < ApplicationController
 	end
 
 	def fetch_table_data
-		@dataConfig = DataConfig.find_by_name(params[:id])
+		@dataConfig = DataConfig.find(params[:id])
 		@datasetConfig = @dataConfig.dataset_config
 		@goldstandardConfig = @dataConfig.goldstandard_config
     	@runResults = RunResultsParameterOptimization.select(:id).where(:data_config_id => DataConfig.select(:id).where(:data_config_id => params[:id]))
@@ -41,7 +41,7 @@ class DataConfigsController < ApplicationController
 	end
 	
 	def show
-		@dataConfig = DataConfig.find_by_name(params[:id])
+		@dataConfig = DataConfig.find(params[:id])
 		@datasetConfig = @dataConfig.dataset_config
 		@goldstandardConfig = @dataConfig.goldstandard_config
     	@runResults = RunResultsParameterOptimization.select(:id).where(:data_config_id => DataConfig.select(:id).where(:data_config_id => params[:id]))
@@ -62,6 +62,7 @@ class DataConfigsController < ApplicationController
 	end
 
 	def comparison
-            @data_config_id = DataConfig.all(params[:repository]).select{|dataConfig| dataConfig.name == params[:id] and not dataConfig.data_config_id}.first
+            #@data_config_id = DataConfig.all(params[:repository]).select{|dataConfig| dataConfig.id == params[:id] and not dataConfig.data_config_id}.first
+            @data_config_id = params[:id]
 	end
 end

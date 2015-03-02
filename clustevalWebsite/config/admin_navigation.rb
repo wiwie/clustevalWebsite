@@ -165,7 +165,7 @@ SimpleNavigation::Configuration.run do |navigation|
             if params[:action] == 'index'
               @dataConfigs = DataConfig.all(params[:repository]).sort_by{|x| x.name}
             else
-              @dataConfigs = [DataConfig.find_by_name(params[:id])]
+              @dataConfigs = [DataConfig.find(params[:id])]
             end
           end
           @dataConfigs.each do |data_config|

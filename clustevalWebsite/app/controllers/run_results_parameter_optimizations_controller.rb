@@ -12,13 +12,20 @@ class RunResultsParameterOptimizationsController < ApplicationController
 		@run = RunParameterOptimization.find_by_run_execution_id(@runExecution.id)
 
 		@runResultsQualityMeasures = RunParameterOptimizationQualityMeasure.includes(:clustering_quality_measure).where(:run_parameter_optimization_id => @run)
+		#@runResultsParamOpt = RunResultsParameterOptimization.includes(
+		#		:data_config, 
+		#		:program_config,
+		#		{:run_results_parameter_optimizations_parameter_set => 
+		#				{:run_results_parameter_optimizations_parameter_set_parameters => :program_parameter}
+		#		}
+		#	).find(:all, :conditions => ["run_results_execution_id = ?",@runResultExecution.id])
 		@runResultsParamOpt = RunResultsParameterOptimization.includes(
 				:data_config, 
 				:program_config,
 				{:run_results_parameter_optimizations_parameter_set => 
 						{:run_results_parameter_optimizations_parameter_set_parameters => :program_parameter}
 				}
-			).find(:all, :conditions => ["run_results_execution_id = ?",@runResultExecution.id])
+			).where(:run_results_execution_id => @runResultExecution.id)
 
 		@dataConfigs = []
 		@programConfigs = []
