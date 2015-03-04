@@ -22,7 +22,7 @@
  <tbody>
   <% for i in 0..@programs.length-1 %>
   <tr>
-    <% for j in 0..@datasets.length %>
+    <% for j in 0..@dataConfigs.length %>
       <% if j == 0 %>
         <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
         <td></td>
@@ -110,13 +110,13 @@ $(function () {
                 }
             },
             series: [
-<% @dataConfigs.sort_by{|x| x.alias}.each do |dataConfig| %>
+<% @dataConfigs.sort_by{|x| x.name}.each do |dataConfig| %>
 <% if @visibleDataConfigs[dataConfig] %>
 {
-  name: '<%= dataset.alias %>',
+  name: '<%= dataConfig.name %>',
   data: [<% @programs.sort_by{|x| x.alias}.each do |program| %>
   <% if @visiblePrograms[program] %>
-    <% @qual = @matrix[@programIds[program]][@dataConfigIds[dataConfig]] %>
+    <% @qual = @matrix[@programIds[program]][@dataConfigsIds[dataConfig]] %>
     <% if @qual != "--" %>
       <%= @qual %>
     <% else %>

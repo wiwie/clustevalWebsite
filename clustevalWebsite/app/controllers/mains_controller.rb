@@ -57,12 +57,18 @@ class MainsController < ApplicationController
 		if params[:showDataConfigs]
 			if params[:selectDataConfigs]
 				@dataConfigs = params[:selectDataConfigs]
+			# if we have shown data sets before, we take all data configs of those data sets
+			elsif params[:selectDatasets]
+				@dataConfigs = DataConfig.where(:dataset_config_id => DatasetConfig.where(:dataset_id => params[:selectDatasets])).map{|x| x.id}
 			else
 				@dataConfigs = DataConfig.all(params[:repository]).map{|x| x.id}
 			end
 		else
 			if params[:selectDatasets]
 				@datasets = params[:selectDatasets]
+			# if we have shown data sets before, we take all data configs of those data sets
+			elsif params[:selectDataConfigs]
+				@datasets = DataConfig.includes({:dataset_config => :dataset}).where(:id => params[:selectDataConfigs]).map{|dc| dc.dataset_config}.map{|dsc| dsc.dataset_id}
 			else
 				@datasets = Dataset.all(params[:repository]).select{|x| x.visible.nil? || x.visible }.map{|x| x.id}
 			end

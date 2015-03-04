@@ -344,6 +344,102 @@ class SmallRankingCell < MyCell
 		render :view => 'ds_and_p_inv', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds, :showRanks => opts[:showRanks]}
 	end
 
+
+
+	def dc_and_p_inv(opts)
+		# data for plot
+		@visibleDataConfigs = {}
+		@visiblePrograms = {}
+
+		@showRanks = opts[:showRanks]
+
+		@matrix = []
+		
+		@ranks = []
+		
+		@programIds = {}
+		@dataConfigs = DataConfig.where(:id => opts[:dataConfigs]).sort_by{|x| x.name}
+		@programs = Program.where(:id => opts[:methods]).sort_by{|x| x.alias}
+
+		@programAvg = {}
+		@programNumber = {}
+		@programMedian = {}
+
+		for i in 0..@programs.length-1
+		  @programIds[@programs[i]] = i
+		  @matrix << [@programs[i]]
+		end
+		@dataConfigsIds = {}
+		for i in 1..@dataConfigs.length
+		  @dataConfigsIds[@dataConfigs[i-1]] = i
+
+		  for j in 0..@programs.length-1
+		    @matrix[j][i] = '--'
+		  end
+		end
+		@qualityMeasure = ClusteringQualityMeasure.find_by_id(opts[:qualityMeasure])
+		@isMaximum = @qualityMeasure.optimum == 'Maximum'
+
+		@rowMax = {}
+		@rowMaxPos = {}
+		opts[:iterationsExts].each do |iterationExt|
+		  dataConfigId = @dataConfigsIds[iterationExt.data_config]
+		  programId = @programIds[iterationExt.program]
+
+		  next if dataConfigId == nil or programId == nil
+
+		  @visibleDataConfigs[iterationExt.data_config] = true
+		  @visiblePrograms[iterationExt.program] = true
+
+		  @matrix[programId][dataConfigId] = (((@isMaximum ? iterationExt.maxQuality : iterationExt.minQuality)*1000).round/1000.0)
+
+		  if @rowMax[programId]
+		  	if @isMaximum
+			    if @rowMax[programId] < @matrix[programId][dataConfigId]
+			      @rowMax[programId] = @matrix[programId][dataConfigId]
+			      @rowMaxPos[programId] = [dataConfigId]
+			    elsif @rowMax[programId] == @matrix[programId][dataConfigId]
+			      @rowMaxPos[programId] << dataConfigId
+			    end
+			else
+			    if @rowMax[programId] > @matrix[programId][dataConfigId]
+			      @rowMax[programId] = @matrix[programId][dataConfigId]
+			      @rowMaxPos[programId] = [dataConfigId]
+			    elsif @rowMax[programId] == @matrix[programId][dataConfigId]
+			      @rowMaxPos[programId] << dataConfigId
+			    end
+			end
+		  else
+		    @rowMax[programId] = @matrix[programId][dataConfigId]
+		    @rowMaxPos[programId] = [dataConfigId]
+		  end
+		end
+	  
+		if opts[:showRanks]
+			for j in 1..@datasets.length
+				@submatrix = @matrix.map{|x| x[j]}
+				@rowRanks = @submatrix.map{|x| (x == "--") ? ("--") : (@submatrix.select{|y| (y != "--") and (y > x)}.length+1)}
+				for i in 0..@programs.length-1
+					@matrix[i][j] = @rowRanks[i]
+				end
+			end
+		end
+
+		for i in 0..@programs.length-1
+			@programAvg[i] = @matrix[i][1..@dataConfigs.length].inject(0){ |sum, el| (el == "--") ? (sum) : (sum + el) }.to_f
+			@programNumber[i] = @matrix[i][1..@dataConfigs.length].keep_if{|x| x != "--"}.length
+		    
+		    if @programNumber[i] > 0
+				@programAvg[i] = (@programAvg[i]/@programNumber[i]*1000).round/1000.0
+		    else
+				@programAvg[i] = "--"
+		    end
+		    @programMedian[i] = median(@matrix[i][1..@matrix[i].length])
+		end
+
+		render :view => 'dc_and_p_inv', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataConfigs => @dataConfigs, :dataConfigsIds => @dataConfigsIds, :programIds => @programIds, :showRanks => opts[:showRanks]}
+	end
+
 # dataset vs quality
 	def ds_and_q(opts)
 		# data for plot
