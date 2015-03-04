@@ -1,0 +1,204 @@
+<div class="resizable" style="height:400px; width:100%;">
+  <div id="comparison_chart">
+  </div>
+</div>
+<br>
+<div class="resizableTable">
+<table id="dataAndProgramStatistics1" class="display">
+  <thead>
+  <tr>
+    <th>Program</th>
+    <th></th>
+    <% for i in 0..@dataConfigs.length-1 %>
+    <% dataConfig = @dataConfigs[i] %>
+    <th>
+      <%= dataConfig.name %>
+</th>
+    <% end %>
+    <th>Average <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
+    <th>Median <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
+  </tr>
+ </thead>
+ <tbody>
+  <% for i in 0..@programs.length-1 %>
+  <tr>
+    <% for j in 0..@datasets.length %>
+      <% if j == 0 %>
+        <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
+        <td></td>
+      <% else %>
+       <% @string = "" %>
+          <% if @matrix[i][j].to_s == "--" %>
+            <% @string = "--" %>
+          <% else %>
+            <% if @qualityMeasure.maxValue and @qualityMeasure.minValue %>
+              <% if @showRanks %>
+                <% @fontSize = 100 - 50*((matrix[i][j].to_f-1)/@dataConfigs.length) %>
+              <% elsif @isMaximum %>
+                <% @fontSize = 50 + 50*(matrix[i][j]/(@qualityMeasure.maxValue-@qualityMeasure.minValue)) %>
+              <% else %>
+                <% @fontSize = 100 - 50*(matrix[i][j]/(@qualityMeasure.maxValue-@qualityMeasure.minValue)) %>
+              <% end %>
+            <% else %>
+              <% @fontSize = 100%>
+            <% end %>
+            <%# @string = '<a style="text-decoration:none;font-size:' + @fontSize.round.to_s + '%;" href="/' + params[:repository] + '/datasets/' + @dataConfigs[j-1].id.to_s + '/bestclust/' + @programs[i].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+
+            <% @string = @string + matrix[i][j].to_s %>
+            <%# @string = @string + '</a>' %>
+          <% end %>
+        <td style="text-align:center;">
+          <%= raw @string %>
+        </td>
+      <% end %>
+    <% end %>
+    <td><%= @programAvg[i] %></td>
+    <td><%= @programMedian[i] %></td>
+  </tr>
+  <% end %>
+</tbody>
+</table>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            plotOptions: {
+            column: {
+                animation: false,
+                borderWidth: 0,
+                groupPadding: 0.1,
+                pointPadding: 0.05
+            }},
+            chart: {
+                renderTo: 'comparison_chart',
+                type: 'column'
+            },
+    
+            title: {
+                text: 'Clustering qualities'
+            },
+    
+            xAxis: {
+                categories: [<% @programs.sort_by{|x| x.alias}.each do |program| %><% if @visiblePrograms[program] %>'<%= program.alias %>',<% end %><% end %>],
+                labels: {
+                  enabled: true,
+                  rotation: -45,
+                  align: 'right'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: <% if @showRanks %>'Rank'<% else %>'<%= @qualityMeasure.alias %>'<% end %>
+                }
+                <% if !@showRanks %>
+                  <% if @qualityMeasure.minValue %>
+                  ,min: <%= @qualityMeasure.minValue %>
+                  <% end %>
+                  <% if @qualityMeasure.maxValue %>
+                  ,max: <%= @qualityMeasure.maxValue %>
+                  <% end %>
+                <% end %>
+            },
+    
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y;
+                }
+            },
+            series: [
+<% @dataConfigs.sort_by{|x| x.alias}.each do |dataConfig| %>
+<% if @visibleDataConfigs[dataConfig] %>
+{
+  name: '<%= dataset.alias %>',
+  data: [<% @programs.sort_by{|x| x.alias}.each do |program| %>
+  <% if @visiblePrograms[program] %>
+    <% @qual = @matrix[@programIds[program]][@dataConfigIds[dataConfig]] %>
+    <% if @qual != "--" %>
+      <%= @qual %>
+    <% else %>
+      null
+    <% end %>,<% end %><% end %>]
+},
+<% end %>
+<% end %>
+            ]
+        });
+
+      $( ".resizable" ).resizable({
+        helper: "ui-resizable-helper",
+        create: function( event, ui ) {
+          chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+        },
+        stop: function( event, ui ) {
+          chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+        }
+      });
+
+      $( ".resizableTable" ).resizable({
+        helper: "ui-resizable-helper"
+      });
+    });
+});
+
+$(document).ready(function() {
+  jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+      "num-html-pre": function ( a ) {
+          var x = String(a).replace( /<[\s\S]*?>/g, "" );
+          if (x == "--")
+            return "--"
+          return parseFloat( x );
+      },
+   
+      "num-html-asc": function ( a, b ) {
+          if (a == "--") {
+            if (b == "--")
+              return 0;            
+            return 1;
+          }
+          if (b == "--")
+            return -1;
+          return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+      },
+   
+      "num-html-desc": function ( a, b ) {
+          if (a == "--") {
+            if (b == "--")
+              return 0;
+            return 1;
+          }
+          if (b == "--")
+            return -1;
+          return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+      }
+  } );
+
+  MyDatatable('#dataAndProgramStatistics1');
+
+  $('#dataAndProgramStatistics1').dataTable({
+    aoColumnDefs: [
+      { "aTargets": [1],"bVisible": false },
+      { "sType": "num-html", "aTargets": [ <%= (1..@dataConfigs.length+3).to_a.join(', ') %> ] }
+    ],
+    sPaginationType: "full_numbers",
+    bJQueryUI: true,
+    bRetrieve: true,
+    bDestroy: true,
+    bPaginate: false,
+    bInfo: false,
+    bFilter: false,
+    bAutoWidth: false,
+    sDom: 'C<"clear">T<"clear"><"H"Rlfr>t<"F"ip>',
+    oTableTools: {
+      sSwfPath: "/assets/dataTables/copy_csv_xls.swf",
+      aButtons: ['copy', 'csv']
+    },
+    oColVis: {
+      aiInclude: [1]
+    }
+  });
+});
+</script>
