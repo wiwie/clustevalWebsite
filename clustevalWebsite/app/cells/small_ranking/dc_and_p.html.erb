@@ -6,7 +6,7 @@
 <table id="dataAndProgramStatistics1" class="display">
   <thead>
   <tr>
-    <th>Data Set</th>
+    <th>Data Config</th>
     <th>Data Type</th>
     <% for i in 0..@programs.length-1 %>
       <% program = @programs[i] %>
@@ -19,12 +19,12 @@
   </tr>
  </thead>
  <tbody>
-  <% for i in 0..@datasets.length-1 %>
+  <% for i in 0..@dataConfigs.length-1 %>
   <tr>
     <% for j in 0..@programs.length %>
       <% if j == 0 %>
-        <td><%= link_to @matrix[i][j].alias, @matrix[i][j] %></td>
-        <td><%= @matrix[i][j].dataset_type.alias %></td>
+        <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
+        <td><%= @matrix[i][j].dataset_config.dataset.dataset_type.alias %></td>
       <% else %>
        <% @string = "" %>
           <% if @matrix[i][j].to_s == "--" %>
@@ -41,9 +41,10 @@
             <% else %>
               <% @fontSize = 100%>
             <% end %>
-            <% @string = '<a style="text-decoration:none;font-size:' + @fontSize.round.to_s + '%;" href="/' + params[:repository] + '/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+            <%# @string = '<a style="text-decoration:none;font-size:' + @fontSize.round.to_s + '%;" href="/' + params[:repository] + '/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
 
-            <% @string = @string + matrix[i][j].to_s + '</a>' %>
+            <% @string = @string + matrix[i][j].to_s %>
+            <%# @string = @string + '</a>' %>
           <% end %>
         <td style="text-align:center;">
           <%= raw @string %>
@@ -79,7 +80,7 @@ $(function () {
             },
     
             xAxis: {
-                categories: [<% @datasets.each do |dataset| %><% if @visibleDatasets[dataset] %>'<%= dataset.alias %>',<% end %><% end %>],
+                categories: [<% @dataConfigs.each do |dataConfig| %><% if @visibleDataConfigs[dataConfig] %>'<%= dataConfig.name %>',<% end %><% end %>],
                 labels: {
                   enabled: true,
                   rotation: -45,
@@ -110,7 +111,7 @@ $(function () {
             <% @programs.sort_by{|x| x.alias}.each do |program| %>
               {
                 name: '<%= program.alias %>',
-                data: [<% @datasets.sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
+                data: [<% @dataConfigs.sort_by{|x| x.name}.each do |dataConfig| %><% if @visibleDataConfigs[dataConfig] %><% @qual = @matrix[@dataConfigsIds[dataConfig]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
                 <%# elsif @isMaximum %><%#= @qualityMeasure.minValue %><%# else %><%#= @qualityMeasure.maxValue %>
                 <% else %>null<% end %>,<% end %><% end %>]
             },

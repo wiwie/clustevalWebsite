@@ -37,9 +37,8 @@ class DataConfigsController < ApplicationController
 		end
 		filterString = filterStrings.join(' AND ')
 
-		@runResultsDataConfigsRanking = RunResultsDataConfigsRanking.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig)).order(
-			columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0]).limit(
-			params[:iDisplayLength].to_i).offset(
+		@runResultsDataConfigsRanking = RunResultsDataConfigsRanking.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig)).order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
+			.limit(params[:iDisplayLength].to_i).offset(
 			params[:iDisplayStart].to_i).where(filterString)
 
 		@paramValuesQualityArray = []

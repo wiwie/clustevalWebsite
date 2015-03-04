@@ -3,28 +3,29 @@
   </div>
 </div>
 <br>
+<div class="resizableTable">
 <table id="dataAndProgramStatistics1" class="display">
   <thead>
   <tr>
-    <th>Data Set</th>
-    <th>Data Type</th>
-    <% for i in 0..@programs.length-1 %>
-      <% program = @programs[i] %>
-      <th>
-        <%= program.name %>
-      </th>
+    <th>Program</th>
+    <th></th>
+    <% for i in 0..@dataConfigs.length-1 %>
+    <% dataConfig = @dataConfigs[i] %>
+    <th>
+      <%= dataConfig.name %>
+</th>
     <% end %>
     <th>Average <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
     <th>Median <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
   </tr>
  </thead>
  <tbody>
-  <% for i in 0..@datasets.length-1 %>
+  <% for i in 0..@programs.length-1 %>
   <tr>
-    <% for j in 0..@programs.length %>
+    <% for j in 0..@datasets.length %>
       <% if j == 0 %>
-        <td><%= link_to @matrix[i][j].alias, @matrix[i][j] %></td>
-        <td><%= @matrix[i][j].dataset_type.alias %></td>
+        <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
+        <td></td>
       <% else %>
        <% @string = "" %>
           <% if @matrix[i][j].to_s == "--" %>
@@ -32,7 +33,7 @@
           <% else %>
             <% if @qualityMeasure.maxValue and @qualityMeasure.minValue %>
               <% if @showRanks %>
-                <% @fontSize = 100 - 50*((matrix[i][j].to_f-1)/@programs.length) %>
+                <% @fontSize = 100 - 50*((matrix[i][j].to_f-1)/@dataConfigs.length) %>
               <% elsif @isMaximum %>
                 <% @fontSize = 50 + 50*(matrix[i][j]/(@qualityMeasure.maxValue-@qualityMeasure.minValue)) %>
               <% else %>
@@ -41,21 +42,23 @@
             <% else %>
               <% @fontSize = 100%>
             <% end %>
-            <% @string = '<a style="text-decoration:none;font-size:' + @fontSize.round.to_s + '%;" href="/' + params[:repository] + '/datasets/' + @datasets[i].id.to_s + '/bestclust/' + @programs[j-1].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+            <%# @string = '<a style="text-decoration:none;font-size:' + @fontSize.round.to_s + '%;" href="/' + params[:repository] + '/datasets/' + @dataConfigs[j-1].id.to_s + '/bestclust/' + @programs[i].alias + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
 
-            <% @string = @string + matrix[i][j].to_s + '</a>' %>
+            <% @string = @string + matrix[i][j].to_s %>
+            <%# @string = @string + '</a>' %>
           <% end %>
         <td style="text-align:center;">
           <%= raw @string %>
         </td>
       <% end %>
     <% end %>
-    <td><%= @datasetAvg[i] %></td>
-    <td><%= @datasetMedian[i] %></td>
+    <td><%= @programAvg[i] %></td>
+    <td><%= @programMedian[i] %></td>
   </tr>
   <% end %>
 </tbody>
 </table>
+</div>
 
 <script type="text/javascript">
 $(function () {
@@ -79,7 +82,7 @@ $(function () {
             },
     
             xAxis: {
-                categories: [<% @datasets.each do |dataset| %><% if @visibleDatasets[dataset] %>'<%= dataset.alias %>',<% end %><% end %>],
+                categories: [<% @programs.sort_by{|x| x.alias}.each do |program| %><% if @visiblePrograms[program] %>'<%= program.alias %>',<% end %><% end %>],
                 labels: {
                   enabled: true,
                   rotation: -45,
@@ -107,28 +110,40 @@ $(function () {
                 }
             },
             series: [
-            <% @programs.sort_by{|x| x.alias}.each do |program| %>
-              {
-                name: '<%= program.alias %>',
-                data: [<% @datasets.sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
-                <%# elsif @isMaximum %><%#= @qualityMeasure.minValue %><%# else %><%#= @qualityMeasure.maxValue %>
-                <% else %>null<% end %>,<% end %><% end %>]
-            },
-            <% end %>
+<% @dataConfigs.sort_by{|x| x.alias}.each do |dataConfig| %>
+<% if @visibleDataConfigs[dataConfig] %>
+{
+  name: '<%= dataset.alias %>',
+  data: [<% @programs.sort_by{|x| x.alias}.each do |program| %>
+  <% if @visiblePrograms[program] %>
+    <% @qual = @matrix[@programIds[program]][@dataConfigIds[dataConfig]] %>
+    <% if @qual != "--" %>
+      <%= @qual %>
+    <% else %>
+      null
+    <% end %>,<% end %><% end %>]
+},
+<% end %>
+<% end %>
             ]
         });
 
       $( ".resizable" ).resizable({
         helper: "ui-resizable-helper",
-        stop: function( event, ui ) {
+        create: function( event, ui ) {
           chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
         },
-        create: function( event, ui ) {
+        stop: function( event, ui ) {
           chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
         }
       });
+
+      $( ".resizableTable" ).resizable({
+        helper: "ui-resizable-helper"
+      });
     });
 });
+
 $(document).ready(function() {
   jQuery.extend( jQuery.fn.dataTableExt.oSort, {
       "num-html-pre": function ( a ) {
@@ -165,9 +180,8 @@ $(document).ready(function() {
 
   $('#dataAndProgramStatistics1').dataTable({
     aoColumnDefs: [
-      { "aTargets": [1],"bVisible": false
-      },
-      { "sType": "num-html", "aTargets": [ <%= (2..@programs.length+3).to_a.join(', ') %> ] }
+      { "aTargets": [1],"bVisible": false },
+      { "sType": "num-html", "aTargets": [ <%= (1..@dataConfigs.length+3).to_a.join(', ') %> ] }
     ],
     sPaginationType: "full_numbers",
     bJQueryUI: true,
