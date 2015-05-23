@@ -1,4 +1,4 @@
-<% content_for :title, "Run Analysis Run Result '" + @runResult.absPath.split('/')[-1] + "'" %>
+<% content_for :title, "Run Analysis Run Result '" + @runResult.abs_path.split('/')[-1] + "'" %>
 <style type="text/css" >
 .whiterectangle { color: white; background-color: white; z-index: 0;}
 .blackrectangle { color: black; background-color: black; z-index: 1;}
@@ -27,7 +27,7 @@ drawrectangle( "whiterectangle", 0, 0, 1, 1 );  // make a background rectangle, 
   </thead>
   <tbody>
     <tr>
-      <td>Run configuration</td><td><%= link_to @runRunAnalysisRunIdentifier[d].runIdentifier, RunResult.find_by_uniqueRunIdentifier(@runRunAnalysisRunIdentifier[d].runIdentifier) %></td>
+      <td>Run configuration</td><td><%= link_to @runRunAnalysisRunIdentifier[d].runIdentifier, RunResult.find_by_unique_run_identifier(@runRunAnalysisRunIdentifier[d].runIdentifier) %></td>
     </tr>
     <% for i in 0..@statistics.length-1 %>
     <% statistic = @statistics[i] %>

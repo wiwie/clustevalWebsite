@@ -11,6 +11,6 @@ class Goldstandard < ActiveRecord::Base
   end
 
   def name
-  	return (absPath.split('/')[-2] + '/' + absPath.split('/')[-1])
+  	return (abs_path.split('/')[-2] + '/' + abs_path.split('/')[-1])
   end
 end

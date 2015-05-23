@@ -10,7 +10,7 @@ class CreateRunResultsParameterOptimizationsQualities < ActiveRecord::Migration
   end
 
   add_index "run_results_parameter_optimizations_qualities", ["clustering_quality_measure_id"], :name => "fk_parameter_optimization_qualities_4"
-  add_index "run_results_parameter_optimizations_qualities", ["repository_id", "clustering_quality_measure_id", "run_results_parameter_optimizations_parameter_set_iteration_id"], :name => "index6", :unique => true
+  add_index "run_results_parameter_optimizations_qualities", ["repository_id", "clustering_quality_measure_id", "run_results_parameter_optimizations_parameter_set_iteration_id"], :name => "run_results_parameter_optimizations_qualities_sindex6", :unique => true
   add_index "run_results_parameter_optimizations_qualities", ["repository_id"], :name => "fk_parameter_optimization_qualities_1"
   add_index "run_results_parameter_optimizations_qualities", ["run_results_parameter_optimizations_parameter_set_iteration_id"], :name => "fk_parameter_optimization_qualities_2"
   add_index "run_results_parameter_optimizations_qualities", ["run_results_parameter_optimizations_parameter_set_iteration_id"], :name => "fk_parameter_optimization_qualities_3"

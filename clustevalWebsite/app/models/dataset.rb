@@ -7,19 +7,19 @@ class Dataset < ActiveRecord::Base
 
   def self.all(repository, *args)
     if repository
-      return self.find(:all, :conditions => ["repository_id = ?",repository])
+      return self.find(:all, :conditions => ["repository_id = ? AND visibility > ?",repository,0])
     else
       return super.all
     end
   end
 
   def name
-  	#return (absPath.split('/')[-2] + '/' + absPath.split('/')[-1])
+  	#return (abs_path.split('/')[-2] + '/' + abs_path.split('/')[-1])
     return (self.alias)
   end
 
   def full_name
-    return (absPath.split('/')[-2] + '/' + absPath.split('/')[-1])
+    return (abs_path.split('/')[-2] + '/' + abs_path.split('/')[-1])
   end
 
   def imageUrl
@@ -58,12 +58,30 @@ class Dataset < ActiveRecord::Base
     end
   end
 
-  def visible
-    @visible = DatasetVisibility.find_by_dataset_name(self.full_name)
-    if @visible
-      return @visible.visible
-    else
+  #def visible
+  #  @visible = DatasetVisibility.find_by_dataset_name(self.full_name)
+  #  if @visible
+  #    return @visible.visible
+  #  else
+  #    return false
+  #  end
+  #end
+
+  def hide
+    @visible = self.visibility
+    if @visible == 0
       return true
+    else
+      return false
+    end
+  end
+
+  def visible
+    @visible = self.visibility
+    if @visible == 1 or @visible == 2
+      return true
+    else
+      return false
     end
   end
 end

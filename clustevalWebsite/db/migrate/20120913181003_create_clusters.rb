@@ -4,7 +4,7 @@ class CreateClusters < ActiveRecord::Migration
 
     t.integer "repository_id",                :null => false
     t.integer "clustering_id",                :null => false
-    t.binary  "name",          :limit => 200, :null => false
+    t.binary  "name",          :limit => 767, :null => false
   end
 
   add_index "clusters", ["clustering_id"], :name => "fk_clusters_2"

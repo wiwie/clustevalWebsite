@@ -8,10 +8,10 @@
   </thead>
   <tbody>
   <tr>
-    <td>Absolute Path</td><td><%= @goldstandardConfig.absPath.split('/')[-1] %></td>
+    <td>Absolute Path</td><td><%= @goldstandardConfig.abs_path.split('/')[-1] %></td>
   </tr>
   <tr>
-    <td>Goldstandard</td><td><%= link_to @goldstandard.absPath.split('/')[-2] + "/" + @goldstandard.absPath.split('/')[-1], @goldstandard %></td>
+    <td>Goldstandard</td><td><%= link_to @goldstandard.abs_path.split('/')[-2] + "/" + @goldstandard.abs_path.split('/')[-1], @goldstandard %></td>
   </tr>
   <tr>
     <td>File content</td><td>

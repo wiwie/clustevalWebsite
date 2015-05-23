@@ -10,8 +10,8 @@
  <tbody>
  <% @programConfigs.each do |programConfig| %>
   <tr>
-    <td><%= link_to programConfig.absPath.split('/')[-1], programConfig %></td>
-    <td><% @program = programConfig.program %><%= link_to @program.absPath.split('/')[-2] + '/' + @program.absPath.split('/')[-1], @program %></td>
+    <td><%= link_to programConfig.abs_path.split('/')[-1], programConfig %></td>
+    <td><% @program = programConfig.program %><%= link_to @program.abs_path.split('/')[-2] + '/' + @program.abs_path.split('/')[-1], @program %></td>
     <td><%= programConfig.run_result_format.name %></td>
   </tr>
 <% end %>

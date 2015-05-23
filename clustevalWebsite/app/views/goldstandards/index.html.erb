@@ -8,7 +8,7 @@
  <tbody>
  <% @goldstandards.each do |goldstandard| %>
   <tr>
-    <td><%= link_to goldstandard.absPath.split('/')[-2] + "/" + goldstandard.absPath.split('/')[-1], goldstandard %></td>
+    <td><%= link_to goldstandard.abs_path.split('/')[-2] + "/" + goldstandard.abs_path.split('/')[-1], goldstandard %></td>
   </tr>
 <% end %>
 </tbody>

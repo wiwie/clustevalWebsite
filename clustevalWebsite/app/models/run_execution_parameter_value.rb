@@ -5,7 +5,7 @@ class RunExecutionParameterValue < ActiveRecord::Base
 	belongs_to :run_execution
 
 	def to_param
-  		"#{absPath}".split('/')[-1].tr('.runconfig','')
+  		"#{abs_path}".split('/')[-1].tr('.runconfig','')
 	end
 
   def self.all(session, *args)

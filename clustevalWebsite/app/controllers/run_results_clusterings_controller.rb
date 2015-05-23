@@ -15,7 +15,7 @@ class RunResultsClusteringsController < ApplicationController
 		@run = RunClustering.find_by_run_execution_id(@runExecution.id)
 
 		# log file
-		logPath = @runResult.absPath + '/logs/' + @runResult.absPath.split('/')[-1] + '.log'
+		logPath = @runResult.abs_path + '/logs/' + @runResult.abs_path.split('/')[-1] + '.log'
 		file = File.open(logPath)
 		@logContents = ""
 		while tmp = file.gets do

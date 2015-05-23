@@ -12,7 +12,7 @@
     <td>Alias</td><td><%= @dataset.alias %></td>
   </tr>
   <tr>
-    <td>Name</td><td><%= @dataset.absPath.split('/')[-2] + "/" + @dataset.absPath.split('/')[-1] %></td>
+    <td>Name</td><td><%= @dataset.abs_path.split('/')[-2] + "/" + @dataset.abs_path.split('/')[-1] %></td>
   </tr>
   <% if @description %>
   <tr><td>Description:</td><td><%= raw @description.dataset_description %></td></tr>

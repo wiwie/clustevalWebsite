@@ -31,13 +31,13 @@
           <% if @matrix[i][j].to_s == "--" %>
             <% @string = "--" %>
           <% else %>
-            <% if @qualityMeasure.maxValue and @qualityMeasure.minValue %>
+            <% if @qualityMeasure.max_value and @qualityMeasure.min_value %>
               <% if @showRanks %>
                 <% @fontSize = 100 - 50*((matrix[i][j].to_f-1)/@datasets.length) %>
               <% elsif @isMaximum %>
-                <% @fontSize = 50 + 50*(matrix[i][j]/(@qualityMeasure.maxValue-@qualityMeasure.minValue)) %>
+                <% @fontSize = 50 + 50*(matrix[i][j]/(@qualityMeasure.max_value-@qualityMeasure.min_value)) %>
               <% else %>
-                <% @fontSize = 100 - 50*(matrix[i][j]/(@qualityMeasure.maxValue-@qualityMeasure.minValue)) %>
+                <% @fontSize = 100 - 50*(matrix[i][j]/(@qualityMeasure.max_value-@qualityMeasure.min_value)) %>
               <% end %>
             <% else %>
               <% @fontSize = 100%>
@@ -93,11 +93,11 @@ $(function () {
                     text: <% if @showRanks %>'Rank'<% else %>'<%= @qualityMeasure.alias %>'<% end %>
                 }
                 <% if !@showRanks %>
-                  <% if @qualityMeasure.minValue %>
-                  ,min: <%= @qualityMeasure.minValue %>
+                  <% if @qualityMeasure.min_value %>
+                  ,min: <%= @qualityMeasure.min_value %>
                   <% end %>
-                  <% if @qualityMeasure.maxValue %>
-                  ,max: <%= @qualityMeasure.maxValue %>
+                  <% if @qualityMeasure.max_value %>
+                  ,max: <%= @qualityMeasure.max_value %>
                   <% end %>
                 <% end %>
             },

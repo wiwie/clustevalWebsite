@@ -5,7 +5,7 @@ class DataConfig < ActiveRecord::Base
 	belongs_to :data_config
 
 	def name
-		return (absPath.split('/')[-1].gsub('.dataconfig',''))
+		return (abs_path.split('/')[-1].gsub('.dataconfig',''))
 	end
 
 	#def to_param

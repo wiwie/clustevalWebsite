@@ -7,7 +7,7 @@ class CreateOptimizableProgramParameters < ActiveRecord::Migration
     t.integer "program_parameter_id", :null => false
   end
 
-  add_index "optimizable_program_parameters", ["program_config_id", "program_parameter_id", "repository_id"], :name => "index5", :unique => true
+  add_index "optimizable_program_parameters", ["program_config_id", "program_parameter_id", "repository_id"], :name => "optimizable_program_parameters_index5", :unique => true
   add_index "optimizable_program_parameters", ["program_config_id"], :name => "fk_optimizableProgramParameter_3"
   add_index "optimizable_program_parameters", ["program_parameter_id"], :name => "fk_optimizableProgramParameter_1"
   add_index "optimizable_program_parameters", ["repository_id"], :name => "fk_optimizableProgramParameter_2"

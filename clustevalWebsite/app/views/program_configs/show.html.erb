@@ -8,7 +8,7 @@
   </thead>
   <tbody>
   <tr>
-    <td>Filename</td><td><%= @programConfig.absPath.split('/')[-1] %></td>
+    <td>Filename</td><td><%= @programConfig.abs_path.split('/')[-1] %></td>
   </tr>
   <tr>
     <td>Program</td><td><%= link_to @program.name, @program %></td>
@@ -54,10 +54,20 @@ $(document).ready(function() {
       aaSorting: [[ 4, "desc" ]],
       bProcessing: true,
       bDeferRender: true,
+      bServerSide: true,
       sAjaxSource: '/<%= params[:repository] %>/program_configs/fetch_table_data/<%= params[:id] %>',
       fnInitComplete: function(oSettings) {
         $('body').removeClass('loading'); 
       }
-    });
+    }).columnFilter(
+        {aoColumns: [ 
+          { type: "text" },
+          { type: "text" },
+          { type: "text" },
+          { type: "text" },
+          { type: "number-range" },
+          null
+        ]
+      });
 });
 </script>

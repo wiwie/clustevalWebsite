@@ -7,7 +7,7 @@ class CreateRunConfigsExecutions < ActiveRecord::Migration
   end
 
   add_index "run_executions", ["repository_id"], :name => "fk_runConfigsExecution_2"
-  add_index "run_executions", ["run_id", "repository_id"], :name => "run_id_UNIQUE", :unique => true
+  add_index "run_executions", ["run_id", "repository_id"], :name => "run_executions_run_id_UNIQUE", :unique => true
   add_index "run_executions", ["run_id"], :name => "fk_runConfigsExecution_1"
   end
 end

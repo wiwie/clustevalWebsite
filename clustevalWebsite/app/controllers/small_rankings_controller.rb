@@ -12,9 +12,9 @@ class SmallRankingsController < ApplicationController
 		@qualityMeasure = params[:qualityMeasure]
 		@optimum = ClusteringQualityMeasure.find_by_name(@qualityMeasure).optimum
 		if @optimum == 'Maximum'
-			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,max(quality) as maxQuality,paramSetAsString,clustering_quality_measure_id").where(:dataset_id => @id).where(:clustering_quality_measure_id => @qualityMeasure).group("program_id")
+			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,max(quality) as max_quality,param_set_as_string,clustering_quality_measure_id").where(:dataset_id => @id).where(:clustering_quality_measure_id => @qualityMeasure).group("program_id")
 		else
-			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,min(quality) as maxQuality,paramSetAsString,clustering_quality_measure_id").where(:dataset_id => @id).where(:clustering_quality_measure_id => @qualityMeasure).group("program_id")
+			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,min(quality) as max_quality,param_set_as_string,clustering_quality_measure_id").where(:dataset_id => @id).where(:clustering_quality_measure_id => @qualityMeasure).group("program_id")
 		end
 		@object = Dataset.find_by_id(@id)
 	
@@ -27,9 +27,9 @@ class SmallRankingsController < ApplicationController
 		@qualityMeasure = params[:qualityMeasure]
 		@optimum = ClusteringQualityMeasure.find_by_name(@qualityMeasure).optimum
 		if @optimum == 'Maximum'
-			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,max(quality) as maxQuality,paramSetAsString,clustering_quality_measure_id").where(:program_id => @id).where(:clustering_quality_measure_id => @qualityMeasure).group("dataset_id")
+			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,max(quality) as max_quality,param_set_as_string,clustering_quality_measure_id").where(:program_id => @id).where(:clustering_quality_measure_id => @qualityMeasure).group("dataset_id")
 		else
-			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,min(quality) as maxQuality,paramSetAsString,clustering_quality_measure_id").where(:program_id => @id).where(:clustering_quality_measure_id => @qualityMeasure).group("dataset_id")
+			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,min(quality) as max_quality,param_set_as_string,clustering_quality_measure_id").where(:program_id => @id).where(:clustering_quality_measure_id => @qualityMeasure).group("dataset_id")
 		end
 		@object = Program.find_by_id(@id)
 
@@ -43,9 +43,9 @@ class SmallRankingsController < ApplicationController
 		@qualityMeasure = params[:qualityMeasure]
 		@optimum = ClusteringQualityMeasure.find_by_name(@qualityMeasure).optimum
 		if @optimum == 'Maximum'
-			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,max(quality) as maxQuality,paramSetAsString,clustering_quality_measure_id").where(:clustering_quality_measure_id => @qualityMeasure).group("dataset_id,program_id")
+			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,max(quality) as max_quality,param_set_as_string,clustering_quality_measure_id").where(:clustering_quality_measure_id => @qualityMeasure).group("dataset_id,program_id")
 		else
-			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,min(quality) as maxQuality,paramSetAsString,clustering_quality_measure_id").where(:clustering_quality_measure_id => @qualityMeasure).group("dataset_id,program_id")
+			@iterationsExts = ParameterOptimizationIterationsExt.select("program_id,dataset_id,min(quality) as max_quality,param_set_as_string,clustering_quality_measure_id").where(:clustering_quality_measure_id => @qualityMeasure).group("dataset_id,program_id")
 		end
 		render :layout => false
 	end

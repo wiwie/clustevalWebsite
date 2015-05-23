@@ -13,17 +13,17 @@
  <tbody>
  <% for i in 0..@runs.length-1 %>
   <tr>
-    <td><%= link_to @runs[i].absPath.split('/')[-1], @runs[i] %></td>
+    <td><%= link_to @runs[i].abs_path.split('/')[-1], @runs[i] %></td>
     <td><%= @runs[i].run_type.name %></td>
     <td>
     <% for d in 0..@dataConfigs[i].length-1 %>
-    <%= link_to @dataConfigs[i][d].absPath.split('/')[-1], @dataConfigs[i][d] %>
+    <%= link_to @dataConfigs[i][d].abs_path.split('/')[-1], @dataConfigs[i][d] %>
     <br />
     <% end %>
     </td>
     <td>
     <% for d in 0..@programConfigs[i].length-1 %>
-    <%= link_to @programConfigs[i][d].absPath.split('/')[-1], @programConfigs[i][d] %>
+    <%= link_to @programConfigs[i][d].abs_path.split('/')[-1], @programConfigs[i][d] %>
     <br />
     <% end %>
     </td>

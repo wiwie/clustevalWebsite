@@ -8,7 +8,7 @@
   </thead>
   <tbody>
   <tr>
-    <td>Name</td><td><%= @run.absPath.split('/')[-1] %></td>
+    <td>Name</td><td><%= @run.abs_path.split('/')[-1] %></td>
   </tr>
   <tr>
     <td>Data result folders</td><td>
@@ -16,13 +16,13 @@
         <% if dataConfig.nil? %>
         not found
         <% else %>
-        <%= link_to dataConfig.uniqueRunIdentifier, dataConfig %>
+        <%= link_to dataConfig.unique_run_identifier, dataConfig %>
         <% end %>
         <br /><% end %>
       </td>
   </tr>
   <tr>
-    <td>Run result folders</td><td><% @runs.each do |run|%><%= link_to run.uniqueRunIdentifier, run %><br /><% end %></td>
+    <td>Run result folders</td><td><% @runs.each do |run|%><%= link_to run.unique_run_identifier, run %><br /><% end %></td>
   </tr>
   <tr>
     <td>Statistics</td><td><% @statistics.each do |statistic|%><%= link_to statistic.name, statistic %><br /><% end %></td>

@@ -9,13 +9,13 @@ class RunRunDataAnalysesController < ApplicationController
 		@runIds = @runRunDataAnalysis.run_run_data_analysis_run_identifiers
 		@runs = []
 		@runIds.each do |runId|
-			@runs << RunResult.find_by_uniqueRunIdentifier(runId.runIdentifier)
+			@runs << RunResult.find_by_unique_run_identifier(runId.runIdentifier)
 		end
 		
 		@dataConfigIds = @runRunDataAnalysis.run_run_data_analysis_data_identifiers
 		@dataConfigs = []
 		@dataConfigIds.each do |dataConfigId|
-			@dataConfigs << RunResult.find_by_uniqueRunIdentifier(dataConfigId.dataIdentifier)
+			@dataConfigs << RunResult.find_by_unique_run_identifier(dataConfigId.dataIdentifier)
 		end
 		
 		@statisticIds = @runAnalysis.run_analysis_statistics

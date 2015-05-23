@@ -35,7 +35,7 @@ class RunResultsRunDataAnalysesController < ApplicationController
 				@codeTmpTmp = []
 				@contentsTmpTmp = []
 
-				@basePath = @runResult.absPath + '/analyses/' + runIdentifier.runIdentifier + '_' + dataIdentifier.dataIdentifier + '_'
+				@basePath = @runResult.abs_path + '/analyses/' + runIdentifier.runIdentifier + '_' + dataIdentifier.dataIdentifier + '_'
 
 				for i in 0..@statistics.length-1
 					statistic = @statistics[i]

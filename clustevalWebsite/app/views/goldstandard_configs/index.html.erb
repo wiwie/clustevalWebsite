@@ -9,8 +9,8 @@
  <tbody>
  <% @goldstandardConfigs.each do |goldstandardConfig| %>
   <tr>
-    <td><%= link_to goldstandardConfig.absPath.split('/')[-1], goldstandardConfig %></td>
-    <td><% @goldStandard = goldstandardConfig.goldstandard %><%= link_to @goldStandard.absPath.split('/')[-2] + "/" + @goldStandard.absPath.split('/')[-1], @goldStandard %></td>
+    <td><%= link_to goldstandardConfig.abs_path.split('/')[-1], goldstandardConfig %></td>
+    <td><% @goldStandard = goldstandardConfig.goldstandard %><%= link_to @goldStandard.abs_path.split('/')[-2] + "/" + @goldStandard.abs_path.split('/')[-1], @goldStandard %></td>
   </tr>
 <% end %>
 </tbody>

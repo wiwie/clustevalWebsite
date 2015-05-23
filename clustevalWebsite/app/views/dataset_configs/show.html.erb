@@ -8,10 +8,10 @@
   </thead>
   <tbody>
   <tr>
-    <td>Absolute Path</td><td><%= @datasetConfig.absPath.split('/')[-1] %></td>
+    <td>Absolute Path</td><td><%= @datasetConfig.abs_path.split('/')[-1] %></td>
   </tr>
   <tr>
-    <td>Dataset</td><td><%= link_to @dataset.absPath.split('/')[-2] + "/" + @dataset.absPath.split('/')[-1], @dataset %></td>
+    <td>Dataset</td><td><%= link_to @dataset.abs_path.split('/')[-2] + "/" + @dataset.abs_path.split('/')[-1], @dataset %></td>
   </tr>
   <tr>
     <td>File content</td><td>

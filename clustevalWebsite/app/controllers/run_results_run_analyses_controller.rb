@@ -29,7 +29,7 @@ class RunResultsRunAnalysesController < ApplicationController
 
 			@contentsTmp = []
 
-			@basePath = @runResult.absPath + '/analyses/' + runIdentifier.runIdentifier + '_'
+			@basePath = @runResult.abs_path + '/analyses/' + runIdentifier.runIdentifier + '_'
 
 			for i in 0..@statistics.length-1
 				statistic = @statistics[i]
@@ -106,7 +106,7 @@ class RunResultsRunAnalysesController < ApplicationController
 	def img
 		@runResult = RunResult.find_by_id(params[:id])
 
-		send_file( @runResult.absPath + '/analyses/' + params[:runIdentifier] + '_' + params[:statisticName] + '.txt.png',
+		send_file( @runResult.abs_path + '/analyses/' + params[:runIdentifier] + '_' + params[:statisticName] + '.txt.png',
                 :disposition => 'inline',
                 :type => 'image/png',
                 :stream => false,

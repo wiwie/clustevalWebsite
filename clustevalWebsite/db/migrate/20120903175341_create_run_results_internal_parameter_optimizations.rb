@@ -5,7 +5,7 @@ class CreateRunResultsInternalParameterOptimizations < ActiveRecord::Migration
     t.integer "repository_id",                           :null => false
     t.integer "run_results_execution_id",                :null => false
     end
-  add_index "run_results_internal_parameter_optimizations", ["repository_id", "run_results_execution_id"], :name => "index4", :unique => true
-  add_index "run_results_internal_parameter_optimizations", ["repository_id"], :name => "fk_runResultParameterOptimization_1"
+  add_index "run_results_internal_parameter_optimizations", ["repository_id", "run_results_execution_id"], :name => "run_results_internal_parameter_optimizations_index4", :unique => true
+  add_index "run_results_internal_parameter_optimizations", ["repository_id"], :name => "fk_runResultsInternalParamOpts_1"
   end
 end

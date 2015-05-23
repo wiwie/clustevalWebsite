@@ -12,7 +12,7 @@ class GoldstandardsController < ApplicationController
 	def show
 		@goldstandard = Goldstandard.find_by_id(params[:id])
 		
-		file = File.open(@goldstandard.absPath)
+		file = File.open(@goldstandard.abs_path)
 		@contents = ""
 		for i in 1..10 do
 			tmp = file.gets

@@ -5,7 +5,7 @@ class DatasetsRecentStatistic < ActiveRecord::Base
   # attr_accessible :title, :body
 
   	def content
-		file = File.open(absPath + '/analyses/' + DataConfig.find(data_config_id).name + '_' + statistic + '.txt')
+		file = File.open(abs_path + '/analyses/' + DataConfig.find(data_config_id).name + '_' + statistic + '.txt')
 		@contents = []
 		while tmp = file.gets do
 			@contents << tmp.split(/\t/)

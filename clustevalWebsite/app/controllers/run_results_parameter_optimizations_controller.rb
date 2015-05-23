@@ -31,7 +31,7 @@ class RunResultsParameterOptimizationsController < ApplicationController
 		@programConfigs = []
 
 		# log file
-		logPath = @runResult.absPath + '/logs/' + @runResult.absPath.split('/')[-1] + '.log'
+		logPath = @runResult.abs_path + '/logs/' + @runResult.abs_path.split('/')[-1] + '.log'
 		file = File.open(logPath)
 		@logContents = ""
 		while tmp = file.gets do
@@ -62,21 +62,21 @@ class RunResultsParameterOptimizationsController < ApplicationController
 			@parameterNames << @paramNamesTmp
 
 			if @dataConfig.goldstandard_config_id
-				invocationLine = @programConfig.invocationFormatParameterOptimization
+				invocationLine = @programConfig.invocation_format_parameter_optimization
 				if invocationLine == ''
-					invocationLine = @programConfig.invocationFormat
+					invocationLine = @programConfig.invocation_format
 				end
-				invocationLine = invocationLine.gsub('%gs%',@dataConfig.goldstandard_config.goldstandard.absPath)
+				invocationLine = invocationLine.gsub('%gs%',@dataConfig.goldstandard_config.goldstandard.abs_path)
 			else
-				invocationLine = @programConfig.invocationFormatParameterOptimizationWithoutGoldStandard
+				invocationLine = @programConfig.invocation_format_parameter_optimizationWithoutGoldStandard
 				if invocationLine == ''
-					invocationLine = @programConfig.invocationFormatWithoutGoldStandard
+					invocationLine = @programConfig.invocation_formatWithoutGoldStandard
 				end
 				invocationLine = invocationLine.gsub('%gs%','')
 			end
 
-			invocationLine = invocationLine.gsub('%e%',@programConfig.program.absPath)
-			invocationLine = invocationLine.gsub('%i%',@dataConfig.dataset_config.dataset.absPath)
+			invocationLine = invocationLine.gsub('%e%',@programConfig.program.abs_path)
+			invocationLine = invocationLine.gsub('%i%',@dataConfig.dataset_config.dataset.abs_path)
 			invocationLine = invocationLine.gsub('%o%','<OUTPUT_PATH>')
 
 			@invocationLines << invocationLine
@@ -89,7 +89,7 @@ class RunResultsParameterOptimizationsController < ApplicationController
 	end
 
 	def fetch_table_data		
-		columns = ['iteration', 'paramSetAsString', 'alias', 'quality', '']
+		columns = ['iteration', 'param_set_as_string', 'alias', 'quality', '']
 		columnFormat = ['like','like','like','range','']
 
 		filterStrings = []
@@ -113,7 +113,7 @@ class RunResultsParameterOptimizationsController < ApplicationController
 				.joins([:data_config, :program_config, :clustering_quality_measure])
 				.where(:data_config_id => params[:dataId])
 				.where(:program_config_id => params[:programId])
-				.select("value, quality, run_results_parameter_optimizations_parameter_set_iteration_id as iteration_id, iteration,paramSetAsString,clustering_quality_measures.alias")
+				.select("value, quality, run_results_parameter_optimizations_parameter_set_iteration_id as iteration_id, iteration,param_set_as_string,clustering_quality_measures.alias")
 				.group("iteration_id","clustering_quality_measures.alias")
 				.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0]).limit(
 			params[:iDisplayLength].to_i).offset(
@@ -124,8 +124,8 @@ class RunResultsParameterOptimizationsController < ApplicationController
 		@runResultsParamOptIteration.each do |iteration|
 			@paramValuesQualityArray << [
 				iteration.iteration.to_s, 
-				iteration.paramSetAsString.gsub(',','<br />'), 
-				#iteration.paramSetAsString,
+				iteration.param_set_as_string.gsub(',','<br />'), 
+				#iteration.param_set_as_string,
 				iteration.alias, 
 				iteration.quality.to_s,
 				'<a href="/' + params[:repository] + '/run_results_parameter_optimizations_parameter_set_iterations/' + iteration.iteration_id.to_s + '" tooltip_info="/' + params[:repository] + '/run_results_parameter_optimizations_parameter_set_iterations/' + iteration.iteration_id.to_s + '/tooltip_info">Clustering</a>'
@@ -170,7 +170,7 @@ class RunResultsParameterOptimizationsController < ApplicationController
 	def img
 		@runResultsParamOpt = RunResultsParameterOptimization.find_by_id(params[:id])
 		
-		send_file( @runResultsParamOpt.absPath + ".svg",
+		send_file( @runResultsParamOpt.abs_path + ".svg",
                 :disposition => 'inline',
                 :type => 'image/svg+xml',
                 :stream => false,

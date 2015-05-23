@@ -8,10 +8,10 @@
   </thead>
   <tbody>
   <tr>
-    <td>Name</td><td><%= @runConfig.absPath.split('/')[-1] %></td>
+    <td>Name</td><td><%= @runConfig.abs_path.split('/')[-1] %></td>
   </tr>
   <tr>
-    <td>Data configurations</td><td><% @dataConfigs.each do |dataConfig|%><%= link_to dataConfig.absPath.split('/')[-1], dataConfig %><br /><% end %></td>
+    <td>Data configurations</td><td><% @dataConfigs.each do |dataConfig|%><%= link_to dataConfig.abs_path.split('/')[-1], dataConfig %><br /><% end %></td>
   </tr>
   <tr>
     <td>Program configurations</td><td><% @programConfigs.each do |programConfig|%><%= link_to programConfig.name, programConfig %><br /><% end %></td>

@@ -1,4 +1,4 @@
-<% content_for :title, "'" + @runResult.absPath.split('/')[-1] + "' - " + @dataConfig.name + "," + @programConfig.name + " Iteration " + @iteration.iteration.to_s %>
+<% content_for :title, "'" + @runResult.abs_path.split('/')[-1] + "' - " + @dataConfig.name + "," + @programConfig.name + " Iteration " + @iteration.iteration.to_s %>
 <h3>Clustering</h3>
 <table id="general" class="display">
 	<thead>
@@ -7,7 +7,7 @@
 	</thead>
 	<tbody>
 	<tr>
-		<td>Run Result</td><td><%= @runResult.uniqueRunIdentifier %></td>
+		<td>Run Result</td><td><%= @runResult.unique_run_identifier %></td>
 	</tr>
 	<tr>
 		<td>Run</td><td><%= link_to @runResult.run.name, @runResult.run %></td>
@@ -19,7 +19,7 @@
 		<td>Program configuration</td><td><%=  link_to @programConfig.name, @programConfig %></td>
 	</tr>
 	<tr>
-		<td>Parameter Set</td><td><%= @iteration.paramSetAsString %></td>
+		<td>Parameter Set</td><td><%= @iteration.param_set_as_string %></td>
 	</tr>
 	<tr>
 		<td>Iteration number</td><td><%= @iteration.iteration %></td>
@@ -27,6 +27,18 @@
 	<tr>
 		<td>Number of clusters</td><td><%= @clustering.length %></td>
 	</tr>
+	</tbody>
+</table>
+
+<table id="qualities" class="display">
+	<thead>
+		<th>Measure</th>
+		<th>Quality</th>
+	</thead>
+	<tbody>
+		<% @qualities.each do |qual| %>
+		<tr><td><%= qual.clustering_quality_measure.alias %></td><td><%= qual.quality %></td></tr>
+		<% end %>
 	</tbody>
 </table>
 

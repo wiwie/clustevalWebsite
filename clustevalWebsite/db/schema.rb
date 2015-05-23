@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141012095013) do
+ActiveRecord::Schema.define(:version => 20150518091028) do
 
   create_table "aboutus", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -29,117 +29,117 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   end
 
   create_table "cluster_objects", :force => true do |t|
-    t.integer "repository_id",                :null => false
-    t.integer "cluster_id",                   :null => false
-    t.binary  "name",          :limit => 255, :null => false
+    t.integer "repository_id", :null => false
+    t.integer "cluster_id",    :null => false
+    t.binary  "name",          :null => false
   end
 
   add_index "cluster_objects", ["cluster_id"], :name => "fk_cluster_objects_2"
   add_index "cluster_objects", ["repository_id"], :name => "fk_cluster_objects_1"
 
   create_table "clustering_quality_measure_optimums", :force => true do |t|
-    t.binary "measure_name", :limit => 255, :null => false
-    t.binary "name",         :limit => 255, :null => false
+    t.binary "measure_name", :null => false
+    t.binary "name",         :null => false
   end
 
-  add_index "clustering_quality_measure_optimums", ["measure_name"], :name => "name_UNIQUE", :unique => true, :length => {"measure_name"=>200}
+  add_index "clustering_quality_measure_optimums", ["measure_name"], :name => "clustering_quality_measure_optimums_name_UNIQUE", :unique => true
 
   create_table "clustering_quality_measures", :force => true do |t|
-    t.integer "repository_id",                       :null => false
-    t.binary  "name",                 :limit => 255
-    t.float   "minValue"
-    t.float   "maxValue"
-    t.integer "requiresGoldStandard"
-    t.binary  "alias",                :limit => 255
+    t.integer "repository_id",          :null => false
+    t.binary  "name"
+    t.float   "min_value"
+    t.float   "max_value"
+    t.integer "requires_gold_standard"
+    t.binary  "alias"
   end
 
-  add_index "clustering_quality_measures", ["name", "repository_id"], :name => "name_UNIQUE", :unique => true, :length => {"name"=>200, "repository_id"=>nil}
-  add_index "clustering_quality_measures", ["name"], :name => "name_INDEX", :length => {"name"=>200}
+  add_index "clustering_quality_measures", ["name", "repository_id"], :name => "clustering_quality_measures_name_UNIQUE", :unique => true
+  add_index "clustering_quality_measures", ["name"], :name => "name_INDEX"
   add_index "clustering_quality_measures", ["repository_id"], :name => "fk_clusteringQualityMeasures_1"
 
   create_table "clusterings", :force => true do |t|
-    t.integer "repository_id",                :null => false
-    t.binary  "absPath",       :limit => 255, :null => false
+    t.integer "repository_id", :null => false
+    t.binary  "abs_path",      :null => false
   end
 
-  add_index "clusterings", ["absPath"], :name => "index3", :unique => true, :length => {"absPath"=>200}
+  add_index "clusterings", ["abs_path"], :name => "clusterings_index3", :unique => true
   add_index "clusterings", ["repository_id"], :name => "fk_clusterings_1"
 
   create_table "clusters", :force => true do |t|
-    t.integer "repository_id",                :null => false
-    t.integer "clustering_id",                :null => false
-    t.binary  "name",          :limit => 255, :null => false
+    t.integer "repository_id", :null => false
+    t.integer "clustering_id", :null => false
+    t.binary  "name",          :null => false
   end
 
   add_index "clusters", ["clustering_id"], :name => "fk_clusters_2"
   add_index "clusters", ["repository_id"], :name => "fk_clusters_1"
 
   create_table "data_configs", :force => true do |t|
-    t.integer "repository_id",                         :null => false
-    t.binary  "absPath",                :limit => 255
-    t.binary  "name",                   :limit => 255
-    t.integer "dataset_config_id",                     :null => false
+    t.integer "repository_id",          :null => false
+    t.binary  "abs_path"
+    t.binary  "name"
+    t.integer "dataset_config_id",      :null => false
     t.integer "goldstandard_config_id"
     t.integer "data_config_id"
   end
 
-  add_index "data_configs", ["absPath", "repository_id"], :name => "absPath_UNIQUE", :unique => true, :length => {"absPath"=>200, "repository_id"=>nil}
+  add_index "data_configs", ["abs_path", "repository_id"], :name => "data_configs_abs_path_UNIQUE", :unique => true
   add_index "data_configs", ["data_config_id"], :name => "fk_data_configs_1"
   add_index "data_configs", ["dataset_config_id"], :name => "fk_dataConfigs_1"
   add_index "data_configs", ["goldstandard_config_id"], :name => "fk_dataConfigs_2"
   add_index "data_configs", ["repository_id"], :name => "fk_dataConfigs_3"
 
   create_table "dataset_configs", :force => true do |t|
-    t.integer "repository_id",                    :null => false
-    t.binary  "absPath",           :limit => 255
-    t.binary  "name",              :limit => 255
-    t.integer "dataset_id",                       :null => false
+    t.integer "repository_id",     :null => false
+    t.binary  "abs_path"
+    t.binary  "name"
+    t.integer "dataset_id",        :null => false
     t.integer "dataset_config_id"
   end
 
-  add_index "dataset_configs", ["absPath", "repository_id"], :name => "absPath_UNIQUE", :unique => true, :length => {"absPath"=>200, "repository_id"=>nil}
+  add_index "dataset_configs", ["abs_path", "repository_id"], :name => "dataset_configs_abs_path_UNIQUE", :unique => true
   add_index "dataset_configs", ["dataset_config_id"], :name => "fk_dataset_configs_1"
   add_index "dataset_configs", ["dataset_id"], :name => "fk_dataSetConfigs_2"
   add_index "dataset_configs", ["repository_id"], :name => "fk_dataSetConfigs_1"
 
   create_table "dataset_descriptions", :force => true do |t|
-    t.string "dataset_fullName",    :limit => 200,  :null => false
-    t.string "dataset_description", :limit => 1000, :null => false
+    t.binary "dataset_fullName",    :null => false
+    t.binary "dataset_description", :null => false
   end
 
   add_index "dataset_descriptions", ["dataset_fullName"], :name => "fk_dataset_descriptions_1", :unique => true
 
   create_table "dataset_formats", :force => true do |t|
-    t.integer "repository_id",                :null => false
-    t.binary  "name",          :limit => 255
-    t.binary  "alias",         :limit => 255, :null => false
+    t.integer "repository_id", :null => false
+    t.binary  "name"
+    t.binary  "alias",         :null => false
   end
 
-  add_index "dataset_formats", ["name", "repository_id"], :name => "name_UNIQUE", :unique => true, :length => {"name"=>200, "repository_id"=>nil}
+  add_index "dataset_formats", ["name", "repository_id"], :name => "dataset_formats_name_UNIQUE", :unique => true
   add_index "dataset_formats", ["repository_id"], :name => "fk_dataSetFormats_1"
 
   create_table "dataset_images", :force => true do |t|
-    t.string "dataset_fullName", :limit => 200, :null => false
-    t.string "dataset_imageUrl", :limit => 500, :null => false
+    t.binary "dataset_fullName", :null => false
+    t.binary "dataset_imageUrl", :null => false
   end
 
   add_index "dataset_images", ["dataset_fullName"], :name => "fk_dataset_images_1", :unique => true
 
   create_table "dataset_publications", :force => true do |t|
-    t.string "dataset_fullName",       :limit => 200,  :null => false
-    t.string "dataset_publication",    :limit => 1000, :null => false
-    t.string "dataset_publicationUrl", :limit => 1000, :null => false
+    t.binary "dataset_fullName",       :null => false
+    t.binary "dataset_publication",    :null => false
+    t.binary "dataset_publicationUrl", :null => false
   end
 
   add_index "dataset_publications", ["dataset_fullName"], :name => "fk_dataset_publications_1", :unique => true
 
   create_table "dataset_types", :force => true do |t|
-    t.integer "repository_id",                :null => false
-    t.binary  "name",          :limit => 255, :null => false
-    t.binary  "alias",         :limit => 255, :null => false
+    t.integer "repository_id", :null => false
+    t.binary  "name",          :null => false
+    t.binary  "alias",         :null => false
   end
 
-  add_index "dataset_types", ["repository_id", "name"], :name => "index_dataset_types_name", :unique => true, :length => {"repository_id"=>nil, "name"=>200}
+  add_index "dataset_types", ["repository_id", "name"], :name => "index_dataset_types_name", :unique => true
   add_index "dataset_types", ["repository_id"], :name => "fk_dataset_types_1"
 
   create_table "dataset_visibilities", :force => true do |t|
@@ -150,41 +150,42 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   end
 
   create_table "datasets", :force => true do |t|
-    t.integer "repository_id",                    :null => false
-    t.binary  "absPath",           :limit => 255, :null => false
-    t.integer "dataset_format_id",                :null => false
+    t.integer "repository_id",     :null => false
+    t.binary  "abs_path",          :null => false
+    t.integer "dataset_format_id", :null => false
     t.integer "dataset_id"
-    t.integer "checksum",                         :null => false
-    t.integer "dataset_type_id",                  :null => false
-    t.string  "alias",                            :null => false
+    t.integer "checksum",          :null => false
+    t.integer "dataset_type_id",   :null => false
+    t.string  "alias",             :null => false
+    t.integer "visibility"
   end
 
-  add_index "datasets", ["absPath", "repository_id"], :name => "absPath_UNIQUE", :unique => true, :length => {"absPath"=>200, "repository_id"=>nil}
+  add_index "datasets", ["abs_path", "repository_id"], :name => "datasets_abs_path_UNIQUE", :unique => true
   add_index "datasets", ["dataset_format_id"], :name => "fk_datasets_1"
   add_index "datasets", ["dataset_id"], :name => "fk_datasets_3"
   add_index "datasets", ["dataset_type_id"], :name => "fk_datasets_4"
   add_index "datasets", ["repository_id"], :name => "fk_datasets_2"
 
   create_table "goldstandard_configs", :force => true do |t|
-    t.integer "repository_id",                         :null => false
-    t.binary  "absPath",                :limit => 255
-    t.binary  "name",                   :limit => 255
-    t.integer "goldstandard_id",                       :null => false
+    t.integer "repository_id",          :null => false
+    t.binary  "abs_path"
+    t.binary  "name"
+    t.integer "goldstandard_id",        :null => false
     t.integer "goldstandard_config_id"
   end
 
-  add_index "goldstandard_configs", ["absPath", "repository_id"], :name => "absPath_UNIQUE", :unique => true, :length => {"absPath"=>200, "repository_id"=>nil}
+  add_index "goldstandard_configs", ["abs_path", "repository_id"], :name => "goldstandard_configs_abs_path_UNIQUE", :unique => true
   add_index "goldstandard_configs", ["goldstandard_config_id"], :name => "fk_goldstandard_configs_1"
   add_index "goldstandard_configs", ["goldstandard_id"], :name => "fk_goldStandardConfigs_2"
   add_index "goldstandard_configs", ["repository_id"], :name => "fk_goldStandardConfigs_1"
 
   create_table "goldstandards", :force => true do |t|
-    t.integer "repository_id",                  :null => false
-    t.binary  "absPath",         :limit => 255, :null => false
+    t.integer "repository_id",   :null => false
+    t.binary  "abs_path",        :null => false
     t.integer "goldstandard_id"
   end
 
-  add_index "goldstandards", ["absPath", "repository_id"], :name => "absPath_UNIQUE", :unique => true, :length => {"absPath"=>200, "repository_id"=>nil}
+  add_index "goldstandards", ["abs_path", "repository_id"], :name => "goldstandards_abs_path_UNIQUE", :unique => true
   add_index "goldstandards", ["goldstandard_id"], :name => "fk_goldstandards_2"
   add_index "goldstandards", ["repository_id"], :name => "fk_goldstandards_1"
 
@@ -248,34 +249,34 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "program_parameter_id", :null => false
   end
 
-  add_index "optimizable_program_parameters", ["program_config_id", "program_parameter_id", "repository_id"], :name => "index5", :unique => true
+  add_index "optimizable_program_parameters", ["program_config_id", "program_parameter_id", "repository_id"], :name => "optimizable_program_parameters_index5", :unique => true
   add_index "optimizable_program_parameters", ["program_config_id"], :name => "fk_optimizableProgramParameter_3"
   add_index "optimizable_program_parameters", ["program_parameter_id"], :name => "fk_optimizableProgramParameter_1"
   add_index "optimizable_program_parameters", ["repository_id"], :name => "fk_optimizableProgramParameter_2"
 
   create_table "parameter_optimization_methods", :force => true do |t|
-    t.integer "repository_id",                :null => false
-    t.binary  "name",          :limit => 255, :null => false
+    t.integer "repository_id", :null => false
+    t.binary  "name",          :null => false
   end
 
-  add_index "parameter_optimization_methods", ["name", "repository_id"], :name => "name_UNIQUE", :unique => true, :length => {"name"=>200, "repository_id"=>nil}
+  add_index "parameter_optimization_methods", ["name", "repository_id"], :name => "parameter_optimization_methods_name_UNIQUE", :unique => true
   add_index "parameter_optimization_methods", ["repository_id"], :name => "fk_parameterOptimizationMethods_1"
 
   create_table "program_configs", :force => true do |t|
-    t.integer "repository_id",                                                           :null => false
-    t.integer "program_id",                                                              :null => false
-    t.integer "run_result_format_id",                                                    :null => false
+    t.integer "repository_id",                                                  :null => false
+    t.integer "program_id",                                                     :null => false
+    t.integer "run_result_format_id",                                           :null => false
     t.integer "program_config_id"
-    t.binary  "name",                                                     :limit => 255, :null => false
-    t.binary  "absPath",                                                  :limit => 255, :null => false
-    t.binary  "invocationFormat",                                         :limit => 255
-    t.binary  "invocationFormatWithoutGoldStandard",                      :limit => 255
-    t.binary  "invocationFormatParameterOptimization",                    :limit => 255
-    t.binary  "invocationFormatParameterOptimizationWithoutGoldStandard", :limit => 255
-    t.integer "expectsNormalizedDataSet"
+    t.binary  "name",                                                           :null => false
+    t.binary  "abs_path",                                                       :null => false
+    t.binary  "invocation_format"
+    t.binary  "invocation_format_without_gold_standard"
+    t.binary  "invocation_format_parameter_optimization"
+    t.binary  "invocation_format_parameter_optimization_without_gold_standard"
+    t.integer "expects_normalized_data_set"
   end
 
-  add_index "program_configs", ["absPath", "repository_id"], :name => "absPath_UNIQUE", :unique => true, :length => {"absPath"=>200, "repository_id"=>nil}
+  add_index "program_configs", ["abs_path", "repository_id"], :name => "program_configs_abs_path_UNIQUE", :unique => true
   add_index "program_configs", ["program_config_id"], :name => "fk_program_configs_3"
   add_index "program_configs", ["program_id"], :name => "fk_programConfigs_1"
   add_index "program_configs", ["program_id"], :name => "fk_program_configs_2"
@@ -292,86 +293,86 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   add_index "program_configs_compatible_dataset_formats", ["dataset_format_id"], :name => "fk_programsCompatibleDataSetFormats_2"
   add_index "program_configs_compatible_dataset_formats", ["program_config_id"], :name => "fk_program_configs_compatible_dataset_formats_2"
   add_index "program_configs_compatible_dataset_formats", ["program_config_id"], :name => "fk_programsCompatibleDataSetFormats_1"
-  add_index "program_configs_compatible_dataset_formats", ["repository_id", "program_config_id", "dataset_format_id"], :name => "index5", :unique => true
+  add_index "program_configs_compatible_dataset_formats", ["repository_id", "program_config_id", "dataset_format_id"], :name => "program_configs_compatible_dataset_formats_index5", :unique => true
   add_index "program_configs_compatible_dataset_formats", ["repository_id"], :name => "fk_program_configs_compatible_dataset_formats_1"
   add_index "program_configs_compatible_dataset_formats", ["repository_id"], :name => "fk_programs_compatible_dataset_formats_1"
 
   create_table "program_descriptions", :force => true do |t|
-    t.string "program_fullName",    :limit => 200,  :null => false
-    t.string "program_description", :limit => 1000, :null => false
+    t.binary "program_fullName",    :null => false
+    t.binary "program_description", :null => false
   end
 
   add_index "program_descriptions", ["program_fullName"], :name => "fk_program_descriptions_1", :unique => true
 
   create_table "program_images", :force => true do |t|
-    t.string "program_fullName", :limit => 200, :null => false
-    t.string "program_imageUrl", :limit => 500, :null => false
+    t.binary "program_fullName", :null => false
+    t.binary "program_imageUrl", :null => false
   end
 
   add_index "program_images", ["program_fullName"], :name => "fk_program_images_1", :unique => true
 
   create_table "program_parameter_types", :force => true do |t|
-    t.binary "name", :limit => 255, :null => false
+    t.binary "name", :null => false
   end
 
-  add_index "program_parameter_types", ["name"], :name => "index3", :unique => true, :length => {"name"=>200}
+  add_index "program_parameter_types", ["name"], :name => "program_parameter_types_index3", :unique => true
 
   create_table "program_parameters", :force => true do |t|
-    t.integer "repository_id",                            :null => false
-    t.integer "program_config_id",                        :null => false
-    t.integer "program_parameter_type_id",                :null => false
-    t.binary  "name",                      :limit => 255, :null => false
-    t.binary  "description",               :limit => 255
-    t.binary  "minValue",                  :limit => 255
-    t.binary  "maxValue",                  :limit => 255
-    t.binary  "def",                       :limit => 255
+    t.integer "repository_id",             :null => false
+    t.integer "program_config_id",         :null => false
+    t.integer "program_parameter_type_id", :null => false
+    t.binary  "name",                      :null => false
+    t.binary  "description"
+    t.binary  "min_value"
+    t.binary  "max_value"
+    t.binary  "def"
   end
 
-  add_index "program_parameters", ["program_config_id", "name", "repository_id"], :name => "index3", :unique => true, :length => {"program_config_id"=>nil, "name"=>200, "repository_id"=>nil}
+  add_index "program_parameters", ["program_config_id", "name", "repository_id"], :name => "program_parameters_index3", :unique => true
   add_index "program_parameters", ["program_config_id"], :name => "fk_programParameter_1"
   add_index "program_parameters", ["program_config_id"], :name => "fk_program_parameter_1"
   add_index "program_parameters", ["program_parameter_type_id"], :name => "fk_program_parameters_1"
   add_index "program_parameters", ["repository_id"], :name => "fk_programParameter_2"
 
   create_table "program_publications", :force => true do |t|
-    t.string "program_fullName",       :limit => 200,  :null => false
-    t.string "program_publication",    :limit => 1000, :null => false
-    t.string "program_publicationUrl", :limit => 1000, :null => false
+    t.binary "program_fullName",       :null => false
+    t.binary "program_publication",    :null => false
+    t.binary "program_publicationUrl", :null => false
   end
 
   add_index "program_publications", ["program_fullName"], :name => "fk_program_publications_1", :unique => true
 
   create_table "programs", :force => true do |t|
-    t.integer "repository_id",                :null => false
-    t.binary  "absPath",       :limit => 255, :null => false
-    t.binary  "alias",         :limit => 255, :null => false
+    t.integer "repository_id", :null => false
+    t.binary  "abs_path",      :null => false
+    t.binary  "alias",         :null => false
   end
 
-  add_index "programs", ["absPath", "repository_id"], :name => "name_UNIQUE", :unique => true, :length => {"absPath"=>200, "repository_id"=>nil}
+  add_index "programs", ["abs_path", "repository_id"], :name => "programs_name_UNIQUE", :unique => true
   add_index "programs", ["repository_id"], :name => "fk_programs_3"
 
   create_table "repositories", :force => true do |t|
-    t.binary  "basePath",           :limit => 255, :null => false
+    t.binary  "base_path",          :null => false
     t.integer "repository_id"
-    t.integer "repository_type_id",                :null => false
+    t.integer "repository_type_id", :null => false
   end
 
-  add_index "repositories", ["basePath"], :name => "index2", :unique => true, :length => {"basePath"=>200}
+  add_index "repositories", ["base_path"], :name => "repositories_index2", :unique => true
   add_index "repositories", ["repository_id"], :name => "fk_repositories_3"
   add_index "repositories", ["repository_type_id"], :name => "fk_repositories_1"
 
   create_table "repository_types", :force => true do |t|
-    t.binary "name", :limit => 255
+    t.binary "name"
   end
 
-  add_index "repository_types", ["name"], :name => "name_UNIQUE", :unique => true, :length => {"name"=>200}
+  add_index "repository_types", ["name"], :name => "repository_types_name_UNIQUE", :unique => true
 
   create_table "run_analyses", :force => true do |t|
     t.integer "repository_id", :null => false
     t.integer "run_id",        :null => false
   end
 
-  add_index "run_analyses", ["repository_id", "run_id"], :name => "index4", :unique => true
+  add_index "run_analyses", ["repository_id", "run_id"], :name => "run_analyses_index4", :unique => true
   add_index "run_analyses", ["repository_id"], :name => "fk_runConfigsAnalysis_1"
   add_index "run_analyses", ["run_id"], :name => "fk_runConfigsAnalysis_2"
 
@@ -381,7 +382,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "statistic_id",    :null => false
   end
 
-  add_index "run_analysis_statistics", ["repository_id", "run_analysis_id", "statistic_id"], :name => "index5", :unique => true
+  add_index "run_analysis_statistics", ["repository_id", "run_analysis_id", "statistic_id"], :name => "run_analysis_statistics_index5", :unique => true
   add_index "run_analysis_statistics", ["repository_id"], :name => "fk_runConfigsAnalysisStatistics_1"
   add_index "run_analysis_statistics", ["run_analysis_id"], :name => "fk_runConfigsAnalysisStatistics_2"
   add_index "run_analysis_statistics", ["statistic_id"], :name => "fk_runConfigsAnalysisStatistics_3"
@@ -391,7 +392,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_execution_id", :null => false
   end
 
-  add_index "run_clusterings", ["repository_id", "run_execution_id"], :name => "index4", :unique => true
+  add_index "run_clusterings", ["repository_id", "run_execution_id"], :name => "run_clusterings_index4", :unique => true
   add_index "run_clusterings", ["repository_id"], :name => "fk_runConfigsClustering_2"
   add_index "run_clusterings", ["run_execution_id"], :name => "fk_runConfigsClustering_1"
   add_index "run_clusterings", ["run_execution_id"], :name => "fk_run_clusterings_1"
@@ -401,7 +402,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_analysis_id", :null => false
   end
 
-  add_index "run_data_analyses", ["repository_id", "run_analysis_id"], :name => "index4", :unique => true
+  add_index "run_data_analyses", ["repository_id", "run_analysis_id"], :name => "run_data_analyses_index4", :unique => true
   add_index "run_data_analyses", ["repository_id"], :name => "fk_runConfigsAnalysisData_1"
   add_index "run_data_analyses", ["run_analysis_id"], :name => "fk_runConfigsAnalysisData_2"
 
@@ -413,7 +414,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
 
   add_index "run_data_analysis_data_configs", ["data_config_id"], :name => "fk_runConfigsAnalysisDataDataConfigs_3"
   add_index "run_data_analysis_data_configs", ["repository_id"], :name => "fk_runConfigsAnalysisDataDataConfigs_1"
-  add_index "run_data_analysis_data_configs", ["run_data_analysis_id", "data_config_id", "repository_id"], :name => "index5", :unique => true
+  add_index "run_data_analysis_data_configs", ["run_data_analysis_id", "data_config_id", "repository_id"], :name => "run_data_analysis_data_configs_index5", :unique => true
   add_index "run_data_analysis_data_configs", ["run_data_analysis_id"], :name => "fk_runConfigsAnalysisDataDataConfigs_2"
 
   create_table "run_execution_data_configs", :force => true do |t|
@@ -424,21 +425,21 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
 
   add_index "run_execution_data_configs", ["data_config_id"], :name => "fk_runConfigsExecutionDataConfigs_2"
   add_index "run_execution_data_configs", ["repository_id"], :name => "fk_runConfigsExecutionDataConfigs_3"
-  add_index "run_execution_data_configs", ["run_execution_id", "data_config_id", "repository_id"], :name => "index4", :unique => true
+  add_index "run_execution_data_configs", ["run_execution_id", "data_config_id", "repository_id"], :name => "run_execution_data_configs_index4", :unique => true
   add_index "run_execution_data_configs", ["run_execution_id"], :name => "fk_runConfigsExecutionDataConfigs_1"
   add_index "run_execution_data_configs", ["run_execution_id"], :name => "fk_run_execution_data_configs_1"
 
   create_table "run_execution_parameter_values", :force => true do |t|
-    t.integer "repository_id",                       :null => false
-    t.integer "run_execution_id",                    :null => false
-    t.integer "program_config_id",                   :null => false
-    t.integer "program_parameter_id",                :null => false
-    t.binary  "value",                :limit => 255
+    t.integer "repository_id",        :null => false
+    t.integer "run_execution_id",     :null => false
+    t.integer "program_config_id",    :null => false
+    t.integer "program_parameter_id", :null => false
+    t.binary  "value"
   end
 
   add_index "run_execution_parameter_values", ["program_config_id"], :name => "fk_runConfigsExecutionParameterValues_2"
   add_index "run_execution_parameter_values", ["program_parameter_id"], :name => "fk_runConfigsExecutionParameterValues_3"
-  add_index "run_execution_parameter_values", ["repository_id", "run_execution_id", "program_config_id", "program_parameter_id"], :name => "index6", :unique => true
+  add_index "run_execution_parameter_values", ["repository_id", "run_execution_id", "program_config_id", "program_parameter_id"], :name => "run_execution_parameter_values_index6", :unique => true
   add_index "run_execution_parameter_values", ["repository_id"], :name => "fk_runConfigsExecutionParameterValues_1"
   add_index "run_execution_parameter_values", ["run_execution_id"], :name => "fk_runConfigsExecutionParameterValues_4"
 
@@ -450,7 +451,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
 
   add_index "run_execution_program_configs", ["program_config_id"], :name => "fk_runConfigsExecutionProgramConfigs_2"
   add_index "run_execution_program_configs", ["repository_id"], :name => "fk_runConfigsExecutionProgramConfigs_3"
-  add_index "run_execution_program_configs", ["run_execution_id", "program_config_id", "repository_id"], :name => "index4", :unique => true
+  add_index "run_execution_program_configs", ["run_execution_id", "program_config_id", "repository_id"], :name => "run_execution_program_configs_index4", :unique => true
   add_index "run_execution_program_configs", ["run_execution_id"], :name => "fk_runConfigsExecutionProgramConfigs_1"
   add_index "run_execution_program_configs", ["run_execution_id"], :name => "fk_run_execution_program_configs_1"
 
@@ -461,7 +462,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   end
 
   add_index "run_execution_quality_measures", ["clustering_quality_measure_id"], :name => "fk_runConfigsExecutionQualityMeasures_2"
-  add_index "run_execution_quality_measures", ["repository_id", "run_execution_id", "clustering_quality_measure_id"], :name => "index5", :unique => true
+  add_index "run_execution_quality_measures", ["repository_id", "run_execution_id", "clustering_quality_measure_id"], :name => "run_execution_quality_measures_index5", :unique => true
   add_index "run_execution_quality_measures", ["repository_id"], :name => "fk_runConfigsExecutionQualityMeasures_1"
   add_index "run_execution_quality_measures", ["run_execution_id"], :name => "fk_run_execution_quality_measures_1"
   add_index "run_execution_quality_measures", ["run_execution_id"], :name => "fk_runs_execution_quality_measures_1"
@@ -472,7 +473,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   end
 
   add_index "run_executions", ["repository_id"], :name => "fk_runConfigsExecution_2"
-  add_index "run_executions", ["run_id", "repository_id"], :name => "run_id_UNIQUE", :unique => true
+  add_index "run_executions", ["run_id", "repository_id"], :name => "run_executions_run_id_UNIQUE", :unique => true
   add_index "run_executions", ["run_id"], :name => "fk_runConfigsExecution_1"
 
   create_table "run_internal_parameter_optimizations", :force => true do |t|
@@ -480,7 +481,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_execution_id", :null => false
   end
 
-  add_index "run_internal_parameter_optimizations", ["repository_id", "run_execution_id"], :name => "index4", :unique => true
+  add_index "run_internal_parameter_optimizations", ["repository_id", "run_execution_id"], :name => "run_internal_parameter_optimizations_index4", :unique => true
   add_index "run_internal_parameter_optimizations", ["repository_id"], :name => "fk_runConfigsInternalParameterOptimization_1"
   add_index "run_internal_parameter_optimizations", ["run_execution_id"], :name => "fk_runConfigsInternalParameterOptimization_2"
 
@@ -495,7 +496,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   add_index "run_parameter_optimization_methods", ["clustering_quality_measure_id"], :name => "fk_runConfigsParameterOptimizationMethods_3"
   add_index "run_parameter_optimization_methods", ["parameter_optimization_method_id"], :name => "fk_runConfigsParameterOptimizationMethods_1"
   add_index "run_parameter_optimization_methods", ["program_config_id"], :name => "fk_runConfigsParameterOptimizationMethods_5"
-  add_index "run_parameter_optimization_methods", ["repository_id", "run_parameter_optimization_id", "program_config_id", "parameter_optimization_method_id", "clustering_quality_measure_id"], :name => "index7", :unique => true
+  add_index "run_parameter_optimization_methods", ["repository_id", "run_parameter_optimization_id", "program_config_id", "parameter_optimization_method_id", "clustering_quality_measure_id"], :name => "run_parameter_optimization_methods_index7", :unique => true
   add_index "run_parameter_optimization_methods", ["repository_id"], :name => "fk_runConfigsParameterOptimizationMethods_4"
   add_index "run_parameter_optimization_methods", ["run_parameter_optimization_id"], :name => "fk_runConfigsParameterOptimizationMethods_2"
 
@@ -508,7 +509,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
 
   add_index "run_parameter_optimization_parameters", ["program_config_id"], :name => "fk_runConfigsParameterOptimizationParameters_1"
   add_index "run_parameter_optimization_parameters", ["program_parameter_id"], :name => "fk_runConfigParameterOptimizationParameters_3"
-  add_index "run_parameter_optimization_parameters", ["repository_id", "run_parameter_optimization_id", "program_config_id", "program_parameter_id"], :name => "index6", :unique => true
+  add_index "run_parameter_optimization_parameters", ["repository_id", "run_parameter_optimization_id", "program_config_id", "program_parameter_id"], :name => "run_parameter_optimization_parameters_index6", :unique => true
   add_index "run_parameter_optimization_parameters", ["repository_id"], :name => "fk_runConfigParameterOptimizationParameters_1"
   add_index "run_parameter_optimization_parameters", ["run_parameter_optimization_id"], :name => "fk_runConfigParameterOptimizationParameters_2"
 
@@ -519,7 +520,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   end
 
   add_index "run_parameter_optimization_quality_measures", ["clustering_quality_measure_id"], :name => "fk_runs_parameter_optimization_quality_measures_3"
-  add_index "run_parameter_optimization_quality_measures", ["repository_id", "run_parameter_optimization_id", "clustering_quality_measure_id"], :name => "index2", :unique => true
+  add_index "run_parameter_optimization_quality_measures", ["repository_id", "run_parameter_optimization_id", "clustering_quality_measure_id"], :name => "run_parameter_optimization_quality_measures_index2", :unique => true
   add_index "run_parameter_optimization_quality_measures", ["repository_id"], :name => "fk_runs_parameter_optimization_quality_measures_1"
   add_index "run_parameter_optimization_quality_measures", ["run_parameter_optimization_id"], :name => "fk_runs_parameter_optimization_quality_measures_2"
 
@@ -528,28 +529,28 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_execution_id", :null => false
   end
 
-  add_index "run_parameter_optimizations", ["repository_id", "run_execution_id"], :name => "index4", :unique => true
+  add_index "run_parameter_optimizations", ["repository_id", "run_execution_id"], :name => "run_parameter_optimizations_index4", :unique => true
   add_index "run_parameter_optimizations", ["repository_id"], :name => "fk_runConfigsParameterOptimization_2"
   add_index "run_parameter_optimizations", ["run_execution_id"], :name => "fk_runConfigsParameterOptimization_1"
 
   create_table "run_result_formats", :force => true do |t|
-    t.integer "repository_id",                :null => false
-    t.binary  "name",          :limit => 255, :null => false
+    t.integer "repository_id", :null => false
+    t.binary  "name",          :null => false
   end
 
-  add_index "run_result_formats", ["name", "repository_id"], :name => "index2", :unique => true, :length => {"name"=>200, "repository_id"=>nil}
+  add_index "run_result_formats", ["name", "repository_id"], :name => "run_result_formats_index2", :unique => true
   add_index "run_result_formats", ["repository_id"], :name => "fk_runResultFormats_1"
 
   create_table "run_results", :force => true do |t|
-    t.integer  "repository_id",                      :null => false
-    t.integer  "run_type_id",                        :null => false
-    t.binary   "absPath",                            :null => false
-    t.binary   "uniqueRunIdentifier", :limit => 255, :null => false
-    t.integer  "run_id",                             :null => false
-    t.datetime "date",                               :null => false
+    t.integer  "repository_id",         :null => false
+    t.integer  "run_type_id",           :null => false
+    t.binary   "abs_path",              :null => false
+    t.binary   "unique_run_identifier", :null => false
+    t.integer  "run_id",                :null => false
+    t.datetime "date",                  :null => false
   end
 
-  add_index "run_results", ["repository_id", "uniqueRunIdentifier"], :name => "index3", :unique => true, :length => {"repository_id"=>nil, "uniqueRunIdentifier"=>200}
+  add_index "run_results", ["repository_id", "unique_run_identifier"], :name => "run_results_index3", :unique => true
   add_index "run_results", ["repository_id"], :name => "fk_runResults_1"
   add_index "run_results", ["repository_id"], :name => "fk_run_results_1"
   add_index "run_results", ["run_id"], :name => "fk_run_results_3"
@@ -560,7 +561,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_result_id", :null => false
   end
 
-  add_index "run_results_analyses", ["repository_id", "run_result_id"], :name => "index4", :unique => true
+  add_index "run_results_analyses", ["repository_id", "run_result_id"], :name => "run_results_analyses_index4", :unique => true
   add_index "run_results_analyses", ["repository_id"], :name => "fk_run_results_analyses_1"
   add_index "run_results_analyses", ["run_result_id"], :name => "fk_run_results_analyses_2"
 
@@ -570,24 +571,20 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "data_config_id",                :null => false
     t.integer "program_config_id",             :null => false
     t.integer "clustering_quality_measure_id", :null => false
-    t.binary  "paramString",                   :null => false
+    t.binary  "param_string",                  :null => false
     t.binary  "quality",                       :null => false
   end
 
-  add_index "run_results_clustering_qualities", ["clustering_quality_measure_id"], :name => "fk_clustering_quals_qual_measures"
-  add_index "run_results_clustering_qualities", ["data_config_id"], :name => "fk_clustering_qualities_data_configs"
-  add_index "run_results_clustering_qualities", ["program_config_id"], :name => "fk_clustering_qualities_program_configs"
   add_index "run_results_clustering_qualities", ["repository_id", "run_results_clustering_id", "data_config_id", "program_config_id", "clustering_quality_measure_id"], :name => "fk_run_results_clustering_qualities_2", :unique => true
   add_index "run_results_clustering_qualities", ["repository_id"], :name => "fk_run_results_clustering_qualities_1"
-  add_index "run_results_clustering_qualities", ["run_results_clustering_id"], :name => "fk_clustering_quals_run_results_clusterings"
 
   create_table "run_results_clusterings", :force => true do |t|
-    t.integer "repository_id",                           :null => false
-    t.integer "run_results_execution_id",                :null => false
-    t.binary  "absPath",                  :limit => 255
+    t.integer "repository_id",            :null => false
+    t.integer "run_results_execution_id", :null => false
+    t.binary  "abs_path"
   end
 
-  add_index "run_results_clusterings", ["repository_id", "run_results_execution_id", "absPath"], :name => "index4", :unique => true, :length => {"repository_id"=>nil, "run_results_execution_id"=>nil, "absPath"=>200}
+  add_index "run_results_clusterings", ["repository_id", "run_results_execution_id", "abs_path"], :name => "run_results_clusterings_index4", :unique => true
   add_index "run_results_clusterings", ["repository_id"], :name => "fk_run_results_clusterings_1"
   add_index "run_results_clusterings", ["run_results_execution_id"], :name => "fk_run_results_clusterings_2"
 
@@ -596,7 +593,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_results_analysis_id", :null => false
   end
 
-  add_index "run_results_data_analyses", ["repository_id", "run_results_analysis_id"], :name => "index4", :unique => true
+  add_index "run_results_data_analyses", ["repository_id", "run_results_analysis_id"], :name => "run_results_data_analyses_index4", :unique => true
   add_index "run_results_data_analyses", ["repository_id"], :name => "fk_runResultsDataAnalysis_1"
   add_index "run_results_data_analyses", ["run_results_analysis_id"], :name => "fk_runResultsDataAnalysis_2"
 
@@ -605,7 +602,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_result_id", :null => false
   end
 
-  add_index "run_results_executions", ["repository_id", "run_result_id"], :name => "index4", :unique => true
+  add_index "run_results_executions", ["repository_id", "run_result_id"], :name => "run_results_executions_index4", :unique => true
   add_index "run_results_executions", ["repository_id"], :name => "fk_runResultExecution_1"
   add_index "run_results_executions", ["run_result_id"], :name => "fk_runResultExecution_2"
 
@@ -614,37 +611,35 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_results_execution_id", :null => false
   end
 
-  add_index "run_results_internal_parameter_optimizations", ["repository_id", "run_results_execution_id"], :name => "index4", :unique => true
-  add_index "run_results_internal_parameter_optimizations", ["repository_id"], :name => "fk_runResultParameterOptimization_1"
-  add_index "run_results_internal_parameter_optimizations", ["run_results_execution_id"], :name => "run_results_internal_param_opt_run_results_execution_id_fk"
+  add_index "run_results_internal_parameter_optimizations", ["repository_id", "run_results_execution_id"], :name => "run_results_internal_parameter_optimizations_index4", :unique => true
+  add_index "run_results_internal_parameter_optimizations", ["repository_id"], :name => "fk_runResultsInternalParamOpts_1"
 
   create_table "run_results_parameter_optimizations", :force => true do |t|
-    t.integer "repository_id",                           :null => false
-    t.integer "run_results_execution_id",                :null => false
-    t.integer "data_config_id",                          :null => false
-    t.integer "program_config_id",                       :null => false
-    t.binary  "absPath",                  :limit => 255
+    t.integer "repository_id",            :null => false
+    t.integer "run_results_execution_id", :null => false
+    t.integer "data_config_id",           :null => false
+    t.integer "program_config_id",        :null => false
+    t.binary  "abs_path"
   end
 
-  add_index "run_results_parameter_optimizations", ["absPath"], :name => "index_paramopt_abspath", :length => {"absPath"=>200}
+  add_index "run_results_parameter_optimizations", ["abs_path"], :name => "index_paramopt_abspath"
   add_index "run_results_parameter_optimizations", ["data_config_id"], :name => "fk_run_results_parameter_optimizations_1"
   add_index "run_results_parameter_optimizations", ["program_config_id"], :name => "fk_run_results_parameter_optimizations_2"
-  add_index "run_results_parameter_optimizations", ["repository_id", "run_results_execution_id", "absPath"], :name => "index4", :unique => true, :length => {"repository_id"=>nil, "run_results_execution_id"=>nil, "absPath"=>200}
+  add_index "run_results_parameter_optimizations", ["repository_id", "run_results_execution_id", "abs_path"], :name => "run_results_parameter_optimizations_index4", :unique => true
   add_index "run_results_parameter_optimizations", ["repository_id"], :name => "fk_runResultParameterOptimization_1"
   add_index "run_results_parameter_optimizations", ["run_results_execution_id"], :name => "fk_runResultParameterOptimization_2"
   add_index "run_results_parameter_optimizations", ["run_results_execution_id"], :name => "fk_run_results_parameter_optimization_1"
 
   create_table "run_results_parameter_optimizations_parameter_set_iterations", :force => true do |t|
-    t.integer "repository_id",                                                       :null => false
-    t.integer "run_results_parameter_optimizations_parameter_set_id",                :null => false
-    t.integer "iteration",                                                           :null => false
+    t.integer "repository_id",                                        :null => false
+    t.integer "run_results_parameter_optimizations_parameter_set_id", :null => false
+    t.integer "iteration",                                            :null => false
     t.integer "clustering_id"
-    t.binary  "paramSetAsString",                                     :limit => 255, :null => false
+    t.binary  "param_set_as_string",                                  :null => false
   end
 
   add_index "run_results_parameter_optimizations_parameter_set_iterations", ["clustering_id"], :name => "fk_2"
-  add_index "run_results_parameter_optimizations_parameter_set_iterations", ["iteration", "run_results_parameter_optimizations_parameter_set_id"], :name => "index3", :unique => true
-  add_index "run_results_parameter_optimizations_parameter_set_iterations", ["repository_id"], :name => "run_results_param_opt_param_set_iter_repository_id_fk"
+  add_index "run_results_parameter_optimizations_parameter_set_iterations", ["iteration", "run_results_parameter_optimizations_parameter_set_id"], :name => "run_results_paramOpts_parameter_set_iterations_index3", :unique => true
   add_index "run_results_parameter_optimizations_parameter_set_iterations", ["run_results_parameter_optimizations_parameter_set_id"], :name => "fk_1"
 
   create_table "run_results_parameter_optimizations_parameter_set_parameters", :force => true do |t|
@@ -655,10 +650,9 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   end
 
   add_index "run_results_parameter_optimizations_parameter_set_parameters", ["program_parameter_id"], :name => "fk_parameter_optimizations_parameter_set_parameters_3"
-  add_index "run_results_parameter_optimizations_parameter_set_parameters", ["repository_id", "run_results_parameter_optimization_id", "run_results_parameter_optimizations_parameter_set_id", "program_parameter_id"], :name => "index5", :unique => true
+  add_index "run_results_parameter_optimizations_parameter_set_parameters", ["repository_id", "run_results_parameter_optimization_id", "run_results_parameter_optimizations_parameter_set_id", "program_parameter_id"], :name => "run_results_paramOpts_parameter_set_parameters_index5", :unique => true
   add_index "run_results_parameter_optimizations_parameter_set_parameters", ["repository_id"], :name => "fk_parameter_optimizations_parameter_set_parameters_1"
-  add_index "run_results_parameter_optimizations_parameter_set_parameters", ["run_results_parameter_optimization_id"], :name => "fk12"
-  add_index "run_results_parameter_optimizations_parameter_set_parameters", ["run_results_parameter_optimizations_parameter_set_id"], :name => "fk_parameter_optimizations_parameter_set_parameters_2"
+  add_index "run_results_parameter_optimizations_parameter_set_parameters", ["run_results_parameter_optimizations_parameter_set_id"], :name => "fk_paramOpts_parameter_set_parameters_2"
 
   create_table "run_results_parameter_optimizations_parameter_sets", :force => true do |t|
     t.integer "repository_id",                         :null => false
@@ -670,18 +664,17 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   add_index "run_results_parameter_optimizations_parameter_sets", ["run_results_parameter_optimization_id"], :name => "fk_run_results_parameter_optimizations_parameter_sets_1"
 
   create_table "run_results_parameter_optimizations_parameter_values", :force => true do |t|
-    t.integer "repository_id",                                                                 :null => false
-    t.integer "run_results_parameter_optimization_id",                                         :null => false
-    t.integer "run_results_parameter_optimizations_parameter_set_iteration_id",                :null => false
-    t.integer "run_results_parameter_optimizations_parameter_set_parameter_id",                :null => false
-    t.binary  "value",                                                          :limit => 255, :null => false
+    t.integer "repository_id",                                                  :null => false
+    t.integer "run_results_parameter_optimization_id",                          :null => false
+    t.integer "run_results_parameter_optimizations_parameter_set_iteration_id", :null => false
+    t.integer "run_results_parameter_optimizations_parameter_set_parameter_id", :null => false
+    t.binary  "value",                                                          :null => false
   end
 
   add_index "run_results_parameter_optimizations_parameter_values", ["repository_id"], :name => "fk_parameter_set_parameters_3"
   add_index "run_results_parameter_optimizations_parameter_values", ["repository_id"], :name => "fk_parameter_set_values_3"
-  add_index "run_results_parameter_optimizations_parameter_values", ["run_results_parameter_optimization_id"], :name => "fk17"
   add_index "run_results_parameter_optimizations_parameter_values", ["run_results_parameter_optimizations_parameter_set_iteration_id"], :name => "fk_run_results_parameter_optimizations_parameter_values_1"
-  add_index "run_results_parameter_optimizations_parameter_values", ["run_results_parameter_optimizations_parameter_set_parameter_id", "run_results_parameter_optimizations_parameter_set_iteration_id", "repository_id"], :name => "index2", :unique => true
+  add_index "run_results_parameter_optimizations_parameter_values", ["run_results_parameter_optimizations_parameter_set_parameter_id", "run_results_parameter_optimizations_parameter_set_iteration_id", "repository_id"], :name => "run_results_parameter_optimizations_parameter_values_index2", :unique => true
   add_index "run_results_parameter_optimizations_parameter_values", ["run_results_parameter_optimizations_parameter_set_parameter_id"], :name => "fk_parameter_optimizations_parameter_values_1"
   add_index "run_results_parameter_optimizations_parameter_values", ["run_results_parameter_optimizations_parameter_set_parameter_id"], :name => "fk_parameter_set_parameters_2"
 
@@ -694,9 +687,8 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   end
 
   add_index "run_results_parameter_optimizations_qualities", ["clustering_quality_measure_id"], :name => "fk_parameter_optimization_qualities_4"
-  add_index "run_results_parameter_optimizations_qualities", ["repository_id", "clustering_quality_measure_id", "run_results_parameter_optimizations_parameter_set_iteration_id"], :name => "index6", :unique => true
+  add_index "run_results_parameter_optimizations_qualities", ["repository_id", "clustering_quality_measure_id", "run_results_parameter_optimizations_parameter_set_iteration_id"], :name => "run_results_parameter_optimizations_qualities_sindex6", :unique => true
   add_index "run_results_parameter_optimizations_qualities", ["repository_id"], :name => "fk_parameter_optimization_qualities_1"
-  add_index "run_results_parameter_optimizations_qualities", ["run_results_parameter_optimization_id"], :name => "fk22"
   add_index "run_results_parameter_optimizations_qualities", ["run_results_parameter_optimizations_parameter_set_iteration_id"], :name => "fk_parameter_optimization_qualities_2"
   add_index "run_results_parameter_optimizations_qualities", ["run_results_parameter_optimizations_parameter_set_iteration_id"], :name => "fk_parameter_optimization_qualities_3"
   add_index "run_results_parameter_optimizations_qualities", ["run_results_parameter_optimizations_parameter_set_iteration_id"], :name => "fk_run_results_parameter_optimizations_qualities_1"
@@ -706,7 +698,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_results_analysis_id", :null => false
   end
 
-  add_index "run_results_run_analyses", ["repository_id", "run_results_analysis_id"], :name => "index4", :unique => true
+  add_index "run_results_run_analyses", ["repository_id", "run_results_analysis_id"], :name => "run_results_run_analyses_index4", :unique => true
   add_index "run_results_run_analyses", ["repository_id"], :name => "fk_runResultsRunAnalysis_1"
   add_index "run_results_run_analyses", ["run_results_analysis_id"], :name => "fk_runResultsRunAnalysis_2"
 
@@ -715,7 +707,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_results_analysis_id", :null => false
   end
 
-  add_index "run_results_run_data_analyses", ["repository_id", "run_results_analysis_id"], :name => "index4", :unique => true
+  add_index "run_results_run_data_analyses", ["repository_id", "run_results_analysis_id"], :name => "run_results_run_data_analyses_index4", :unique => true
   add_index "run_results_run_data_analyses", ["repository_id"], :name => "fk_run_results_run_data_analysis_1"
   add_index "run_results_run_data_analyses", ["run_results_analysis_id"], :name => "fk_run_results_run_data_analysis_2"
 
@@ -724,19 +716,19 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_analysis_id", :null => false
   end
 
-  add_index "run_run_analyses", ["repository_id", "run_analysis_id"], :name => "index4", :unique => true
+  add_index "run_run_analyses", ["repository_id", "run_analysis_id"], :name => "run_run_analyses_index4", :unique => true
   add_index "run_run_analyses", ["repository_id"], :name => "fk_runConfigsAnalysisRun_1"
   add_index "run_run_analyses", ["run_analysis_id"], :name => "fk_runConfigsAnalysisRun_2"
 
   create_table "run_run_analysis_run_identifiers", :force => true do |t|
-    t.integer "repository_id",                      :null => false
-    t.integer "run_run_analysis_id",                :null => false
-    t.binary  "runIdentifier",       :limit => 255, :null => false
+    t.integer "repository_id",       :null => false
+    t.integer "run_run_analysis_id", :null => false
+    t.binary  "run_identifier",      :null => false
   end
 
-  add_index "run_run_analysis_run_identifiers", ["repository_id", "run_run_analysis_id", "runIdentifier"], :name => "index5", :unique => true, :length => {"repository_id"=>nil, "run_run_analysis_id"=>nil, "runIdentifier"=>200}
+  add_index "run_run_analysis_run_identifiers", ["repository_id", "run_run_analysis_id", "run_identifier"], :name => "run_run_analysis_run_identifiers_index5", :unique => true
   add_index "run_run_analysis_run_identifiers", ["repository_id"], :name => "fk_runConfigsAnalysisRunRunIdentifiers_1"
-  add_index "run_run_analysis_run_identifiers", ["runIdentifier"], :name => "fk_runConfigsAnalysisRunRunIdentifiers_3", :length => {"runIdentifier"=>200}
+  add_index "run_run_analysis_run_identifiers", ["run_identifier"], :name => "fk_runConfigsAnalysisRunRunIdentifiers_3"
   add_index "run_run_analysis_run_identifiers", ["run_run_analysis_id"], :name => "fk_runConfigsAnalysisRunRunIdentifiers_2"
 
   create_table "run_run_data_analyses", :force => true do |t|
@@ -744,47 +736,47 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "run_analysis_id", :null => false
   end
 
-  add_index "run_run_data_analyses", ["repository_id", "run_analysis_id"], :name => "index4", :unique => true
+  add_index "run_run_data_analyses", ["repository_id", "run_analysis_id"], :name => "run_run_data_analyses_index4", :unique => true
   add_index "run_run_data_analyses", ["repository_id"], :name => "fk_runs_analysis_run_data_1"
   add_index "run_run_data_analyses", ["run_analysis_id"], :name => "fk_runs_analysis_run_data_2"
   add_index "run_run_data_analyses", ["run_analysis_id"], :name => "fk_runs_run_data_analyses_1"
 
   create_table "run_run_data_analysis_data_identifiers", :force => true do |t|
-    t.integer "repository_id",                           :null => false
-    t.integer "run_run_data_analysis_id",                :null => false
-    t.binary  "dataIdentifier",           :limit => 255, :null => false
+    t.integer "repository_id",            :null => false
+    t.integer "run_run_data_analysis_id", :null => false
+    t.binary  "dataIdentifier",           :null => false
   end
 
-  add_index "run_run_data_analysis_data_identifiers", ["repository_id", "run_run_data_analysis_id", "dataIdentifier"], :name => "index4", :unique => true, :length => {"repository_id"=>nil, "run_run_data_analysis_id"=>nil, "dataIdentifier"=>200}
+  add_index "run_run_data_analysis_data_identifiers", ["repository_id", "run_run_data_analysis_id", "dataIdentifier"], :name => "run_run_data_analysis_data_identifiers_index4", :unique => true
   add_index "run_run_data_analysis_data_identifiers", ["repository_id"], :name => "fk_runs_run_data_analysis_data_identifiers_1"
   add_index "run_run_data_analysis_data_identifiers", ["run_run_data_analysis_id"], :name => "fk_runs_run_data_analysis_data_identifiers_2"
 
   create_table "run_run_data_analysis_run_identifiers", :force => true do |t|
-    t.integer "repository_id",                           :null => false
-    t.integer "run_run_data_analysis_id",                :null => false
-    t.binary  "runIdentifier",            :limit => 255, :null => false
+    t.integer "repository_id",            :null => false
+    t.integer "run_run_data_analysis_id", :null => false
+    t.binary  "run_identifier",           :null => false
   end
 
-  add_index "run_run_data_analysis_run_identifiers", ["repository_id", "run_run_data_analysis_id", "runIdentifier"], :name => "index4", :unique => true, :length => {"repository_id"=>nil, "run_run_data_analysis_id"=>nil, "runIdentifier"=>200}
+  add_index "run_run_data_analysis_run_identifiers", ["repository_id", "run_run_data_analysis_id", "run_identifier"], :name => "run_run_data_analysis_run_identifiers_index4", :unique => true
   add_index "run_run_data_analysis_run_identifiers", ["repository_id"], :name => "fk_runs_run_data_analysis_run_identifiers_1"
   add_index "run_run_data_analysis_run_identifiers", ["run_run_data_analysis_id"], :name => "fk_runs_run_data_analysis_run_identifiers_2"
 
   create_table "run_types", :force => true do |t|
-    t.binary "name", :limit => 255
+    t.binary "name"
   end
 
-  add_index "run_types", ["name"], :name => "name_UNIQUE", :unique => true, :length => {"name"=>200}
+  add_index "run_types", ["name"], :name => "run_types_name_UNIQUE", :unique => true
 
   create_table "runs", :force => true do |t|
     t.integer "repository_id",                :null => false
     t.integer "run_type_id",                  :null => false
     t.integer "run_id"
-    t.binary  "absPath",       :limit => 255
-    t.binary  "name",          :limit => 255
-    t.string  "status",        :limit => 200, :null => false
+    t.binary  "abs_path"
+    t.binary  "name"
+    t.string  "status",        :limit => 767, :null => false
   end
 
-  add_index "runs", ["absPath", "repository_id"], :name => "absPath_UNIQUE", :unique => true, :length => {"absPath"=>200, "repository_id"=>nil}
+  add_index "runs", ["abs_path", "repository_id"], :name => "runs_abs_path_UNIQUE", :unique => true
   add_index "runs", ["repository_id"], :name => "fk_runConfigs_1"
   add_index "runs", ["run_id"], :name => "fk_runs_2"
   add_index "runs", ["run_type_id"], :name => "fk_runs_1"
@@ -795,12 +787,12 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   end
 
   create_table "statistics", :force => true do |t|
-    t.integer "repository_id",                :null => false
-    t.binary  "name",          :limit => 255, :null => false
-    t.binary  "alias",         :limit => 255, :null => false
+    t.integer "repository_id", :null => false
+    t.binary  "name",          :null => false
+    t.binary  "alias",         :null => false
   end
 
-  add_index "statistics", ["name", "repository_id"], :name => "name_UNIQUE", :unique => true, :length => {"name"=>200, "repository_id"=>nil}
+  add_index "statistics", ["name", "repository_id"], :name => "statistics_name_UNIQUE", :unique => true
   add_index "statistics", ["repository_id"], :name => "fk_statistics_1"
 
   create_table "statistics_data", :force => true do |t|
@@ -808,7 +800,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "statistic_id",  :null => false
   end
 
-  add_index "statistics_data", ["repository_id", "statistic_id"], :name => "index4", :unique => true
+  add_index "statistics_data", ["repository_id", "statistic_id"], :name => "statistics_data_index4", :unique => true
   add_index "statistics_data", ["repository_id"], :name => "fk_statisticsData_2"
   add_index "statistics_data", ["statistic_id"], :name => "fk_statisticsData_1"
 
@@ -817,7 +809,7 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "statistic_id",  :null => false
   end
 
-  add_index "statistics_run_data", ["repository_id", "statistic_id"], :name => "index4", :unique => true
+  add_index "statistics_run_data", ["repository_id", "statistic_id"], :name => "statistics_run_data_index4", :unique => true
   add_index "statistics_run_data", ["repository_id"], :name => "fk_statisticsRunData_1"
   add_index "statistics_run_data", ["statistic_id"], :name => "fk_statisticsRunData_2"
 
@@ -826,28 +818,28 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
     t.integer "statistic_id",  :null => false
   end
 
-  add_index "statistics_runs", ["repository_id", "statistic_id"], :name => "index4", :unique => true
+  add_index "statistics_runs", ["repository_id", "statistic_id"], :name => "statistics_runs_index4", :unique => true
   add_index "statistics_runs", ["repository_id"], :name => "fk_statisticsRun_1"
   add_index "statistics_runs", ["statistic_id"], :name => "fk_statisticsRun_2"
 
   create_table "submit_datasets", :force => true do |t|
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
-    t.string   "email",       :limit => 200, :null => false
-    t.string   "firstname",   :limit => 200, :null => false
-    t.string   "lastname",    :limit => 200, :null => false
-    t.string   "institution", :limit => 200, :null => false
-    t.string   "description", :limit => 200, :null => false
+    t.string   "email",       :limit => 767, :null => false
+    t.string   "firstname",   :limit => 767, :null => false
+    t.string   "lastname",    :limit => 767, :null => false
+    t.string   "institution", :limit => 767, :null => false
+    t.string   "description", :limit => 767, :null => false
   end
 
   create_table "submit_methods", :force => true do |t|
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
-    t.string   "email",       :limit => 200, :null => false
-    t.string   "firstname",   :limit => 200, :null => false
-    t.string   "lastname",    :limit => 200, :null => false
-    t.string   "institution", :limit => 200, :null => false
-    t.string   "description", :limit => 200, :null => false
+    t.string   "email",       :limit => 767, :null => false
+    t.string   "firstname",   :limit => 767, :null => false
+    t.string   "lastname",    :limit => 767, :null => false
+    t.string   "institution", :limit => 767, :null => false
+    t.string   "description", :limit => 767, :null => false
   end
 
   create_table "submits", :force => true do |t|
@@ -1079,251 +1071,36 @@ ActiveRecord::Schema.define(:version => 20141012095013) do
   add_foreign_key "statistics_runs", "repositories", name: "statistics_runs_repository_id_fk", dependent: :delete
   add_foreign_key "statistics_runs", "statistics", name: "statistics_runs_statistic_id_fk", dependent: :delete
 
-  create_view "dataset_statistics", "select `ds`.`id` AS `dataset_id`,`anaDataConfigs`.`data_config_id` AS `data_config_id`,`res`.`id` AS `run_result_id`,`res`.`absPath` AS `absPath`,`res`.`run_id` AS `run_id`,`res`.`date` AS `date`,`stats`.`name` AS `statistic` from ((((((((((((`run_data_analysis_data_configs` `anaDataConfigs` join `data_configs` `dcs`) join `dataset_configs` `dscs`) join `datasets` `ds`) join `run_data_analyses` `runDataAna`) join `run_analyses` `runAna`) join `run_analysis_statistics` `runStats`) join `statistics` `stats`) join `runs`) join `runs` `runsOrig`) join `run_results` `res`) join `run_results_analyses` `resAna`) join `run_results_data_analyses` `resDataAna`) where ((`res`.`id` = `resAna`.`run_result_id`) and (`resAna`.`id` = `resDataAna`.`run_results_analysis_id`) and (`runs`.`id` = `res`.`run_id`) and (`runsOrig`.`id` = `runs`.`run_id`) and (`runsOrig`.`id` = `runAna`.`run_id`) and (`runDataAna`.`run_analysis_id` = `runAna`.`id`) and (`anaDataConfigs`.`run_data_analysis_id` = `runDataAna`.`id`) and (`anaDataConfigs`.`data_config_id` = `dcs`.`id`) and (`dcs`.`dataset_config_id` = `dscs`.`id`) and (`dscs`.`dataset_id` = `ds`.`id`) and (`runStats`.`run_analysis_id` = `runAna`.`id`) and (`stats`.`id` = `runStats`.`statistic_id`))", :force => true do |v|
-    v.column :dataset_id
-    v.column :data_config_id
-    v.column :run_result_id
-    v.column :absPath
-    v.column :run_id
-    v.column :date
-    v.column :statistic
-  end
+# Could not dump view "dataset_statistics" because of following RuntimeError
+#   No view called dataset_statistics found
 
-  create_view "datasets_recent_statistics", "select `dataset_statistics`.`dataset_id` AS `dataset_id`,`dataset_statistics`.`data_config_id` AS `data_config_id`,`dataset_statistics`.`run_result_id` AS `run_result_id`,`dataset_statistics`.`absPath` AS `absPath`,`dataset_statistics`.`run_id` AS `run_id`,`dataset_statistics`.`date` AS `date`,`dataset_statistics`.`statistic` AS `statistic` from `dataset_statistics` where (`dataset_statistics`.`dataset_id`,`dataset_statistics`.`statistic`,`dataset_statistics`.`date`) in (select `dataset_statistics`.`dataset_id`,`dataset_statistics`.`statistic`,max(`dataset_statistics`.`date`) AS `maxDate` from `dataset_statistics` group by `dataset_statistics`.`dataset_id`,`dataset_statistics`.`statistic`)", :force => true do |v|
-    v.column :dataset_id
-    v.column :data_config_id
-    v.column :run_result_id
-    v.column :absPath
-    v.column :run_id
-    v.column :date
-    v.column :statistic
-  end
+# Could not dump view "datasets_recent_statistics" because of following RuntimeError
+#   No view called datasets_recent_statistics found
 
-  create_view "parameter_optimization_iterations", "select `iter`.`id` AS `run_results_parameter_optimizations_parameter_set_iteration_id`,`iter`.`iteration` AS `iteration`,`iter`.`paramSetAsString` AS `paramSetAsString`,`measure`.`id` AS `clustering_quality_measure_id`,`qual`.`quality` AS `quality`,`results`.`uniqueRunIdentifier` AS `uniqueRunIdentifier`,`opts`.`data_config_id` AS `data_config_id`,`opts`.`program_config_id` AS `program_config_id`,`progParams`.`name` AS `paramName`,`vals`.`value` AS `value` from (((((((((`run_results_parameter_optimizations_parameter_set_iterations` `iter` join `run_results_parameter_optimizations_parameter_sets` `sets`) join `run_results_parameter_optimizations` `opts`) join `run_results_executions` `exec`) join `run_results` `results`) join `run_results_parameter_optimizations_qualities` `qual`) join `run_results_parameter_optimizations_parameter_values` `vals`) join `run_results_parameter_optimizations_parameter_set_parameters` `params`) join `program_parameters` `progParams`) join `clustering_quality_measures` `measure`) where ((`results`.`id` = `exec`.`run_result_id`) and (`exec`.`id` = `opts`.`run_results_execution_id`) and (`opts`.`id` = `sets`.`run_results_parameter_optimization_id`) and (`sets`.`id` = `iter`.`run_results_parameter_optimizations_parameter_set_id`) and (`iter`.`id` = `qual`.`run_results_parameter_optimizations_parameter_set_iteration_id`) and (`measure`.`id` = `qual`.`clustering_quality_measure_id`) and (`vals`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `iter`.`id`) and (`vals`.`run_results_parameter_optimizations_parameter_set_parameter_id` = `params`.`id`) and (`params`.`program_parameter_id` = `progParams`.`id`))", :force => true do |v|
-    v.column :run_results_parameter_optimizations_parameter_set_iteration_id
-    v.column :iteration
-    v.column :paramSetAsString
-    v.column :clustering_quality_measure_id
-    v.column :quality
-    v.column :uniqueRunIdentifier
-    v.column :data_config_id
-    v.column :program_config_id
-    v.column :paramName
-    v.column :value
-  end
+# Could not dump view "parameter_optimization_iterations" because of following RuntimeError
+#   No view called parameter_optimization_iterations found
 
-  create_view "parameter_optimization_data_configs_iterations", "select `dcOrig`.`id` AS `data_config_id`,`ps`.`id` AS `program_id`,`it`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`it`.`quality` AS `quality`,`it`.`paramSetAsString` AS `paramSetAsString` from ((((`programs` `ps` join `data_configs` `dcs`) join `data_configs` `dcOrig`) join `program_configs` `pcs`) join `parameter_optimization_iterations` `it`) where ((`it`.`data_config_id` = `dcs`.`id`) and (`it`.`program_config_id` = `pcs`.`id`) and (`dcs`.`data_config_id` = `dcOrig`.`id`) and (`pcs`.`program_id` = `ps`.`id`))", :force => true do |v|
+  create_view "parameter_optimization_data_configs_iterations", " SELECT dcorig.id AS data_config_id,\n    ps.id AS program_id,\n    it.clustering_quality_measure_id,\n    it.quality,\n    it.param_set_as_string\n   FROM programs ps,\n    data_configs dcs,\n    data_configs dcorig,\n    program_configs pcs,\n    parameter_optimization_iterations it\n  WHERE ((((it.data_config_id = dcs.id) AND (it.program_config_id = pcs.id)) AND (dcs.data_config_id = dcorig.id)) AND (pcs.program_id = ps.id));", :force => true do |v|
     v.column :data_config_id
     v.column :program_id
     v.column :clustering_quality_measure_id
     v.column :quality
-    v.column :paramSetAsString
+    v.column :param_set_as_string
   end
 
-  create_view "parameter_optimization_iterations_exts", "select `dsOrig`.`id` AS `dataset_id`,`ps`.`id` AS `program_id`,`it`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`it`.`quality` AS `quality`,`it`.`paramSetAsString` AS `paramSetAsString`,`it`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `run_results_parameter_optimizations_parameter_set_iteration_id` from ((((((`datasets` `dsOrig` join `datasets` `ds`) join `programs` `ps`) join `dataset_configs` `dscs`) join `data_configs` `dcs`) join `program_configs` `pcs`) join `parameter_optimization_iterations` `it`) where ((`it`.`data_config_id` = `dcs`.`id`) and (`it`.`program_config_id` = `pcs`.`id`) and (`dcs`.`dataset_config_id` = `dscs`.`id`) and (`dscs`.`dataset_id` = `ds`.`id`) and (`ds`.`dataset_id` = `dsOrig`.`id`) and (`pcs`.`program_id` = `ps`.`id`))", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :quality
-    v.column :paramSetAsString
-    v.column :run_results_parameter_optimizations_parameter_set_iteration_id
-  end
+# Could not dump view "parameter_optimization_iterations_exts" because of following RuntimeError
+#   No view called parameter_optimization_iterations_exts found
 
-  create_view "parameter_optimization_max_quals", "select `parameter_optimization_iterations_exts`.`dataset_id` AS `dataset_id`,`parameter_optimization_iterations_exts`.`program_id` AS `program_id`,`parameter_optimization_iterations_exts`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,max(`parameter_optimization_iterations_exts`.`quality`) AS `maxQuality` from `parameter_optimization_iterations_exts` group by `parameter_optimization_iterations_exts`.`dataset_id`,`parameter_optimization_iterations_exts`.`program_id`,`parameter_optimization_iterations_exts`.`clustering_quality_measure_id`", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :maxQuality
-  end
+# Could not dump view "parameter_optimization_max_quals" because of following RuntimeError
+#   No view called parameter_optimization_max_quals found
 
-  create_view "parameter_optimization_max_qual_rows", "select `iter`.`dataset_id` AS `dataset_id`,`iter`.`program_id` AS `program_id`,`iter`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`iter`.`quality` AS `quality`,`iter`.`paramSetAsString` AS `paramSetAsString`,`iter`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `run_results_parameter_optimizations_parameter_set_iteration_id` from (`parameter_optimization_iterations_exts` `iter` join `parameter_optimization_max_quals` `groupediter` on(((`iter`.`dataset_id` = `groupediter`.`dataset_id`) and (`iter`.`program_id` = `groupediter`.`program_id`) and (`iter`.`clustering_quality_measure_id` = `groupediter`.`clustering_quality_measure_id`) and (`iter`.`quality` = `groupediter`.`maxQuality`))))", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :quality
-    v.column :paramSetAsString
-    v.column :run_results_parameter_optimizations_parameter_set_iteration_id
-  end
+# Could not dump view "parameter_optimization_max_qual_rows" because of following RuntimeError
+#   No view called parameter_optimization_max_qual_rows found
 
-  create_view "parameter_optimization_min_quals", "select `parameter_optimization_iterations_exts`.`dataset_id` AS `dataset_id`,`parameter_optimization_iterations_exts`.`program_id` AS `program_id`,`parameter_optimization_iterations_exts`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,min(`parameter_optimization_iterations_exts`.`quality`) AS `minQuality` from `parameter_optimization_iterations_exts` group by `parameter_optimization_iterations_exts`.`dataset_id`,`parameter_optimization_iterations_exts`.`program_id`,`parameter_optimization_iterations_exts`.`clustering_quality_measure_id`", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :minQuality
-  end
+# Could not dump view "parameter_optimization_min_quals" because of following RuntimeError
+#   No view called parameter_optimization_min_quals found
 
-  create_view "parameter_optimization_min_qual_rows", "select `iter`.`dataset_id` AS `dataset_id`,`iter`.`program_id` AS `program_id`,`iter`.`clustering_quality_measure_id` AS `clustering_quality_measure_id`,`iter`.`quality` AS `quality`,`iter`.`paramSetAsString` AS `paramSetAsString`,`iter`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `run_results_parameter_optimizations_parameter_set_iteration_id` from (`parameter_optimization_iterations_exts` `iter` join `parameter_optimization_min_quals` `groupediter` on(((`iter`.`dataset_id` = `groupediter`.`dataset_id`) and (`iter`.`program_id` = `groupediter`.`program_id`) and (`iter`.`clustering_quality_measure_id` = `groupediter`.`clustering_quality_measure_id`) and (`iter`.`quality` = `groupediter`.`minQuality`))))", :force => true do |v|
-    v.column :dataset_id
-    v.column :program_id
-    v.column :clustering_quality_measure_id
-    v.column :quality
-    v.column :paramSetAsString
-    v.column :run_results_parameter_optimizations_parameter_set_iteration_id
-  end
-
-  create_view "run_result_data_analysis_data_configs_statistics", "select `runRes`.`id` AS `run_result_id`,`runResDataAna`.`id` AS `run_results_data_analysis_id`,`runRes`.`uniqueRunIdentifier` AS `uniqueRunIdentifier`,`runRes`.`absPath` AS `absPath`,`runDataAnaDataConf`.`data_config_id` AS `data_config_id`,`runAnaStats`.`statistic_id` AS `statistic_id` from (((((((`run_results_data_analyses` `runResDataAna` join `run_results_analyses` `runResAna`) join `run_results` `runRes`) join `runs` `run`) join `run_analyses` `runAna`) join `run_analysis_statistics` `runAnaStats`) join `run_data_analyses` `runDataAna`) join `run_data_analysis_data_configs` `runDataAnaDataConf`) where ((`runResDataAna`.`run_results_analysis_id` = `runResAna`.`id`) and (`runResAna`.`run_result_id` = `runRes`.`id`) and (`runRes`.`run_id` = `run`.`id`) and (`runAna`.`run_id` = `run`.`id`) and (`runAnaStats`.`run_analysis_id` = `runAna`.`id`) and (`runDataAna`.`run_analysis_id` = `runAna`.`id`) and (`runDataAnaDataConf`.`run_data_analysis_id` = `runDataAna`.`id`))", :force => true do |v|
-    v.column :run_result_id
-    v.column :run_results_data_analysis_id
-    v.column :uniqueRunIdentifier
-    v.column :absPath
-    v.column :data_config_id
-    v.column :statistic_id
-  end
-
-  create_view "run_results_data_configs_rankings", "select `run_results_parameter_optimizations_parameter_set_iterations`.`id` AS `t0_r0`,`run_results_parameter_optimizations_parameter_set_iterations`.`run_results_parameter_optimizations_parameter_set_id` AS `t0_r1`,`run_results_parameter_optimizations_parameter_set_iterations`.`iteration` AS `t0_r2`,`run_results_parameter_optimizations_parameter_set_iterations`.`paramSetAsString` AS `t0_r3`,`run_results_parameter_optimizations_parameter_values`.`id` AS `t1_r0`,`run_results_parameter_optimizations_parameter_values`.`repository_id` AS `t1_r1`,`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `t1_r2`,`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_parameter_id` AS `t1_r3`,`run_results_parameter_optimizations_parameter_values`.`value` AS `t1_r4`,`run_results_parameter_optimizations_parameter_set_parameters`.`id` AS `t2_r0`,`run_results_parameter_optimizations_parameter_set_parameters`.`repository_id` AS `t2_r1`,`run_results_parameter_optimizations_parameter_set_parameters`.`run_results_parameter_optimizations_parameter_set_id` AS `t2_r2`,`run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_id` AS `t2_r3`,`program_parameters`.`id` AS `t3_r0`,`program_parameters`.`repository_id` AS `t3_r1`,`program_parameters`.`program_config_id` AS `t3_r2`,`program_parameters`.`program_parameter_type_id` AS `t3_r3`,`program_parameters`.`name` AS `t3_r4`,`program_parameters`.`description` AS `t3_r5`,`program_parameters`.`minValue` AS `t3_r6`,`program_parameters`.`maxValue` AS `t3_r7`,`program_parameters`.`def` AS `t3_r8`,`run_results_parameter_optimizations_qualities`.`id` AS `t4_r0`,`run_results_parameter_optimizations_qualities`.`repository_id` AS `t4_r1`,`run_results_parameter_optimizations_qualities`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `t4_r2`,`run_results_parameter_optimizations_qualities`.`clustering_quality_measure_id` AS `t4_r3`,`run_results_parameter_optimizations_qualities`.`quality` AS `t4_r4`,`clustering_quality_measures`.`id` AS `t5_r0`,`clustering_quality_measures`.`repository_id` AS `t5_r1`,`clustering_quality_measures`.`name` AS `t5_r2`,`clustering_quality_measures`.`minValue` AS `t5_r3`,`clustering_quality_measures`.`maxValue` AS `t5_r4`,`clustering_quality_measures`.`requiresGoldStandard` AS `t5_r5`,`run_results_parameter_optimizations_parameter_sets`.`id` AS `t6_r0`,`run_results_parameter_optimizations_parameter_sets`.`repository_id` AS `t6_r1`,`run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimization_id` AS `t6_r2`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`id` AS `t7_r0`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`repository_id` AS `t7_r1`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimizations_parameter_set_id` AS `t7_r2`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`program_parameter_id` AS `t7_r3`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`id` AS `t8_r0`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`repository_id` AS `t8_r1`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`program_config_id` AS `t8_r2`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_type_id` AS `t8_r3`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`name` AS `t8_r4`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`description` AS `t8_r5`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`minValue` AS `t8_r6`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`maxValue` AS `t8_r7`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`def` AS `t8_r8`,`run_results_parameter_optimizations`.`id` AS `t9_r0`,`run_results_parameter_optimizations`.`repository_id` AS `t9_r1`,`run_results_parameter_optimizations`.`run_results_execution_id` AS `t9_r2`,`run_results_parameter_optimizations`.`data_config_id` AS `t9_r3`,`run_results_parameter_optimizations`.`program_config_id` AS `t9_r4`,`run_results_parameter_optimizations`.`absPath` AS `t9_r5`,`program_configs`.`id` AS `t10_r0`,`program_configs`.`repository_id` AS `t10_r1`,`program_configs`.`program_id` AS `t10_r2`,`program_configs`.`program_config_id` AS `t10_r4`,`program_configs`.`name` AS `t10_r5`,`program_configs`.`absPath` AS `t10_r6`,`program_configs`.`invocationFormat` AS `t10_r7`,`program_configs`.`invocationFormatWithoutGoldStandard` AS `t10_r8`,`program_configs`.`invocationFormatParameterOptimization` AS `t10_r9`,`program_configs`.`invocationFormatParameterOptimizationWithoutGoldStandard` AS `t10_r10`,`program_configs`.`expectsNormalizedDataSet` AS `t10_r11`,`run_results_executions`.`id` AS `t11_r0`,`run_results_executions`.`repository_id` AS `t11_r1`,`run_results_executions`.`run_result_id` AS `t11_r2`,`run_results`.`id` AS `t12_r0`,`run_results`.`repository_id` AS `t12_r1`,`run_results`.`run_type_id` AS `t12_r2`,`run_results`.`uniqueRunIdentifier` AS `t12_r3`,`run_results`.`run_id` AS `t12_r4`,`run_results`.`date` AS `t12_r5` from ((((((((((((`run_results_parameter_optimizations_parameter_set_iterations` left join `run_results_parameter_optimizations_parameter_values` on((`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `run_results_parameter_optimizations_parameter_set_iterations`.`id`))) left join `run_results_parameter_optimizations_parameter_set_parameters` on((`run_results_parameter_optimizations_parameter_set_parameters`.`id` = `run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_parameter_id`))) left join `program_parameters` on((`program_parameters`.`id` = `run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_id`))) left join `run_results_parameter_optimizations_qualities` on((`run_results_parameter_optimizations_qualities`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `run_results_parameter_optimizations_parameter_set_iterations`.`id`))) left join `clustering_quality_measures` on((`clustering_quality_measures`.`id` = `run_results_parameter_optimizations_qualities`.`clustering_quality_measure_id`))) left join `run_results_parameter_optimizations_parameter_sets` on((`run_results_parameter_optimizations_parameter_sets`.`id` = `run_results_parameter_optimizations_parameter_set_iterations`.`run_results_parameter_optimizations_parameter_set_id`))) left join `run_results_parameter_optimizations_parameter_set_parameters` `run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets` on((`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimizations_parameter_set_id` = `run_results_parameter_optimizations_parameter_sets`.`id`))) left join `program_parameters` `program_parameters_run_results_parameter_optimizations_parameter_set_parameters` on((`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`id` = `run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`program_parameter_id`))) left join `run_results_parameter_optimizations` on((`run_results_parameter_optimizations`.`id` = `run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimization_id`))) left join `program_configs` on((`program_configs`.`id` = `run_results_parameter_optimizations`.`program_config_id`))) left join `run_results_executions` on((`run_results_executions`.`id` = `run_results_parameter_optimizations`.`run_results_execution_id`))) left join `run_results` on((`run_results`.`id` = `run_results_executions`.`run_result_id`)))", :force => true do |v|
-    v.column :t0_r0
-    v.column :t0_r1
-    v.column :t0_r2
-    v.column :t0_r3
-    v.column :t1_r0
-    v.column :t1_r1
-    v.column :t1_r2
-    v.column :t1_r3
-    v.column :t1_r4
-    v.column :t2_r0
-    v.column :t2_r1
-    v.column :t2_r2
-    v.column :t2_r3
-    v.column :t3_r0
-    v.column :t3_r1
-    v.column :t3_r2
-    v.column :t3_r3
-    v.column :t3_r4
-    v.column :t3_r5
-    v.column :t3_r6
-    v.column :t3_r7
-    v.column :t3_r8
-    v.column :t4_r0
-    v.column :t4_r1
-    v.column :t4_r2
-    v.column :t4_r3
-    v.column :t4_r4
-    v.column :t5_r0
-    v.column :t5_r1
-    v.column :t5_r2
-    v.column :t5_r3
-    v.column :t5_r4
-    v.column :t5_r5
-    v.column :t6_r0
-    v.column :t6_r1
-    v.column :t6_r2
-    v.column :t7_r0
-    v.column :t7_r1
-    v.column :t7_r2
-    v.column :t7_r3
-    v.column :t8_r0
-    v.column :t8_r1
-    v.column :t8_r2
-    v.column :t8_r3
-    v.column :t8_r4
-    v.column :t8_r5
-    v.column :t8_r6
-    v.column :t8_r7
-    v.column :t8_r8
-    v.column :t9_r0
-    v.column :t9_r1
-    v.column :t9_r2
-    v.column :t9_r3
-    v.column :t9_r4
-    v.column :t9_r5
-    v.column :t10_r0
-    v.column :t10_r1
-    v.column :t10_r2
-    v.column :t10_r4
-    v.column :t10_r5
-    v.column :t10_r6
-    v.column :t10_r7
-    v.column :t10_r8
-    v.column :t10_r9
-    v.column :t10_r10
-    v.column :t10_r11
-    v.column :t11_r0
-    v.column :t11_r1
-    v.column :t11_r2
-    v.column :t12_r0
-    v.column :t12_r1
-    v.column :t12_r2
-    v.column :t12_r3
-    v.column :t12_r4
-    v.column :t12_r5
-  end
-
-  create_view "run_results_program_configs_rankings", "select `run_results_parameter_optimizations_parameter_set_iterations`.`id` AS `t0_r0`,`run_results_parameter_optimizations_parameter_set_iterations`.`run_results_parameter_optimizations_parameter_set_id` AS `t0_r1`,`run_results_parameter_optimizations_parameter_set_iterations`.`iteration` AS `t0_r2`,`run_results_parameter_optimizations_parameter_set_iterations`.`paramSetAsString` AS `t0_r3`,`run_results_parameter_optimizations_parameter_values`.`id` AS `t1_r0`,`run_results_parameter_optimizations_parameter_values`.`repository_id` AS `t1_r1`,`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `t1_r2`,`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_parameter_id` AS `t1_r3`,`run_results_parameter_optimizations_parameter_values`.`value` AS `t1_r4`,`run_results_parameter_optimizations_parameter_set_parameters`.`id` AS `t2_r0`,`run_results_parameter_optimizations_parameter_set_parameters`.`repository_id` AS `t2_r1`,`run_results_parameter_optimizations_parameter_set_parameters`.`run_results_parameter_optimizations_parameter_set_id` AS `t2_r2`,`run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_id` AS `t2_r3`,`program_parameters`.`id` AS `t3_r0`,`program_parameters`.`repository_id` AS `t3_r1`,`program_parameters`.`program_config_id` AS `t3_r2`,`program_parameters`.`program_parameter_type_id` AS `t3_r3`,`program_parameters`.`name` AS `t3_r4`,`program_parameters`.`description` AS `t3_r5`,`program_parameters`.`minValue` AS `t3_r6`,`program_parameters`.`maxValue` AS `t3_r7`,`program_parameters`.`def` AS `t3_r8`,`run_results_parameter_optimizations_qualities`.`id` AS `t4_r0`,`run_results_parameter_optimizations_qualities`.`repository_id` AS `t4_r1`,`run_results_parameter_optimizations_qualities`.`run_results_parameter_optimizations_parameter_set_iteration_id` AS `t4_r2`,`run_results_parameter_optimizations_qualities`.`clustering_quality_measure_id` AS `t4_r3`,`run_results_parameter_optimizations_qualities`.`quality` AS `t4_r4`,`clustering_quality_measures`.`id` AS `t5_r0`,`clustering_quality_measures`.`repository_id` AS `t5_r1`,`clustering_quality_measures`.`name` AS `t5_r2`,`clustering_quality_measures`.`minValue` AS `t5_r3`,`clustering_quality_measures`.`maxValue` AS `t5_r4`,`clustering_quality_measures`.`requiresGoldStandard` AS `t5_r5`,`run_results_parameter_optimizations_parameter_sets`.`id` AS `t6_r0`,`run_results_parameter_optimizations_parameter_sets`.`repository_id` AS `t6_r1`,`run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimization_id` AS `t6_r2`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`id` AS `t7_r0`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`repository_id` AS `t7_r1`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimizations_parameter_set_id` AS `t7_r2`,`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`program_parameter_id` AS `t7_r3`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`id` AS `t8_r0`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`repository_id` AS `t8_r1`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`program_config_id` AS `t8_r2`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_type_id` AS `t8_r3`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`name` AS `t8_r4`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`description` AS `t8_r5`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`minValue` AS `t8_r6`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`maxValue` AS `t8_r7`,`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`def` AS `t8_r8`,`run_results_parameter_optimizations`.`id` AS `t9_r0`,`run_results_parameter_optimizations`.`repository_id` AS `t9_r1`,`run_results_parameter_optimizations`.`run_results_execution_id` AS `t9_r2`,`run_results_parameter_optimizations`.`data_config_id` AS `t9_r3`,`run_results_parameter_optimizations`.`program_config_id` AS `t9_r4`,`run_results_parameter_optimizations`.`absPath` AS `t9_r5`,`program_configs`.`id` AS `t10_r0`,`program_configs`.`repository_id` AS `t10_r1`,`program_configs`.`program_id` AS `t10_r2`,`program_configs`.`program_config_id` AS `t10_r4`,`program_configs`.`name` AS `t10_r5`,`program_configs`.`absPath` AS `t10_r6`,`program_configs`.`invocationFormat` AS `t10_r7`,`program_configs`.`invocationFormatWithoutGoldStandard` AS `t10_r8`,`program_configs`.`invocationFormatParameterOptimization` AS `t10_r9`,`program_configs`.`invocationFormatParameterOptimizationWithoutGoldStandard` AS `t10_r10`,`program_configs`.`expectsNormalizedDataSet` AS `t10_r11`,`run_results_executions`.`id` AS `t11_r0`,`run_results_executions`.`repository_id` AS `t11_r1`,`run_results_executions`.`run_result_id` AS `t11_r2`,`run_results`.`id` AS `t12_r0`,`run_results`.`repository_id` AS `t12_r1`,`run_results`.`run_type_id` AS `t12_r2`,`run_results`.`uniqueRunIdentifier` AS `t12_r3`,`run_results`.`run_id` AS `t12_r4`,`run_results`.`date` AS `t12_r5` from ((((((((((((`run_results_parameter_optimizations_parameter_set_iterations` left join `run_results_parameter_optimizations_parameter_values` on((`run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `run_results_parameter_optimizations_parameter_set_iterations`.`id`))) left join `run_results_parameter_optimizations_parameter_set_parameters` on((`run_results_parameter_optimizations_parameter_set_parameters`.`id` = `run_results_parameter_optimizations_parameter_values`.`run_results_parameter_optimizations_parameter_set_parameter_id`))) left join `program_parameters` on((`program_parameters`.`id` = `run_results_parameter_optimizations_parameter_set_parameters`.`program_parameter_id`))) left join `run_results_parameter_optimizations_qualities` on((`run_results_parameter_optimizations_qualities`.`run_results_parameter_optimizations_parameter_set_iteration_id` = `run_results_parameter_optimizations_parameter_set_iterations`.`id`))) left join `clustering_quality_measures` on((`clustering_quality_measures`.`id` = `run_results_parameter_optimizations_qualities`.`clustering_quality_measure_id`))) left join `run_results_parameter_optimizations_parameter_sets` on((`run_results_parameter_optimizations_parameter_sets`.`id` = `run_results_parameter_optimizations_parameter_set_iterations`.`run_results_parameter_optimizations_parameter_set_id`))) left join `run_results_parameter_optimizations_parameter_set_parameters` `run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets` on((`run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimizations_parameter_set_id` = `run_results_parameter_optimizations_parameter_sets`.`id`))) left join `program_parameters` `program_parameters_run_results_parameter_optimizations_parameter_set_parameters` on((`program_parameters_run_results_parameter_optimizations_parameter_set_parameters`.`id` = `run_results_parameter_optimizations_parameter_set_parameters_run_results_parameter_optimizations_parameter_sets`.`program_parameter_id`))) left join `run_results_parameter_optimizations` on((`run_results_parameter_optimizations`.`id` = `run_results_parameter_optimizations_parameter_sets`.`run_results_parameter_optimization_id`))) left join `program_configs` on((`program_configs`.`id` = `run_results_parameter_optimizations`.`program_config_id`))) left join `run_results_executions` on((`run_results_executions`.`id` = `run_results_parameter_optimizations`.`run_results_execution_id`))) left join `run_results` on((`run_results`.`id` = `run_results_executions`.`run_result_id`)))", :force => true do |v|
-    v.column :t0_r0
-    v.column :t0_r1
-    v.column :t0_r2
-    v.column :t0_r3
-    v.column :t1_r0
-    v.column :t1_r1
-    v.column :t1_r2
-    v.column :t1_r3
-    v.column :t1_r4
-    v.column :t2_r0
-    v.column :t2_r1
-    v.column :t2_r2
-    v.column :t2_r3
-    v.column :t3_r0
-    v.column :t3_r1
-    v.column :t3_r2
-    v.column :t3_r3
-    v.column :t3_r4
-    v.column :t3_r5
-    v.column :t3_r6
-    v.column :t3_r7
-    v.column :t3_r8
-    v.column :t4_r0
-    v.column :t4_r1
-    v.column :t4_r2
-    v.column :t4_r3
-    v.column :t4_r4
-    v.column :t5_r0
-    v.column :t5_r1
-    v.column :t5_r2
-    v.column :t5_r3
-    v.column :t5_r4
-    v.column :t5_r5
-    v.column :t6_r0
-    v.column :t6_r1
-    v.column :t6_r2
-    v.column :t7_r0
-    v.column :t7_r1
-    v.column :t7_r2
-    v.column :t7_r3
-    v.column :t8_r0
-    v.column :t8_r1
-    v.column :t8_r2
-    v.column :t8_r3
-    v.column :t8_r4
-    v.column :t8_r5
-    v.column :t8_r6
-    v.column :t8_r7
-    v.column :t8_r8
-    v.column :t9_r0
-    v.column :t9_r1
-    v.column :t9_r2
-    v.column :t9_r3
-    v.column :t9_r4
-    v.column :t9_r5
-    v.column :t10_r0
-    v.column :t10_r1
-    v.column :t10_r2
-    v.column :t10_r4
-    v.column :t10_r5
-    v.column :t10_r6
-    v.column :t10_r7
-    v.column :t10_r8
-    v.column :t10_r9
-    v.column :t10_r10
-    v.column :t10_r11
-    v.column :t11_r0
-    v.column :t11_r1
-    v.column :t11_r2
-    v.column :t12_r0
-    v.column :t12_r1
-    v.column :t12_r2
-    v.column :t12_r3
-    v.column :t12_r4
-    v.column :t12_r5
-  end
+# Could not dump view "parameter_optimization_min_qual_rows" because of following RuntimeError
+#   No view called parameter_optimization_min_qual_rows found
 
 end

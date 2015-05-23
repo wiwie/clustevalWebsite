@@ -20,7 +20,7 @@ private
     runs.map do |run|
       [
         h(run.id),
-        h(run.absPath)
+        h(run.abs_path)
       ]
     end
   end
@@ -33,7 +33,7 @@ private
     runs = Run.order("#{sort_column} #{sort_direction}")
     runs = runs.page(page).per_page(per_page)
     if params[:sSearch].present?
-      runs = runs.where("id like :search or absPath like :search", search: "%#{params[:sSearch]}%")
+      runs = runs.where("id like :search or abs_path like :search", search: "%#{params[:sSearch]}%")
     end
     runs
   end
@@ -47,7 +47,7 @@ private
   end
 
   def sort_column
-    columns = %w[id absPath]
+    columns = %w[id abs_path]
     columns[params[:iSortCol_0].to_i]
   end
 

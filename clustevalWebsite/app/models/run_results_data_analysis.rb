@@ -4,7 +4,7 @@ class RunResultsDataAnalysis < ActiveRecord::Base
   # attr_accessible :title, :body
 
   	def identifier
-  		return run_results_execution.run_result.uniqueRunIdentifier
+  		return run_results_execution.run_result.unique_run_identifier
   	end
 
 	def to_param

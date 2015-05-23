@@ -10,8 +10,7 @@ class DataConfigsController < ApplicationController
 	end
 
 	def fetch_table_data
-
-		@dataConfig = DataConfig.find(:all, :conditions => ["repository_id = ?",Repository.find(params[:repository])])
+		@dataConfig = DataConfig.find(params[:id])
 		#@datasetConfig = @dataConfig.dataset_config
 		#@goldstandardConfig = @dataConfig.goldstandard_config
     	#@runResults = RunResultsParameterOptimization.select(:id).where(:data_config_id => DataConfig.select(:id).where(:data_config_id => params[:id]))
@@ -71,7 +70,7 @@ class DataConfigsController < ApplicationController
     	@runResultsParamSets = RunResultsParameterOptimizationsParameterSet.select(:id).where(:run_results_parameter_optimization_id => @runResults)
 		@dataConfigOrigId = DataConfig.where(:data_config_id => @dataConfig.id)
 
-		file = File.open(@dataConfig.absPath)
+		file = File.open(@dataConfig.abs_path)
 		@contents = ""
 		while tmp = file.gets do
 			@contents << tmp

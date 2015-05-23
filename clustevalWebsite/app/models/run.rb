@@ -4,7 +4,7 @@ class Run < ActiveRecord::Base
 	belongs_to :run
 
 	def to_param
-  		"#{absPath}".split('/')[-1].gsub('.run','')
+  		"#{abs_path}".split('/')[-1].gsub('.run','')
 	end
 
   def self.all(session, *args)

@@ -9,7 +9,7 @@
   </thead>
   <tbody>
   <tr>
-    <td>Name</td><td><%= @program.absPath.split('/')[-2] + '/' + @program.absPath.split('/')[-1] %></td>
+    <td>Name</td><td><%= @program.abs_path.split('/')[-2] + '/' + @program.abs_path.split('/')[-1] %></td>
   </tr>
   <tr>
     <td>Download</td><td><%= link_to 'Click', :action => 'download', :id => @program %></td>

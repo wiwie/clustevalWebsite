@@ -14,7 +14,7 @@ class DatasetConfigsController < ApplicationController
 		
 		@dataset = @datasetConfig.dataset
 		
-		file = File.open(@datasetConfig.absPath)
+		file = File.open(@datasetConfig.abs_path)
 		@contents = ""
 		while tmp = file.gets do
 			@contents << tmp

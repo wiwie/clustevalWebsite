@@ -29,7 +29,6 @@ class MainsController < ApplicationController
 	end
 
 	def comparison
-
 		if params[:post]
 			@qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:measure])
 			@inverted = params[:inv]
@@ -81,9 +80,9 @@ class MainsController < ApplicationController
 
 			# data for table
 			if params[:showDataConfigs]
-				@iterationsExts = ParameterOptimizationIterationsExtsConfig.includes(:program, :data_config).select("program_id,data_config_id,max(quality) as maxQuality,min(quality) as minQuality,clustering_quality_measure_id").where(:clustering_quality_measure_id => @qualityMeasureName).where("data_config_id" => @dataConfigs).where("program_id" => @methods).group("data_config_id,program_id")
+				@iterationsExts = ParameterOptimizationIterationsExtsConfig.includes(:program, :data_config).select("program_id,data_config_id,max(quality) as max_quality,min(quality) as min_quality").where(:clustering_quality_measure_id => @qualityMeasureName).where("data_config_id" => @dataConfigs).where("program_id" => @methods).group("data_config_id,program_id")
 			else
-				@iterationsExts = ParameterOptimizationIterationsExt.includes(:program, :dataset).select("program_id,dataset_id,max(quality) as maxQuality,min(quality) as minQuality,clustering_quality_measure_id").where(:clustering_quality_measure_id => @qualityMeasureName).where(:dataset_id => @datasets).where(:program_id => @methods).group("dataset_id,program_id")
+				@iterationsExts = ParameterOptimizationIterationsExt.includes(:program, :dataset).select("program_id,dataset_id,max(quality) as max_quality,min(quality) as min_quality").where(:clustering_quality_measure_id => @qualityMeasureName).where(:dataset_id => @datasets).where(:program_id => @methods).group("dataset_id,program_id")
 			end
 		end
 		respond_to do |format|

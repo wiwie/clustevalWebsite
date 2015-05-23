@@ -21,10 +21,10 @@
       <td>Type</td><td><%= @runType.name %></td>
     </tr>
     <tr>
-      <td>Name</td><td><%= @run.absPath.split('/')[-1] %></td>
+      <td>Name</td><td><%= @run.abs_path.split('/')[-1] %></td>
     </tr>
     <tr>
-      <td>Run configuration</td><td><%= link_to @runConfig.absPath.split('/')[-1], @runConfig %></td>
+      <td>Run configuration</td><td><%= link_to @runConfig.abs_path.split('/')[-1], @runConfig %></td>
     </tr>
     <tr>
       <td>Status</td><td><%= @run.status %></td>

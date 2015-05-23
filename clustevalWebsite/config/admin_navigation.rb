@@ -251,13 +251,13 @@ SimpleNavigation::Configuration.run do |navigation|
           @runResults = []
           if params[:controller] == 'run_results' or params[:controller] == 'run_results_clusterings' or params[:controller] == 'run_results_parameter_optimizations' or params[:controller] == 'run_results_data_analyses' or params[:controller] == 'run_results_run_data_analyses'
             if params[:action] == 'index'
-              @runResults = RunResult.all(params[:repository]).uniq{|x| x.uniqueRunIdentifier}.sort_by{|x| x.uniqueRunIdentifier}
+              @runResults = RunResult.all(params[:repository]).uniq{|x| x.unique_run_identifier}.sort_by{|x| x.unique_run_identifier}
             else
               @runResults = [RunResult.find(params[:id])]
             end
           end
           @runResults.each do |runResult|
-            @ident = runResult.uniqueRunIdentifier
+            @ident = runResult.unique_run_identifier
             #if @ident.length > 30
             #  @ident = @ident[0..15] + "..." + @ident[@ident.length-15,@ident.length]
             #end

@@ -28,7 +28,6 @@ ClustEval::Application.routes.draw do
 		match 'mains/tableHeaderImage/:text' => 'mains#tableHeaderImage'
 		match 'program_configs/fetch_table_data/:id' => 'program_configs#fetch_table_data'
 		match 'programs/download/:id' => 'programs#download'
-	  	#match 'programs/index' => 'programs#index'
 	  	match 'programs/comparison' => 'programs#comparison'
 		match 'programs/:id/perf' => 'programs#show_performance'
 		match 'programs/:id/clust' => 'programs#show_bestclusterings'

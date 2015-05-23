@@ -1,10 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem 'pg'
 gem 'mysql2'
 
 
@@ -13,14 +14,14 @@ gem 'mysql2'
 group :assets do
 end
   
-gem 'sass-rails',   '~> 3.2.3'
-gem 'coffee-rails', '~> 3.2.1'
+gem 'sass-rails'
+gem 'coffee-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'execjs'
 gem 'therubyracer', :platforms => :ruby
 
-gem 'uglifier', '>= 1.0.3'
+gem 'uglifier'
 
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'jquery-datatables-tabletools-rails', github: 'kindjal/jquery-datatables-tabletools-rails'

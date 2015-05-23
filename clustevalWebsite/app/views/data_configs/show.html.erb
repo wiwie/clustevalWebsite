@@ -8,14 +8,14 @@
   </thead>
   <tbody>
   <tr>
-    <td>Absolute Path</td><td><%= @dataConfig.absPath.split('/')[-1] %></td>
+    <td>Absolute Path</td><td><%= @dataConfig.abs_path.split('/')[-1] %></td>
   </tr>
   <tr>
-    <td>Dataset Configuration</td><td><%= link_to @datasetConfig.absPath.split('/')[-1], @datasetConfig %></td>
+    <td>Dataset Configuration</td><td><%= link_to @datasetConfig.abs_path.split('/')[-1], @datasetConfig %></td>
   </tr>
   <% if @goldstandardConfig != nil %>
   <tr>
-    <td>Goldstandard Configuration</td><td><%= link_to @goldstandardConfig.absPath.split('/')[-1], @goldstandardConfig %></td>
+    <td>Goldstandard Configuration</td><td><%= link_to @goldstandardConfig.abs_path.split('/')[-1], @goldstandardConfig %></td>
   </tr>
   <% end %>
   <tr>

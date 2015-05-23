@@ -8,7 +8,7 @@
   </thead>
   <tbody>
   <tr>
-    <td>Program configuration</td><td><%= link_to @programConfig.absPath.split('/')[-1], @programConfig %></td>
+    <td>Program configuration</td><td><%= link_to @programConfig.abs_path.split('/')[-1], @programConfig %></td>
   </tr>
   <tr>
     <td>Name</td><td><%= @programParameter.name %></td>
@@ -20,10 +20,10 @@
     <td>Type</td><td><%= @programParameter.program_parameter_type.name %></td>
   </tr>
   <tr>
-    <td>minimal value</td><td><%= @programParameter.minValue %></td>
+    <td>minimal value</td><td><%= @programParameter.min_value %></td>
   </tr>
   <tr>
-    <td>maximal value</td><td><%= @programParameter.maxValue %></td>
+    <td>maximal value</td><td><%= @programParameter.max_value %></td>
   </tr>
   <tr>
     <td>default value</td><td><%= @programParameter.def %></td>

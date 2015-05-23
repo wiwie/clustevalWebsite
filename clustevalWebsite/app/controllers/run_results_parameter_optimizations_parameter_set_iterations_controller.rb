@@ -4,6 +4,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 	def show
 		 @iteration = RunResultsParameterOptimizationsParameterSetIteration.find(params[:id])
 		 #@clustering = Clustering.includes({:clusters => :cluster_objects}).find(@iteration.clustering_id)
+		 @clustering = Clustering.find(@iteration.clustering_id)
 		 @paramSet = @iteration.run_results_parameter_optimizations_parameter_set
 		 @paramOpt = @paramSet.run_results_parameter_optimization
 		 @runResult = @paramOpt.run_results_execution.run_result
@@ -17,7 +18,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 		 @logContents = ""
 
 		# log file
-		logPath = @runResult.absPath + '/logs/' + @programConfig.name + '_' + @dataConfig.name + '.' + @iteration.iteration.to_s + '.log'
+		logPath = @runResult.abs_path + '/logs/' + @programConfig.name + '_' + @dataConfig.name + '.' + @iteration.iteration.to_s + '.log'
 		file = File.open(logPath)
 		@logContents = ""
 		while tmp = file.gets do
@@ -25,7 +26,8 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 		end
 
 
-		clusteringPath = @paramOpt.absPath.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv'
+		#clusteringPath = @paramOpt.abs_path.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv'
+		clusteringPath = @clustering.abs_path
 		file = File.open(clusteringPath)
 		@clusteringContents = []
 		while tmp = file.gets do
@@ -53,6 +55,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 			i = i + 1
 		end
 
+		@qualities = @iteration.run_results_parameter_optimizations_qualities
 		
 		respond_to do |format|
 			format.html # index.html.erb
@@ -65,7 +68,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 		 @paramSet = @iteration.run_results_parameter_optimizations_parameter_set
 		 @paramOpt = @paramSet.run_results_parameter_optimization
 		
-		send_file( @paramOpt.absPath.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv.svg',
+		send_file( @paramOpt.abs_path.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv.svg',
                 :disposition => 'inline',
                 :type => 'image/svg+xml',
                 :stream => false,
@@ -81,7 +84,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 		@datasetConfig = @dataConfig.dataset_config
 		@dataset = @datasetConfig.dataset
 
-		@isoMDSpath = @dataset.absPath + '.strip.isoMDS'
+		@isoMDSpath = @dataset.abs_path + '.strip.isoMDS'
 		
 		send_file( @isoMDSpath,
                 :disposition => 'inline',
@@ -89,7 +92,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
                 :stream => false,
                 :filename => 'scatter.txt' )
 
-		#send_file( @paramOpt.absPath.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv.isoMDS',
+		#send_file( @paramOpt.abs_path.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv.isoMDS',
         #        :disposition => 'inline',
         #        :type => 'text',
         #        :stream => false,
@@ -105,7 +108,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 		@datasetConfig = @dataConfig.dataset_config
 		@dataset = @datasetConfig.dataset
 
-		@isoMDSpath = @dataset.absPath + '.strip.PCA'
+		@isoMDSpath = @dataset.abs_path + '.strip.PCA'
 		
 		send_file( @isoMDSpath,
                 :disposition => 'inline',
@@ -113,7 +116,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
                 :stream => false,
                 :filename => 'scatter.txt' )
 
-		#send_file( @paramOpt.absPath.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv.isoMDS',
+		#send_file( @paramOpt.abs_path.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv.isoMDS',
         #        :disposition => 'inline',
         #        :type => 'text',
         #        :stream => false,
@@ -131,7 +134,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 
 		@programConfig = ProgramConfig.find(@paramOpt.program_config_id)
 
-		clusteringPath = @paramOpt.absPath.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv'
+		clusteringPath = @paramOpt.abs_path.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv'
 		file = File.open(clusteringPath)
 		@clusteringContents = []
 		while tmp = file.gets do

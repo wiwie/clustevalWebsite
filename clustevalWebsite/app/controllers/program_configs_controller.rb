@@ -17,7 +17,35 @@ class ProgramConfigsController < ApplicationController
     	@runResults = RunResultsParameterOptimization.select(:id).where(:program_config_id => ProgramConfig.select(:id).where(:program_config_id => params[:id]))
     	@runResultsParamSets = RunResultsParameterOptimizationsParameterSet.select(:id).where(:run_results_parameter_optimization_id => @runResults)
 		@programConfigOrigId = ProgramConfig.where(:program_config_id => @programConfig.id)
+
+		# 07/05/2015: new to improve performance
+		columns = ['t12_r5','t10_r6','t0_r3','t5_r2','t4_r4','t1_r2']
+		columnFormat = ['like','like','like','like','range','']
+
+		filterStrings = []
+		for i in 0..columns.count-1
+			format = columnFormat[i]
+			if format == 'like'
+				if params["sSearch_" + i.to_s] != ''
+					filterStrings += [columns[i] + ' LIKE \'%' + params["sSearch_" + i.to_s] + '%\'']
+				end
+			elsif format == 'range'
+				if params["sSearch_" + i.to_s] != '' and params["sSearch_" + i.to_s] != '~'
+					split = params["sSearch_" + i.to_s].split('~')
+					filterStrings += [columns[i] + ' BETWEEN ' + split[0] + ' AND ' + split[1]]
+				end
+			end
+		end
+		filterString = filterStrings.join(' AND ')
+
 		@runResultsProgramConfigsRanking = RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId)
+			#.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
+			.limit(params[:iDisplayLength].to_i)
+			.offset(params[:iDisplayStart].to_i)
+			.where(filterString)
+
+		# TODO: remove
+		#@runResultsProgramConfigsRanking = RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId)
 
 
 		@paramValuesQualityArray = []
@@ -35,7 +63,10 @@ class ProgramConfigsController < ApplicationController
 			]
 		end
 
-		@json = {"aaData" => @paramValuesQualityArray}.to_json
+		#@json = {"aaData" => @paramValuesQualityArray}.to_json
+		@json = {"iTotalRecords" => RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId).count,
+ 				"iTotalDisplayRecords" => RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId).where(filterString).count, 
+ 				"aaData" => @paramValuesQualityArray}.to_json
 		render :inline => @json
 	end
 	
@@ -49,7 +80,7 @@ class ProgramConfigsController < ApplicationController
 		@programConfigOrigId = ProgramConfig.where(:program_config_id => @programConfig.id)
 		@runResultsProgramConfigsRanking = RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId)
 
-		file = File.open(@programConfig.absPath)
+		file = File.open(@programConfig.abs_path)
 		@contents = ""
 		while tmp = file.gets do
 			@contents << tmp

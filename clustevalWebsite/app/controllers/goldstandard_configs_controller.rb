@@ -14,7 +14,7 @@ class GoldstandardConfigsController < ApplicationController
 		
 		@goldstandard = @goldstandardConfig.goldstandard
 		
-		file = File.open(@goldstandardConfig.absPath)
+		file = File.open(@goldstandardConfig.abs_path)
 		@contents = ""
 		while tmp = file.gets do
 			@contents << tmp

@@ -7,7 +7,7 @@ class CreateRunResultsClusteringQualities < ActiveRecord::Migration
       t.integer "data_config_id",                :null => false
       t.integer "program_config_id",                :null => false
       t.integer "clustering_quality_measure_id",                :null => false
-      t.binary "paramString", :null => false
+      t.binary "param_string", :null => false
       t.binary "quality",                :null => false
     end
 

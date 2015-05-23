@@ -5,14 +5,14 @@ class CreateProgramParameters < ActiveRecord::Migration
     t.integer "repository_id",                            :null => false
     t.integer "program_config_id",                        :null => false
     t.integer "program_parameter_type_id",                :null => false
-    t.binary  "name",                      :limit => 200, :null => false
-    t.binary  "description",               :limit => 200
-    t.binary  "minValue",                  :limit => 200
-    t.binary  "maxValue",                  :limit => 200
-    t.binary  "def",                       :limit => 200
+    t.binary  "name",                      :limit => 767, :null => false
+    t.binary  "description",               :limit => 767
+    t.binary  "min_value",                  :limit => 767
+    t.binary  "max_value",                  :limit => 767
+    t.binary  "def",                       :limit => 767
   end
 
-  add_index "program_parameters", ["program_config_id", "name", "repository_id"], :name => "index3", :unique => true, :length => {"name" => 200}
+  add_index "program_parameters", ["program_config_id", "name", "repository_id"], :name => "program_parameters_index3", :unique => true, :length => {"name" => 767}
   add_index "program_parameters", ["program_config_id"], :name => "fk_programParameter_1"
   add_index "program_parameters", ["program_config_id"], :name => "fk_program_parameter_1"
   add_index "program_parameters", ["program_parameter_type_id"], :name => "fk_program_parameters_1"

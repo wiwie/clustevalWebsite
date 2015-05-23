@@ -11,7 +11,7 @@ class CreateProgramConfigsCompatibleDatasetFormats < ActiveRecord::Migration
   add_index "program_configs_compatible_dataset_formats", ["dataset_format_id"], :name => "fk_programsCompatibleDataSetFormats_2"
   add_index "program_configs_compatible_dataset_formats", ["program_config_id"], :name => "fk_program_configs_compatible_dataset_formats_2"
   add_index "program_configs_compatible_dataset_formats", ["program_config_id"], :name => "fk_programsCompatibleDataSetFormats_1"
-  add_index "program_configs_compatible_dataset_formats", ["repository_id", "program_config_id", "dataset_format_id"], :name => "index5", :unique => true
+  add_index "program_configs_compatible_dataset_formats", ["repository_id", "program_config_id", "dataset_format_id"], :name => "program_configs_compatible_dataset_formats_index5", :unique => true
   add_index "program_configs_compatible_dataset_formats", ["repository_id"], :name => "fk_program_configs_compatible_dataset_formats_1"
   add_index "program_configs_compatible_dataset_formats", ["repository_id"], :name => "fk_programs_compatible_dataset_formats_1"
   end

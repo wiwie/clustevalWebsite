@@ -6,7 +6,7 @@ class CreateRunConfigsDataAnalyses < ActiveRecord::Migration
     t.integer "run_analysis_id", :null => false
   end
 
-  add_index "run_data_analyses", ["repository_id", "run_analysis_id"], :name => "index4", :unique => true
+  add_index "run_data_analyses", ["repository_id", "run_analysis_id"], :name => "run_data_analyses_index4", :unique => true
   add_index "run_data_analyses", ["repository_id"], :name => "fk_runConfigsAnalysisData_1"
   add_index "run_data_analyses", ["run_analysis_id"], :name => "fk_runConfigsAnalysisData_2"
   end

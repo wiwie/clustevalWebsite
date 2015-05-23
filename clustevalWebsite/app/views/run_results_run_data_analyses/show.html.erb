@@ -1,4 +1,4 @@
-<% content_for :title, "Run-Data Analysis Run Result '" + @runResult.absPath.split('/')[-1] + "'" %>
+<% content_for :title, "Run-Data Analysis Run Result '" + @runResult.abs_path.split('/')[-1] + "'" %>
 <% for d in 0..@runConfigRunAnalysisRunIdentifier.length-1 %>
   <% for e in 0..@runConfigRunAnalysisDataIdentifier.length-1 %>
     <table id="runResultsDataAnalysis" class="display">
@@ -11,11 +11,11 @@
       <tbody>
         <tr>
           <td>Data configuration</td>
-          <td><%= link_to @runConfigRunAnalysisRunIdentifier[d].runIdentifier, RunResult.find_by_uniqueRunIdentifier(@runConfigRunAnalysisRunIdentifier[d].runIdentifier) %></td>
+          <td><%= link_to @runConfigRunAnalysisRunIdentifier[d].runIdentifier, RunResult.find_by_unique_run_identifier(@runConfigRunAnalysisRunIdentifier[d].runIdentifier) %></td>
         </tr>
         <tr>
           <td>Data Analysis configuration</td>
-          <td><%= link_to @runConfigRunAnalysisDataIdentifier[e].dataIdentifier, RunResult.find_by_uniqueRunIdentifier(@runConfigRunAnalysisDataIdentifier[e].dataIdentifier) %></td>
+          <td><%= link_to @runConfigRunAnalysisDataIdentifier[e].dataIdentifier, RunResult.find_by_unique_run_identifier(@runConfigRunAnalysisDataIdentifier[e].dataIdentifier) %></td>
         </tr>
         <% for i in 0..@statistics.length-1 %>
           <% statistic = @statistics[i] %>

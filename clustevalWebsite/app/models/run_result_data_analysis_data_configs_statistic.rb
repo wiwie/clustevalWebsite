@@ -6,7 +6,7 @@ class RunResultDataAnalysisDataConfigsStatistic < ActiveRecord::Base
   # attr_accessible :title, :body
 
   	def content
-		file = File.open(absPath + '/analyses/' + data_config.name + '_' + statistic.name + '.txt')
+		file = File.open(abs_path + '/analyses/' + data_config.name + '_' + statistic.name + '.txt')
 		@contents = []
 		while tmp = file.gets do
 			@contents << tmp.split(/\t/)

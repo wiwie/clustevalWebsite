@@ -12,7 +12,7 @@ class ProgramsController < ApplicationController
 	def download
 		@program = Program.find_by_id(params[:id])
 
-		send_file @program.absPath
+		send_file @program.abs_path
 	end
 	
 	def show

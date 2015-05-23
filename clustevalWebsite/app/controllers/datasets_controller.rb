@@ -20,7 +20,7 @@ class DatasetsController < ApplicationController
 	def download
 		@dataset = Dataset.find_by_id(params[:id])
 
-		send_file @dataset.absPath
+		send_file @dataset.abs_path
 	end
 
 	def comparison
@@ -37,7 +37,7 @@ class DatasetsController < ApplicationController
 
 		# parse license document
 		begin
-			file = File.open(@dataset.absPath + ".LICENSE")
+			file = File.open(@dataset.abs_path + ".LICENSE")
 			@license = ""
 			while tmp = file.gets
 				@license << tmp
@@ -45,7 +45,7 @@ class DatasetsController < ApplicationController
 		rescue
 		end
 
-		file = File.open(@dataset.absPath)
+		file = File.open(@dataset.abs_path)
 		@contents = ""
 		for i in 1..10 do
 			tmp = file.gets
@@ -70,7 +70,7 @@ class DatasetsController < ApplicationController
 		@qualityMeasureName = params[:measureId]
 		@qualityMeasure = ClusteringQualityMeasure.find(@qualityMeasureName)
 
-		columns = ['alias', 'paramSetAsString', 'quality']
+		columns = ['alias', 'param_set_as_string', 'quality']
 		columnFormat = ['like','like','range']
 
 		filterStrings = []
@@ -93,7 +93,7 @@ class DatasetsController < ApplicationController
 			.joins(:program)
 			.where(:dataset_id => params[:id])
 			.where(:clustering_quality_measure_id => @qualityMeasureName)
-			.select("alias, paramSetAsString, quality")
+			.select("alias, param_set_as_string, quality")
 			.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
 			.limit(params[:iDisplayLength].to_i)
 			.offset(params[:iDisplayStart].to_i)
@@ -103,7 +103,7 @@ class DatasetsController < ApplicationController
 		@iterations.each do |runResult|
 			@paramValuesQualityArray << [
 				runResult.alias, 
-				runResult.paramSetAsString.gsub(',','<br />'),
+				runResult.param_set_as_string.gsub(',','<br />'),
         		runResult.quality
 			]
 		end
@@ -112,12 +112,12 @@ class DatasetsController < ApplicationController
 			.joins(:program)
 			.where(:dataset_id => params[:id])
 			.where(:clustering_quality_measure_id => @qualityMeasureName)
-			.select("alias, paramSetAsString, quality").count,
+			.select("alias, param_set_as_string, quality").count,
  				"iTotalDisplayRecords" => ParameterOptimizationIterationsExt
 			.joins(:program)
 			.where(:dataset_id => params[:id])
 			.where(:clustering_quality_measure_id => @qualityMeasureName)
-			.select("alias, paramSetAsString, quality")
+			.select("alias, param_set_as_string, quality")
 			.where(filterString).count, 
  				"aaData" => @paramValuesQualityArray}.to_json
 		render :inline => @json
@@ -174,7 +174,10 @@ class DatasetsController < ApplicationController
 		@datasets = Dataset.where(:dataset_id => @datasets)
 		@dataset_configs = DatasetConfig.where(:dataset_id => @datasets)
 		@data_configs = DataConfig.where(:dataset_config_id => @dataset_configs)
-		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:clustering_quality_measure, {:program_config => :program}]).where(:data_config_id => @data_configs).where(:clustering_quality_measure_id => params[:measureId]).select("value, programs.id AS program_id, quality,clustering_quality_measures.alias,paramName")
+		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:clustering_quality_measure, {:program_config => :program}])
+			.where(:data_config_id => @data_configs)
+			.where(:clustering_quality_measure_id => params[:measureId])
+			.select("value, programs.id AS program_id, quality,clustering_quality_measures.alias,paramName")
 		
 		@paramValuesQualityString = ''
 		@runResultsParamOptIteration.each do |iteration|
