@@ -1,7 +1,7 @@
 <b><large>Clustering Quality Measure: <%= @measure.alias%></large></b>
 <small>
 	<table class="tooltip_info">
-		<tr><td valign="top"><b>Type:</b></td><td><%= @measure.requiresGoldStandard ? 'External' : 'Internal' %></td></tr>
+		<tr><td valign="top"><b>Type:</b></td><td><%= @measure.requires_gold_standard ? 'External' : 'Internal' %></td></tr>
 		<tr><td valign="top"><b>Optimize by:</b></td><td><%= @measure.optimum == 'Maximum' ? 'Maximization' : 'Minimization' %></td></tr>
 		<tr><td valign="top"><b>Range:</b></td><td>[<%= @measure.min_value ? @measure.min_value : '?' %>, <%= @measure.max_value ? @measure.max_value : '?' %>]</td></tr>
 	</table>

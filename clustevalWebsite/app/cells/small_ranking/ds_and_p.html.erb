@@ -107,10 +107,10 @@ $(function () {
                 }
             },
             series: [
-            <% @programs.sort_by{|x| x.alias}.each do |program| %>
+            <% @programs.each do |program| %>
               {
                 name: '<%= program.alias %>',
-                data: [<% @datasets.sort_by{|x| x.alias}.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
+                data: [<% @datasets.each do |dataset| %><% if @visibleDatasets[dataset] %><% @qual = @matrix[@datasetIds[dataset]][@programIds[program]] %><% if @qual != "--" %><%= @qual %>
                 <%# elsif @isMaximum %><%#= @qualityMeasure.min_value %><%# else %><%#= @qualityMeasure.max_value %>
                 <% else %>null<% end %>,<% end %><% end %>]
             },

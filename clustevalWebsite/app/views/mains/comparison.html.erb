@@ -4,15 +4,15 @@
 	<p>This comparison page requires a quality measure in the repository, but there is none. Please add at least one measure to the repository and reload this page.</p>
 <% else %>
 	<p>This matrix contains the best performances of clustering methods applied to different datasets. Every cell shows the best achieved clustering quality with the corresponding clustering method on the corresponding dataset. The clustering quality is measured as <%= link_to @qualityMeasure.alias, @qualityMeasure %>.</p>
-	<%= select_tag :selectMethods, options_from_collection_for_select(Program.all(params[:repository]).sort_by{|x| x.alias}, "id", "alias", @methods), {:multiple => true } %>
+	<%= select_tag :selectMethods, options_from_collection_for_select(Program.where(:repository_id => params[:repository]).order(:alias), "id", "alias", @methods), {:multiple => true } %>
 	</select>
 	<% if not @showDataConfigs %>
-		<%= select_tag :selectDatasets, options_from_collection_for_select(Dataset.all(params[:repository]).sort_by{|x| x.alias}, "id", "alias", @datasets), {:multiple => true } %>
+		<%= select_tag :selectDatasets, options_from_collection_for_select(Dataset.where(:repository_id => params[:repository]).where(:visibility => ['1','2']).order(:alias), "id", "alias", @datasets), {:multiple => true } %>
 	<% else %>
-		<%= select_tag :selectDataConfigs, options_from_collection_for_select(DataConfig.all(params[:repository]).sort_by{|x| x.name}, "id", "name", @dataConfigs), {:multiple => true } %>
+		<%= select_tag :selectDataConfigs, options_from_collection_for_select(DataConfig.where(:repository_id => params[:repository]).order(:name), "id", "name", @dataConfigs), {:multiple => true } %>
 	<% end %>
 	</select>
-	<%= collection_select(:post, :measure, ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px'} ) %>
+	<%= collection_select(:post, :measure, ClusteringQualityMeasure.where(:repository_id => params[:repository]).order(:alias), :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px'} ) %>
 	<%= check_box_tag(:inv, '1', @inverted) %>Data Sets vs. Methods? (Invert)
 	<%= check_box_tag(:showDataConfigs, '1', @showDataConfigs) %>Data Configs. instead of Data Sets?
 	<%= check_box_tag(:showRanks, '1', @showRanks) %>Show Ranks
