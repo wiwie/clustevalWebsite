@@ -148,7 +148,13 @@ class RunResultsParameterOptimizationsController < ApplicationController
 	end
 
 	def fetch_graph_data
-		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:data_config, :program_config, :clustering_quality_measure]).where(:data_config_id => params[:dataId]).where(:program_config_id => params[:programId]).where(:paramName => params[:paramName]).select("GROUP_CONCAT(value SEPARATOR '\t') as value, quality, iteration,clustering_quality_measures.alias").group("iteration","clustering_quality_measures.alias")
+		@runResultsParamOptIteration = ParameterOptimizationIteration
+			.joins([:data_config, :program_config, :clustering_quality_measure])
+			.where(:data_config_id => params[:dataId])
+			.where(:program_config_id => params[:programId])
+			.where(:paramname => params[:paramName])#.select("GROUP_CONCAT(value SEPARATOR '\t') as value, quality, iteration,clustering_quality_measures.alias")
+			.select("string_agg(value, '\t') as value, max(quality) as quality, max(iteration) as iteration,clustering_quality_measures.alias")
+			.group("iteration","clustering_quality_measures.alias")
 		
 		@paramValuesQualityString = ''
 		@runResultsParamOptIteration.each do |iteration|

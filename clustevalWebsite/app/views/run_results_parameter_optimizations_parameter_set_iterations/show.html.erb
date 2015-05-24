@@ -7,7 +7,7 @@
 	</thead>
 	<tbody>
 	<tr>
-		<td>Run Result</td><td><%= @runResult.unique_run_identifier %></td>
+		<td>Run Result</td><td><%= link_to @runResult.unique_run_identifier, @paramOpt %></td>
 	</tr>
 	<tr>
 		<td>Run</td><td><%= link_to @runResult.run.name, @runResult.run %></td>

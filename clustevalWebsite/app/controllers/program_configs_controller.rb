@@ -38,8 +38,7 @@ class ProgramConfigsController < ApplicationController
 		end
 		filterString = filterStrings.join(' AND ')
 
-		@runResultsProgramConfigsRanking = RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId)
-			#.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
+		@runResultsProgramConfigsRanking = RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId)#.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
 			.limit(params[:iDisplayLength].to_i)
 			.offset(params[:iDisplayStart].to_i)
 			.where(filterString)

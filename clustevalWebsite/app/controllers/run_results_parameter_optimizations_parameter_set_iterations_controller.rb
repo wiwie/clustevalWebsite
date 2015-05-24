@@ -47,7 +47,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 				@item = clusterItemString.split(':')[0]
 				@clusterItems[@item] = @coeff
 				@fuzzySum = @fuzzySum + @coeff.to_f
-				if not @item in @itemToCrispCluster or (@item in @itemToCrispCluster and @coeff.to_f > @itemToCrispCluster[@item][1])
+				if not @itemToCrispCluster.has_key?(@item) or (@itemToCrispCluster.has_key?(@item) and @coeff.to_f > @itemToCrispCluster[@item][1])
 					@itemToCrispCluster[@item] = [i,@coeff.to_f]
 				end
 			end
