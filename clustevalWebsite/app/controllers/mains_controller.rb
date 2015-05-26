@@ -82,7 +82,19 @@ class MainsController < ApplicationController
 			if params[:showDataConfigs]
 				@iterationsExts = ParameterOptimizationIterationsExtsConfig.includes(:program, :data_config).select("program_id,data_config_id,max(quality) as max_quality,min(quality) as min_quality").where(:clustering_quality_measure_id => @qualityMeasureName).where("data_config_id" => @dataConfigs).where("program_id" => @methods).group("data_config_id,program_id")
 			else
-				@iterationsExts = ParameterOptimizationIterationsExt.includes(:program, :dataset).select("program_id,dataset_id,max(quality) as max_quality,min(quality) as min_quality").where(:clustering_quality_measure_id => @qualityMeasureName).where(:dataset_id => @datasets).where(:program_id => @methods).group("dataset_id,program_id")
+				#@iterationsExts = ParameterOptimizationIterationsExt.includes(:program, :dataset).select("program_id,dataset_id,max(quality) as max_quality,min(quality) as min_quality").where(:clustering_quality_measure_id => @qualityMeasureName).where(:dataset_id => @datasets).where(:program_id => @methods).group("dataset_id,program_id")
+				@isMaximum = @qualityMeasure.optimum == 'Maximum'
+				if @isMaximum
+					@iterationsExts = ParameterOptimizationMaxQual.includes(:program, :dataset)
+						.select("program_id,dataset_id,maxquality as max_quality")
+						.where(:clustering_quality_measure_id => @qualityMeasureName)
+						.where(:dataset_id => @datasets).where(:program_id => @methods)
+				else
+					@iterationsExts = ParameterOptimizationMinQual.includes(:program, :dataset)
+						.select("program_id,dataset_id,minquality as min_quality")
+						.where(:clustering_quality_measure_id => @qualityMeasureName)
+						.where(:dataset_id => @datasets).where(:program_id => @methods)
+				end
 			end
 		end
 		respond_to do |format|
