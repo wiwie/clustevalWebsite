@@ -17,8 +17,10 @@ class RunResultsController < ApplicationController
 				#	@castedRunResults << tmp2
 			#		@runResults << runResult
 				#end
-				@castedRunResults << RunResultsParameterOptimization.find_by_run_results_execution_id(@runResultExecution.id)
-				@runResults << runResult
+				if @RunResultsExecution
+					@castedRunResults << RunResultsParameterOptimization.find_by_run_results_execution_id(@runResultExecution.id)
+					@runResults << runResult
+				end
 			elsif @runType.name == 'Internal Parameter Optimization'
 				@runResultExecution = RunResultsExecution.find_by_run_result_id(runResult.id)
 				@castedRunResults << RunResultsInternalParameterOptimization.find_by_run_results_execution_id(@runResultExecution.id)
