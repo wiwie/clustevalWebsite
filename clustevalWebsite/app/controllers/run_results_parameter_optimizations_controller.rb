@@ -115,9 +115,10 @@ class RunResultsParameterOptimizationsController < ApplicationController
 				.where(:program_config_id => params[:programId])
 				.select("max(quality) as quality, run_results_parameter_optimizations_parameter_set_iteration_id as iteration_id, iteration,encode(param_set_as_string,'escape') as param_set_as_string,clustering_quality_measures.alias")
 				.group("iteration_id", "iteration","param_set_as_string","clustering_quality_measures.alias")
-				.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0]).limit(
-			params[:iDisplayLength].to_i).offset(
-			params[:iDisplayStart].to_i).where(filterString)
+				.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
+				.limit(params[:iDisplayLength].to_i)
+				.offset(params[:iDisplayStart].to_i)
+				.where(filterString)
 
 
 		@paramValuesQualityArray = []
