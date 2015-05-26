@@ -15,8 +15,6 @@
       <%= dataset.alias %>
 </th>
     <% end %>
-    <th>Average <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
-    <th>Median <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
   </tr>
  </thead>
  <tbody>
@@ -51,8 +49,6 @@
         </td>
       <% end %>
     <% end %>
-    <td><%= @programAvg[i] %></td>
-    <td><%= @programMedian[i] %></td>
   </tr>
   <% end %>
 </tbody>
@@ -180,7 +176,7 @@ $(document).ready(function() {
   $('#dataAndProgramStatistics1').dataTable({
     aoColumnDefs: [
       { "aTargets": [1],"bVisible": false },
-      { "sType": "num-html", "aTargets": [ <%= (1..@datasets.length+3).to_a.join(', ') %> ] }
+      { "sType": "num-html", "aTargets": [ <%= (1..@datasets.length+1).to_a.join(', ') %> ] }
     ],
     sPaginationType: "full_numbers",
     bJQueryUI: true,

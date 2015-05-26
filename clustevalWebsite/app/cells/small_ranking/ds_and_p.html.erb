@@ -14,8 +14,6 @@
         <%= program.name %>
       </th>
     <% end %>
-    <th>Average <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
-    <th>Median <% if @showRanks %>Rank<% else %><%= @qualityMeasure.alias %><% end %></th>
   </tr>
  </thead>
  <tbody>
@@ -50,8 +48,6 @@
         </td>
       <% end %>
     <% end %>
-    <td><%= @datasetAvg[i] %></td>
-    <td><%= @datasetMedian[i] %></td>
   </tr>
   <% end %>
 </tbody>
@@ -167,7 +163,7 @@ $(document).ready(function() {
     aoColumnDefs: [
       { "aTargets": [1],"bVisible": false
       },
-      { "sType": "num-html", "aTargets": [ <%= (2..@programs.length+3).to_a.join(', ') %> ] }
+      { "sType": "num-html", "aTargets": [ <%= (2..@programs.length+1).to_a.join(', ') %> ] }
     ],
     sPaginationType: "full_numbers",
     bJQueryUI: true,
