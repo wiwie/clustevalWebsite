@@ -177,7 +177,7 @@ class DatasetsController < ApplicationController
 		@runResultsParamOptIteration = ParameterOptimizationIteration.joins([:clustering_quality_measure, {:program_config => :program}])
 			.where(:data_config_id => @data_configs)
 			.where(:clustering_quality_measure_id => params[:measureId])
-			.select("value, programs.id AS program_id, quality,clustering_quality_measures.alias,paramName")
+			.select("value, programs.id AS program_id, quality,clustering_quality_measures.alias,paramname")
 		
 		@paramValuesQualityString = ''
 		@runResultsParamOptIteration.each do |iteration|
@@ -185,7 +185,7 @@ class DatasetsController < ApplicationController
 			@paramValuesQualityString << '	'
 			@paramValuesQualityString << iteration.program_id.to_s
 			@paramValuesQualityString << '	'
-			@paramValuesQualityString << iteration.paramName
+			@paramValuesQualityString << iteration.paramname
 			@paramValuesQualityString << '	'
 			@paramValuesQualityString << iteration.value.to_s
 			@paramValuesQualityString << '	'

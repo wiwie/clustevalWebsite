@@ -30,7 +30,6 @@
 <table id="dataConfig2" class="display">
   <thead>
   <tr>
-    <th>Date</th>
     <th>Program Config</th>
     <th>Parameter set</th>
     <th>Clustering Quality Measure</th>
@@ -42,7 +41,6 @@
   </tbody>
       <tfoot>
       <tr>
-        <th>Date</th>
         <th>Program Config</th>
         <th>Parameter set</th>
         <th>Clustering Quality Measure</th>
@@ -64,7 +62,7 @@ $(document).ready(function() {
       bJQueryUI: true,
       bRetrieve: true,
       bDestroy: true,
-      aaSorting: [[ 4, "desc" ]],
+      aaSorting: [[ 3, "desc" ]],
       bProcessing: true,
       bDeferRender: true,
       bServerSide: true,
@@ -73,8 +71,7 @@ $(document).ready(function() {
         $('body').removeClass('loading'); 
       }
     }).columnFilter(
-        {aoColumns: [ 
-          { type: "text" },
+        {aoColumns: [
           { type: "text" },
           { type: "text" },
           { type: "text" },

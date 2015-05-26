@@ -17,8 +17,8 @@ class DataConfigsController < ApplicationController
     	#@runResultsParamSets = RunResultsParameterOptimizationsParameterSet.select(:id).where(:run_results_parameter_optimization_id => @runResults)
 		#@dataConfigOrigId = DataConfig.where(:data_config_id => @dataConfig.id)
 
-		columns = ['t12_r5','t10_r6','t0_r3','t5_r2','t4_r4','t1_r2']
-		columnFormat = ['like','like','like','like','range','']
+		columns = ['t10_r6','t0_r3','t5_r2','t4_r4','t1_r2']
+		columnFormat = ['like','like','like','range','']
 
 		filterStrings = []
 		for i in 0..columns.count-1
@@ -36,7 +36,10 @@ class DataConfigsController < ApplicationController
 		end
 		filterString = filterStrings.join(' AND ')
 
-		@runResultsDataConfigsRanking = RunResultsDataConfigsRanking.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig)).order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
+		@runResultsDataConfigsRanking = RunResultsDataConfigsRanking
+			.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig))
+			.where('t5_r2 is not null')
+			.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
 			.limit(params[:iDisplayLength].to_i).offset(
 			params[:iDisplayStart].to_i).where(filterString)
 
@@ -44,7 +47,6 @@ class DataConfigsController < ApplicationController
 		@runResultsDataConfigsRanking.each do |runResult|
 			#@measure = ClusteringQualityMeasure.find_by_name(runResult.t5_r2)
 			@paramValuesQualityArray << [
-				runResult.t12_r5, 
 				runResult.t10_r6.split('/')[-1], 
 				runResult.t0_r3.gsub(',','<br />'),
 				#(@measure.nil? ? '' : @measure.alias),
@@ -56,8 +58,13 @@ class DataConfigsController < ApplicationController
 			]
 		end
 
-		@json = {"iTotalRecords" => RunResultsDataConfigsRanking.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig)).count,
- 				"iTotalDisplayRecords" => RunResultsDataConfigsRanking.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig)).where(filterString).count, 
+		@json = {"iTotalRecords" => RunResultsDataConfigsRanking
+					.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig))
+					.where('t5_r2 is not null').count,
+ 				"iTotalDisplayRecords" => RunResultsDataConfigsRanking
+ 					.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig))
+ 					.where(filterString)
+ 					.where('t5_r2 is not null').count, 
  				"aaData" => @paramValuesQualityArray}.to_json
 		render :inline => @json
 	end

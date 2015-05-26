@@ -137,12 +137,12 @@ class RunResultsParameterOptimizationsController < ApplicationController
 				.joins([:data_config, :program_config, :clustering_quality_measure])
 				.where(:data_config_id => params[:dataId])
 				.where(:program_config_id => params[:programId])
-				.select("distinct run_results_parameter_optimizations_parameter_set_iteration_id,clustering_quality_measures.alias").count,
+				.select("distinct run_results_parameter_optimizations_parameter_set_iteration_id,iteration,param_set_as_string,clustering_quality_measures.alias").count,
  				"iTotalDisplayRecords" => ParameterOptimizationIteration
 				.joins([:data_config, :program_config, :clustering_quality_measure])
 				.where(:data_config_id => params[:dataId])
 				.where(:program_config_id => params[:programId])
-				.select("distinct run_results_parameter_optimizations_parameter_set_iteration_id,clustering_quality_measures.alias")
+				.select("distinct run_results_parameter_optimizations_parameter_set_iteration_id,iteration,param_set_as_string,clustering_quality_measures.alias")
 				.where(filterString).count, 
  				"aaData" => @paramValuesQualityArray}.to_json
 		render :inline => @json
