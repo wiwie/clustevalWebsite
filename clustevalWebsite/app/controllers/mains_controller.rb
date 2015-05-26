@@ -47,6 +47,9 @@ class MainsController < ApplicationController
 			@showRanks = false
 		end
 
+		@programsSelectChoices = Program.where(:repository_id => params[:repository]).order(:alias)
+		@measureSelectChoices = ClusteringQualityMeasure.where(:repository_id => params[:repository]).order(:alias)
+		
 		if params[:selectMethods]
 			@methods = params[:selectMethods]
 		else
@@ -54,6 +57,7 @@ class MainsController < ApplicationController
 		end
 
 		if params[:showDataConfigs]
+			@dataConfigsSelectChoices = DataConfig.where(:repository_id => params[:repository]).order(:name)
 			if params[:selectDataConfigs]
 				@dataConfigs = params[:selectDataConfigs]
 			# if we have shown data sets before, we take all data configs of those data sets
@@ -63,6 +67,7 @@ class MainsController < ApplicationController
 				@dataConfigs = DataConfig.all(params[:repository]).map{|x| x.id}
 			end
 		else
+			@datasetsSelectChoices = Dataset.where(:repository_id => params[:repository]).where(:visibility => ['1','2']).order(:alias)
 			if params[:selectDatasets]
 				@datasets = params[:selectDatasets]
 			# if we have shown data sets before, we take all data configs of those data sets
