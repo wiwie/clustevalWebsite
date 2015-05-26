@@ -5,8 +5,10 @@
       The data statistics below correspond to one of the following data configurations of this dataset. Depending on which data configuration you choose, the calculated data statistics may differ.
         Please choose a data configuration:
         <%= collection_select(:data_config, :data_config_id, @data_configs, :id, :name, {:selected => params[:data_config][:data_config_id]}) %>
-        Analysis date:
-        <%= collection_select(:data_config, :date, @dates, :date, :date, {:selected => params[:data_config][:date]}) %>
+        <% if params[:data_config][:data_config_id] %>
+          Analysis date:
+          <%= collection_select(:data_config, :date, @dates, :date, :date, {:selected => params[:data_config][:date]}) %>
+        <% end %>
         <%= submit_tag('Change') %>
       <%# end %>
     <% end %>

@@ -2,7 +2,7 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 	
 
 	def show
-		 @iteration = RunResultsParameterOptimizationsParameterSetIteration.find(params[:id])
+		 @iteration = RunResultsParameterOptimizationsParameterSetIteration.find(params[:id]).includes(:qualities)
 		 #@clustering = Clustering.includes({:clusters => :cluster_objects}).find(@iteration.clustering_id)
 		 @clustering = Clustering.find(@iteration.clustering_id)
 		 @paramSet = @iteration.run_results_parameter_optimizations_parameter_set
