@@ -580,9 +580,17 @@ class SmallRankingCell < MyCell
 	def ds(opts)
 		measure = ClusteringQualityMeasure.find_by_id(opts[:qualityMeasure])
 		if measure.optimum == 'Maximum'
-			@iterationsExts = ParameterOptimizationMaxQualRow.joins([:program, :dataset, :run_results_parameter_optimizations_parameter_set_iteration]).select("DISTINCT parameter_optimization_max_qual_rows.program_id,parameter_optimization_max_qual_rows.dataset_id,quality,parameter_optimization_max_qual_rows.param_set_as_string,clustering_quality_measure_id,parameter_optimization_max_qual_rows.run_results_parameter_optimizations_parameter_set_iteration_id").where(:dataset_id => opts[:obj].id).where(:clustering_quality_measure_id => measure.id)
+			@iterationsExts = ParameterOptimizationMaxQualRow
+				.joins([:program, :dataset, :run_results_parameter_optimizations_parameter_set_iteration])
+				.select("DISTINCT ON (parameter_optimization_max_qual_rows.program_id,parameter_optimization_max_qual_rows.dataset_id) parameter_optimization_max_qual_rows.program_id,parameter_optimization_max_qual_rows.dataset_id,quality,parameter_optimization_max_qual_rows.param_set_as_string,clustering_quality_measure_id,parameter_optimization_max_qual_rows.run_results_parameter_optimizations_parameter_set_iteration_id")
+				.where(:dataset_id => opts[:obj].id)
+				.where(:clustering_quality_measure_id => measure.id)
 		else
-			@iterationsExts = ParameterOptimizationMinQualRow.joins([:program, :dataset, :run_results_parameter_optimizations_parameter_set_iteration]).select("DISTINCT parameter_optimization_min_qual_rows.program_id,parameter_optimization_min_qual_rows.dataset_id,quality,parameter_optimization_min_qual_rows.param_set_as_string,clustering_quality_measure_id,parameter_optimization_min_qual_rows.run_results_parameter_optimizations_parameter_set_iteration_id").where(:dataset_id => opts[:obj].id).where(:clustering_quality_measure_id => measure.id)
+			@iterationsExts = ParameterOptimizationMinQualRow
+				.joins([:program, :dataset, :run_results_parameter_optimizations_parameter_set_iteration])
+				.select("DISTINCT ON (parameter_optimization_min_qual_rows.program_id,parameter_optimization_min_qual_rows.dataset_id) parameter_optimization_min_qual_rows.program_id,parameter_optimization_min_qual_rows.dataset_id,quality,parameter_optimization_min_qual_rows.param_set_as_string,clustering_quality_measure_id,parameter_optimization_min_qual_rows.run_results_parameter_optimizations_parameter_set_iteration_id")
+				.where(:dataset_id => opts[:obj].id)
+				.where(:clustering_quality_measure_id => measure.id)
 		end
 		render :view => 'ds', :locals => {:qualityMeasure => opts[:qualityMeasure], :iterationsExts => @iterationsExts, :program_filter => opts[:program_filter]}
 	end
