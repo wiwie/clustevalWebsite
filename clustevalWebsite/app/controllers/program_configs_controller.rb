@@ -38,7 +38,9 @@ class ProgramConfigsController < ApplicationController
 		end
 		filterString = filterStrings.join(' AND ')
 
-		@runResultsProgramConfigsRanking = RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId)#.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
+		@runResultsProgramConfigsRanking = RunResultsProgramConfigsRanking
+			.where(:t9_r4 => @programConfigOrigId)
+			.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
 			.limit(params[:iDisplayLength].to_i)
 			.offset(params[:iDisplayStart].to_i)
 			.where(filterString)
@@ -74,11 +76,7 @@ class ProgramConfigsController < ApplicationController
 		@program = @programConfig.program
 		@runResultFormat = RunResultFormat.find(@programConfig.run_result_format_id)
 		@parameters = @programConfig.program_parameters
-    	@runResults = RunResultsParameterOptimization.select(:id).where(:program_config_id => ProgramConfig.select(:id).where(:program_config_id => params[:id]))
-    	@runResultsParamSets = RunResultsParameterOptimizationsParameterSet.select(:id).where(:run_results_parameter_optimization_id => @runResults)
-		@programConfigOrigId = ProgramConfig.where(:program_config_id => @programConfig.id)
-		@runResultsProgramConfigsRanking = RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId)
-
+    	
 		file = File.open(@programConfig.abs_path)
 		@contents = ""
 		while tmp = file.gets do
