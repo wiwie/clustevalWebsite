@@ -37,7 +37,7 @@ class MainsController < ApplicationController
 		else
 			@qualityMeasures = ClusteringQualityMeasure.all(params[:repository])
 			@qualityMeasures.each do |measure|
-				if measure.name == 'TransClustF2ClusteringQualityMeasure'
+				if measure.name == 'TransClustFClusteringQualityMeasure'
 					@qualityMeasure = measure
 					break
 				end
