@@ -19,10 +19,12 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 
 		# log file
 		logPath = @runResult.abs_path + '/logs/' + @programConfig.name + '_' + @dataConfig.name + '.' + @iteration.iteration.to_s + '.log'
-		file = File.open(logPath)
 		@logContents = ""
-		while tmp = file.gets do
-			@logContents << tmp
+		if File.exist?(logPath)
+			file = File.open(logPath)
+			while tmp = file.gets do
+				@logContents << tmp
+			end
 		end
 
 

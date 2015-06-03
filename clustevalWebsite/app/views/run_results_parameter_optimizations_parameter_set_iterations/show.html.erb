@@ -238,7 +238,9 @@ $(function() {
 		jQuery.each(tsv, function(i, line) {
 			if (line) {
 				line = line.split(/\t/);
-				series[itemToClusterId[line[0]]].push({name: line[0], x: parseFloat(line[1]), y: parseFloat(line[2])});
+                	if (line[0] in itemToClusterId) {
+					series[itemToClusterId[line[0]]].push({name: line[0], x: parseFloat(line[1]), y: parseFloat(line[2])});
+				}
 			}
 		});
 
@@ -332,7 +334,9 @@ $(function() {
             jQuery.each(tsv, function(i, line) {
             	if (line) {
                 	line = line.split(/\t/);
-                	series[itemToClusterId[line[0]]].push({name: line[0], x: parseFloat(line[1]), y: parseFloat(line[2])});
+                	if (line[0] in itemToClusterId) {
+	                	series[itemToClusterId[line[0]]].push({name: line[0], x: parseFloat(line[1]), y: parseFloat(line[2])});
+	                }
                 }
             });
     
