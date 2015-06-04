@@ -10,7 +10,8 @@ class DatasetConfigsController < ApplicationController
 	end
 	
 	def show
-		@datasetConfig = DatasetConfig.find_by_name(params[:id])
+		#@datasetConfig = DatasetConfig.find_by_name(params[:id])
+		@datasetConfig = DatasetConfig.find(params[:id])
 		
 		@dataset = @datasetConfig.dataset
 		

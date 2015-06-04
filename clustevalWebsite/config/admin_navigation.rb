@@ -181,7 +181,7 @@ SimpleNavigation::Configuration.run do |navigation|
             if params[:action] == 'index'
               @datasetConfigs = DatasetConfig.all(params[:repository]).sort_by{|x| x.name}
             else
-              @datasetConfigs = [DatasetConfig.find_by_name(params[:id])]
+              @datasetConfigs = [DatasetConfig.find(params[:id])]
             end
           end
           @datasetConfigs.each do |dataset_config|
