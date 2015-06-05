@@ -16,7 +16,7 @@ class ProgramConfigsController < ApplicationController
 		@parameters = @programConfig.program_parameters
     	@runResults = RunResultsParameterOptimization.select(:id).where(:program_config_id => ProgramConfig.select(:id).where(:program_config_id => params[:id]))
     	@runResultsParamSets = RunResultsParameterOptimizationsParameterSet.select(:id).where(:run_results_parameter_optimization_id => @runResults)
-		@programConfigOrigId = ProgramConfig.where(:program_config_id => @programConfig.id)
+		#@programConfigOrigId = ProgramConfig.where(:program_config_id => @programConfig.id)
 
 		# 07/05/2015: new to improve performance
 		columns = ['t12_r5','t10_r6','t0_r3','t5_r2','t4_r4','t1_r2']
@@ -39,7 +39,7 @@ class ProgramConfigsController < ApplicationController
 		filterString = filterStrings.join(' AND ')
 
 		@runResultsProgramConfigsRanking = RunResultsProgramConfigsRanking
-			.where(:t9_r4 => @programConfigOrigId)
+			.where(:t10_r0 => params[:id])
 			.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
 			.limit(params[:iDisplayLength].to_i)
 			.offset(params[:iDisplayStart].to_i)
@@ -65,8 +65,8 @@ class ProgramConfigsController < ApplicationController
 		end
 
 		#@json = {"aaData" => @paramValuesQualityArray}.to_json
-		@json = {"iTotalRecords" => RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId).count,
- 				"iTotalDisplayRecords" => RunResultsProgramConfigsRanking.where(:t9_r4 => @programConfigOrigId).where(filterString).count, 
+		@json = {"iTotalRecords" => RunResultsProgramConfigsRanking.where(:t10_r0 => params[:id]).count,
+ 				"iTotalDisplayRecords" => RunResultsProgramConfigsRanking.where(:t10_r0 => params[:id]).where(filterString).count, 
  				"aaData" => @paramValuesQualityArray}.to_json
 		render :inline => @json
 	end

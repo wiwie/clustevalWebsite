@@ -37,7 +37,7 @@ class DataConfigsController < ApplicationController
 		filterString = filterStrings.join(' AND ')
 
 		@runResultsDataConfigsRanking = RunResultsDataConfigsRanking
-			.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig))
+			.where(:t13_r0 => @dataConfig)
 			.where('t5_r2 is not null')
 			.order(columns[params[:iSortCol_0].to_i] + " " + params[:sSortDir_0])
 			.limit(params[:iDisplayLength].to_i).offset(
@@ -59,10 +59,10 @@ class DataConfigsController < ApplicationController
 		end
 
 		@json = {"iTotalRecords" => RunResultsDataConfigsRanking
-					.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig))
+					.where(:t13_r0 => @dataConfig)
 					.where('t5_r2 is not null').count,
  				"iTotalDisplayRecords" => RunResultsDataConfigsRanking
- 					.where(:t9_r3 => DataConfig.where(:data_config_id => @dataConfig))
+ 					.where(:t13_r0 => @dataConfig)
  					.where(filterString)
  					.where('t5_r2 is not null').count, 
  				"aaData" => @paramValuesQualityArray}.to_json
