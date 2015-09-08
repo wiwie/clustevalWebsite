@@ -46,3 +46,5 @@ gem "twitter-bootstrap-rails", github: 'wiwie/twitter-bootstrap-rails'
 
 # sitemap creation
 gem 'sitemap_generator'
+
+gem 'multi_json'
