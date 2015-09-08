@@ -5,6 +5,5 @@ WORKDIR /clusteval
 ADD Gemfile /clusteval/Gemfile
 RUN bundle install
 ADD . /clusteval
-RUN rake db:create
 RUN rake db:migrate
 RUN rake db:seed
