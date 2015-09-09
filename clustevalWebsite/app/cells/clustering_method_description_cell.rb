@@ -1,7 +1,7 @@
 class ClusteringMethodDescriptionCell < MyCell
-	helper ActionView::Helpers::FormTagHelper
+	include ActionView::Helpers::FormTagHelper
 
-	def display(opts)
+	def show(opts)
 		begin
 	  		render :view => 'display', :locals => {:method => opts[:method], :detailsLink => opts[:detailsLink]}
 	  	rescue

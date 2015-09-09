@@ -1,10 +1,11 @@
 class InfoTextCell < MyCell
-	helper ActionView::Helpers::FormTagHelper
+	include ActionView::Helpers::FormTagHelper
 
-  def display
+  def show(opts)
 
   	begin
-  		render :view => 'display_' + params[:controller] + '_' + params[:action]
+  		# TODO
+  		render :view => 'display_' + opts[:controller] + '_' + opts[:action]
   	rescue
   		render :text => ''
   	end

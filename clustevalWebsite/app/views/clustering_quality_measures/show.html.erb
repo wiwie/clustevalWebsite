@@ -1,2 +1,2 @@
 <% content_for(:title, @measure.alias) %></h2>
-<%= render_cell :clustering_quality_measure_description, :display, :measure => @measure %>
+<%= cell :clustering_quality_measure_description, method: :display, :measure => @measure %>

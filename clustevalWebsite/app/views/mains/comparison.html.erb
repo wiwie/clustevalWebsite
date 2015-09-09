@@ -19,15 +19,15 @@
 	<input type="submit">
 	<% if !@inverted %>
 		<% if @showDataConfigs %>
-			<%= render_cell :small_ranking, :dc_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :dataConfigs => @dataConfigs, :showRanks => @showRanks %>
+			<%= cell :small_ranking, :dc_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :dataConfigs => @dataConfigs, :showRanks => @showRanks %>
 		<% else %>
-			<%= render_cell :small_ranking, :ds_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets, :showRanks => @showRanks %>
+			<%= cell :small_ranking, :ds_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets, :showRanks => @showRanks %>
 		<% end %>
 	<% else %>
 		<% if @showDataConfigs %>
-			<%= render_cell :small_ranking, :dc_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :dataConfigs => @dataConfigs, :showRanks => @showRanks %>
+			<%= cell :small_ranking, :dc_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :dataConfigs => @dataConfigs, :showRanks => @showRanks %>
 		<% else %>
-			<%= render_cell :small_ranking, :ds_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets, :showRanks => @showRanks %>
+			<%= cell :small_ranking, :ds_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets, :showRanks => @showRanks %>
 		<% end %>
 	<% end %>
 	<% end %>

@@ -1,6 +1,6 @@
 class DataStatisticCell < MyCell
 
-  def display(opts)
+  def show(opts)
   		@statistic = opts[:statistic]
   		@content = opts[:content]
   		@id = opts[:id]

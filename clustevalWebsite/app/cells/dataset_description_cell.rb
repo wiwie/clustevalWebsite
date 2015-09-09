@@ -1,7 +1,7 @@
 class DatasetDescriptionCell < MyCell
-	helper ActionView::Helpers::FormTagHelper
+	include ActionView::Helpers::FormTagHelper
 
-	def display(opts)
+	def show(opts)
 		begin
 	  		render :view => 'display', :locals => {:dataset => opts[:dataset], :detailsLink => opts[:detailsLink]}
 	  	rescue

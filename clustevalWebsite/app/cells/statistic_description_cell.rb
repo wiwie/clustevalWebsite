@@ -1,5 +1,5 @@
 class StatisticDescriptionCell < MyCell
-	def display(opts)
+	def show(opts)
 		begin
 	  		render :view => 'display_' + opts[:statistic].name, :locals => {:statistic => opts[:statistic]}
 	  	rescue

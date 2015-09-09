@@ -1,9 +1,10 @@
 class NavigationCell < MyCell
-	helper SimpleNavigation::Helpers
+	include SimpleNavigation::Helpers
 
-  def display
+  def show(opts)
   	begin
-  		render :view => 'display_' + params[:controller] + '_' + params[:action]
+  		# TODO
+  		render :view => 'display_' + opts[:controller] + '_' + opts[:action]
   	rescue
     	render :view => 'display'
 	end

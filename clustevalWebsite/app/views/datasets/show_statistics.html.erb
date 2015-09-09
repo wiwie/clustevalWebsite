@@ -21,7 +21,7 @@
   </thead>
   <tbody>
     <% @statistics.each do |statistic| %>
-      <%= render_cell :data_statistic, :display, :statistic => statistic.statistic, :content => statistic.content %>
+      <%= cell :data_statistic, :display, :statistic => statistic.statistic, :content => statistic.content %>
     <% end %>
   </tbody>
 </table>

@@ -1,5 +1,5 @@
 class ClusteringQualityMeasureDescriptionCell < MyCell
-	def display(opts)
+	def show(opts)
 		begin
 	  		render :view => 'display_' + opts[:measure].name, :locals => {:measure => opts[:measure]}
 	  	rescue

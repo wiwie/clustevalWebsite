@@ -12,7 +12,7 @@
         <td>Data configuration</td><td><%= link_to @runDataAnalysisDataConfigs[d].data_config.abs_path.split('/')[-1], @runDataAnalysisDataConfigs[d].data_config %></td>
       </tr>
       <% @statistics[d].each do |statistic| %>
-        <%= render_cell :data_statistic, :display, :statistic => statistic.statistic.name, :content => statistic.content, :id => d %>
+        <%= cell :data_statistic, :display, :statistic => statistic.statistic.name, :content => statistic.content, :id => d %>
       <% end %>
     </tbody>
   </table>

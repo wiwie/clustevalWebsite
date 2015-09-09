@@ -4,7 +4,7 @@
 	  <h3><%= dataset[0].alias %></h3>
 	  <ul>
 	  <% dataset[1].sort_by{|x| x.alias}.each do |ds| %>
-		<li><%= render_cell :dataset_description, :display, :dataset => ds, :detailsLink => true %></li>
+		<li><%= cell :dataset_description, method: :display, :dataset => ds, :detailsLink => true %></li>
 	  <% end %>
 	  </ul>
 	<% end %>
