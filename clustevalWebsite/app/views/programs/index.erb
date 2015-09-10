@@ -1,0 +1,4 @@
+<% content_for :title, "Available clustering methods" %>
+<% @programs.sort_by{|x| x.name}.each do |program| %>
+	<%= cell(:clustering_method_description).(:show, :method => program, :detailsLink => true).mb_chars %>
+<% end %>

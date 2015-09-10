@@ -7,5 +7,5 @@ ClustEval::Application.initialize! do |config|
 end
 
 require 'rubygems'
-require 'rails_sql_views'
+#require 'rails_sql_views'
 require 'composite_primary_keys'

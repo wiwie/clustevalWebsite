@@ -3,11 +3,11 @@ class RunAnalysisStatistic < ActiveRecord::Base
 	belongs_to :run_analysis
 	belongs_to :statistic
 
-  def self.all(session, *args)
+  def self.all(session = nil, *args)
 	if session
-		return self.find(:all, :conditions => ["repository_id = ?",Repository.find(session)])
+		return self.where("repository_id = ?",Repository.find(session))
 	else
-		return super.all
+		return super()
 	end
   end
 end

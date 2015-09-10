@@ -35,10 +35,10 @@ gem 'rails3-generators'
 gem 'json'
 gem 'raphael-rails'
 gem 'cells'
+gem "cells-erb"
 gem 'dynamic_form'
-gem 'foreigner' # enables this app, to use foreign keys in the database
 gem 'immigrant' # allows recreation of existing foreign keys in the database into the migration files
-gem 'rails_sql_views', github: 'centresource/rails_sql_views' # supports view
+#gem 'rails_sql_views', github: 'centresource/rails_sql_views' # supports view
 gem 'mathjax-rails'
 gem 'composite_primary_keys'
 
@@ -47,4 +47,5 @@ gem "twitter-bootstrap-rails", github: 'wiwie/twitter-bootstrap-rails'
 # sitemap creation
 gem 'sitemap_generator'
 
-gem 'multi_json'
+# compatibility with our rails 3 models with rails 4
+gem 'protected_attributes'

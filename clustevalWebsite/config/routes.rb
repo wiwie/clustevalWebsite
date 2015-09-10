@@ -3,52 +3,52 @@ ClustEval::Application.routes.draw do
 	mathjax 'mathjax'
 
 	scope ':repository' do
-	  	match 'datasets/index' => 'datasets#index'
-	  	match 'datasets/comparison' => 'datasets#comparison'
-	  	match 'datasets/show_comparison' => 'datasets#show_comparison'
-		match 'datasets/fetch_table_data/:id/:measureId' => 'datasets#fetch_table_data'
-		match 'datasets/show_clusterings_fetch_graph_data/:id/:measureId' => 'datasets#show_clusterings_fetch_graph_data'
-		match 'datasets/bestclusterings_table_data/:id/:measureId' => 'datasets#bestclusterings_table_data'
-		match 'datasets/download/:id' => 'datasets#download'
-		match 'datasets/:id/perf' => 'datasets#show_performance'
-		match 'datasets/:id/stat' => 'datasets#show_statistics'
-		match 'datasets/:id/clust' => 'datasets#show_clusterings'
-		match 'datasets/:id/bestclust' => 'datasets#show_bestclusterings'
-		match 'datasets/:id/bestclust/:program_filter' => 'datasets#show_bestclusterings', :as => :dataset_filter
-		match 'datasets/:id/tooltip_info' => 'datasets#tooltip_info'
-		match 'data_configs/fetch_table_data/:id' => 'data_configs#fetch_table_data'
-		match 'data_configs/:id/comparison' => 'data_configs#comparison'
-		match 'login', :to => "user_sessions#new",      :as => :login
-		match 'logout', :to => "user_sessions#destroy", :as => :logout
-		match 'mains' => 'mains#index', :via => :post
-		match 'mains/comparison' => 'mains#comparison'
-		match 'mains/workflow' => 'mains#workflow'
-		match 'mains/comparison_table_data/:qualityMeasure' => 'mains#comparison_table_data'
-		match 'mains/comparison_table_data_inverse/:qualityMeasure' => 'mains#comparison_table_data_inverse'
-		match 'mains/tableHeaderImage/:text' => 'mains#tableHeaderImage'
-		match 'program_configs/fetch_table_data/:id' => 'program_configs#fetch_table_data'
-		match 'programs/download/:id' => 'programs#download'
-	  	match 'programs/comparison' => 'programs#comparison'
-		match 'programs/:id/perf' => 'programs#show_performance'
-		match 'programs/:id/clust' => 'programs#show_bestclusterings'
-		match 'programs/:id/clust/:dataset_filter' => 'programs#show_bestclusterings', :as => :program_filter
-		match 'programs/:id/tooltip_info' => 'programs#tooltip_info'
-		match 'run_results_parameter_optimizations/img/:id' => 'run_results_parameter_optimizations#img'
-		match 'run_results_parameter_optimizations/fetch_table_data/:id/:dataId/:programId' => 'run_results_parameter_optimizations#fetch_table_data'
-		match 'run_results_parameter_optimizations/fetch_graph_data/:id/:dataId/:programId/:paramName' => 'run_results_parameter_optimizations#fetch_graph_data'
-		match 'run_results_parameter_optimizations_parameter_set_iterations/img/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#img'
-		match 'run_results_parameter_optimizations_parameter_set_iterations/isoMDS/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#isoMDS'
-		match 'run_results_parameter_optimizations_parameter_set_iterations/pca/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#pca'
-		match 'run_results_parameter_optimizations_parameter_set_iterations/:id/tooltip_info' => 'run_results_parameter_optimizations_parameter_set_iterations#tooltip_info'
+	  	get 'datasets/index' => 'datasets#index'
+	  	get 'datasets/comparison' => 'datasets#comparison'
+	  	get 'datasets/show_comparison' => 'datasets#show_comparison'
+		get 'datasets/fetch_table_data/:id/:measureId' => 'datasets#fetch_table_data'
+		get 'datasets/show_clusterings_fetch_graph_data/:id/:measureId' => 'datasets#show_clusterings_fetch_graph_data'
+		get 'datasets/bestclusterings_table_data/:id/:measureId' => 'datasets#bestclusterings_table_data'
+		get 'datasets/download/:id' => 'datasets#download'
+		get 'datasets/:id/perf' => 'datasets#show_performance'
+		get 'datasets/:id/stat' => 'datasets#show_statistics'
+		get 'datasets/:id/clust' => 'datasets#show_clusterings'
+		get 'datasets/:id/bestclust' => 'datasets#show_bestclusterings'
+		get 'datasets/:id/bestclust/:program_filter' => 'datasets#show_bestclusterings', :as => :dataset_filter
+		get 'datasets/:id/tooltip_info' => 'datasets#tooltip_info'
+		get 'data_configs/fetch_table_data/:id' => 'data_configs#fetch_table_data'
+		get 'data_configs/:id/comparison' => 'data_configs#comparison'
+		get 'login', :to => "user_sessions#new",      :as => :login
+		get 'logout', :to => "user_sessions#destroy", :as => :logout
+		get 'mains' => 'mains#index', :via => :post
+		get 'mains/comparison' => 'mains#comparison'
+		get 'mains/workflow' => 'mains#workflow'
+		get 'mains/comparison_table_data/:qualityMeasure' => 'mains#comparison_table_data'
+		get 'mains/comparison_table_data_inverse/:qualityMeasure' => 'mains#comparison_table_data_inverse'
+		get 'mains/tableHeaderImage/:text' => 'mains#tableHeaderImage'
+		get 'program_configs/fetch_table_data/:id' => 'program_configs#fetch_table_data'
+		get 'programs/download/:id' => 'programs#download'
+	  	get 'programs/comparison' => 'programs#comparison'
+		get 'programs/:id/perf' => 'programs#show_performance'
+		get 'programs/:id/clust' => 'programs#show_bestclusterings'
+		get 'programs/:id/clust/:dataset_filter' => 'programs#show_bestclusterings', :as => :program_filter
+		get 'programs/:id/tooltip_info' => 'programs#tooltip_info'
+		get 'run_results_parameter_optimizations/img/:id' => 'run_results_parameter_optimizations#img'
+		get 'run_results_parameter_optimizations/fetch_table_data/:id/:dataId/:programId' => 'run_results_parameter_optimizations#fetch_table_data'
+		get 'run_results_parameter_optimizations/fetch_graph_data/:id/:dataId/:programId/:paramName' => 'run_results_parameter_optimizations#fetch_graph_data'
+		get 'run_results_parameter_optimizations_parameter_set_iterations/img/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#img'
+		get 'run_results_parameter_optimizations_parameter_set_iterations/isoMDS/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#isoMDS'
+		get 'run_results_parameter_optimizations_parameter_set_iterations/pca/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#pca'
+		get 'run_results_parameter_optimizations_parameter_set_iterations/:id/tooltip_info' => 'run_results_parameter_optimizations_parameter_set_iterations#tooltip_info'
 
-		match 'run_results_run_analyses/img/:runIdentifier/:statisticName/:id' => 'run_results_run_analyses#img'
-		match 'runs/start/:id' => 'runs#start'
-		match 'runs/stop/:id' => 'runs#stop'
-		match 'small_rankings/dsp/:qualityMeasure/:inv' => 'small_rankings#dsp'
-		match 'small_rankings/ds/:id/:qualityMeasure' => 'small_rankings#ds'
-		match 'small_rankings/p/:id/:qualityMeasure' => 'small_rankings#p'
+		get 'run_results_run_analyses/img/:runIdentifier/:statisticName/:id' => 'run_results_run_analyses#img'
+		get 'runs/start/:id' => 'runs#start'
+		get 'runs/stop/:id' => 'runs#stop'
+		get 'small_rankings/dsp/:qualityMeasure/:inv' => 'small_rankings#dsp'
+		get 'small_rankings/ds/:id/:qualityMeasure' => 'small_rankings#ds'
+		get 'small_rankings/p/:id/:qualityMeasure' => 'small_rankings#p'
 
-		match 'clustering_quality_measures/:id/tooltip_info' => 'clustering_quality_measures#tooltip_info'
+		get 'clustering_quality_measures/:id/tooltip_info' => 'clustering_quality_measures#tooltip_info'
 
 		resources :admins
 		resources :datasets
@@ -117,11 +117,11 @@ ClustEval::Application.routes.draw do
 	  # first created -> highest priority.
 
 	  # Sample of regular route:
-	  #   match 'products/:id' => 'catalog#view'
+	  #   get 'products/:id' => 'catalog#view'
 	  # Keep in mind you can assign values other than :controller and :action
 
 	  # Sample of named route:
-	  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+	  #   get 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
 	  # This route can be invoked with purchase_url(:id => product.id)
 
 	  # Sample resource route (maps HTTP verbs to controller actions automatically):
@@ -168,6 +168,6 @@ ClustEval::Application.routes.draw do
 
 	  # This is a legacy wild controller route that's not recommended for RESTful applications.
 	  # Note: This route will make all actions in every controller accessible via GET requests.
-	  # match ':controller(/:action(/:id))(.:format)'
+	  # get ':controller(/:action(/:id))(.:format)'
 	end
 end

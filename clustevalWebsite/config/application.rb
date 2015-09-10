@@ -52,7 +52,7 @@ module ClustEval
     # This will create an empty whitelist of attributes available for mass-assignment for all models
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
     # parameters by using an attr_accessible or attr_protected declaration.
-    config.active_record.whitelist_attributes = true
+    # config.active_record.whitelist_attributes = true
 
     # Enable the asset pipeline
     config.assets.enabled = true
@@ -62,15 +62,15 @@ module ClustEval
 
     config.assets.paths << "#{Rails.root}/app/assets/images/diagona"
 
-    ActiveRecord::SchemaDumper.view_creation_order = [
-        'dataset_statistics',
-        'datasets_recent_statistics',
-        'parameter_optimization_iterations',
-        'parameter_optimization_data_configs_iterations',
-        'parameter_optimization_iterations_exts',
-        'parameter_optimization_max_quals',
-        'parameter_optimization_max_qual_rows',
-        'parameter_optimization_min_quals',
-        'parameter_optimization_min_qual_rows']
+    # ActiveRecord::SchemaDumper.view_creation_order = [
+    #     'dataset_statistics',
+    #     'datasets_recent_statistics',
+    #     'parameter_optimization_iterations',
+    #     'parameter_optimization_data_configs_iterations',
+    #     'parameter_optimization_iterations_exts',
+    #     'parameter_optimization_max_quals',
+    #     'parameter_optimization_max_qual_rows',
+    #     'parameter_optimization_min_quals',
+    #     'parameter_optimization_min_qual_rows']
   end
 end

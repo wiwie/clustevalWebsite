@@ -1,0 +1,22 @@
+<%= form_tag({:action => 'comparison'},{:method => 'get'}) do %>
+<% if params[:post] %> 
+<% program_id = params[:post][:program_id] %>
+<% qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:clustering_quality_measure_id2]) %>
+<% qualityMeasureName = qualityMeasure.id %>
+<% else %>
+	<% program_id = Program.all(params[:repository]).first.id %>
+	<% @qualityMeasures = ClusteringQualityMeasure.all(params[:repository]) %>
+	<% @qualityMeasures.each do |measure| %>
+		<% if measure.name == 'TransClustF2ClusteringQualityMeasure' %>
+			<% qualityMeasure = measure %>
+			<% break %>
+		<% end %>
+	<% end %>
+	<% qualityMeasureName = qualityMeasure.id %>
+<% end %>
+<% content_for :title, "How does a clustering method perform on different datasets?" %>
+Please choose a clustering method <%= collection_select(:post, :program_id, Program.all(params[:repository]).sort_by{|x| x.alias}, :id, :name, {:selected => program_id},{:style=>'width:300px; font: 16px serif;', :onchange => "$('body').addClass('loading'); this.form.submit();"}) %> and <br />
+a clustering quality measure:
+<%= collection_select(:post, :clustering_quality_measure_id2, ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}, :id, :alias, {:selected => qualityMeasure.id},{:style=>'width:200px; font: 16px serif;', :onchange => "$('body').addClass('loading'); this.form.submit();"} ) %>
+<%= cell(:small_ranking).(:p, :qualityMeasure => qualityMeasureName, :obj => Program.find_by_id(program_id)) %>
+<% end %>

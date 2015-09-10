@@ -1,0 +1,19 @@
+<% content_for :title, "Data Analysis Run Result '" + @runResult.abs_path.split('/')[-1] + "'" %>
+<% for d in 0..@runDataAnalysisDataConfigs.length-1 %>
+  <table id="runResultsDataAnalysis" class="display">
+    <thead>
+  	<tr>
+  	<th>Statistic</th>
+  	<th>Value</th>
+  	</tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Data configuration</td><td><%= link_to @runDataAnalysisDataConfigs[d].data_config.abs_path.split('/')[-1], @runDataAnalysisDataConfigs[d].data_config %></td>
+      </tr>
+      <% @statistics[d].each do |statistic| %>
+        <%= cell(:data_statistic).(:display, :statistic => statistic.statistic.name, :content => statistic.content, :id => d) %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

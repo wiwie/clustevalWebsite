@@ -1,0 +1,11 @@
+<% content_for :title, "Available datasets" %>
+<% @datasets.sort_by{|x| x[0].alias}.each do |dataset| %>
+	<% if dataset[1].length > 0 %>
+	  <h3><%= dataset[0].alias %></h3>
+	  <ul>
+	  <% dataset[1].sort_by{|x| x.alias}.each do |ds| %>
+		<li><%= cell(:dataset_description).(:show, :dataset => ds, :detailsLink => true).mb_chars %></li>
+	  <% end %>
+	  </ul>
+	<% end %>
+<% end %>

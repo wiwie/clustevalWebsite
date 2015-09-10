@@ -8,7 +8,7 @@ class CreateDatasetTypes < ActiveRecord::Migration
 
 	 add_index "dataset_types", ["repository_id"], :name => "fk_dataset_types_1"
     add_index "dataset_types", ["repository_id","name"], :name => "index_dataset_types_name", :unique => true, :length => {"name" => 767}
-    add_foreign_key "dataset_types", "repositories", :name => "dataset_types_repository_id_fk", dependent: :delete
-    add_foreign_key "datasets", "dataset_types", :name => "datasets_dataset_type_id_fk", dependent: :delete
+    add_foreign_key "dataset_types", "repositories", :name => "dataset_types_repository_id_fk", on_delete: :cascade
+    add_foreign_key "datasets", "dataset_types", :name => "datasets_dataset_type_id_fk", on_delete: :cascade
   end
 end

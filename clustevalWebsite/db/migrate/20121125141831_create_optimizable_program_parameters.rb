@@ -1,7 +1,6 @@
 class CreateOptimizableProgramParameters < ActiveRecord::Migration
   def change
     create_table :optimizable_program_parameters do |t|
-    t.integer "id",                   :null => false
     t.integer "repository_id",        :null => false
     t.integer "program_config_id",    :null => false
     t.integer "program_parameter_id", :null => false

@@ -1,0 +1,18 @@
+<% content_for :title, "Clustering Method '" + @program.name + "' - General" %>
+<%= cell(:clustering_method_description).(:show, :method => @program, :detailsLink => false).mb_chars %><br>
+<table id="program" class="display">
+  <thead>
+	<tr>
+	<th>Information</th>
+	<th>Value</th>
+	</tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Name</td><td><%= @program.abs_path.split('/')[-2] + '/' + @program.abs_path.split('/')[-1] %></td>
+  </tr>
+  <tr>
+    <td>Download</td><td><%= link_to 'Click', :action => 'download', :id => @program %></td>
+  </tr>
+  </tbody>
+</table>

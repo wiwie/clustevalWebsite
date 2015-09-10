@@ -1,4 +1,4 @@
-class MyCell < Cell::Rails
+class MyCell < Cell::ViewModel
 	include ApplicationHelper
 
 end

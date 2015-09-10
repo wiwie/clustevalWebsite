@@ -1,11 +1,11 @@
 class DatasetType < ActiveRecord::Base
   attr_accessible :name, :description
 
-  def self.all(session, *args)
+  def self.all(session = nil, *args)
 	if session
-		return self.find(:all, :conditions => ["repository_id = ?",Repository.find(session)])
+		return self.where("repository_id = ?",Repository.find(session))
 	else
-		return super.all
+		return super()
 	end
   end
 

@@ -1,7 +1,6 @@
 class CreateProgramConfigsCompatibleDatasetFormats < ActiveRecord::Migration
   def change
     create_table :program_configs_compatible_dataset_formats do |t|
-    t.integer "id",                :null => false
     t.integer "repository_id",     :null => false
     t.integer "program_config_id", :null => false
     t.integer "dataset_format_id", :null => false

@@ -4,11 +4,11 @@ class Cluster < ActiveRecord::Base
 	has_many :cluster_objects
   # attr_accessible :title, :body
 
-  def self.all(session, *args)
+  def self.all(session = nil, *args)
 	if session
-		return self.find(:all, :conditions => ["repository_id = ?",Repository.find(session).id])
+		return self.where("repository_id = ?",Repository.find(session).id)
 	else
-		return super.all
+		return super()
 	end
   end
 end

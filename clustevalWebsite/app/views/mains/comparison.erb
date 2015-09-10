@@ -1,0 +1,63 @@
+<% content_for :title, "Comparison of all clustering methods on all datasets" %>
+<%= form_tag({:action => 'comparison'}, {:method => 'get'}) do %>
+<% if not @qualityMeasure %>
+	<p>This comparison page requires a quality measure in the repository, but there is none. Please add at least one measure to the repository and reload this page.</p>
+<% else %>
+	<p>This matrix contains the best performances of clustering methods applied to different datasets. Every cell shows the best achieved clustering quality with the corresponding clustering method on the corresponding dataset. The clustering quality is measured as <%= link_to @qualityMeasure.alias, @qualityMeasure %>.</p>
+	<%= select_tag :selectMethods, options_from_collection_for_select(@programsSelectChoices, "id", "alias", @methods), {:multiple => true } %>
+	</select>
+	<% if not @showDataConfigs %>
+		<%= select_tag :selectDatasets, options_from_collection_for_select(@datasetsSelectChoices, "id", "alias", @datasets), {:multiple => true } %>
+	<% else %>
+		<%= select_tag :selectDataConfigs, options_from_collection_for_select(@dataConfigsSelectChoices, "id", "name", @dataConfigs), {:multiple => true } %>
+	<% end %>
+	</select>
+	<%= collection_select(:post, :measure, @measureSelectChoices, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px'} ) %>
+	<%= check_box_tag(:inv, '1', @inverted) %>Data Sets vs. Methods? (Invert)
+	<%= check_box_tag(:showDataConfigs, '1', @showDataConfigs) %>Data Configs. instead of Data Sets?
+	<%= check_box_tag(:showRanks, '1', @showRanks) %>Show Ranks
+	<input type="submit">
+	<% if !@inverted %>
+		<% if @showDataConfigs %>
+			<%= cell(:small_ranking).(:dc_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :dataConfigs => @dataConfigs, :showRanks => @showRanks) %>
+		<% else %>
+			<%= cell(:small_ranking).(:ds_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets, :showRanks => @showRanks) %>
+		<% end %>
+	<% else %>
+		<% if @showDataConfigs %>
+			<%= cell(:small_ranking).(:dc_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :dataConfigs => @dataConfigs, :showRanks => @showRanks) %>
+		<% else %>
+			<%= cell(:small_ranking).(:ds_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets, :showRanks => @showRanks) %>
+		<% end %>
+	<% end %>
+	<% end %>
+
+<% end %>
+<script type="text/javascript">
+$(document).ready(function(){
+   $("#selectMethods").multiselect({
+    includeSelectAllOption: true,
+    buttonText: function(options, select) {
+    	return 'Selected Methods (' + options.length + ') <b class="caret"></b>';
+    },
+    maxHeight: 400
+   });
+});
+$(document).ready(function(){
+	<% if not @showDataConfigs %>
+	   $("#selectDatasets").multiselect({
+	  <% else %>
+	   $("#selectDataConfigs").multiselect({
+	  <% end %>
+	    includeSelectAllOption: true,
+	    buttonText: function(options, select) {
+	    	<% if @showDataConfigs %>
+	    		return 'Selected Data configs. (' + options.length + ') <b class="caret"></b>';
+	    	<% else %>
+	    		return 'Selected Data sets (' + options.length + ') <b class="caret"></b>';
+	    	<% end %>
+	    },
+	    maxHeight: 400
+	   });
+});
+</script>

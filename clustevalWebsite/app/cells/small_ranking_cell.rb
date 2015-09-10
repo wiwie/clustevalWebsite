@@ -238,7 +238,8 @@ class SmallRankingCell < MyCell
 		#    @datasetMedian[i] = median(@matrix[i][1..@matrix[i].length])
 		#end
 
-		render :view => 'ds_and_p', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds, :showRanks => @showRanks}
+		render view: :ds_and_p
+		#, locals: {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds, :showRanks => @showRanks}
 	end
 
 	def median(array)

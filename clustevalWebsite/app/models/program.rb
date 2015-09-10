@@ -5,12 +5,12 @@ class Program < ActiveRecord::Base
   #    return self.full_name.gsub('/','_')
   #end
 
-  def self.all(repository, *args)
-  if repository
-    return self.find(:all, :conditions => ["repository_id = ?",repository])
-  else
-    return super.all
-  end
+  def self.all(repository = nil, *args)
+    if repository
+      return self.where(repository_id: repository)
+    else
+      return super()
+    end
   end
 
   def name

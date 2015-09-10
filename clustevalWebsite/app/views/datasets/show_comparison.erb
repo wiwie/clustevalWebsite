@@ -1,0 +1,2 @@
+<% content_for :title, "How well do clustering methods perform on '" + Dataset.find(@dataset_id).name + "'?" %>
+<%= cell(:small_ranking).(:ds_and_q, :obj => Dataset.find_by_id(@dataset_id), :iterationsExts => ParameterOptimizationIterationsExt.select("program_id,max(quality) as max_quality,min(quality) as min_quality,clustering_quality_measure_id").where(:dataset_id => @dataset_id).group("program_id,clustering_quality_measure_id")) %>

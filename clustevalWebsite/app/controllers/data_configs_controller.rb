@@ -91,6 +91,10 @@ class DataConfigsController < ApplicationController
 	end
 
 	def comparison
+		if DataConfig.find(params[:id]).data_config
             @data_config_id = DataConfig.find(params[:id]).data_config.id
+        else
+        	@data_config_id = params[:id]
+        end
 	end
 end

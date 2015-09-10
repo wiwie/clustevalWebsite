@@ -5,11 +5,11 @@ class Dataset < ActiveRecord::Base
   belongs_to :dataset_type
   has_many :dataset_configs
 
-  def self.all(repository, *args)
+  def self.all(repository = nil, *args)
     if repository
-      return self.find(:all, :conditions => ["repository_id = ? AND visibility > ?",repository,0])
+      return self.where("repository_id = ? AND visibility > ?",repository,0)
     else
-      return super.all
+      return super()
     end
   end
 
