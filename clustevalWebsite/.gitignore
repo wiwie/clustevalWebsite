@@ -18,3 +18,4 @@ config/database.yml.my
 config/database_pg.yml
 
 vendor/bundle/
+vendor/cache/
