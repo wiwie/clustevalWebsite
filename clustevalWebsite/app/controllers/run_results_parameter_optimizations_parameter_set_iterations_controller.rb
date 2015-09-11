@@ -18,16 +18,8 @@ class RunResultsParameterOptimizationsParameterSetIterationsController < Applica
 		 @logContents = ""
 
 		# log file
-		logPath = @runResult.abs_path + '/logs/' + @programConfig.name + '_' + @dataConfig.name + '.' + @iteration.iteration.to_s + '.log'
-		@logContents = ""
-		if File.exist?(logPath)
-			file = File.open(logPath)
-			while tmp = file.gets do
-				@logContents << tmp
-			end
-		end
-
-
+		@logContents = @runResult.log
+		
 		#clusteringPath = @paramOpt.abs_path.gsub('results.qual.complete','') + @iteration.iteration.to_s + '.results.conv'
 		clusteringPath = @clustering.abs_path
 		file = File.open(clusteringPath)
