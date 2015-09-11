@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605103334) do
+ActiveRecord::Schema.define(version: 20150911133050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -551,6 +551,7 @@ ActiveRecord::Schema.define(version: 20150605103334) do
     t.binary   "unique_run_identifier", null: false
     t.integer  "run_id",                null: false
     t.datetime "date",                  null: false
+    t.string   "log"
   end
 
   add_index "run_results", ["repository_id", "unique_run_identifier"], name: "run_results_index3", unique: true, using: :btree
