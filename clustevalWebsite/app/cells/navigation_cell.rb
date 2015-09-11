@@ -4,10 +4,9 @@ class NavigationCell < MyCell
   def show(view)
   	begin
   		render :view => view
-  		return
   	rescue
+    	render :view => 'show'
 	end
-    render :view => 'display'
   end
 
 end

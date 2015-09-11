@@ -4,9 +4,8 @@ class DatasetDescriptionCell < MyCell
 	def show(opts)
 		begin
 	  		render :view => 'display', :locals => {:dataset => opts[:dataset], :detailsLink => opts[:detailsLink]}
-	  		return
 	  	rescue
+	  		render :text => opts[:dataset].full_name + '<br />'
 	  	end
-	  	render :text => opts[:dataset].full_name + '<br />'
 	end
 end
