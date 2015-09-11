@@ -5,8 +5,8 @@ class NavigationCell < MyCell
   	begin
   		render :view => view
   	rescue
-    	render :view => 'display'
 	end
+    render :view => 'display'
   end
 
 end

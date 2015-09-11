@@ -7,8 +7,8 @@ class InfoTextCell < MyCell
   		# TODO
   		render view: view
   	rescue
-  		render :text => ''
   	end
+  	render :text => ''
   end
 
 end
