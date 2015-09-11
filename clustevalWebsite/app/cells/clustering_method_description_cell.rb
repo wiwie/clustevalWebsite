@@ -4,8 +4,9 @@ class ClusteringMethodDescriptionCell < MyCell
 	def show(opts)
 		begin
 	  		render :view => 'display', :locals => {:method => opts[:method], :detailsLink => opts[:detailsLink]}
+	  		return
 	  	rescue
-	  		render :text => opts[:method].full_name + '<br />'
 	  	end
+	  	render :text => opts[:method].full_name + '<br />'
 	end
 end

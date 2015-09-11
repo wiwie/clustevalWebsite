@@ -6,7 +6,6 @@ class SmallRankingCell < MyCell
 		@dataSets = Dataset.all(params[:repository])
 		for i in 0..@dataConfigs.length-1
 		  datasetIds[@dataSets[i]] = i
-		  #@matrix << [link_to(Dataset.all(session)[i].name, Dataset.all(session)[i])]
 		  @matrix << [@dataSets[i]]
 		end
 		programIds = {}
@@ -50,7 +49,7 @@ class SmallRankingCell < MyCell
 		    @rowMaxPos[datasetId] = [programId]
 		  end
 		end
-		render :view => 'dc_and_p', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos}
+		render :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos}
 	end
 
 	def dc_and_p(opts)
@@ -72,7 +71,6 @@ class SmallRankingCell < MyCell
 
 		for i in 0..@dataConfigs.length-1
 		  @dataConfigsIds[@dataConfigs[i]] = i
-		  #@matrix << [link_to(Dataset.all(session)[i].name, Dataset.all(session)[i])]
 		  @matrix << [@dataConfigs[i]]
 		end
 		@programIds = {}
@@ -144,7 +142,7 @@ class SmallRankingCell < MyCell
 		    @datasetMedian[i] = median(@matrix[i][1..@matrix[i].length])
 		end
 
-		render :view => 'dc_and_p', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataConfigs => @dataConfigs, :dataConfigIds => @dataConfigIds, :programIds => @programIds, :showRanks => @showRanks}
+		render :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataConfigs => @dataConfigs, :dataConfigIds => @dataConfigIds, :programIds => @programIds, :showRanks => @showRanks}
 	end
 
 	def ds_and_p(opts)
@@ -166,7 +164,6 @@ class SmallRankingCell < MyCell
 
 		for i in 0..@datasets.length-1
 		  @datasetIds[@datasets[i]] = i
-		  #@matrix << [link_to(Dataset.all(session)[i].name, Dataset.all(session)[i])]
 		  @matrix << [@datasets[i]]
 		end
 		@programIds = {}
@@ -180,8 +177,6 @@ class SmallRankingCell < MyCell
 		end
 		@qualityMeasure = ClusteringQualityMeasure.find_by_id(opts[:qualityMeasure])
 		@isMaximum = @qualityMeasure.optimum == 'Maximum'
-		#@rowMax = {}
-		#@rowMaxPos = {}
 		opts[:iterationsExts].each do |iterationExt|
 		  datasetId = @datasetIds[iterationExt.dataset]
 		  programId = @programIds[iterationExt.program]
@@ -193,26 +188,6 @@ class SmallRankingCell < MyCell
 
 		  @matrix[datasetId][programId] = (((@isMaximum ? iterationExt.max_quality.to_f : iterationExt.min_quality.to_f)*1000).round/1000.0)
 
-		#  if @rowMax[datasetId]
-		#  	if @isMaximum
-		#	    if @rowMax[datasetId] < @matrix[datasetId][programId]
-		#	      @rowMax[datasetId] = @matrix[datasetId][programId]
-		#	      @rowMaxPos[datasetId] = [programId]
-		#	    elsif @rowMax[datasetId] == @matrix[datasetId][programId]
-		#	      @rowMaxPos[datasetId] << programId
-		#	    end
-		#	else
-		#	    if @rowMax[datasetId] > @matrix[datasetId][programId]
-		#	      @rowMax[datasetId] = @matrix[datasetId][programId]
-		#	      @rowMaxPos[datasetId] = [programId]
-		#	    elsif @rowMax[datasetId] == @matrix[datasetId][programId]
-		#	      @rowMaxPos[datasetId] << programId
-		#	    end
-		#	end
-		#  else
-		#    @rowMax[datasetId] = @matrix[datasetId][programId]
-		#    @rowMaxPos[datasetId] = [programId]
-		#  end
 		end
 	  
 		if opts[:showRanks]
@@ -225,21 +200,7 @@ class SmallRankingCell < MyCell
 			end
 		end
 
-
-		#for i in 0..@datasets.length-1
-		#	@datasetAvg[i] = @matrix[i][1..@programs.length].inject(0){ |sum, el| (el == "--") ? (sum) : (sum + el) }.to_f
-		#	@datasetNumber[i] = @matrix[i][1..@programs.length].keep_if{|x| x != "--"}.length
-		#    
-		#    if @datasetNumber[i] > 0
-		#       @datasetAvg[i] = (@datasetAvg[i]/@datasetNumber[i]*1000).round/1000.0
-		#    else
-		#       @datasetAvg[i] = "--"
-		#    end
-		#    @datasetMedian[i] = median(@matrix[i][1..@matrix[i].length])
-		#end
-
-		render view: :ds_and_p
-		#, locals: {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds, :showRanks => @showRanks}
+		render locals: {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds, :showRanks => @showRanks}
 	end
 
 	def median(array)
@@ -285,8 +246,6 @@ class SmallRankingCell < MyCell
 		@qualityMeasure = ClusteringQualityMeasure.find_by_id(opts[:qualityMeasure])
 		@isMaximum = @qualityMeasure.optimum == 'Maximum'
 
-		#@rowMax = {}
-		#@rowMaxPos = {}
 		opts[:iterationsExts].each do |iterationExt|
 		  datasetId = @datasetIds[iterationExt.dataset]
 		  programId = @programIds[iterationExt.program]
@@ -297,27 +256,6 @@ class SmallRankingCell < MyCell
 		  @visiblePrograms[iterationExt.program] = true
 
 		  @matrix[programId][datasetId] = (((@isMaximum ? iterationExt.max_quality.to_f : iterationExt.min_quality.to_f)*1000).round/1000.0)
-
-		 #  if @rowMax[programId]
-		 #  	if @isMaximum
-			#     if @rowMax[programId] < @matrix[programId][datasetId]
-			#       @rowMax[programId] = @matrix[programId][datasetId]
-			#       @rowMaxPos[programId] = [datasetId]
-			#     elsif @rowMax[programId] == @matrix[programId][datasetId]
-			#       @rowMaxPos[programId] << datasetId
-			#     end
-			# else
-			#     if @rowMax[programId] > @matrix[programId][datasetId]
-			#       @rowMax[programId] = @matrix[programId][datasetId]
-			#       @rowMaxPos[programId] = [datasetId]
-			#     elsif @rowMax[programId] == @matrix[programId][datasetId]
-			#       @rowMaxPos[programId] << datasetId
-			#     end
-			# end
-		 #  else
-		 #    @rowMax[programId] = @matrix[programId][datasetId]
-		 #    @rowMaxPos[programId] = [datasetId]
-		 #  end
 		end
 	  
 		if opts[:showRanks]
@@ -330,19 +268,7 @@ class SmallRankingCell < MyCell
 			end
 		end
 
-		# for i in 0..@programs.length-1
-		# 	@programAvg[i] = @matrix[i][1..@datasets.length].inject(0){ |sum, el| (el == "--") ? (sum) : (sum + el) }.to_f
-		# 	@programNumber[i] = @matrix[i][1..@datasets.length].keep_if{|x| x != "--"}.length
-		    
-		#     if @programNumber[i] > 0
-		# 		@programAvg[i] = (@programAvg[i]/@programNumber[i]*1000).round/1000.0
-		#     else
-		# 		@programAvg[i] = "--"
-		#     end
-		#     @programMedian[i] = median(@matrix[i][1..@matrix[i].length])
-		# end
-
-		render :view => 'ds_and_p_inv', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds, :showRanks => opts[:showRanks]}
+		render :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataSets => @datasets, :datasetIds => @datasetIds, :programIds => @programIds, :showRanks => opts[:showRanks]}
 	end
 
 
@@ -438,7 +364,7 @@ class SmallRankingCell < MyCell
 		    @programMedian[i] = median(@matrix[i][1..@matrix[i].length])
 		end
 
-		render :view => 'dc_and_p_inv', :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataConfigs => @dataConfigs, :dataConfigsIds => @dataConfigsIds, :programIds => @programIds, :showRanks => opts[:showRanks]}
+		render :locals => {:matrix => @matrix, :rowMaxPos => @rowMaxPos, :programs => @programs, :dataConfigs => @dataConfigs, :dataConfigsIds => @dataConfigsIds, :programIds => @programIds, :showRanks => opts[:showRanks]}
 	end
 
 # dataset vs quality
@@ -487,7 +413,7 @@ class SmallRankingCell < MyCell
 
 		  @matrix[programId][measureId] = (((isMaximum ? iterationExt.max_quality.to_f : iterationExt.min_quality.to_f)*1000).round/1000.0)
 		end
-		render :view => 'ds_and_q', :locals => {:matrix => @matrix, :programs => @programs, :programIds => @programIds, :qualityMeasures => @qualityMeasures, :measureIds => @measureIds, :minY => @minY, :maxY => @maxY, :dataset => opts[:obj]}
+		render :locals => {:matrix => @matrix, :programs => @programs, :programIds => @programIds, :qualityMeasures => @qualityMeasures, :measureIds => @measureIds, :minY => @minY, :maxY => @maxY, :dataset => opts[:obj]}
 	end
 
 # dataconfig vs quality
@@ -515,7 +441,7 @@ class SmallRankingCell < MyCell
 		  isMaximum = measure.optimum == 'Maximum'
 		  @matrix[programId][measureId] = (((isMaximum ? iterationExt.max_quality : iterationExt.min_quality)*1000).round/1000.0)
 		end
-		render :view => 'dc_and_q', :locals => {:matrix => @matrix, :programs => @programs, :qualityMeasures => @qualityMeasures}
+		render :locals => {:matrix => @matrix, :programs => @programs, :qualityMeasures => @qualityMeasures}
 	end
 
 	def p_and_q(opts)
@@ -575,7 +501,7 @@ class SmallRankingCell < MyCell
 		    @rowMaxPos[datasetId] = [measureId]
 		  end
 		end
-		render :view => 'p_and_q', :locals => {:matrix => @matrix, :datasets => @datasets, :qualityMeasures => @qualityMeasures, :measureIds => @measureIds, :datasetIds => @datasetIds, :minY => @minY, :maxY => @maxY, :program => opts[:obj]}
+		render :locals => {:matrix => @matrix, :datasets => @datasets, :qualityMeasures => @qualityMeasures, :measureIds => @measureIds, :datasetIds => @datasetIds, :minY => @minY, :maxY => @maxY, :program => opts[:obj]}
 	end
 
 	def ds(opts)
@@ -593,7 +519,7 @@ class SmallRankingCell < MyCell
 				.where(:dataset_id => opts[:obj].id)
 				.where(:clustering_quality_measure_id => measure.id)
 		end
-		render :view => 'ds', :locals => {:qualityMeasure => opts[:qualityMeasure], :iterationsExts => @iterationsExts, :program_filter => opts[:program_filter]}
+		render :locals => {:qualityMeasure => opts[:qualityMeasure], :iterationsExts => @iterationsExts, :program_filter => opts[:program_filter]}
 	end
 
 	def p(opts)
@@ -611,6 +537,6 @@ class SmallRankingCell < MyCell
 				.where(:program_id => opts[:obj].id)
 				.where(:clustering_quality_measure_id => measure.id)
 		end
-		render :view => 'p', :locals => {:qualityMeasure => opts[:qualityMeasure], :iterationsExts => @iterationsExts, :dataset_filter => opts[:dataset_filter]}
+		render :locals => {:qualityMeasure => opts[:qualityMeasure], :iterationsExts => @iterationsExts, :dataset_filter => opts[:dataset_filter]}
 	end
 end

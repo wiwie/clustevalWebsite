@@ -4,7 +4,6 @@ class InfoTextCell < MyCell
   def show(view)
 
   	begin
-  		# TODO
   		render view: view
   		return
   	rescue
