@@ -8,3 +8,4 @@ ADD . /clusteval
 RUN mv /clusteval/config/database.yml.example /clusteval/config/database.yml
 RUN bundle install
 RUN rake assets:precompile
+RUN RAILS_ENV=production rake assets:precompile
