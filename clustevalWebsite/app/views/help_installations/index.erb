@@ -1,32 +1,53 @@
 <% content_for :title, "Download & Installation" %>
-clusteval is separated into backend and frontend. The backend calculates all the clusterings and performs all the actual analyses of the framework. The frontend includes this website and a corresponding database and is responsible for the representation of the results.
+ClustEval is separated into backend and frontend. The backend calculates all the clusterings and performs all the actual analyses of the framework. The frontend includes this website and a corresponding database and is responsible for the representation of the results.
 
-<h3>Backend Executables (Client & Server)</h3>
-The backend consists of a client and a server component. Both can be downloaded separately as a jar-executable. Also, all available dynamic components which can be loaded by the backend are available on GitHub as jars. It is sufficient to copy the "programs" and "supp" subfolders of the "repository" folder in the clustevalPackages GitHub repository into the local repository.
-<table class="downloadTable">
-	<thead>
-		<th>Link</th>
-		<th>Version</th>
-		<th>Release Date</th>
-	</thead>
-	<tr>
-		<td><%= link_to "clustevalBackendServer.jar", "https://github.com/wiwie/clusteval/blob/v1.2/clusteval/packages/clustevalBackendServer.jar?raw=true" %></td>
-		<td>1.2</td>
-		<td>22.03.2014</td>
-	</tr>
-	<tr>
-		<td><%= link_to "clustevalBackendClient.jar", "https://github.com/wiwie/clusteval/blob/v1.2/clusteval/packages/clustevalBackendClient.jar?raw=true" %></td>
-		<td>1.2</td>
-		<td>22.03.2014</td>
-	</tr>
-	<tr>
-		<td><%= link_to "Dynamic Packages", "https://github.com/wiwie/clustevalPackages/tree/v1.2/clustevalPackages/repository" %></td>
-		<td>1.2</td>
-		<td>22.03.2014</td>
-	</tr>
-</table>
+<div class="media">
+  <div class="media-left pull-left">
+    <a href="#">
+    	<%= image_tag image_path('GitHub_Logo.png'), :class => 'media-object', style: 'width: 82px;' %>
+    </a>
+  </div>
+  <div class="media-body">
+    <h3 class="media-heading">Backend Executables (Client & Server)</h3>
+		The backend consists of a client and a server component. Both can be downloaded separately as a jar-executable. Also, all available dynamic components which can be loaded by the backend are available on GitHub as jars. It is sufficient to copy the "programs" and "supp" subfolders of the "repository" folder in the clustevalPackages GitHub repository into the local repository.
 
-<h3>Results (as a zipped repository)</h3>
+		<table class="table">
+			<thead>
+				<th>Link</th>
+				<th>Version</th>
+			</thead>
+			<tr>
+				<td><%= link_to "clustevalBackendServer.jar", "https://github.com/wiwie/clusteval/blob/master/clusteval/packages/clustevalBackendServer.jar?raw=true" %></td>
+				<td>Latest</td>
+			</tr>
+			<tr>
+				<td><%= link_to "clustevalBackendClient.jar", "https://github.com/wiwie/clusteval/blob/master/clusteval/packages/clustevalBackendClient.jar?raw=true" %></td>
+				<td>Latest</td>
+			</tr>
+			<tr>
+				<td><%= link_to "Dynamic Packages", "https://github.com/wiwie/clustevalPackages/tree/master/clustevalPackages/repository" %></td>
+				<td>Latest</td>
+			</tr>
+		</table>
+	
+		<h3 class="media-heading">Frontend (Website & MySQL DB Structure)</h3>
+		For a detailed step-by-step installation guide for the frontend, please check out the installation section of the clusteval <%= link_to "technical documentation", HelpTechnicalDocumentation %>.
+		You can download a zip containing all parts of the frontend here:
+		<table class="table">
+			<thead>
+				<th>Link</th>
+				<th>Version</th>
+			</thead>
+			<tr>
+				<td><%= link_to "clustevalFrontend.zip", "https://github.com/wiwie/clustevalWebsite/archive/master.zip" %></td>
+				<td>Latest</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+
+<!-- <h3>Results (as a zipped repository)</h3>
 The clustering and analysis results of the bone_marrow, brown and synthetic (cassini, cuboid, spirals) data sets can be downloaded as a zipped repository. This repository also contains all required configuration files as well as dynamic packages which were used to perform the calculations. This repository can be downloaded together with the back end JARs and the website, to host the results on a local webserver.
 <table class="downloadTable">
 	<thead>
@@ -39,48 +60,27 @@ The clustering and analysis results of the bone_marrow, brown and synthetic (cas
 		<td>1.2</td>
 		<td>22.03.2014</td>
 	</tr>
-</table>
+</table> -->
 
-<h3>Frontend (Website & MySQL DB Structure)</h3>
-For a detailed step-by-step installation guide for the frontend, please check out the installation section of the clusteval <%= link_to "technical documentation", HelpTechnicalDocumentation %>.
-You can download a zip containing all parts of the frontend here:
-<table class="downloadTable">
-	<thead>
-		<th>Link</th>
-		<th>Version</th>
-		<th>Release Date</th>
-	</thead>
-	<tr>
-		<td><%= link_to "clustevalFrontend.zip", "https://github.com/wiwie/clustevalWebsite/archive/v1.2.zip" %></td>
-		<td>1.2</td>
-		<td>22.03.2014</td>
-	</tr>
-</table>
-
-<h3>Docker Images & Docker-Compose</h3>
 <div class="media">
   <div class="media-left pull-left">
     <a href="#">
-    	<%= image_tag image_path('small_v-trans.png'), :class => 'media-object' %>
+    	<%= image_tag image_path('small_v-trans.png'), :class => 'media-object', style: 'width: 82px;' %>
     </a>
   </div>
   <div class="media-body">
-    <h4 class="media-heading">Media heading</h4>
-    ...
-  </div>
+    <h3 class="media-heading">Docker Images & Docker-Compose</h3>
+		ClustEval can be installed on OS X and Linux using <a target="_blank" href="https://www.docker.com/">Docker</a> and <a target="_blank" href="https://www.docker.com/docker-compose">Docker Compose</a>.
+		<ol>
+			<li><a target="_blank" href="http://docs.docker.com/compose/install/">Install Docker & Docker-Compose</a></li>
+			<li>Check out <a target="_blank" href="https://github.com/wiwie/clustevalDocker">this</a> GitHub repository.</li>
+			<li>Execute <code>docker-compose up</code> in the folder containing the docker-compose.yml from the checked out repository.</li>
+		</ol>
+	
+	</div>
 </div>
-We provide the backend, website and database of ClustEval as Docker images on Docker Hub. Docker is an automated build system which keeps the ClustEval images up-to-date by always pulling the newest revision from the ClustEval repositories.
 
-The individual Docker images are linked together by Docker Compose. We provide a docker-compose script on this TODO GitHub repository.
-
-1. Check the repository out.
-2. Install Docker-Compose
-3. Execute "docker-compose up" in the folder containing the docker-compose from the checked out repository.
-
-Docker-Compose installation instructions can be found here TODO.
-
-
-<h3>VirtualBox Image</h3>
+<!-- <h3>VirtualBox Image</h3>
 We provide a VirtualBox Image containing clusteval backend and frontend installations. The backend can be started via a shell script and the frontend is accessible on the localhost ip address. More details can be found in the technical documentation.
 <table class="downloadTable">
 	<thead>
@@ -93,4 +93,4 @@ We provide a VirtualBox Image containing clusteval backend and frontend installa
 		<td>1.0</td>
 		<td>13.05.2013</td>
 	</tr>
-</table>
+</table> -->

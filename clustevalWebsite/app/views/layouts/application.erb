@@ -74,38 +74,27 @@
 </div>
 <br><br>
 <div style="height:100px;">&nbsp;</div>
-    <table class="designTable">
-      <tr valign="top">
-        <td class='content_table_left'>
-  <!-- <div class="row"> -->
-      <!-- <div class="span2"> -->
-          <!-- <div class='left_navigation'> -->
-        <div data-spy="affix" style="width: 200px;">
+<div class="container-fluid">
+  <div class="row">
+    <div data-spy="affix" class="col-md-2">
 
-            <%= cell(:navigation).(:show, 'display_' + params[:controller] + '_' + params[:action]) %>
+        <%= cell(:navigation).(:show, 'display_' + params[:controller] + '_' + params[:action]) %>
 
-            <div class='left_navigation_title'>
-              <%= image_tag '/assets/027.png', :style => 'padding-right: 5px;' %>Hints:
-            </div>
-            <p><small>
-              <%= cell(:info_text).(:show, 'display_' + params[:controller] + '_' + params[:action]) %>
-            </small></p>
-          <!-- </div> -->
-        <!-- </div> -->
-      <!-- </div> -->
-        </td>
-<td class='content_table_right'>
-    <!-- <div class="span12"> -->
-      <div class='clustEvalContentInner'>
-        <h2><%= yield(:title) %></h2>
-        <div style="padding-left:10px; padding-right:10px;">
-          <%= yield %>
+        <div class='left_navigation_title'>
+          <%= image_tag '/assets/027.png', :style => 'padding-right: 5px;' %>Hints:
         </div>
-      </div>
-    <!-- </div> -->
-        </td>
-      </tr>
-    </table>
+        <p><small>
+          <%= cell(:info_text).(:show, 'display_' + params[:controller] + '_' + params[:action]) %>
+        </small></p>
+  </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-10">
+        <h2><%= yield(:title) %></h2>
+          <%= yield %>
+    
+    </div>
+  </div>
   </div>
   <div class="mymodal"><!-- Place at bottom of page --></div>
   <p></p>
