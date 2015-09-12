@@ -7,3 +7,4 @@ ADD Gemfile.lock /clusteval/Gemfile.lock
 ADD . /clusteval
 RUN mv /clusteval/config/database.yml.example /clusteval/config/database.yml
 RUN bundle install
+RUN rake assets:precompile
