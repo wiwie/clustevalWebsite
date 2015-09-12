@@ -42,7 +42,8 @@ gem 'immigrant' # allows recreation of existing foreign keys in the database int
 gem 'mathjax-rails'
 gem 'composite_primary_keys'
 
-gem "twitter-bootstrap-rails", github: 'wiwie/twitter-bootstrap-rails'
+#gem "twitter-bootstrap-rails", github: 'wiwie/twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 
 # sitemap creation
 gem 'sitemap_generator'

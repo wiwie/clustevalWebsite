@@ -58,7 +58,17 @@ You can download a zip containing all parts of the frontend here:
 </table>
 
 <h3>Docker Images & Docker-Compose</h3>
-
+<div class="media">
+  <div class="media-left pull-left">
+    <a href="#">
+    	<%= image_tag image_path('small_v-trans.png'), :class => 'media-object' %>
+    </a>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">Media heading</h4>
+    ...
+  </div>
+</div>
 We provide the backend, website and database of ClustEval as Docker images on Docker Hub. Docker is an automated build system which keeps the ClustEval images up-to-date by always pulling the newest revision from the ClustEval repositories.
 
 The individual Docker images are linked together by Docker Compose. We provide a docker-compose script on this TODO GitHub repository.

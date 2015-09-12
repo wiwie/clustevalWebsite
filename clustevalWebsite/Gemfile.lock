@@ -16,6 +16,16 @@ GIT
       sass-rails
 
 GIT
+  remote: git://github.com/seyhunak/twitter-bootstrap-rails.git
+  revision: 665e50e7511d5418fbcf76ccb15c593f953d197a
+  specs:
+    twitter-bootstrap-rails (3.2.1)
+      actionpack (>= 3.1)
+      execjs (>= 2.2.2, >= 2.2)
+      less-rails (>= 2.5.0)
+      railties (>= 3.1)
+
+GIT
   remote: git://github.com/wiwie/authlogic.git
   revision: 4119a93d98379d56af21f92533f7d5946d80418f
   specs:
@@ -29,16 +39,6 @@ GIT
   specs:
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.8)
-
-GIT
-  remote: git://github.com/wiwie/twitter-bootstrap-rails.git
-  revision: 9b862e4c2ca8452f5b4e6f1c8ebd7201ddb974f4
-  specs:
-    twitter-bootstrap-rails (2.2.8)
-      actionpack (>= 3.1)
-      execjs
-      rails (>= 3.1)
-      railties (>= 3.1)
 
 GEM
   remote: https://rubygems.org/
@@ -93,6 +93,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
+    commonjs (0.2.7)
     composite_primary_keys (8.1.1)
       activerecord (~> 4.2.0)
     dynamic_form (1.1.4)
@@ -109,6 +110,13 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
+    less (2.6.0)
+      commonjs (~> 0.2.7)
+    less-rails (2.7.0)
+      actionpack (>= 4.0)
+      less (~> 2.6.0)
+      sprockets (> 2, < 4)
+      tilt
     libv8 (3.16.14.11)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
