@@ -113,5 +113,6 @@ class MainsController < ApplicationController
 	end
 
 	def workflow
+		render 'workflow.svg', layout: false
 	end
 end
