@@ -1,6 +1,0 @@
-[submodule "clustevalWebsite/clusterRepository"]
-	path = clustevalWebsite/clusterRepository
-	url = https://github.com/wiwie/clustevalDockerRepository
-[submodule "clustevalWebsite/repositoryDocker"]
-	path = clustevalWebsite/repositoryDocker
-	url = https://github.com/wiwie/clustevalDockerRepository
