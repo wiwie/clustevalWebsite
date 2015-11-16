@@ -89,9 +89,9 @@ SimpleNavigation::Configuration.run do |navigation|
       sub_submit.item :nav_submit_method, 'Submit method', url_for(:controller => 'submit_methods', :action => 'create')
     end
     primary.item( :nav_helps, 'Help', helps_path) do |sub_help|
-      sub_help.item :nav_help_installation, 'Download & Installation', help_installations_path
-      sub_help.item :nav_help_tec_doc, 'Technical Documentation', help_technical_documentations_path
-      sub_help.item :nav_help_source_code, 'Source Code', help_source_codes_path
+      #sub_help.item :nav_help_installation, 'Download & Installation', help_installations_path
+      #sub_help.item :nav_help_tec_doc, 'Technical Documentation', help_technical_documentations_path
+      #sub_help.item :nav_help_source_code, 'Source Code', help_source_codes_path
       sub_help.item :nav_help_publication, 'Publications', help_publications_path
     end
     primary.item( :nav_aboutus, 'About us', aboutus_path) do |sub_aboutus|
