@@ -1,5 +1,5 @@
 <% content_for :title, "Comparison of all clustering methods on all datasets" %>
-<%= form_tag({:action => 'comparison'}, {:method => 'get'}) do %>
+<%= form_tag({:action => 'comparison'}, {:method => 'post'}) do %>
 <% if not @qualityMeasure %>
 	<p>This comparison page requires a quality measure in the repository, but there is none. Please add at least one measure to the repository and reload this page.</p>
 <% else %>

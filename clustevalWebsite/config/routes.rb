@@ -22,6 +22,7 @@ ClustEval::Application.routes.draw do
 		get 'logout', :to => "user_sessions#destroy", :as => :logout
 		get 'mains' => 'mains#index', :via => :post
 		get 'mains/comparison' => 'mains#comparison'
+		post 'mains/comparison' => 'mains#comparison'
 		get 'mains/workflow' => 'mains#workflow'
 		get 'mains/comparison_table_data/:qualityMeasure' => 'mains#comparison_table_data'
 		get 'mains/comparison_table_data_inverse/:qualityMeasure' => 'mains#comparison_table_data_inverse'
