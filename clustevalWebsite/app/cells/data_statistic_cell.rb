@@ -26,15 +26,15 @@ class DataStatisticCell < MyCell
 				@stringArgs << 'false'
 				@stringArgs << ['', '']
 			end
-			render :partial => 'datastatistic_plot', :locals => {:statistic => @statistic, :content => @content, :stringArgs => @stringArgs, :id => @id}
+			render :view => '_datastatistic_plot', :locals => {:statistic => @statistic, :content => @content, :stringArgs => @stringArgs, :id => @id}
 		elsif @statistic == 'ClassSizeDistributionDataStatistic'
 			@stringArgs = []
 			@stringArgs << 'Class Size Distribution'
 			@stringArgs << 'Class'
 			@stringArgs << 'Size'
-			render :partial => 'datastatistic_plot_bar', :locals => {:statistic => @statistic, :content => @content, :stringArgs => @stringArgs, :id => @id}
+			render :view => '_datastatistic_plot_bar', :locals => {:statistic => @statistic, :content => @content, :stringArgs => @stringArgs, :id => @id}
 		else
-			render :partial => 'datastatistic_text', :locals => {:statistic => @statistic, :content => @content, :id => @id}
+			render :view => '_datastatistic_text', :locals => {:statistic => @statistic, :content => @content, :id => @id}
 		end
   end
 
