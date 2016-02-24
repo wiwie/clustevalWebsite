@@ -1,19 +1,23 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', '~> 4.2.4'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'pg'
-gem 'mysql2'
+group :postgres do
+  gem 'pg'
+end
+group :mysql do
+  gem 'mysql2'
+end
 
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
 end
-  
+
 gem 'sass-rails'
 gem 'coffee-rails'
 

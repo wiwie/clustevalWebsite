@@ -16,6 +16,7 @@
 config/database.yml
 config/database.yml.my
 config/database_pg.yml
+Gemfile.lock
 
 vendor/bundle/
 vendor/cache/
