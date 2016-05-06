@@ -5,8 +5,8 @@
 <% if @repositories.length > 1 %>
   <h2>Repository</h2>
   This website shows all information from one central repository. You can select a different repository here:
-  <%= form_tag({:action => 'index'}, {:method => 'post'}) do %>
-  <%= collection_select(:repo_select, :repository_id, @repositories, :id, :basePath, {:selected => params[:repository]}, :onchange => "$('body').addClass('loading'); this.form.submit();", :class => 'span3') %>
+  <%= form_tag({:action => 'index'}, {:method => 'get'}) do %>
+  <%= collection_select(:repo_select, :repository_id, @repositories, :id, :base_path, {:selected => params[:repository]}, :onchange => "$('body').addClass('loading'); this.form.submit();", :class => 'span3') %>
   <% end %>
 <% end %>
 <a id="workflow" style="text-decoration:none;"><h2>Workflow</h2></a>
