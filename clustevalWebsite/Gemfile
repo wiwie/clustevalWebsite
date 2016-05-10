@@ -47,7 +47,7 @@ gem 'mathjax-rails'
 gem 'composite_primary_keys'
 
 #gem "twitter-bootstrap-rails", github: 'wiwie/twitter-bootstrap-rails'
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', :ref => '665e50e7511d5418fbcf76ccb15c593f953d197a'
 
 # sitemap creation
 gem 'sitemap_generator'
