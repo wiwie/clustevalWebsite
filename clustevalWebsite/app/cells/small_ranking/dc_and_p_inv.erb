@@ -188,7 +188,8 @@ $(document).ready(function() {
   $('#dataAndProgramStatistics1').dataTable({
     aoColumnDefs: [
       { "aTargets": [1],"bVisible": false },
-      { "sType": "num-html", "aTargets": [ <%= (1..@dataConfigs.length+3).to_a.join(', ') %> ] }
+      { "sType": "num-html", "aTargets": [ <%= (1..@dataConfigs.length+3).to_a.join(', ') %> ] },
+      { "asSorting": [<% if @isMaximum %>"desc"<% else %>"asc"<% end %>], "aTargets": [ <%= (1..@dataConfigs.length+3).to_a.join(', ') %> ]}
     ],
     sPaginationType: "full_numbers",
     bJQueryUI: true,
