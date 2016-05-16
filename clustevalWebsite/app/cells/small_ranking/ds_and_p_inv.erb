@@ -159,6 +159,8 @@ $(document).ready(function() {
           if (b == "--") {
             return -1;
           }
+          a = parseFloat(String(a).replace( /<[\s\S]*?>/g, "" ));
+          b = parseFloat(String(b).replace( /<[\s\S]*?>/g, "" ));
           return ((a < b) ? -1 : ((a > b) ? 1 : 0));
       },
    
@@ -170,6 +172,8 @@ $(document).ready(function() {
           }
           if (b == "--")
             return -1;
+          a = parseFloat(String(a).replace( /<[\s\S]*?>/g, "" ));
+          b = parseFloat(String(b).replace( /<[\s\S]*?>/g, "" ));
           return ((a < b) ? 1 : ((a > b) ? -1 : 0));
       }
   } );
