@@ -176,7 +176,7 @@ $(document).ready(function() {
       { "aTargets": [1],"bVisible": false
       },
       { "sType": "num-html", "aTargets": [ <%= (2..@programs.length+3).to_a.join(', ') %> ] },
-      { "asSorting": [<% if @isMaximum %>"desc", "asc"<% else %>"asc", "desc"<% end %>], "aTargets": [ <%= (2..@programs.length+3).to_a.join(', ') %> ]}
+      { "asSorting": [<% if not @showRanks and @isMaximum %>"desc", "asc"<% else %>"asc", "desc"<% end %>], "aTargets": [ <%= (2..@programs.length+3).to_a.join(', ') %> ]}
     ],
     sPaginationType: "full_numbers",
     bJQueryUI: true,
