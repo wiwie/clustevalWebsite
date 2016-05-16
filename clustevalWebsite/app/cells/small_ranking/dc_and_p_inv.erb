@@ -146,21 +146,24 @@ $(function () {
 
 $(document).ready(function() {
   jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-      "num-html-pre": function ( a ) {
-          var x = String(a).replace( /<[\s\S]*?>/g, "" );
-          if (x == "--")
-            return "--"
-          return parseFloat( x );
-      },
+    // TODO: we remove this function for now, because new version 1.10 of datatables does not use custom sort -asc and -desc if this is present for each column
+      //"bla-pre": function ( a ) {
+      //    var x = String(a).replace( /<[\s\S]*?>/g, "" );
+      //    if (x == "--")
+      //      return "--"
+      //    return parseFloat( x );
+      //},
    
       "num-html-asc": function ( a, b ) {
           if (a == "--") {
-            if (b == "--")
-              return 0;            
+            if (b == "--") {
+              return 0;     
+              }       
             return 1;
           }
-          if (b == "--")
+          if (b == "--") {
             return -1;
+          }
           return ((a < b) ? -1 : ((a > b) ? 1 : 0));
       },
    
