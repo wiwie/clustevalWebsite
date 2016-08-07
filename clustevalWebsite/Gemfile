@@ -40,6 +40,7 @@ gem 'json'
 gem 'raphael-rails'
 gem 'cells'
 gem "cells-erb"
+gem "cells-rails"
 gem 'dynamic_form'
 gem 'immigrant' # allows recreation of existing foreign keys in the database into the migration files
 #gem 'rails_sql_views', github: 'centresource/rails_sql_views' # supports view
