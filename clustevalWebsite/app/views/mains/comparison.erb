@@ -4,7 +4,11 @@
 	<p>This comparison page requires a quality measure in the repository, but there is none. Please add at least one measure to the repository and reload this page.</p>
 <% else %>
 	<p>This matrix contains the best performances of clustering methods applied to different datasets. Every cell shows the best achieved clustering quality with the corresponding clustering method on the corresponding dataset. The clustering quality is measured as <%= link_to @qualityMeasure.alias, @qualityMeasure %>.</p>
-	<%= select_tag :selectMethods, options_from_collection_for_select(@programsSelectChoices, "id", "alias", @methods), {:multiple => true } %>
+	<% if not @showProgramConfigs %>
+		<%= select_tag :selectMethods, options_from_collection_for_select(@programsSelectChoices, "id", "alias", @methods), {:multiple => true } %>
+	<% else %>
+		<%= select_tag :selectProgramConfigs, options_from_collection_for_select(@programConfigsSelectChoices, "id", "name", @programConfigs), {:multiple => true } %>
+	<% end %>
 	</select>
 	<% if not @showDataConfigs %>
 		<%= select_tag :selectDatasets, options_from_collection_for_select(@datasetsSelectChoices, "id", "alias", @datasets), {:multiple => true } %>
@@ -13,32 +17,45 @@
 	<% end %>
 	</select>
 	<%= collection_select(:post, :measure, @measureSelectChoices, :id, :alias, {:selected => @qualityMeasure.id},{:style=>'width:200px'} ) %>
-	<%= check_box_tag(:inv, '1', @inverted) %>Data Sets vs. Methods? (Invert)
 	<%= check_box_tag(:showDataConfigs, '1', @showDataConfigs) %>Data Configs. instead of Data Sets?
+	<%= check_box_tag(:showProgramConfigs, '1', @showProgramConfigs) %>Program Configs. instead of Programs?
+	<%= check_box_tag(:inv, '1', @inverted) %>Transpose Matrix & Chart
 	<%= check_box_tag(:showRanks, '1', @showRanks) %>Show Ranks
 	<input type="submit">
-	<% if !@inverted %>
-		<% if @showDataConfigs %>
-			<%= cell(:small_ranking).(:dc_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :dataConfigs => @dataConfigs, :showRanks => @showRanks) %>
-		<% else %>
-			<%= cell(:small_ranking).(:ds_and_p, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets, :showRanks => @showRanks) %>
-		<% end %>
+	<% if @showDataConfigs %>
+		<% datas = @dataConfigs %>
+		<% dataType = "dataconfig" %>
 	<% else %>
-		<% if @showDataConfigs %>
-			<%= cell(:small_ranking).(:dc_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :dataConfigs => @dataConfigs, :showRanks => @showRanks) %>
-		<% else %>
-			<%= cell(:small_ranking).(:ds_and_p_inv, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => @methods, :datasets => @datasets, :showRanks => @showRanks) %>
-		<% end %>
+		<% datas = @datasets %>
+		<% dataType = "dataset" %>
 	<% end %>
+
+	<% if @showProgramConfigs %>
+		<% tools = @programConfigs %>
+		<% toolType = "programconfig" %>
+	<% else %>
+		<% tools = @methods %>
+		<% toolType = "program" %>
+	<% end %>
+
+	<%= cell(:small_ranking).(:data_vs_tools, :qualityMeasure => @qualityMeasureName, :iterationsExts => @iterationsExts, :methods => tools, :datas => datas, :showRanks => @showRanks, :dataType => dataType, :toolType => toolType, :inv => @inverted) %>
 	<% end %>
 
 <% end %>
 <script type="text/javascript">
 $(document).ready(function(){
+	<% if not @showProgramConfigs %>
    $("#selectMethods").multiselect({
+   <% else %>
+   $("#selectProgramConfigs").multiselect({
+   <% end %>
     includeSelectAllOption: true,
     buttonText: function(options, select) {
-    	return 'Selected Methods (' + options.length + ') <b class="caret"></b>';
+		<% if not @showProgramConfigs %>
+    		return 'Selected Methods (' + options.length + ') <b class="caret"></b>';
+   		<% else %>
+	    	return 'Selected Program Configs (' + options.length + ') <b class="caret"></b>';
+   		<% end %>
     },
     maxHeight: 400
    });

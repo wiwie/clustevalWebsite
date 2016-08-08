@@ -33,6 +33,7 @@ class MainsController < ApplicationController
 			@qualityMeasure = ClusteringQualityMeasure.find_by_id(params[:post][:measure])
 			@inverted = params[:inv]
 			@showDataConfigs = params[:showDataConfigs]
+			@showProgramConfigs = params[:showProgramConfigs]
 			@showRanks = params[:showRanks]
 		else
 			@qualityMeasures = ClusteringQualityMeasure.all(params[:repository])
@@ -44,30 +45,46 @@ class MainsController < ApplicationController
 			end
 			@inverted = false
 			@showDataConfigs = false
+			@showProgramConfigs = false
 			@showRanks = false
 		end
 
-		@programsSelectChoices = Program.where(:repository_id => params[:repository]).order(:alias)
-		@measureSelectChoices = ClusteringQualityMeasure.where(:repository_id => params[:repository]).order(:alias)
-		
-		if params[:selectMethods]
-			@methods = params[:selectMethods]
+		if params[:showProgramConfigs]
+			@programConfigsSelectChoices = ProgramConfig.where(:repository_id => params[:repository]).where(:program_config_id => nil).order(:name)
+			if params[:selectProgramConfigs]
+				@programConfigs = params[:selectProgramConfigs]
+			# if we have shown programs before, we take all program configs of those programs
+			elsif params[:selectMethods]
+				@programConfigs = ProgramConfig.where(:program => params[:selectMethods]).where(:program_config_id => nil).map{|x| x.id}
+			else
+				@programConfigs = ProgramConfig.all(params[:repository]).where(:program_config_id => nil).map{|x| x.id}
+			end
 		else
-			@methods = Program.all(params[:repository]).map{|x| x.id}
+			@programsSelectChoices = Program.where(:repository_id => params[:repository]).order(:alias)
+			if params[:selectMethods]
+				@methods = params[:selectMethods]
+			# if we have shown program configs before, we take all programs of those
+			elsif params[:selectProgramConfigs]
+				@methods = ProgramConfig.where(:id => params[:selectProgramConfigs]).map{|x| x.program_id}
+			else
+				@methods = Program.all(params[:repository]).map{|x| x.id}
+			end
 		end
 
+		@measureSelectChoices = ClusteringQualityMeasure.where(:repository_id => params[:repository]).order(:alias)
+
 		if params[:showDataConfigs]
-			@dataConfigsSelectChoices = DataConfig.where(:repository_id => params[:repository]).order(:name)
+			@dataConfigsSelectChoices = DataConfig.where(:repository_id => params[:repository]).where(:data_config_id => nil).order(:name)
 			if params[:selectDataConfigs]
 				@dataConfigs = params[:selectDataConfigs]
 			# if we have shown data sets before, we take all data configs of those data sets
 			elsif params[:selectDatasets]
-				@dataConfigs = DataConfig.where(:dataset_config_id => DatasetConfig.where(:dataset_id => params[:selectDatasets])).map{|x| x.id}
+				@dataConfigs = DataConfig.where(:dataset_config_id => DatasetConfig.where(:dataset_id => params[:selectDatasets])).where(:data_config_id => nil).map{|x| x.id}
 			else
-				@dataConfigs = DataConfig.all(params[:repository]).map{|x| x.id}
+				@dataConfigs = DataConfig.all(params[:repository]).where(:data_config_id => nil).map{|x| x.id}
 			end
 		else
-			@datasetsSelectChoices = Dataset.where(:repository_id => params[:repository]).where(:visibility => ['1','2']).order(:alias)
+			@datasetsSelectChoices = Dataset.where(:repository_id => params[:repository]).where(:dataset_id => nil).where(:visibility => ['1','2']).order(:alias)
 			if params[:selectDatasets]
 				@datasets = params[:selectDatasets]
 			# if we have shown data sets before, we take all data configs of those data sets
@@ -85,20 +102,46 @@ class MainsController < ApplicationController
 
 			# data for table
 			if params[:showDataConfigs]
-				@iterationsExts = ParameterOptimizationIterationsExtsConfig.includes(:program, :data_config).select("program_id,data_config_id,max(quality) as max_quality,min(quality) as min_quality").where(:clustering_quality_measure_id => @qualityMeasureName).where("data_config_id" => @dataConfigs).where("program_id" => @methods).group("data_config_id,program_id")
-			else
-				#@iterationsExts = ParameterOptimizationIterationsExt.includes(:program, :dataset).select("program_id,dataset_id,max(quality) as max_quality,min(quality) as min_quality").where(:clustering_quality_measure_id => @qualityMeasureName).where(:dataset_id => @datasets).where(:program_id => @methods).group("dataset_id,program_id")
-				@isMaximum = @qualityMeasure.optimum == 'Maximum'
-				if @isMaximum
-					@iterationsExts = ParameterOptimizationMaxQual.includes(:program, :dataset)
-						.select("program_id,dataset_id,maxquality as max_quality")
-						.where(:clustering_quality_measure_id => @qualityMeasureName)
-						.where(:dataset_id => @datasets).where(:program_id => @methods)
+				if params[:showProgramConfigs]
+					@iterationsExts = ParameterOptimizationIterationsExtsConfig.includes(:program_config, :data_config).select(
+						"program_config_id,data_config_id,max(quality) as max_quality,min(quality) as min_quality").where(
+						:clustering_quality_measure_id => @qualityMeasureName).where(
+						"data_config_id" => @dataConfigs).where(
+						"program_config_id" => @programConfigs).group("data_config_id,program_config_id")
 				else
-					@iterationsExts = ParameterOptimizationMinQual.includes(:program, :dataset)
-						.select("program_id,dataset_id,minquality as min_quality")
-						.where(:clustering_quality_measure_id => @qualityMeasureName)
-						.where(:dataset_id => @datasets).where(:program_id => @methods)
+					@iterationsExts = ParameterOptimizationIterationsExtsConfig.includes(:program, :data_config).select(
+						"program_id,data_config_id,max(quality) as max_quality,min(quality) as min_quality").where(
+						:clustering_quality_measure_id => @qualityMeasureName).where(
+						"data_config_id" => @dataConfigs).where(
+						"program_id" => @methods).group("data_config_id,program_id")
+				end
+
+			else
+				if params[:showProgramConfigs]
+					@iterationsExts = ParameterOptimizationIterationsExtsConfig.includes(:program_config, :dataset).select(
+						"program_config_id,dataset_id,max(quality) as max_quality,min(quality) as min_quality").where(
+						:clustering_quality_measure_id => @qualityMeasureName).where(
+						"dataset_id" => @datasets).where(
+						"program_config_id" => @programConfigs).group("dataset_id,program_config_id")
+				else
+					#@iterationsExts = ParameterOptimizationIterationsExtsConfig.includes(:program, :dataset).select(
+					#	"program_id,dataset_id,max(quality) as max_quality,min(quality) as min_quality").where(
+					#	:clustering_quality_measure_id => @qualityMeasureName).where(
+					#	"dataset_id" => @datasets).where(
+					#	"program_id" => @methods).group("dataset_id,program_id")
+					#@iterationsExts = ParameterOptimizationIterationsExt.includes(:program, :dataset).select("program_id,dataset_id,max(quality) as max_quality,min(quality) as min_quality").where(:clustering_quality_measure_id => @qualityMeasureName).where(:dataset_id => @datasets).where(:program_id => @methods).group("dataset_id,program_id")
+					@isMaximum = @qualityMeasure.optimum == 'Maximum'
+					if @isMaximum
+						@iterationsExts = ParameterOptimizationMaxQual.includes(:program, :dataset)
+							.select("program_id,dataset_id,maxquality as max_quality")
+							.where(:clustering_quality_measure_id => @qualityMeasureName)
+							.where(:dataset_id => @datasets).where(:program_id => @methods)
+					else
+						@iterationsExts = ParameterOptimizationMinQual.includes(:program, :dataset)
+							.select("program_id,dataset_id,minquality as min_quality")
+							.where(:clustering_quality_measure_id => @qualityMeasureName)
+							.where(:dataset_id => @datasets).where(:program_id => @methods)
+					end
 				end
 			end
 		end

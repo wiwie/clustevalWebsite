@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507115847) do
+ActiveRecord::Schema.define(version: 20160808201453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -245,6 +245,58 @@ ActiveRecord::Schema.define(version: 20160507115847) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "measurement", id: false, force: :cascade do |t|
+    t.integer "city_id",   null: false
+    t.date    "logdate",   null: false
+    t.integer "peaktemp"
+    t.integer "unitsales"
+  end
+
+  create_table "measurement_y2006m02", id: false, force: :cascade do |t|
+    t.integer "city_id",   null: false
+    t.date    "logdate",   null: false
+    t.integer "peaktemp"
+    t.integer "unitsales"
+  end
+
+  add_index "measurement_y2006m02", ["logdate"], name: "measurement_y2006m02_logdate", using: :btree
+
+  create_table "measurement_y2006m03", id: false, force: :cascade do |t|
+    t.integer "city_id",   null: false
+    t.date    "logdate",   null: false
+    t.integer "peaktemp"
+    t.integer "unitsales"
+  end
+
+  add_index "measurement_y2006m03", ["logdate"], name: "measurement_y2006m03_logdate", using: :btree
+
+  create_table "measurement_y2007m11", id: false, force: :cascade do |t|
+    t.integer "city_id",   null: false
+    t.date    "logdate",   null: false
+    t.integer "peaktemp"
+    t.integer "unitsales"
+  end
+
+  add_index "measurement_y2007m11", ["logdate"], name: "measurement_y2007m11_logdate", using: :btree
+
+  create_table "measurement_y2007m12", id: false, force: :cascade do |t|
+    t.integer "city_id",   null: false
+    t.date    "logdate",   null: false
+    t.integer "peaktemp"
+    t.integer "unitsales"
+  end
+
+  add_index "measurement_y2007m12", ["logdate"], name: "measurement_y2007m12_logdate", using: :btree
+
+  create_table "measurement_y2008m01", id: false, force: :cascade do |t|
+    t.integer "city_id",   null: false
+    t.date    "logdate",   null: false
+    t.integer "peaktemp"
+    t.integer "unitsales"
+  end
+
+  add_index "measurement_y2008m01", ["logdate"], name: "measurement_y2008m01_logdate", using: :btree
 
   create_table "optimizable_program_parameters", force: :cascade do |t|
     t.integer "repository_id",        null: false
@@ -849,6 +901,15 @@ ActiveRecord::Schema.define(version: 20160507115847) do
   create_table "submits", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "tmp", id: false, force: :cascade do |t|
+    t.integer "dataset_id"
+    t.integer "program_id"
+    t.integer "clustering_quality_measure_id"
+    t.float   "quality"
+    t.binary  "param_set_as_string"
+    t.integer "run_results_parameter_optimizations_parameter_set_iteration_id"
   end
 
   create_table "users", force: :cascade do |t|
