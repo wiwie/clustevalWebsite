@@ -5,7 +5,7 @@
 <% if @program.description %>
 		<tr><td valign="top"><b>Description:</b></td><td>
 <% if @program.imageUrl %>
-		<%= image_tag '/assets/' + @program.imageUrl, :style => 'float:left;height:100px;margin-right:5px;', :class => 'thumbnail' %>
+		<%= image_tag @program.imageUrl, :style => 'float:left;height:100px;margin-right:5px;', :class => 'thumbnail' %>
 <% end %>
 			<%= @program.description %></td></tr> 
 <% end %>
