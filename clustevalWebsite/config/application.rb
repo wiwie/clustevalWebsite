@@ -72,5 +72,8 @@ module ClustEval
     #     'parameter_optimization_max_qual_rows',
     #     'parameter_optimization_min_quals',
     #     'parameter_optimization_min_qual_rows']
+
+    config.comparison_show_program_configs_by_default = true
+    config.comparison_show_data_configs_by_default = false
   end
 end

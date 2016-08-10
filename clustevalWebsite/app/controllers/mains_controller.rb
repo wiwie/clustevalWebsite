@@ -44,12 +44,12 @@ class MainsController < ApplicationController
 				end
 			end
 			@inverted = false
-			@showDataConfigs = false
-			@showProgramConfigs = false
+			@showDataConfigs = Rails.application.config.comparison_show_data_configs_by_default
+			@showProgramConfigs = Rails.application.config.comparison_show_program_configs_by_default
 			@showRanks = false
 		end
 
-		if params[:showProgramConfigs]
+		if @showProgramConfigs
 			@programConfigsSelectChoices = ProgramConfig.where(:repository_id => params[:repository]).where(:program_config_id => nil).order(:name)
 			if params[:selectProgramConfigs]
 				@programConfigs = params[:selectProgramConfigs]
@@ -73,7 +73,7 @@ class MainsController < ApplicationController
 
 		@measureSelectChoices = ClusteringQualityMeasure.where(:repository_id => params[:repository]).order(:alias)
 
-		if params[:showDataConfigs]
+		if @showDataConfigs
 			@dataConfigsSelectChoices = DataConfig.where(:repository_id => params[:repository]).where(:data_config_id => nil).order(:name)
 			if params[:selectDataConfigs]
 				@dataConfigs = params[:selectDataConfigs]
@@ -101,8 +101,8 @@ class MainsController < ApplicationController
 			@qualityMeasureName = @qualityMeasure.id
 
 			# data for table
-			if params[:showDataConfigs]
-				if params[:showProgramConfigs]
+			if @showDataConfigs
+				if @showProgramConfigs
 					@iterationsExts = ParameterOptimizationIterationsExtsConfig.includes(:program_config, :data_config).select(
 						"program_config_id,data_config_id,max(quality) as max_quality,min(quality) as min_quality").where(
 						:clustering_quality_measure_id => @qualityMeasureName).where(
@@ -117,7 +117,7 @@ class MainsController < ApplicationController
 				end
 
 			else
-				if params[:showProgramConfigs]
+				if @showProgramConfigs
 					@iterationsExts = ParameterOptimizationIterationsExtsConfig.includes(:program_config, :dataset).select(
 						"program_config_id,dataset_id,max(quality) as max_quality,min(quality) as min_quality").where(
 						:clustering_quality_measure_id => @qualityMeasureName).where(
