@@ -37,7 +37,7 @@
           <% if @matrix[i][j].to_s == "--" %>
             <% @string = "--" %>
           <% else %>
-            <% if @dataType == "dataset" %>
+            <% if @dataType == "dataset" and @toolType == "program" %>
               <% @string = '<a href="/' + params[:repository] + '/datasets/' + @datas[i].id.to_s + '/bestclust/' + @programs[j-1].name + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
               <% @string = @string + matrix[i][j].to_s + '</a>' %>
             <% else %>
