@@ -61,17 +61,19 @@
   </style>
 </head>
 <body>
-<div class="navbar navbar-default navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class='title'>
-      <h1><div id="first">ClustEval</div> <div id="second">Integrative Clustering Evaluation Framework</div></h1>
+<div id="holder">
+   <div class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class='title'>
+        <h1><div id="first">ClustEval</div> <div id="second">Integrative Clustering Evaluation Framework</div></h1>
+      </div>
+      <div class='breadcrumb'>
+        <%= render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => false, :join_with => ' » ', :prefix => ' Location: ', :context => :admin) %>
+      </div>
+        <%= render_navigation(:level => 1, :static_leaf => true, :context => "admin") %>
     </div>
-    <div class='breadcrumb'>
-      <%= render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => false, :join_with => ' » ', :prefix => ' Location: ', :context => :admin) %>
-    </div>
-      <%= render_navigation(:level => 1, :static_leaf => true, :context => "admin") %>
   </div>
-</div>
+  <div id="body">
 <br><br>
 <div style="height:100px;">&nbsp;</div>
 <div class="container-fluid">
@@ -95,6 +97,13 @@
     
     </div>
   </div>
+  </div>
+  </div>
+
+
+    <div id="footer">
+      <p style="margin-top: 20px;">Website Version: <%= Rails.application.config.clusteval_website_version %> - Git Revision: <%= AppName::GIT_REVISION %> (<%= AppName::GIT_DATE %>)</p>
+    </div>
   </div>
   <div class="mymodal"><!-- Place at bottom of page --></div>
   <p></p>

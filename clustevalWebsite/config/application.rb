@@ -75,5 +75,7 @@ module ClustEval
 
     config.comparison_show_program_configs_by_default = false
     config.comparison_show_data_configs_by_default = false
+
+    config.clusteval_website_version = 1.0
   end
 end
