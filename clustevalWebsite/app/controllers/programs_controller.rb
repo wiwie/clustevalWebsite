@@ -33,6 +33,7 @@ class ProgramsController < ApplicationController
 
 	def show_performance
 		@program = Program.find(params[:id])
+		@datasets = Dataset.all(params[:repository])
 		
 		respond_to do |format|
 			format.html # index.html.erb

@@ -17,7 +17,7 @@
     </tr>
    </thead>
    <tbody>
-    <% for i in 0..@datasets.length-1 %>
+    <% for i in 0..@datas.length-1 %>
     <tr>
       <% for j in 0..@qualityMeasures.length %>
         <% if j == 0 %>
@@ -27,7 +27,7 @@
             <% if matrix[i][j].to_s == "--" %>
               <%= matrix[i][j].to_s %>
             <% else %>
-              <a href="/<%= params[:repository] %>/programs/<%= program.id %>/clust/<%= @datasets[i].id %>?post[clustering_quality_measure_id2]=<%= @qualityMeasures[j-1].id %>"><%= matrix[i][j].to_s %></a>
+              <a href="/<%= params[:repository] %>/programs/<%= program.id %>/clust/<%= @datas[i].id %>?post[clustering_quality_measure_id2]=<%= @qualityMeasures[j-1].id %>"><%= matrix[i][j].to_s %></a>
             <% end %>
           </td>
         <% end %>
@@ -83,12 +83,12 @@ $(function () {
             },
             series: [
 <% Dataset.all(params[:repository]).sort_by{|x| x.name}.each do |dataset| %>
-<% if @visibleDatasets[dataset] %>
+<% if @visibleDatas[dataset] %>
 {
   name: '<%= dataset.name %>',
   data: [<% ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}.each do |measure| %>
   <% if @visibleMeasures[measure] %>
-    <% @qual = @matrix[@datasetIds[dataset]][@measureIds[measure]] %>
+    <% @qual = @matrix[@dataIds[dataset]][@measureIds[measure]] %>
     <% if @qual != "--" %>
       <%= @qual %>
     <% else %>
