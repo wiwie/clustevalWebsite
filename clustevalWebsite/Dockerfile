@@ -1,4 +1,4 @@
-FROM ruby:2.2.1
+FROM ruby:2.2.5-alpine
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev sudo
 RUN apt-get install -y postgresql-9.4
 RUN cat /etc/postgresql/9.4/main/pg_hba.conf
