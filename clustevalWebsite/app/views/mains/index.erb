@@ -9,6 +9,9 @@
   <%= collection_select(:repo_select, :repository_id, @repositories, :id, :base_path, {:selected => params[:repository]}, :onchange => "$('body').addClass('loading'); this.form.submit();", :class => 'span3') %>
   <% end %>
 <% end %>
+<h2>Citation</h2>
+Wiwie, C., Röttger, R. & Baumbach, J. <i>Comparing the performance of biomedical clustering methods.</i> <b>Nature Methods</b> (2015).
+
 <a id="workflow" style="text-decoration:none;"><h2>Workflow</h2></a>
 The use-case below presents to you where you can find which functionality on the clusteval website. 
 <h2>Download & Installation</h2>
