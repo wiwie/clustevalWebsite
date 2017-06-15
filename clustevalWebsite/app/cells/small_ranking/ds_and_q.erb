@@ -25,7 +25,7 @@ $(function () {
             },
     
             xAxis: {
-                categories: [<% ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}.each do |measure| %><% if @visibleMeasures[measure] %>'<%= measure.alias %>',<% end %><% end %>],
+		categories: [<% ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}.each do |measure| %><% if @visibleMeasures[measure] %>'<%= measure.alias %>',<% end %><% end %>],
                 labels: {
                   enabled: true,
                   rotation: -45,
@@ -47,11 +47,11 @@ $(function () {
                 }
             },
             series: [
-            <% Program.all(params[:repository]).sort_by{|x| x.name}.each do |program| %>
+            <% @sortedPrograms.each do |program| %>
             <% if @visiblePrograms[program] %>
             {
               name: '<%= program.alias %>',
-              data: [<% ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}.each do |measure| %>
+              data: [<% @sortedMeasures.each do |measure| %>
               <% if @visibleMeasures[measure] %>
                 <% @qual = @matrix[@programIds[program]][@measureIds[measure]] %>
                 <% if @qual != "--" %>
@@ -79,38 +79,31 @@ $(function () {
   <thead>
   <tr>
     <th>Program</th>
-    <% for i in 0..@qualityMeasures.length-1 %>
-    <% measure = @qualityMeasures[i] %>
-    <th>
-      <!--<svg version="1.1" width="20px" height="250px">  
-    <text fill="#000000" stroke="none" font-size="100%" font="serif" transform="rotate(90,0,0)">
-      <tspan y="-5"><%= measure.alias %>
-      </tspan>
-    </text>
-</svg>
--->
-<%= measure.alias %>
-</th>
+    <% @sortedMeasures.each do |measure| %>
+	    <th>
+		<%= measure.alias %>
+	    </th>
     <% end %>
   </tr>
  </thead>
  <tbody>
-  <% for i in 0..@programs.length-1 %>
+  <% i = 0 %>
+  <% @sortedPrograms.each do |program| %>
   <tr>
-    <% for j in 0..@qualityMeasures.length %>
-      <% if j == 0 %>
-        <td><%= link_to matrix[i][j].name, matrix[i][j] %></td>
-      <% else %>
+    <% j = 0 %>
+    <td><%= link_to matrix[i][j].name, matrix[i][j] %></td>
+    <% @sortedMeasures.each do |measure| %>
         <td>
         <% if matrix[i][j].to_s == "--" %>
           <%= matrix[i][j].to_s %>
         <% else %>
-          <a href="/<%= params[:repository] %>/datasets/<%= dataset.id %>/bestclust/<%= @programs[i].alias %>?post[clustering_quality_measure_id2]=<%= @qualityMeasures[j-1].id %>"><%= matrix[i][j].to_s %></a>
+          <a href="/<%= params[:repository] %>/datasets/<%= dataset.id %>/bestclust/<%= program.alias %>?post[clustering_quality_measure_id2]=<%= measure.id %>"><%= matrix[i][j].to_s %></a>
         <% end %>
         </td>
-      <% end %>
+	<% j = j + 1 %>
     <% end %>
   </tr>
+  <% i = i + 1 %>
   <% end %>
 </tbody>
 </table>

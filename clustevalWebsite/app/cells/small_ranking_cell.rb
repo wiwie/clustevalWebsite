@@ -326,7 +326,18 @@ class SmallRankingCell < MyCell
 
 		  @matrix[programId][measureId] = (((isMaximum ? iterationExt.max_quality.to_f : iterationExt.min_quality.to_f)*1000).round/1000.0)
 		end
-		render :locals => {:matrix => @matrix, :programs => @programs, :programIds => @programIds, :qualityMeasures => @qualityMeasures, :measureIds => @measureIds, :minY => @minY, :maxY => @maxY, :dataset => opts[:obj]}
+		@sortedMeasures = ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}
+		@sortedPrograms = Program.all(params[:repository]).sort_by{|x| x.name}
+		Rails.logger.info(@matrix)
+		Rails.logger.info(@programs)
+		Rails.logger.info(@programIds)
+		Rails.logger.info(@qualityMeasures)
+		Rails.logger.info(@measureIds)
+		Rails.logger.info(@minY)
+		Rails.logger.info(@maxY)
+		Rails.logger.info(opts[:obj])
+		@locals = {:matrix => @matrix, :programs => @programs, :programIds => @programIds, :qualityMeasures => @qualityMeasures, :measureIds => @measureIds, :minY => @minY, :maxY => @maxY, :dataset => opts[:obj]}
+		render :locals => @locals
 	end
 
 # dataconfig vs quality
