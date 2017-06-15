@@ -13,8 +13,7 @@
     <% end %>
 
     <th>Data Type</th>
-    <% for i in @xMin..@xMax %>
-      <% program = @programs[i-1] %>
+    <% @programs.each do |program| %>
       <th>
         <%= program.name %>
       </th>
@@ -22,23 +21,24 @@
   </tr>
  </thead>
  <tbody>
-  <% for i in @yMin..@yMax %>
+  <% i = @yMin %>
+  <% @datas.each do |data| %>
   <tr>
-    <% for j in 0..@xMax %>
-      <% if j == 0 %>
-        <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
-        <% if @dataType == "dataset" %>
+    <% j = 0 %>
+    <td><%= link_to @matrix[i][j].name, @matrix[i][j] %></td>
+    <% if @dataType == "dataset" %>
         <td><%= @matrix[i][j].dataset_type.alias %></td>
-        <% else %>
+    <% else %>
         <td><%= @matrix[i][j].dataset_config.dataset.dataset_type.alias %></td>
-        <% end %>
-      <% else %>
+    <% end %>
+    <% j = 1 %>
+    <% @programs.each do |program| %>
        <% @string = "" %>
           <% if @matrix[i][j].to_s == "--" %>
             <% @string = "--" %>
           <% else %>
             <% if @dataType == "dataset" and @toolType == "program" %>
-              <% @string = '<a href="/' + params[:repository] + '/datasets/' + @datas[i].id.to_s + '/bestclust/' + @programs[j-1].name + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
+              <% @string = '<a href="/' + params[:repository] + '/datasets/' + data.id.to_s + '/bestclust/' + program.name + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
               <% @string = @string + matrix[i][j].to_s + '</a>' %>
             <% else %>
               <% @string = @string + matrix[i][j].to_s %>
@@ -47,9 +47,10 @@
         <td style="text-align:center;">
           <%= raw @string %>
         </td>
-      <% end %>
+      <% j = j + 1 %>
     <% end %>
   </tr>
+  <% i = i + 1 %>
   <% end %>
 </tbody>
 </table>

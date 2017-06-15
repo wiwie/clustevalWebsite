@@ -92,6 +92,7 @@ $(function () {
   <tr>
     <% j = 0 %>
     <td><%= link_to matrix[i][j].name, matrix[i][j] %></td>
+    <% j = 1 %>
     <% @sortedMeasures.each do |measure| %>
         <td>
         <% if matrix[i][j].to_s == "--" %>
