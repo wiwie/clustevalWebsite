@@ -1,0 +1,68 @@
+<div class="resizable" style="height:400px; width:100%;">
+  <div id="comparison_chart">
+  </div>
+</div>
+<br>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            plotOptions: {
+            column: {
+                animation: false,
+                borderWidth: 0,
+                groupPadding: 0.1,
+                pointPadding: 0.05
+            }},
+            chart: {
+                renderTo: 'comparison_chart',
+                type: 'column'
+            },
+    
+            title: {
+                text: 'Clustering qualities'
+            },
+    
+            xAxis: {
+                categories: [<% @histogram.each do |qual,count| %>'<%= qual %>',<% end %>],
+                labels: {
+                  enabled: true,
+                  rotation: -45,
+                  align: 'right'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Counts'
+                }
+                  ,min: 0
+            },
+    
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y;
+                }
+            },
+            series: [
+              {
+                name: '<%= @measure.alias %>',
+                data: [<% @histogram.each do |qual,count| %><%= count %>,<% end %>]
+            },
+            ]
+        });
+
+      $( ".resizable" ).resizable({
+        helper: "ui-resizable-helper",
+        stop: function( event, ui ) {
+          chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+        },
+        create: function( event, ui ) {
+          chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+        }
+      });
+    });
+});
+</script>

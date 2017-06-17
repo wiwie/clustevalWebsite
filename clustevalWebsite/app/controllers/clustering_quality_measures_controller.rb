@@ -23,4 +23,14 @@ class ClusteringQualityMeasuresController < ApplicationController
 
 		render partial: 'tooltip_info'
 	end
+
+	def histogram
+		@measure = ClusteringQualityMeasure.find(params[:id])
+		@histogram = RunResultsParameterOptimizationsQuality.where(:clustering_quality_measure => @measure).group("quality::numeric(7,2)").order("quality::numeric(7,2)").count
+
+                respond_to do |format|
+                        format.html # index.html.erb
+                        format.json { render :json => @histogram }
+                end
+	end
 end
