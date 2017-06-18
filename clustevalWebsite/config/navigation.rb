@@ -80,7 +80,10 @@ SimpleNavigation::Configuration.run do |navigation|
     end
     primary.item( :nav_measures, 'Measures', clustering_quality_measures_path) do |sub_measures|
       ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}.each do |clustering_quality_measure|
-        sub_measures.item( :nav_measure, clustering_quality_measure.alias, clustering_quality_measure_path(clustering_quality_measure))
+        sub_measures.item( :nav_measure, clustering_quality_measure.alias, clustering_quality_measure_path(clustering_quality_measure)) do |sub_measure|
+	 sub_measure.item :nav_measure_general, 'General', clustering_quality_measure_path(clustering_quality_measure)
+	 sub_measure.item :nav_measure_histogram, 'Histogram', url_for(:controller => 'clustering_quality_measures', :action => 'histogram', :id => clustering_quality_measure.id)
+	end
       end
     end
     primary.item( :nav_submit, 'Submit', submits_path) do |sub_submit|

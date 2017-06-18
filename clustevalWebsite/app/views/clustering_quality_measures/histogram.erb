@@ -14,7 +14,8 @@ $(document).ready(function(){
                 animation: false,
                 borderWidth: 0,
                 groupPadding: 0.1,
-                pointPadding: 0.05
+                pointPadding: 0.05,
+            minPointLength: 3
             }},
             chart: {
                 renderTo: 'comparison_chart',
@@ -26,7 +27,7 @@ $(document).ready(function(){
             },
     
             xAxis: {
-                categories: [<% @histogram.each do |qual,count| %>'<%= qual %>',<% end %>],
+                categories: [<% @allkeys.each do |qual,count| %>'<%= qual %>',<% end %>],
                 labels: {
                   enabled: true,
                   rotation: -45,
@@ -35,7 +36,7 @@ $(document).ready(function(){
             },
             yAxis: {
                 title: {
-                    text: 'Counts'
+                    text: 'Frequency'
                 }
                   ,min: 0
             },
@@ -49,7 +50,7 @@ $(document).ready(function(){
             series: [
               {
                 name: '<%= @measure.alias %>',
-                data: [<% @histogram.each do |qual,count| %><%= count %>,<% end %>]
+                data: [<% @allkeys.each do |qual,count| %><%= count %>,<% end %>]
             },
             ]
         });
