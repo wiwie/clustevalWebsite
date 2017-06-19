@@ -28,17 +28,17 @@ body {
 	padding:10px;
 }
 
-.title {
+.page_title {
 	background-color:$darker;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
 
-.title div {
+.page_title div {
 	display: inline;
 }
 
-.title h1 #first {
+.page_title h1 #first {
  	text-transform:uppercase;
 	color:$light;
 	padding-left: 10px;
@@ -46,7 +46,7 @@ body {
 	border-right: 3px solid $medium2;
 }
 
-.title h1 #second {
+.page_title h1 #second {
 	color: $medium;
 }
 
