@@ -51,6 +51,8 @@ ClustEval::Application.routes.draw do
 
 		get 'clustering_quality_measures/:id/tooltip_info' => 'clustering_quality_measures#tooltip_info'
 
+		get 'clustering_quality_measures/:id/histogram' => 'clustering_quality_measures#histogram'
+
 		resources :admins
 		resources :datasets
 		resources :dataset_formats
