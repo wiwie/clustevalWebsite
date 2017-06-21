@@ -51,4 +51,29 @@ class ClusteringQualityMeasuresController < ApplicationController
                         format.json { render :json => @allkeys }
                 end
 	end
+
+	def correlations
+		@measures = ClusteringQualityMeasure.all(params[:repository]).order(:alias)
+
+		@cast = []
+		i = 0
+		@measures.each do |m1|
+			j = 0
+			@measures.each do |m2|
+				corr = ClusteringQualityMeasuresSpearmanCorrelation.where(:clustering_quality_measure_1_id => m1).where(:clustering_quality_measure_2_id => m2)
+				if corr.count > 0
+					@cast << [i, j, corr.first.corr]
+				else
+					@cast << [i, j, nil]
+				end
+				j = j +1
+			end
+			i = i + 1
+		end
+		
+                respond_to do |format|
+                        format.html # index.html.erb
+                        format.json { render :json => @cast }
+                end
+	end
 end

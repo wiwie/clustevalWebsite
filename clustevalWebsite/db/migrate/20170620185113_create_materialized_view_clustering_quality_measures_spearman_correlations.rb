@@ -1,0 +1,9 @@
+class CreateMaterializedViewClusteringQualityMeasuresSpearmanCorrelations < ActiveRecord::Migration
+  def down
+	execute "drop materialized view clustering_quality_measures_spearman_correlations;"
+  end 
+
+  def up
+	execute "create materialized view clustering_quality_measures_spearman_correlations as select b1.clustering_quality_measure_id clustering_quality_measure_1_id, b2.clustering_quality_measure_id clustering_quality_measure_2_id, corr(b1.rank,b2.rank) from parameter_optimization_iterations_woparam_ranks b1, parameter_optimization_iterations_woparam_ranks b2 where b1.run_results_parameter_optimizations_parameter_set_iteration_id=b2.run_results_parameter_optimizations_parameter_set_iteration_id group by b1.clustering_quality_measure_id,b2.clustering_quality_measure_id;"
+  end
+end

@@ -79,6 +79,7 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
     primary.item( :nav_measures, 'Measures', clustering_quality_measures_path) do |sub_measures|
+      sub_measures.item( :nav_measures_corrs, 'Correlations', url_for(:controller => 'clustering_quality_measures', :action => 'correlations'))
       ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}.each do |clustering_quality_measure|
         sub_measures.item( :nav_measure, clustering_quality_measure.alias, clustering_quality_measure_path(clustering_quality_measure)) do |sub_measure|
 	 sub_measure.item :nav_measure_general, 'General', clustering_quality_measure_path(clustering_quality_measure)

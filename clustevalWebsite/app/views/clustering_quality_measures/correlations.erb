@@ -1,0 +1,66 @@
+<div class="resizable" style="height:400px; width:100%;">
+  <div id="comparison_chart">
+  </div>
+</div>
+<br>
+
+<script type="text/javascript">
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'comparison_chart',
+                type: 'heatmap'
+            },
+            title: {
+                text: 'Spearman Correlations of Clustering Quality Measures'
+            },
+
+    colorAxis: {
+        min: -1,
+        minColor: '#FFFFFF',
+        maxColor: Highcharts.getOptions().colors[0]
+    },
+
+    legend: {
+        align: 'right',
+        layout: 'vertical',
+        margin: 0,
+        verticalAlign: 'top',
+        y: 25,
+        symbolHeight: 280
+    },
+            xAxis: {
+                categories: [<% @measures.each do |m| %>'<%= m.alias %>',<% end %>],
+                labels: {
+                  enabled: true,
+                  rotation: -45,
+                  align: 'right'
+                }
+            },
+            yAxis: {
+		categories: [<% @measures.each do |m| %>'<%= m.alias %>',<% end %>],
+            },
+            series: [{
+                name: 'Spearman Correlation',
+	        borderWidth: 1,
+                data: <%= @cast %>,
+        dataLabels: {
+            enabled: true,
+            color: '#000000',
+	    format: '{point.value:.2f}',
+        },
+            }]
+        });
+
+      $( ".resizable" ).resizable({
+        helper: "ui-resizable-helper",
+        stop: function( event, ui ) {
+          chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+        },
+        create: function( event, ui ) {
+          chart.setSize(ui.size.width,ui.size.height,doAnimation = true);
+        }
+      });
+    });
+</script>

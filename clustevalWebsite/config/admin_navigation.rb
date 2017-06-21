@@ -119,8 +119,9 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     primary.item( :nav_measures, 'Measures', clustering_quality_measures_path) do |sub_measures|
       sub_measures.item :nav_measures_general, 'Overview', clustering_quality_measures_path
+      sub_measures.item( :nav_measures_corrs, 'Correlations', url_for(:controller => 'clustering_quality_measures', :action => 'correlations'))
       @qualityMeasures = []
-      if params[:controller] == 'clustering_quality_measures'
+      if params[:controller] == 'clustering_quality_measures' and not params[:action] == 'correlations'
         if params[:action] == 'index'
           @qualityMeasures = ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}
         else
