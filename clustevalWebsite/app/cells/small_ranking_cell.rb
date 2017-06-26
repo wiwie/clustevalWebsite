@@ -125,6 +125,67 @@ class SmallRankingCell < MyCell
   		return format_quality((sorted[(len - 1) / 2] + sorted[len / 2]) / 2.0)
 	end
 
+
+# dataset vs quality
+	def ds_and_q(opts)
+		# data for plot
+		@visiblePrograms = {}
+		@visibleMeasures = {}
+
+		@minY = 1
+		@maxY = -1
+
+		@matrix = []
+		@programIds = {}
+		@programs = Program.all(params[:repository])
+		for i in 0..@programs.length-1
+		  @programIds[@programs[i]] = i
+		  @matrix << [@programs[i]]
+		end
+		@measureIds = {}
+		@qualityMeasures = ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}
+		for i in 1..@qualityMeasures.length
+		  @measureIds[@qualityMeasures[i-1]] = i
+
+		  for j in 0..@programs.length-1
+		    @matrix[j][i] = '--'
+		  end
+
+		  if @qualityMeasures[i-1].min_value and @qualityMeasures[i-1].min_value < @minY
+		  	@minY = @qualityMeasures[i-1].min_value
+		  end
+
+		  if @qualityMeasures[i-1].max_value and @qualityMeasures[i-1].max_value > @maxY
+		  	@maxY = @qualityMeasures[i-1].max_value
+		  end
+		end
+		opts[:iterationsExts].each do |iterationExt|
+		  programId = @programIds[iterationExt.program]
+		  measure = ClusteringQualityMeasure.find_by_id(iterationExt.clustering_quality_measure_id)
+		  measureId = @measureIds[measure]
+		  isMaximum = measure.optimum == 'Maximum'
+
+		  @visiblePrograms[iterationExt.program] = true
+		  if measure.min_value and measure.max_value
+		  	@visibleMeasures[measure] = true
+		  end
+
+		  @matrix[programId][measureId] = format_quality(isMaximum ? iterationExt.max_quality.to_f : iterationExt.min_quality.to_f)
+		end
+		@sortedMeasures = ClusteringQualityMeasure.all(params[:repository]).sort_by{|x| x.alias}
+		@sortedPrograms = Program.all(params[:repository]).sort_by{|x| x.name}
+		Rails.logger.info(@matrix)
+		Rails.logger.info(@programs)
+		Rails.logger.info(@programIds)
+		Rails.logger.info(@qualityMeasures)
+		Rails.logger.info(@measureIds)
+		Rails.logger.info(@minY)
+		Rails.logger.info(@maxY)
+		Rails.logger.info(opts[:obj])
+		@locals = {:matrix => @matrix, :programs => @programs, :programIds => @programIds, :qualityMeasures => @qualityMeasures, :measureIds => @measureIds, :minY => @minY, :maxY => @maxY, :dataset => opts[:obj]}
+		render :locals => @locals
+end
+
 	def p_and_q(opts)
 		# data for plot
 		@visibleDatas = {}
