@@ -2,7 +2,7 @@ class RunRunAnalysesController < ApplicationController
 	
 
 	def show
-		@run = Run.find_by_name(params[:id])
+		@run = Run.find(params[:id])
 		@runAnalysis = RunAnalysis.find_by_run_id(@run.id)
 		@parameterOptimizationRun = RunRunAnalysis.find_by_run_analysis_id(@runAnalysis.id)
 		@runAnalysis = @parameterOptimizationRun.run_analysis
