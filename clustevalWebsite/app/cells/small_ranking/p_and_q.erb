@@ -5,11 +5,10 @@
 <br>
   <table id="dataAndProgramStatistics" class="display">
     <thead>
-    <!--<tr style="overflow: visible;">-->
     <tr>
       <th>Dataset</th>
-      <% for i in 0..@qualityMeasures.length-1 %>
-      <% measure = @qualityMeasures[i] %>
+      <th>Type</th>
+      <% @qualityMeasures.each do |measure| %>
       <th>
         <%= measure.alias %>
       </th>
@@ -17,22 +16,25 @@
     </tr>
    </thead>
    <tbody>
-    <% for i in 0..@datas.length-1 %>
+    <% i = 0 %>
+    <% @datas.each do |data| %>
     <tr>
-      <% for j in 0..@qualityMeasures.length %>
-        <% if j == 0 %>
-          <td><%= link_to matrix[i][j].name, matrix[i][j] %></td>
-        <% else %>
+      <% j = 0 %>
+      <td><%= link_to matrix[i][j].name, matrix[i][j] %></td>
+      <td></td>
+      <% j = 1 %>
+      <% @qualityMeasures.each do |measure| %>
           <td>
             <% if matrix[i][j].to_s == "--" %>
               <%= matrix[i][j].to_s %>
             <% else %>
-              <a href="/<%= params[:repository] %>/programs/<%= program.id %>/clust/<%= @datas[i].id %>?post[clustering_quality_measure_id2]=<%= @qualityMeasures[j-1].id %>"><%= matrix[i][j].to_s %></a>
+              <a href="/<%= params[:repository] %>/programs/<%= program.id %>/clust/<%= data.id %>?post[clustering_quality_measure_id2]=<%= measure.id %>"><%= matrix[i][j].to_s %></a>
             <% end %>
           </td>
-        <% end %>
+	<% j = j + 1 %>
       <% end %>
     </tr>
+    <% i = i + 1 %>
     <% end %>
   </tbody>
   </table>
