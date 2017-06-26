@@ -93,7 +93,11 @@ class SmallRankingCell < MyCell
 		  		yInd = dataId
 		  	end
 
-		  	@matrix[yInd][xInd] = (((@isMaximum ? iterationExt.max_quality.to_f : iterationExt.min_quality.to_f)*1000).round/1000.0)
+			if ( @isMaximum and iterationExt.max_quality.to_f.nan?) or (not @isMaximum and iterationExt.min_quality.to_f.nan?)
+				@matrix[yInd][xInd] = "NaN"
+			else
+			  	@matrix[yInd][xInd] = (((@isMaximum ? iterationExt.max_quality.to_f : iterationExt.min_quality.to_f)*1000).round/1000.0)
+			end
 		end
 	  
 		if opts[:showRanks]
