@@ -3,6 +3,8 @@
   </div>
 </div>
 <br>
+<div id="dendrogram">
+</div>
 
 <script type="text/javascript">
     var chart;
@@ -52,6 +54,53 @@
         },
             }]
         });
+
+	//Make an SVG Container
+	var svgContainer = d3.select("#dendrogram").append("svg")
+                                    .attr("width", <%= @dendro_width +5 %>)
+                                    .attr("height", <%= @dendro_height + 200 %>);
+
+	// title
+	<% y_offset = 40 %>
+	svgContainer.append("text").text("Dendrogram (Average Linkage) of Measures Based on the Above Similarities")
+		.attr("x", <%= 10 %>)
+                 .attr("y", <%= y_offset-20 %>)
+                 .attr("font-family", "sans-serif")
+                 .attr("font-size", "20px")
+                 .attr("font-weight", "bold")
+                 .attr("fill", "black");
+	<% item_width = (@dendro_width/@clusters[0].length) %>
+
+	<% @clusters[0].each_with_index do |cluster, i| %>
+	<% x1 = item_width*i + 5 %>
+	<% x2 = item_width*i + 5 %>
+	<% y1 = @dendro_height + y_offset + 5 %>
+	var label = svgContainer.append("text").text("<%= ClusteringQualityMeasure.find(cluster).alias %>")
+                 .attr("x", <%= x1 %>)
+                 .attr("y", <%= y1%>)
+                 .attr("font-family", "sans-serif")
+                 .attr("font-size", "14px")
+		 .attr("font-weight", "bold")
+                 .attr("fill", "black")
+		 .attr("transform", "rotate(90 <%= x1 %> <%= y1%>)");
+	<% end %>
+
+
+	<% @dendrogram.each do |split| %>
+	<% i1 = @clusters[0].index(split[0][0])+(split[0].length-1)/2.0 %>
+	<% i2 = @clusters[0].index(split[1][0])+(split[1].length-1)/2.0 %>
+	<% x1 = (5 + item_width * i1) %>
+	<% x2 = (5 + item_width * i2) %>
+	<% xmin = [x1,x2].min %>
+	<% xmax = [x1,x2].max %>
+	<% y1 = @dendro_height - (split[2])/(@max_dist)*@dendro_height + y_offset %>
+	<% y2 = @dendro_height - (split[2])/(@max_dist)*@dendro_height + y_offset %>
+	<% y1down = @dendro_height - (@clusterToDist[split[0]])/(@max_dist)*@dendro_height + y_offset %>
+	<% y2down = @dendro_height - (@clusterToDist[split[1]])/(@max_dist)*@dendro_height + y_offset %>
+	svgContainer.append("line").attr("x1", <%= x1 %>).attr("y1", <%= y1 %>).attr("x2", <%= x2 %>).attr("y2", <%= y2 %>).attr("stroke-width", 2).attr("stroke", "black");
+	svgContainer.append("line").attr("x1", <%= x1 %>).attr("y1", <%= y1 %>).attr("x2", <%= x1 %>).attr("y2", <%= y1down %>).attr("stroke-width", 2).attr("stroke", "black");
+	svgContainer.append("line").attr("x1", <%= x2 %>).attr("y1", <%= y1 %>).attr("x2", <%= x2 %>).attr("y2", <%= y2down %>).attr("stroke-width", 2).attr("stroke", "black");
+	<% end %>
 
       $( ".resizable" ).resizable({
         helper: "ui-resizable-helper",

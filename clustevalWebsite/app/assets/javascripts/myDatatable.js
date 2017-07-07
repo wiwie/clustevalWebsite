@@ -13,5 +13,5 @@ var MyDatatable = function( sTable ) {
 	});
 
 	// wrap table inside div
-	$(sTable).wrap("<div style='padding-top:185px;'></div>");
+	$(sTable).wrap("<div style='padding-top:55px;'></div>");
 }
