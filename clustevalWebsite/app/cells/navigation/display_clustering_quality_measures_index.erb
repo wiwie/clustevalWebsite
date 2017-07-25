@@ -1,2 +1,2 @@
 <div class='left_navigation_title'>Navigation:</div>
-<%= render_navigation(:items => [{:key => :left_nav_general, :name => 'Overview', :url => clustering_quality_measures_path}]) %>
+<%= render_navigation(:items => [{:key => :left_nav_general, :name => 'Overview', :url => clustering_quality_measures_path}, {:key => :left_nav_correlations, :name => 'Correlations', :url => url_for(:controller => :clustering_quality_measures, :action => :correlations)}]) %>

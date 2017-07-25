@@ -27,7 +27,7 @@
   </script>
   <script type="text/javascript">
   $(function() {
-    $( document ).tooltip({
+    $( body ).tooltip({
       items: "[tooltip_info]",
       position: {
         at: "right center"
@@ -62,20 +62,18 @@
 </head>
 <body>
 <div id="holder">
-   <div class="navbar navbar-default navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class='page_title'>
+   <div class='page_title'>
         <h1><div id="first">ClustEval</div> <div id="second">Integrative Clustering Evaluation Framework</div></h1>
       </div>
-      <div class='breadcrumb'>
+   <div class="navbar navbar-default ">
+    <div class="navbar-inner">
+        <%= render_navigation(:level => 1, :static_leaf => true, :context => "admin") %>
+    <div class='breadcrumb'>
         <%= render_navigation(:renderer => SimpleNavigation::Renderer::Breadcrumbs, :static_leaf => false, :join_with => ' » ', :prefix => ' Location: ', :context => :admin) %>
       </div>
-        <%= render_navigation(:level => 1, :static_leaf => true, :context => "admin") %>
     </div>
   </div>
   <div id="body">
-<br><br>
-<div style="height:100px;">&nbsp;</div>
 <div class="container-fluid">
   <div class="row">
     <div data-spy="affix" class="col-md-2">

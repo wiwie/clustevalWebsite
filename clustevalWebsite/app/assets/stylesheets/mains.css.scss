@@ -36,6 +36,7 @@ body {
 
 .page_title div {
 	display: inline;
+//	display: block;
 }
 
 .page_title h1 #first {
@@ -74,6 +75,7 @@ h1, h2, h3, h4, h5, h6          { font-weight: bolder }
 	font-size: small;
 	font-weight: normal;
 	padding:5px 10px 0px 10px;
+	margin-bottom: 0px;
 }
 
 .left_navigation {
@@ -766,3 +768,10 @@ table.dataTable tr.even { background-color: white; }
 table.dataTable tr.odd  .sorting_1  { background-color: #f6f6ff; }
 table.dataTable tr.even .sorting_1 { background-color: white; }
 
+@media(max-width:1000px){
+	.affix {
+	  position: static;
+	  width: auto;
+	  top: 0;
+	}
+}	

@@ -36,6 +36,8 @@
        <% @string = "" %>
           <% if @matrix[i][j].to_s == "--" %>
             <% @string = "--" %>
+	  <% elsif @matrix[i][j].to_s == "NaN" %>
+	    <% @string = "NaN" %>
           <% else %>
             <% if @dataType == "dataset" and @toolType == "program" %>
               <% @string = '<a href="/' + params[:repository] + '/datasets/' + data.id.to_s + '/bestclust/' + program.name + '?post[clustering_quality_measure_id2]=' + @qualityMeasure.id.to_s + '">' %>
@@ -130,22 +132,14 @@ $(function () {
 });
 $(document).ready(function() {
   jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-    // TODO: we remove this function for now, because new version 1.10 of datatables does not use custom sort -asc and -desc if this is present for each column
-      //"bla-pre": function ( a ) {
-      //    var x = String(a).replace( /<[\s\S]*?>/g, "" );
-      //    if (x == "--")
-      //      return "--"
-      //    return parseFloat( x );
-      //},
-   
       "num-html-asc": function ( a, b ) {
-          if (a == "--") {
-            if (b == "--") {
+          if (a == "--" || a == "NaN") {
+            if (b == "--" || b == "NaN") {
               return 0;     
-              }       
+            }
             return 1;
           }
-          if (b == "--") {
+          if (b == "--" || b == "NaN") {
             return -1;
           }
           a = parseFloat(String(a).replace( /<[\s\S]*?>/g, "" ));
@@ -154,12 +148,12 @@ $(document).ready(function() {
       },
    
       "num-html-desc": function ( a, b ) {
-          if (a == "--") {
-            if (b == "--")
+          if (a == "--" || a == "NaN") {
+            if (b == "--" || b == "NaN")
               return 0;
             return 1;
           }
-          if (b == "--")
+          if (b == "--" || b == "NaN")
             return -1;
           a = parseFloat(String(a).replace( /<[\s\S]*?>/g, "" ));
           b = parseFloat(String(b).replace( /<[\s\S]*?>/g, "" ));

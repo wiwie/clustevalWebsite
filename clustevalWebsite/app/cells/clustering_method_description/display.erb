@@ -5,7 +5,8 @@
 		<%= method.description %>
 		<ul>
 			<% if method.publication %>
-			<li>Publication: <%= raw method.publication %> <% if method.publicationUrl %>(<%= link_to 'Link', method.publicationUrl %>)<% end %></li>
+			<li>Publication: <%= raw method.publication %></li>
+			<% if method.publicationUrl and not method.publicationUrl.empty? %><li><%= link_to 'Link to publication', method.publicationUrl %></li><% end %>
 			<% end %>
 		</ul>
 	</p>

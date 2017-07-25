@@ -12,7 +12,7 @@
   <tr>
     <td><%= iterationExt.program.alias %></td>
     <td>
-      <%= (iterationExt.quality*1000).round/1000.0 %>
+      <%= iterationExt.quality.nan? ? "NaN" : (iterationExt.quality*1000).round/1000.0 %>
     </td>
     <td><%= raw iterationExt.param_set_as_string.gsub(",","<br />") %></td>
     <td><%= link_to 'Clustering', iterationExt.run_results_parameter_optimizations_parameter_set_iteration %></td>

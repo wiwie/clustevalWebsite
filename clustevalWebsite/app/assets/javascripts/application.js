@@ -26,4 +26,5 @@
 //= require twitter/bootstrap/affix
 //= require dataTables/jquery.dataTables
 //= require dataTables/TableTools.min
+//= require d3
 //= require_tree .

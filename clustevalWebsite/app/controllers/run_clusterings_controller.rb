@@ -2,7 +2,7 @@ class RunClusteringsController < ApplicationController
 	
 
 	def show
-		@run = Run.find_by_name(params[:id])
+		@run = Run.find(params[:id])
 		@executionRun = RunExecution.find_by_run_id(@run.id)
 		@clusteringRun = RunClustering.find_by_run_execution_id(@executionRun.id)
 		

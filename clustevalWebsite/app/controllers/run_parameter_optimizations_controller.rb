@@ -1,7 +1,7 @@
 class RunParameterOptimizationsController < ApplicationController
 	
 	def show
-		@run = Run.all(params[:repository]).select{|x| x.name == params[:id]}.first
+		@run = Run.find(params[:id])
 		@executionRun = RunExecution.find_by_run_id(@run.id)
 		@parameterOptimizationRun = RunParameterOptimization.find_by_run_execution_id(@executionRun.id)
 
