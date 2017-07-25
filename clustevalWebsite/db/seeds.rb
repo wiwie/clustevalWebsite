@@ -6,310 +6,294 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-RepositoryType.create([
-	{name: 'Repository'}, 
-	{name: 'RunResultRepository'}])
-RunType.create([
-	{name: 'Clustering'},
-	{name: 'Data Analysis'},
-	{name: 'Internal Parameter Optimization'},
-	{name: 'Parameter Optimization'},
-	{name: 'Run Analysis'},
-	{name: 'Run-Data Analysis'}])
-ProgramParameterType.create([
-	{name: 'DoubleProgramParameter'},
-	{name: 'IntegerProgramParameter'},
-	{name: 'StringProgramParameter'}])
-ProgramDescription.create([
-	{program_fullName: 'APcluster/apcluster', program_description: 'Affinity propagation performs the clustering by identifying exemplars (also called prototypes) among the available data points and reports their neighborhoods as clusters. It considers all data points as possible exemplars. The final set of exemplars is determined by sending messages between the data points voting for the best set of exemplars for the given similarity function in combination with the preference.'},
-	{program_fullName: 'programs/ClusterDPClusteringRProgram.jar', program_description: 'Clusterdp is a recently published tool based on the idea that centroids are characterized by a higher local density (rho) than their neighbors and by a comparably high distance from objects with higher density. Rodriguez and Laio claim that the number of clusters arises intuitively and that clusters are recognized regardless of their shape and dimensionality of the space in which they are embedded.'},
-	{program_fullName: 'clusterONE/clusterONE.sh', program_description: 'Clustering with Overlapping Neighborhood Expansion (ClusterONE) is a recently developed clustering method designed for detecting overlapping protein complexes in a given protein-protein interaction network. The primary concept behind the algorithm is the so-called cohesiveness measure, which is a combination of the number of reliable interactions within a cluster and the separation of the cluster from the rest of the network. We may apply ClusterONE to arbitrary data sets by transforming a given similarity matrix into a weighted similarity graph.'},
-	{program_fullName: 'programs/DBSCANClusteringRProgram.jar', program_description: 'DBSCAN regards clusters of objects as dense regions that are separated by regions of low density. A certain minimum number of objects from each cluster is required to be within a certain distance. The number and the distance are user-given. Singletons are considered noise.'},
-	{program_fullName: 'programs/FannyClusteringRProgram.jar', program_description: 'Fanny is a fuzzy clustering method requiring a distance matrix and the desired number of clusters as input. Fanny aims to find for each object the best membership vector describing the degree of membership of each object to each cluster by minimizing the sum of the average within-cluster distances weighted by the degree of the membership. This objective function is minimized numerically and the nearest crisp-clustering is reported as result.'},
-	{program_fullName: 'programs/HierarchicalClusteringRProgram.jar', program_description: 'Hierarchical clustering creates a tree from a given set of objects. Each node in the tree represents a cluster. Agglomerative algorithms initially assign all objects to singleton clusters, which are merged based on their similarity (bottom-up). Divisive algorithms start with one big cluster, which is decomposed into smaller clusters along the tree (top-down). A linkage function determines the distance between two clusters. As linkage function, we use the Unweighted Pair Group Method using arithmetic Averages (known as UPGMA or average linking), which is probably the most popular algorithm for hierarchical clustering in computational biology'},
-	{program_fullName: 'programs/KMeansClusteringRProgram.jar', program_description: 'K-means might be the most well-known clustering algorithm. Using the number of clusters k as parameter, k-means aims to iteratively minimize the within-cluster-sum-of-squares by assigning each object to the closest centroid (an artificial object) followed by a subsequent update of these centroids. The assignment after the convergence of this process is reported as clusters.'},
-	{program_fullName: 'programs/KMedoidsClusteringRProgram.jar', program_description: 'In contrast to , Partitioning Around Medoids (PAM) is one of the most common realizations of the k-medoid clustering approach, which uses exemplars as cluster centers. The algorithm works identical to k-means except that the exemplars are updated by testing each object in each cluster as exemplar instead of calculating artificial mean objects (centroids).'},
-	{program_fullName: 'MCL/mcl-12-068', program_description: 'In Markov Clustering the input similarities are interpret as a graph on which densely connected areas are identified by simulating random walks. The clustering processes itself is performed by repeatedly alternating so-called expansion steps and inflation steps. The expansion steps allow simulated walks of long distances while the inflation steps sharpen the emerging local cluster structure.'},
-	{program_fullName: 'MCODE/MCODE_wrapper_132.jar', program_description: 'Molecular COmplex DEtection (MCODE) is a graph based clustering method. In a first step the ’cliquishness’-score of all nodes is measured by taking into account the number of vertices and edges in the direct neighborhood. In a second step, clusters are built by starting at the vertex with the highest score followed by a recursive growing of these clusters by adding all neighboring nodes exceeding a certain score. MCODE may become extremely slow on large connected components in the similarity graph.'},
-	{program_fullName: 'programs/SOMClusteringRProgram.jar', program_description: 'Self Organizing Maps (SOMs) involve training a neural network, where each neuron represents one centroid. The number of centroids (or the grid size) is a user-given parameter reflecting the number of clusters. The SOM aims at finding a set of neurons/centroids and to assign each object to the neuron that approximates that object best while iteratively imposing a topographic ordering on the neurons by influencing neurons that are close by. The output is a set of neurons that implicate clusters (objects are assigned to the closest neuron/centroid).'},
-	{program_fullName: 'programs/SpectralClusteringRProgram.jar', program_description: 'Spectral clustering computes the second largest eigenvalue of the Laplacian of the similarity matrix to decide where to partition the similarity matrix. The resulting clusters may then be re-partitioned in order to generate a hierarchy. Efficient numeric algorithms solve the underlying linear algebra problems to facilitate spectral clustering on large datasets.'},
-	{program_fullName: 'TransClust/TransClust.jar', program_description: 'Transitivity Clustering is based on the weighted transitive graph projection problem. A given similarity matrix is interpret as weighted graph and transformed into a so-called cost graph by removing edges weighted below a user-given threshold. Such a potentially intransitive graph is transformed into a transitive graph afterwards by adding and removing a minimal number of edges. Edge weights are taken into account by using a similarity-dependent cost function (the distance of the edge weight to the cutoff), which is to be minimized. A combination of exact and heuristic algorithms tackle this NP-hard problem. The number of clusters is influenced by the user threshold. The method guarantees that the mean similarity of objects within the same clusters is above the threshold, while the mean similarity between object from different clusters is below.'}])
-ProgramImage.create([
-	{program_fullName: 'TransClust/TransClust.jar', program_imageUrl: 'transclust.png'},
-	{program_fullName: 'APcluster/apcluster', program_imageUrl: 'affinity_propagation_messages.png'},
-	{program_fullName: 'MCL/mcl-12-068', program_imageUrl: 'markov.png'},
-	{program_fullName: 'programs/KMeansClusteringRProgram.jar', program_imageUrl: 'kmeans.png'},
-	{program_fullName: 'programs/KMedoidsClusteringRProgram.jar', program_imageUrl: 'kmedoids.png'},
-	{program_fullName: 'programs/SpectralClusteringRProgram.jar', program_imageUrl: 'spectral.png'},
-	{program_fullName: 'programs/HierarchicalClusteringRProgram.jar', program_imageUrl: 'dendrogram.png'}])
-ProgramPublication.create([
-	{program_fullName: 'APcluster/apcluster', program_publication: 'Brendan J Frey and Delbert Dueck. <b>Clustering by passing messages between data points.</b> <i>Science</i>, 315(5814):972–976, Feb 2007.', program_publicationUrl: ''},
-	{program_fullName: 'programs/ClusterDPClusteringRProgram.jar', program_publication: 'A. Rodriguez and A. Laio. <b>Clustering by fast search and find of density peaks.</b> <i>Science</i>, 344(6191):1492–1496, Jun 2014.', program_publicationUrl: ''},
-	{program_fullName: 'clusterONE/clusterONE.sh', program_publication: 'Tamas Nepusz, Haiyuan Yu, and Alberto Paccanaro. <b>Detecting overlapping protein complexes in protein-protein interaction networks.</b> <i>Nature Methods</i>, 9(5):471–472, Mar 2012.', program_publicationUrl: ''},
-	{program_fullName: 'programs/DBSCANClusteringRProgram.jar', program_publication: 'Martin Ester, Hans peter Kriegel, Joerg S, and Xiaowei Xu. <b>A density-based algorithm for discovering clusters in large spatial databases with noise.</b> pages 226–231. <i>AAAI Press</i>, 1996.', program_publicationUrl: ''},
-	{program_fullName: 'programs/FannyClusteringRProgram.jar', program_publication: 'Martin Maechler, Peter Rousseeuw, Anja Struyf, Mia Hubert, and Kurt Hornik. <b>cluster: Cluster Analysis Basics and Extensions</b>, 2012. <i>R package version 1.14.3</i> — For new features, see the ’Changelog’ file (in the package source).', program_publicationUrl: ''},
-	{program_fullName: 'programs/HierarchicalClusteringRProgram.jar', program_publication: 'R Core Team. <b>R: A Language and Environment for Statistical Computing.</b> <i>R Foundation for Statistical Computing</i>, Vienna, Austria, 2013. ISBN 3-900051-07-0.', program_publicationUrl: ''},
-	{program_fullName: 'programs/KMeansClusteringRProgram.jar', program_publication: 'R Core Team. <b>R: A Language and Environment for Statistical Computing.</b> <i>R Foundation for Statistical Computing</i>, Vienna, Austria, 2013. ISBN 3-900051-07-0.', program_publicationUrl: ''},
-	{program_fullName: 'programs/KMedoidsClusteringRProgram.jar', program_publication: 'Martin Maechler, Peter Rousseeuw, Anja Struyf, Mia Hubert, and Kurt Hornik. <b>cluster: Cluster Analysis Basics and Extensions</b>, 2012. <i>R package version 1.14.3</i> — For new features, see the ’Changelog’ file (in the package source).', program_publicationUrl: ''},
-	{program_fullName: 'MCL/mcl-12-068', program_publication: 'Stijn Dongen. <b>A cluster algorithm for graphs.</b> <i>Technical report</i>, Amsterdam, The Netherlands, The Netherlands, 2000.', program_publicationUrl: ''},
-	{program_fullName: 'MCODE/MCODE_wrapper_132.jar', program_publication: 'Gary D Bader and Christopher W V Hogue. <b>An automated method for finding molecular complexes in large protein interaction networks.</b> <i>BMC Bioinformatics</i>, 4:2, Jan 2003.', program_publicationUrl: ''},
-	{program_fullName: 'programs/SOMClusteringRProgram.jar', program_publication: 'R. Wehrens and L.M.C. Buydens. <b>Self- and super-organising maps in r: the kohonen package.</b> <i>J. Stat. Softw.</i>, 21(5), 2007.', program_publicationUrl: ''},
-	{program_fullName: 'programs/SpectralClusteringRProgram.jar', program_publication: 'Alexandros Karatzoglou, Alex Smola, Kurt Hornik, and Achim Zeileis. <b>kernlab – an S4 package for kernel methods in R.</b> <i>Journal of Statistical Software</i>, 11(9):1–20, 2004.', program_publicationUrl: ''},
-	{program_fullName: 'TransClust/TransClust.jar', program_publication: 'Tobias Wittkop, Dorothea Emig, Sita Lange, Sven Rahmann, Mario Albrecht, John H Morris, Sebastian Boecker, Jens Stoye, and Jan Baumbach. <b>Partitioning biological data with transitivity clustering.</b> <i>Nat Methods</i>, 7(6):419–420, Jun 2010.', program_publicationUrl: ''}])
-ClusteringQualityMeasureOptimum.create([
-	{measure_name: 'RandIndexClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'SpecificityClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'SensitivityClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'SilhouetteValueClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'FDRClusteringQualityMeasure', name: 'Minimum'},
-	{measure_name: 'SilhouetteValueRClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'FPRClusteringQualityMeasure', name: 'Minimum'},
-	{measure_name: 'TransClustFClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'TransClustF2ClusteringQualityMeasure', name: 'Maximum'},
-	{measure_name: 'DaviesBouldinIndexRClusteringQualityMeasure', name: 'Minimum'}])
+RepositoryType.find_or_create_by(name: 'Repository')
+RepositoryType.find_or_create_by(name: 'RunResultRepository')
+RunType.find_or_create_by(name: 'Clustering')
+RunType.find_or_create_by(name: 'Data Analysis')
+RunType.find_or_create_by(name: 'Internal Parameter Optimization')
+RunType.find_or_create_by(name: 'Parameter Optimization')
+RunType.find_or_create_by(name: 'Run Analysis')
+RunType.find_or_create_by(name: 'Run-Data Analysis')
+ProgramParameterType.find_or_create_by(name: 'DoubleProgramParameter')
+ProgramParameterType.find_or_create_by(name: 'IntegerProgramParameter')
+ProgramParameterType.find_or_create_by(name: 'StringProgramParameter')
+ProgramDescription.find_or_create_by(program_fullName: 'APcluster/apcluster', program_description: 'Affinity propagation performs the clustering by identifying exemplars (also called prototypes) among the available data points and reports their neighborhoods as clusters. It considers all data points as possible exemplars. The final set of exemplars is determined by sending messages between the data points voting for the best set of exemplars for the given similarity function in combination with the preference.')
+ProgramDescription.find_or_create_by(program_fullName: 'programs/ClusterDPClusteringRProgram.jar', program_description: 'Clusterdp is a recently published tool based on the idea that centroids are characterized by a higher local density (rho) than their neighbors and by a comparably high distance from objects with higher density. Rodriguez and Laio claim that the number of clusters arises intuitively and that clusters are recognized regardless of their shape and dimensionality of the space in which they are embedded.')
+ProgramDescription.find_or_create_by(program_fullName: 'clusterONE/clusterONE.sh', program_description: 'Clustering with Overlapping Neighborhood Expansion (ClusterONE) is a recently developed clustering method designed for detecting overlapping protein complexes in a given protein-protein interaction network. The primary concept behind the algorithm is the so-called cohesiveness measure, which is a combination of the number of reliable interactions within a cluster and the separation of the cluster from the rest of the network. We may apply ClusterONE to arbitrary data sets by transforming a given similarity matrix into a weighted similarity graph.')
+ProgramDescription.find_or_create_by(program_fullName: 'programs/DBSCANClusteringRProgram.jar', program_description: 'DBSCAN regards clusters of objects as dense regions that are separated by regions of low density. A certain minimum number of objects from each cluster is required to be within a certain distance. The number and the distance are user-given. Singletons are considered noise.')
+ProgramDescription.find_or_create_by(program_fullName: 'programs/FannyClusteringRProgram.jar', program_description: 'Fanny is a fuzzy clustering method requiring a distance matrix and the desired number of clusters as input. Fanny aims to find for each object the best membership vector describing the degree of membership of each object to each cluster by minimizing the sum of the average within-cluster distances weighted by the degree of the membership. This objective function is minimized numerically and the nearest crisp-clustering is reported as result.')
+ProgramDescription.find_or_create_by(program_fullName: 'programs/HierarchicalClusteringRProgram.jar', program_description: 'Hierarchical clustering creates a tree from a given set of objects. Each node in the tree represents a cluster. Agglomerative algorithms initially assign all objects to singleton clusters, which are merged based on their similarity (bottom-up). Divisive algorithms start with one big cluster, which is decomposed into smaller clusters along the tree (top-down). A linkage function determines the distance between two clusters. As linkage function, we use the Unweighted Pair Group Method using arithmetic Averages (known as UPGMA or average linking), which is probably the most popular algorithm for hierarchical clustering in computational biology')
+ProgramDescription.find_or_create_by(program_fullName: 'programs/KMeansClusteringRProgram.jar', program_description: 'K-means might be the most well-known clustering algorithm. Using the number of clusters k as parameter, k-means aims to iteratively minimize the within-cluster-sum-of-squares by assigning each object to the closest centroid (an artificial object) followed by a subsequent update of these centroids. The assignment after the convergence of this process is reported as clusters.')
+ProgramDescription.find_or_create_by(program_fullName: 'programs/KMedoidsClusteringRProgram.jar', program_description: 'In contrast to , Partitioning Around Medoids (PAM) is one of the most common realizations of the k-medoid clustering approach, which uses exemplars as cluster centers. The algorithm works identical to k-means except that the exemplars are updated by testing each object in each cluster as exemplar instead of calculating artificial mean objects (centroids).')
+ProgramDescription.find_or_create_by(program_fullName: 'MCL/mcl-12-068', program_description: 'In Markov Clustering the input similarities are interpret as a graph on which densely connected areas are identified by simulating random walks. The clustering processes itself is performed by repeatedly alternating so-called expansion steps and inflation steps. The expansion steps allow simulated walks of long distances while the inflation steps sharpen the emerging local cluster structure.')
+ProgramDescription.find_or_create_by(program_fullName: 'MCODE/MCODE_wrapper_132.jar', program_description: 'Molecular COmplex DEtection (MCODE) is a graph based clustering method. In a first step the ’cliquishness’-score of all nodes is measured by taking into account the number of vertices and edges in the direct neighborhood. In a second step, clusters are built by starting at the vertex with the highest score followed by a recursive growing of these clusters by adding all neighboring nodes exceeding a certain score. MCODE may become extremely slow on large connected components in the similarity graph.')
+ProgramDescription.find_or_create_by(program_fullName: 'programs/SOMClusteringRProgram.jar', program_description: 'Self Organizing Maps (SOMs) involve training a neural network, where each neuron represents one centroid. The number of centroids (or the grid size) is a user-given parameter reflecting the number of clusters. The SOM aims at finding a set of neurons/centroids and to assign each object to the neuron that approximates that object best while iteratively imposing a topographic ordering on the neurons by influencing neurons that are close by. The output is a set of neurons that implicate clusters (objects are assigned to the closest neuron/centroid).')
+ProgramDescription.find_or_create_by(program_fullName: 'programs/SpectralClusteringRProgram.jar', program_description: 'Spectral clustering computes the second largest eigenvalue of the Laplacian of the similarity matrix to decide where to partition the similarity matrix. The resulting clusters may then be re-partitioned in order to generate a hierarchy. Efficient numeric algorithms solve the underlying linear algebra problems to facilitate spectral clustering on large datasets.')
+ProgramDescription.find_or_create_by(program_fullName: 'TransClust/TransClust.jar', program_description: 'Transitivity Clustering is based on the weighted transitive graph projection problem. A given similarity matrix is interpret as weighted graph and transformed into a so-called cost graph by removing edges weighted below a user-given threshold. Such a potentially intransitive graph is transformed into a transitive graph afterwards by adding and removing a minimal number of edges. Edge weights are taken into account by using a similarity-dependent cost function (the distance of the edge weight to the cutoff), which is to be minimized. A combination of exact and heuristic algorithms tackle this NP-hard problem. The number of clusters is influenced by the user threshold. The method guarantees that the mean similarity of objects within the same clusters is above the threshold, while the mean similarity between object from different clusters is below.')
+ProgramImage.find_or_create_by(program_fullName: 'TransClust/TransClust.jar', program_imageUrl: 'transclust.png')
+ProgramImage.find_or_create_by(program_fullName: 'APcluster/apcluster', program_imageUrl: 'affinity_propagation_messages.png')
+ProgramImage.find_or_create_by(program_fullName: 'MCL/mcl-12-068', program_imageUrl: 'markov.png')
+ProgramImage.find_or_create_by(program_fullName: 'programs/KMeansClusteringRProgram.jar', program_imageUrl: 'kmeans.png')
+ProgramImage.find_or_create_by(program_fullName: 'programs/KMedoidsClusteringRProgram.jar', program_imageUrl: 'kmedoids.png')
+ProgramImage.find_or_create_by(program_fullName: 'programs/SpectralClusteringRProgram.jar', program_imageUrl: 'spectral.png')
+ProgramImage.find_or_create_by(program_fullName: 'programs/HierarchicalClusteringRProgram.jar', program_imageUrl: 'dendrogram.png')
+ProgramPublication.find_or_create_by(program_fullName: 'APcluster/apcluster', program_publication: 'Brendan J Frey and Delbert Dueck. <b>Clustering by passing messages between data points.</b> <i>Science</i>, 315(5814):972–976, Feb 2007.', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'programs/ClusterDPClusteringRProgram.jar', program_publication: 'A. Rodriguez and A. Laio. <b>Clustering by fast search and find of density peaks.</b> <i>Science</i>, 344(6191):1492–1496, Jun 2014.', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'clusterONE/clusterONE.sh', program_publication: 'Tamas Nepusz, Haiyuan Yu, and Alberto Paccanaro. <b>Detecting overlapping protein complexes in protein-protein interaction networks.</b> <i>Nature Methods</i>, 9(5):471–472, Mar 2012.', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'programs/DBSCANClusteringRProgram.jar', program_publication: 'Martin Ester, Hans peter Kriegel, Joerg S, and Xiaowei Xu. <b>A density-based algorithm for discovering clusters in large spatial databases with noise.</b> pages 226–231. <i>AAAI Press</i>, 1996.', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'programs/FannyClusteringRProgram.jar', program_publication: 'Martin Maechler, Peter Rousseeuw, Anja Struyf, Mia Hubert, and Kurt Hornik. <b>cluster: Cluster Analysis Basics and Extensions</b>, 2012. <i>R package version 1.14.3</i> — For new features, see the ’Changelog’ file (in the package source).', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'programs/HierarchicalClusteringRProgram.jar', program_publication: 'R Core Team. <b>R: A Language and Environment for Statistical Computing.</b> <i>R Foundation for Statistical Computing</i>, Vienna, Austria, 2013. ISBN 3-900051-07-0.', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'programs/KMeansClusteringRProgram.jar', program_publication: 'R Core Team. <b>R: A Language and Environment for Statistical Computing.</b> <i>R Foundation for Statistical Computing</i>, Vienna, Austria, 2013. ISBN 3-900051-07-0.', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'programs/KMedoidsClusteringRProgram.jar', program_publication: 'Martin Maechler, Peter Rousseeuw, Anja Struyf, Mia Hubert, and Kurt Hornik. <b>cluster: Cluster Analysis Basics and Extensions</b>, 2012. <i>R package version 1.14.3</i> — For new features, see the ’Changelog’ file (in the package source).', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'MCL/mcl-12-068', program_publication: 'Stijn Dongen. <b>A cluster algorithm for graphs.</b> <i>Technical report</i>, Amsterdam, The Netherlands, The Netherlands, 2000.', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'MCODE/MCODE_wrapper_132.jar', program_publication: 'Gary D Bader and Christopher W V Hogue. <b>An automated method for finding molecular complexes in large protein interaction networks.</b> <i>BMC Bioinformatics</i>, 4:2, Jan 2003.', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'programs/SOMClusteringRProgram.jar', program_publication: 'R. Wehrens and L.M.C. Buydens. <b>Self- and super-organising maps in r: the kohonen package.</b> <i>J. Stat. Softw.</i>, 21(5), 2007.', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'programs/SpectralClusteringRProgram.jar', program_publication: 'Alexandros Karatzoglou, Alex Smola, Kurt Hornik, and Achim Zeileis. <b>kernlab – an S4 package for kernel methods in R.</b> <i>Journal of Statistical Software</i>, 11(9):1–20, 2004.', program_publicationUrl: '')
+ProgramPublication.find_or_create_by(program_fullName: 'TransClust/TransClust.jar', program_publication: 'Tobias Wittkop, Dorothea Emig, Sita Lange, Sven Rahmann, Mario Albrecht, John H Morris, Sebastian Boecker, Jens Stoye, and Jan Baumbach. <b>Partitioning biological data with transitivity clustering.</b> <i>Nat Methods</i>, 7(6):419–420, Jun 2010.', program_publicationUrl: '')
+ClusteringQualityMeasureOptimum.find_or_create_by(measure_name: 'RandIndexClusteringQualityMeasure', name: 'Maximum')
+ClusteringQualityMeasureOptimum.find_or_create_by(measure_name: 'SpecificityClusteringQualityMeasure', name: 'Maximum')
+ClusteringQualityMeasureOptimum.find_or_create_by(measure_name: 'SensitivityClusteringQualityMeasure', name: 'Maximum')
+ClusteringQualityMeasureOptimum.find_or_create_by(measure_name: 'SilhouetteValueClusteringQualityMeasure', name: 'Maximum')
+ClusteringQualityMeasureOptimum.find_or_create_by(measure_name: 'FDRClusteringQualityMeasure', name: 'Minimum')
+ClusteringQualityMeasureOptimum.find_or_create_by(measure_name: 'SilhouetteValueRClusteringQualityMeasure', name: 'Maximum')
+ClusteringQualityMeasureOptimum.find_or_create_by(measure_name: 'FPRClusteringQualityMeasure', name: 'Minimum')
+ClusteringQualityMeasureOptimum.find_or_create_by(measure_name: 'TransClustFClusteringQualityMeasure', name: 'Maximum')
+ClusteringQualityMeasureOptimum.find_or_create_by(measure_name: 'TransClustF2ClusteringQualityMeasure', name: 'Maximum')
+ClusteringQualityMeasureOptimum.find_or_create_by(measure_name: 'DaviesBouldinIndexRClusteringQualityMeasure', name: 'Minimum')
+DatasetDescription.find_or_create_by(dataset_fullName: 'synthetic/spirals250', dataset_description: 'This synthetic data set consists of 250 two-dimensional data objects, distributed over two entangled spirals. Since the data set is non-convex, it is almost impossible to resolve the natural grouping for clustering methods, that are solely based on an approach maximizing between-cluster distances and minimizing within-cluster distances in the original input space. Therefore, methods that either transform the data into a more suitable space, like Spectral Clustering, or that base their cluster identification on local neighborhood similarities will be able to identify the cluster structure.')
+DatasetDescription.find_or_create_by(dataset_fullName: 'synthetic/cuboid250', dataset_description: 'The cuboid data set consists 3 cuboids and one cube in between in a three dimensional space. The cuboids are placed at the edges of a boundary cube.')
+DatasetDescription.find_or_create_by(dataset_fullName: 'synthetic/cassini250', dataset_description: 'The cassini data set consists of three groups, two banana-shaped clusters (non-convex) bending around a circular cluster in between them.')
+DatasetDescription.find_or_create_by(dataset_fullName: 'coli/time_N', dataset_description: 'Text corpora contain occurrences of the same word in different contexts or senses. These texts can be analyzed automatically and word sense disambiguation can be employed to infer the context solely based on the contained words. For this purpose, pairwise similarities between single word occurrences can be calculated by masking and comparing word neighborhoods. Based on these similarities the occurrences can be clustered into potential contexts. This approach has been applied to a text corpus containing occurrences of the word "time".')
+DatasetDescription.find_or_create_by(dataset_fullName: 'coli/need_V', dataset_description: 'Text corpora contain occurrences of the same word in different contexts or senses. These texts can be analyzed automatically and word sense disambiguation can be employed to infer the context solely based on the contained words. For this purpose, pairwise similarities between single word occurrences can be calculated by masking and comparing word neighborhoods. Based on these similarities the occurrences can be clustered into potential contexts. This approach has been applied to a text corpus containing occurrences of the word "need".')
+DatasetDescription.find_or_create_by(dataset_fullName: 'coli/state_N', dataset_description: 'Text corpora contain occurrences of the same word in different contexts or senses. These texts can be analyzed automatically and word sense disambiguation can be employed to infer the context solely based on the contained words. For this purpose, pairwise similarities between single word occurrences can be calculated by masking and comparing word neighborhoods. Based on these similarities the occurrences can be clustered into potential contexts. This approach has been applied to a text corpus containing occurrences of the word "state".')
+DatasetDescription.find_or_create_by(dataset_fullName: 'coli/find_V', dataset_description: 'Text corpora contain occurrences of the same word in different contexts or senses. These texts can be analyzed automatically and word sense disambiguation can be employed to infer the context solely based on the contained words. For this purpose, pairwise similarities between single word occurrences can be calculated by masking and comparing word neighborhoods. Based on these similarities the occurrences can be clustered into potential contexts. This approach has been applied to a text corpus containing occurrences of the word "find".')
+DatasetDescription.find_or_create_by(dataset_fullName: 'tcga/all_emc_spearman.txt', dataset_description: 'The Cancer Genome Atlas (TCGA) is a project maintaining a database storing molecular information of cancer cells, including gene expression, DNA methylation or copy number aberration. It includes data for many different cancer types, allowing their comparison on a molecular level. A data set has been derived integrating gene expression levels, DNA methylation and copy number aberration of the three different cancer types, namely Breast Invasive Carcinoma (BRCA, 207 samples), Glioblastoma Multiforme (GBM, 67 samples) and Lung Squamous Cell Carcinoma (LUSC, 19 samples). For each type of molecular information the authors calculated pairwise similarities between the samples using Spearman correlation. This resulted in three similarities for every pair of samples, which were then combined by taking their arithmetic mean.')
+DatasetDescription.find_or_create_by(dataset_fullName: 'sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt', dataset_description: 'The data set contains pairwise similarities of blasted sequences of 232 proteins belonging to the amidohydrolase superfamily. A gold standard is provided describing families within the given superfamily. According to the gold standard the amidrohydrolase superfamily contains 29 families.')
+DatasetDescription.find_or_create_by(dataset_fullName: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2', dataset_description: 'This data set has been made publicly available by the Broad Institute. It contains microarray gene expression levels of 999 genes for 38 samples of leukemia patients suffering from three different subtypes of acute leukemia. A gold standard is provided consisting of three cancer subtypes.')
+DatasetDescription.find_or_create_by(dataset_fullName: 'ppi_mips/mips_complexes.tab.conv', dataset_description: 'The MIPS Mammalian Protein-Protein Database is a database for protein-protein interactions of mammalian species. We used the data set proposed in consisting of a subset of 220 protein complexes of 1562 proteins.')
+DatasetDescription.find_or_create_by(dataset_fullName: 'DS1/Zachary_karate_club_similarities.txt', dataset_description: 'The data set contains similarities between 34 members of a karate club. The karate club split up into two groups, which is used as a gold standard.')
+DatasetDescription.find_or_create_by(dataset_fullName: 'astral_1_161/blastResults.txt', dataset_description: 'ASTRAL is a database containing classifications of proteins partially derived from the SCOP database. Different releases of ASTRAL are available, containing data evolved over time. We included the data set ASTRAL95_1_161 derived from ASTRAL as described in. This data set contains pairwise protein similarities generated by applying a similarity function to the blasted proteins contained in the above protein sets. The gold standard to the dataset contains the SCOP classification of each protein.')
+DatasetDescription.find_or_create_by(dataset_fullName: 'fraenti_s3/fraenti_s3.txt.conv', dataset_description: 'Synthetic 2-d data set with 5000 points in 15 Gaussian clusters with relatively high degree of cluster overlap.')
+DatasetImage.find_or_create_by(dataset_fullName: 'synthetic/spirals250', dataset_imageUrl: 'spirals1000.png')
+DatasetImage.find_or_create_by(dataset_fullName: 'synthetic/cuboid250', dataset_imageUrl: 'cuboid.png')
+DatasetImage.find_or_create_by(dataset_fullName: 'synthetic/cassini250', dataset_imageUrl: 'cassini.png')
+DatasetImage.find_or_create_by(dataset_fullName: 'fraenti_s3/fraenti_s3.txt.conv', dataset_imageUrl: 'fraenti_s3.png')
+DatasetImage.find_or_create_by(dataset_fullName: 'chang_spiral/chang_spiral.txt.conv', dataset_imageUrl: 'chang_spiral.png')
+DatasetImage.find_or_create_by(dataset_fullName: 'fu_flame/fu_flame.txt.conv', dataset_imageUrl: 'fu_flame.png')
+DatasetImage.find_or_create_by(dataset_fullName: 'gionis_aggregation/gionis_aggregation.txt.conv', dataset_imageUrl: 'gionis_aggregation.png')
+DatasetPublication.find_or_create_by(dataset_fullName: 'tcga/all_emc_spearman.txt', dataset_publication: 'Nora Speicher. <b>Towards the identification of cancer subtypes by integrative clustering of molecular data.</b> Masters thesis, <i>Saarland University</i>, December 2012.', dataset_publicationUrl: 'http://domino.mpi-inf.mpg.de/intranet/ag3/ag3publ.nsf/AuthorEditorIndividualView/ae782c8688cc637cc1257b27005442df?OpenDocument')
+DatasetPublication.find_or_create_by(dataset_fullName: 'sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt', dataset_publication: 'Shoshana D Brown, John A Gerlt, Jennifer L Seffernick, and Patricia C Babbitt. <b>A gold standard set of mechanistically diverse enzyme superfamilies.</b> <i>Genome Biol, 7(1):R8</i>, 2006.', dataset_publicationUrl: 'http://www.ncbi.nlm.nih.gov/pubmed/16507141')
+DatasetPublication.find_or_create_by(dataset_fullName: 'ppi_mips/mips_complexes.tab.conv', dataset_publication: 'Philipp Pagel, Stefan Kovac, Matthias Oesterheld, Barbara Brauner, Irmtraud Dunger-Kaltenbach, Goar Frishman, Corinna Montrone, Pekka Mark, Volker Stuempflen, Hans-Werner Mewes, Andreas Ruepp and Dmitrij Frishman. <b>The MIPS mammalian protein-protein interaction database.</b> <i>Bioinformatics, 21(6):832-834</i>, 2005', dataset_publicationUrl: 'http://bioinformatics.oxfordjournals.org/content/21/6/832')
+DatasetPublication.find_or_create_by(dataset_fullName: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2', dataset_publication: 'Stefano Monti, Pablo Tamayo, Jill Mesirov, Todd Golub. <b>Consensus Clustering: A Resampling-Based Method for Class Discovery and Visualization of Gene Expression Microarray Data.</b> <i>Machine Learning, Volume 52 Issue 1-2, July-August 2003 Pages 91-118</i>, 2003',dataset_publicationUrl: 'http://link.springer.com/article/10.1023%2FA%3A1023949509487')
+DatasetPublication.find_or_create_by(dataset_fullName: 'DS1/Zachary_karate_club_similarities.txt', dataset_publication: 'Wayne W. Zachary. <b>An information flow model for conflict and fission in small groups.</b> <i>Journal of Anthropological Research</i>, 1977', dataset_publicationUrl: 'http://www.jstor.org/discover/10.2307/3629752?uid=3737864&uid=2&uid=4&sid=21102642268501')
+DatasetPublication.find_or_create_by(dataset_fullName: 'astral_1_161/blastResults.txt', dataset_publication: 'Chandonia JM, Hon G, Walker NS, Lo Conte L, Koehl P, Levitt M, Brenner SE. <b>The ASTRAL compendium in 2004.</b> <i>Nucleic Acids Research, 32:D189-D192</i>, 2004', dataset_publicationUrl: 'http://www.ncbi.nlm.nih.gov/pubmed/14681391')
+DatasetPublication.find_or_create_by(dataset_fullName: 'gionis_aggregation/gionis_aggregation', dataset_publication: 'A. Gionis, H. Mannila, P. Tsaparas. <b>Clustering aggregation.</b> <i>ACM Trans. Knowl. Discovery Data 1, 4 , es</i>, 2007', dataset_publicationUrl: 'http://dl.acm.org/citation.cfm?doid=1217299.1217303')
+DatasetPublication.find_or_create_by(dataset_fullName: 'fraenti_s3/fraenti_s3.txt.conv', dataset_publication: 'P. Fraenti, O. Virmajoki. <b>Iterative shrinking method for clustering problems.</b> <i>Pattern Recognit. 39, 761-775</i>, 2006', dataset_publicationUrl: 'http://dl.acm.org/citation.cfm?id=1221241')
+DatasetPublication.find_or_create_by(dataset_fullName: 'fu_flame/fu_flame.txt.conv', dataset_publication: 'L. Fu, E. Medico. <b>FLAME, a novel fuzzy clustering method for the analysis of DNA microarray data.</b> <i>BMC Bioinformatics 8, 3</i>, 2007.', dataset_publicationUrl: 'http://www.biomedcentral.com/1471-2105/8/3')
+DatasetPublication.find_or_create_by(dataset_fullName: 'chang_spiral/chang_spiral.txt.conv', dataset_publication: 'H. Chang, D.-Y. Yeung. <b>Robust path-based spectral clustering.</b> <i>Pattern Recognit. 41, 191-203</i>, 2008.', dataset_publicationUrl: 'http://www.sciencedirect.com/science/article/pii/S0031320307002038')
 
-DatasetDescription.create([
-	{dataset_fullName: 'synthetic/spirals250', dataset_description: 'This synthetic data set consists of 250 two-dimensional data objects, distributed over two entangled spirals. Since the data set is non-convex, it is almost impossible to resolve the natural grouping for clustering methods, that are solely based on an approach maximizing between-cluster distances and minimizing within-cluster distances in the original input space. Therefore, methods that either transform the data into a more suitable space, like Spectral Clustering, or that base their cluster identification on local neighborhood similarities will be able to identify the cluster structure.'},
-	{dataset_fullName: 'synthetic/cuboid250', dataset_description: 'The cuboid data set consists 3 cuboids and one cube in between in a three dimensional space. The cuboids are placed at the edges of a boundary cube.'},
-	{dataset_fullName: 'synthetic/cassini250', dataset_description: 'The cassini data set consists of three groups, two banana-shaped clusters (non-convex) bending around a circular cluster in between them.'},
-	{dataset_fullName: 'coli/time_N', dataset_description: 'Text corpora contain occurrences of the same word in different contexts or senses. These texts can be analyzed automatically and word sense disambiguation can be employed to infer the context solely based on the contained words. For this purpose, pairwise similarities between single word occurrences can be calculated by masking and comparing word neighborhoods. Based on these similarities the occurrences can be clustered into potential contexts. This approach has been applied to a text corpus containing occurrences of the word "time".'},
-	{dataset_fullName: 'coli/need_V', dataset_description: 'Text corpora contain occurrences of the same word in different contexts or senses. These texts can be analyzed automatically and word sense disambiguation can be employed to infer the context solely based on the contained words. For this purpose, pairwise similarities between single word occurrences can be calculated by masking and comparing word neighborhoods. Based on these similarities the occurrences can be clustered into potential contexts. This approach has been applied to a text corpus containing occurrences of the word "need".'},
-	{dataset_fullName: 'coli/state_N', dataset_description: 'Text corpora contain occurrences of the same word in different contexts or senses. These texts can be analyzed automatically and word sense disambiguation can be employed to infer the context solely based on the contained words. For this purpose, pairwise similarities between single word occurrences can be calculated by masking and comparing word neighborhoods. Based on these similarities the occurrences can be clustered into potential contexts. This approach has been applied to a text corpus containing occurrences of the word "state".'},
-	{dataset_fullName: 'coli/find_V', dataset_description: 'Text corpora contain occurrences of the same word in different contexts or senses. These texts can be analyzed automatically and word sense disambiguation can be employed to infer the context solely based on the contained words. For this purpose, pairwise similarities between single word occurrences can be calculated by masking and comparing word neighborhoods. Based on these similarities the occurrences can be clustered into potential contexts. This approach has been applied to a text corpus containing occurrences of the word "find".'},
-	{dataset_fullName: 'tcga/all_emc_spearman.txt', dataset_description: 'The Cancer Genome Atlas (TCGA) is a project maintaining a database storing molecular information of cancer cells, including gene expression, DNA methylation or copy number aberration. It includes data for many different cancer types, allowing their comparison on a molecular level. A data set has been derived integrating gene expression levels, DNA methylation and copy number aberration of the three different cancer types, namely Breast Invasive Carcinoma (BRCA, 207 samples), Glioblastoma Multiforme (GBM, 67 samples) and Lung Squamous Cell Carcinoma (LUSC, 19 samples). For each type of molecular information the authors calculated pairwise similarities between the samples using Spearman correlation. This resulted in three similarities for every pair of samples, which were then combined by taking their arithmetic mean.'},
-	{dataset_fullName: 'sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt', dataset_description: 'The data set contains pairwise similarities of blasted sequences of 232 proteins belonging to the amidohydrolase superfamily. A gold standard is provided describing families within the given superfamily. According to the gold standard the amidrohydrolase superfamily contains 29 families.'},
-	{dataset_fullName: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2', dataset_description: 'This data set has been made publicly available by the Broad Institute. It contains microarray gene expression levels of 999 genes for 38 samples of leukemia patients suffering from three different subtypes of acute leukemia. A gold standard is provided consisting of three cancer subtypes.'},
-	{dataset_fullName: 'ppi_mips/mips_complexes.tab.conv', dataset_description: 'The MIPS Mammalian Protein-Protein Database is a database for protein-protein interactions of mammalian species. We used the data set proposed in consisting of a subset of 220 protein complexes of 1562 proteins.'},
-	{dataset_fullName: 'DS1/Zachary_karate_club_similarities.txt', dataset_description: 'The data set contains similarities between 34 members of a karate club. The karate club split up into two groups, which is used as a gold standard.'},
-	{dataset_fullName: 'astral_1_161/blastResults.txt', dataset_description: 'ASTRAL is a database containing classifications of proteins partially derived from the SCOP database. Different releases of ASTRAL are available, containing data evolved over time. We included the data set ASTRAL95_1_161 derived from ASTRAL as described in. This data set contains pairwise protein similarities generated by applying a similarity function to the blasted proteins contained in the above protein sets. The gold standard to the dataset contains the SCOP classification of each protein.'},
-	{dataset_fullName: 'fraenti_s3/fraenti_s3.txt.conv', dataset_description: 'Synthetic 2-d data set with 5000 points in 15 Gaussian clusters with relatively high degree of cluster overlap.'}
-	])
-DatasetImage.create([
-	{dataset_fullName: 'synthetic/spirals250', dataset_imageUrl: 'spirals1000.png'},
-	{dataset_fullName: 'synthetic/cuboid250', dataset_imageUrl: 'cuboid.png'},
-	{dataset_fullName: 'synthetic/cassini250', dataset_imageUrl: 'cassini.png'},
-	{dataset_fullName: 'fraenti_s3/fraenti_s3.txt.conv', dataset_imageUrl: 'fraenti_s3.png'},
-	{dataset_fullName: 'chang_spiral/chang_spiral.txt.conv', dataset_imageUrl: 'chang_spiral.png'},
-	{dataset_fullName: 'fu_flame/fu_flame.txt.conv', dataset_imageUrl: 'fu_flame.png'},
-	{dataset_fullName: 'gionis_aggregation/gionis_aggregation.txt.conv', dataset_imageUrl: 'gionis_aggregation.png'}
-	])
-DatasetPublication.create([
-	{dataset_fullName: 'tcga/all_emc_spearman.txt', dataset_publication: 'Nora Speicher. <b>Towards the identification of cancer subtypes by integrative clustering of molecular data.</b> Masters thesis, <i>Saarland University</i>, December 2012.', dataset_publicationUrl: 'http://domino.mpi-inf.mpg.de/intranet/ag3/ag3publ.nsf/AuthorEditorIndividualView/ae782c8688cc637cc1257b27005442df?OpenDocument'},
-	{dataset_fullName: 'sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt', dataset_publication: 'Shoshana D Brown, John A Gerlt, Jennifer L Seffernick, and Patricia C Babbitt. <b>A gold standard set of mechanistically diverse enzyme superfamilies.</b> <i>Genome Biol, 7(1):R8</i>, 2006.', dataset_publicationUrl: 'http://www.ncbi.nlm.nih.gov/pubmed/16507141'},
-	{dataset_fullName: 'ppi_mips/mips_complexes.tab.conv', dataset_publication: 'Philipp Pagel, Stefan Kovac, Matthias Oesterheld, Barbara Brauner, Irmtraud Dunger-Kaltenbach, Goar Frishman, Corinna Montrone, Pekka Mark, Volker Stuempflen, Hans-Werner Mewes, Andreas Ruepp and Dmitrij Frishman. <b>The MIPS mammalian protein-protein interaction database.</b> <i>Bioinformatics, 21(6):832-834</i>, 2005', dataset_publicationUrl: 'http://bioinformatics.oxfordjournals.org/content/21/6/832'},
-	{dataset_fullName: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2', dataset_publication: 'Stefano Monti, Pablo Tamayo, Jill Mesirov, Todd Golub. <b>Consensus Clustering: A Resampling-Based Method for Class Discovery and Visualization of Gene Expression Microarray Data.</b> <i>Machine Learning, Volume 52 Issue 1-2, July-August 2003 Pages 91-118</i>, 2003',dataset_publicationUrl: 'http://link.springer.com/article/10.1023%2FA%3A1023949509487'},
-	{dataset_fullName: 'DS1/Zachary_karate_club_similarities.txt', dataset_publication: 'Wayne W. Zachary. <b>An information flow model for conflict and fission in small groups.</b> <i>Journal of Anthropological Research</i>, 1977', dataset_publicationUrl: 'http://www.jstor.org/discover/10.2307/3629752?uid=3737864&uid=2&uid=4&sid=21102642268501'},
-	{dataset_fullName: 'astral_1_161/blastResults.txt', dataset_publication: 'Chandonia JM, Hon G, Walker NS, Lo Conte L, Koehl P, Levitt M, Brenner SE. <b>The ASTRAL compendium in 2004.</b> <i>Nucleic Acids Research, 32:D189-D192</i>, 2004', dataset_publicationUrl: 'http://www.ncbi.nlm.nih.gov/pubmed/14681391'},
-	{dataset_fullName: 'gionis_aggregation/gionis_aggregation', dataset_publication: 'A. Gionis, H. Mannila, P. Tsaparas. <b>Clustering aggregation.</b> <i>ACM Trans. Knowl. Discovery Data 1, 4 , es</i>, 2007', dataset_publicationUrl: 'http://dl.acm.org/citation.cfm?doid=1217299.1217303'},
-	{dataset_fullName: 'fraenti_s3/fraenti_s3.txt.conv', dataset_publication: 'P. Fraenti, O. Virmajoki. <b>Iterative shrinking method for clustering problems.</b> <i>Pattern Recognit. 39, 761-775</i>, 2006', dataset_publicationUrl: 'http://dl.acm.org/citation.cfm?id=1221241'},
-	{dataset_fullName: 'fu_flame/fu_flame.txt.conv', dataset_publication: 'L. Fu, E. Medico. <b>FLAME, a novel fuzzy clustering method for the analysis of DNA microarray data.</b> <i>BMC Bioinformatics 8, 3</i>, 2007.', dataset_publicationUrl: 'http://www.biomedcentral.com/1471-2105/8/3'},
-	{dataset_fullName: 'chang_spiral/chang_spiral.txt.conv', dataset_publication: 'H. Chang, D.-Y. Yeung. <b>Robust path-based spectral clustering.</b> <i>Pattern Recognit. 41, 191-203</i>, 2008.', dataset_publicationUrl: 'http://www.sciencedirect.com/science/article/pii/S0031320307002038'}
-	])
-
-DatasetVisibility.create([
-	{dataset_name: 'astral_1_161/blastResults.txt_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.1_noise_0.0', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.2_noise_0.0', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.3_noise_0.0', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.01', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.02', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.05', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.0', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.01', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.02', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.05', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.2_noise_0.0', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.0', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.01', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.02', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.05', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.1_noise_0.0', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.2_noise_0.0', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.3_noise_0.0', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.1_noise_0.0', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.2_noise_0.0', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.3_noise_0.0', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.1_noise_0.0', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.2_noise_0.0', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.3_noise_0.0', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.05_noise_0.05', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.05_noise_0.1', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.05_noise_0.2', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.05_noise_0.3', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.0_noise_0.05', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.1_noise_0.05', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.1_noise_0.0', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.2_noise_0.05', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.2_noise_0.0', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.3_noise_0.05', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.3_noise_0.0', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'synthetic/cassini250_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.05_noise_0.05', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.05_noise_0.1', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.05_noise_0.2', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.05_noise_0.3', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.0_noise_0.05', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.1_noise_0.05', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.2_noise_0.05', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.3_noise_0.05', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'synthetic/cuboid250_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.05_noise_0.05', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.05_noise_0.1', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.05_noise_0.2', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.05_noise_0.3', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.0_noise_0.05', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.1_noise_0.05', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.2_noise_0.05', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.3_noise_0.05', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'synthetic/spirals250_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.3_noise_0.3', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.0_noise_0.1', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.0_noise_0.2', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.0_noise_0.3', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.1_noise_0.1', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.1_noise_0.2', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.1_noise_0.3', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.2_noise_0.1', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.2_noise_0.2', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.2_noise_0.3', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.3_noise_0.1', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.3_noise_0.2', visible: false},
-{dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.3_noise_0.3', visible: false}
-	])
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.1_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.2_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.3_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.01', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.02', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.01', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.02', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.2_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.01', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.02', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'astral_1_161/blastResults.txt.SimMatrix_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.1_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.2_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.3_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.1_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.2_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.3_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_pathbased/chang_pathbased.txt.conv_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'chang_spiral/chang_spiral.txt.conv_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fraenti_s3/fraenti_s3.txt.conv_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'fu_flame/fu_flame.txt.conv_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.1_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.2_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.3_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'gionis_aggregation/gionis_aggregation.txt.conv_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.05_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.05_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.05_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.05_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.0_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.1_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.1_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.2_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.2_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.3_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.3_noise_0.0', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cassini250_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.05_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.05_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.05_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.05_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.0_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.1_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.2_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.3_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/cuboid250_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.05_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.05_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.05_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.05_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.0_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.1_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.2_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.3_noise_0.05', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'synthetic/spirals250_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'veenman_r15/veenman_r15.txt.conv_remove_0.3_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.0_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.0_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.0_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.1_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.1_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.1_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.2_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.2_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.2_noise_0.3', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.3_noise_0.1', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.3_noise_0.2', visible: false)
+DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.3_noise_0.3', visible: false)
