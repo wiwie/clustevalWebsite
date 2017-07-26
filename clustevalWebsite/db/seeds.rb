@@ -297,3 +297,5 @@ DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.t
 DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.3_noise_0.1', visible: false)
 DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.3_noise_0.2', visible: false)
 DatasetVisibility.find_or_create_by(dataset_name: 'zahn_compound/zahn_compound.txt.conv_remove_0.3_noise_0.3', visible: false)
+
+ClustevalFlag.find_or_create_by(key: 'is_db_initialized', value: true)
