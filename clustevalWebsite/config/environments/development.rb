@@ -47,5 +47,5 @@ ClustEval::Application.configure do
 
    config.eager_load = false
 
-   config.serve_static_assets = false 
+   config.serve_static_files = false 
  end
