@@ -45,8 +45,9 @@ class RunResultsController < ApplicationController
 	end
 
 	def find_by_name
-		puts params[:name]
-		runResult = RunResult.all(params[:repository]).where(:unique_run_identifier => params[:name]).first
+		runResult = RunResult.where(:unique_run_identifier => params[:name]).first
+
+		params[:repository] = runResult.repository
 
 		@runType = runResult.run_type
 		if @runType.name == 'Clustering'

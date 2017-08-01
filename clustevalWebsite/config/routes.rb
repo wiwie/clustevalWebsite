@@ -2,6 +2,8 @@ ClustEval::Application.routes.draw do
 	root :to => 'mains#index' #RAILS 3
 	mathjax 'mathjax'
 
+	get 'run_results/find_by_name' => 'run_results#find_by_name'
+
 	scope ':repository' do
 	  	get 'datasets/index' => 'datasets#index'
 	  	get 'datasets/comparison' => 'datasets#comparison'
@@ -41,7 +43,6 @@ ClustEval::Application.routes.draw do
 		get 'run_results_parameter_optimizations_parameter_set_iterations/isoMDS/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#isoMDS'
 		get 'run_results_parameter_optimizations_parameter_set_iterations/pca/:id' => 'run_results_parameter_optimizations_parameter_set_iterations#pca'
 		get 'run_results_parameter_optimizations_parameter_set_iterations/:id/tooltip_info' => 'run_results_parameter_optimizations_parameter_set_iterations#tooltip_info'
-		get 'run_results/find_by_name' => 'run_results#find_by_name'
 
 		get 'run_results_run_analyses/img/:runIdentifier/:statisticName/:id' => 'run_results_run_analyses#img'
 		get 'runs/start/:id' => 'runs#start'
