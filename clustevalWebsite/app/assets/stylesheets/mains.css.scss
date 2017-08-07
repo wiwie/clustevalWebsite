@@ -29,7 +29,8 @@ body {
 }
 
 .page_title {
-	background-color:$darker;
+	background-color:#f8f8f8;
+	padding: 10px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
@@ -718,6 +719,10 @@ textarea {
 
 $gradient1: #443f40;
 $gradient2: #575253;
+
+.navbar-default {
+	border: 0px;
+}
 
 .navbar-inner {
 	min-height: 0px;
